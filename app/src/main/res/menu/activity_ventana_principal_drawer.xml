@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:checkableBehavior="single"
+        android:enabled="true"
+        android:visible="true">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/carrera"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_viajes"
+            android:icon="@drawable/viajes"
+            android:title="@string/menu_tusViajes" />
+        <item
+            android:id="@+id/nav_cartera"
+            android:icon="@drawable/billetera"
+            android:title="@string/menu_cartera" />
+        <item
+            android:id="@+id/nav_mensajes"
+            android:icon="@drawable/correo"
+            android:title="@string/menu_mensajes" />
+        <item
+            android:id="@+id/nav_incidencias"
+            android:icon="@drawable/riesgo"
+            android:title="@string/menu_incidencias" />
+        <item
+            android:id="@+id/nav_cuenta"
+            android:icon="@drawable/cuenta"
+            android:title="@string/menu_cuenta" />
+        <item
+            android:id="@+id/nav_vehiculos"
+            android:icon="@drawable/vehiculo"
+            android:title="@string/menu_vehiculos" />
+        <item
+            android:id="@+id/navigation_subheader"
+            android:title="@string/menu_otras">
+            <menu>
+                <item
+                    android:id="@+id/nav_configuracion"
+                    android:icon="@drawable/configuracion"
+                    android:title="@string/menu_configuracion" />
+                <item
+                    android:id="@+id/nav_cerrarSesion"
+                    android:icon="@drawable/apagar"
+                    android:title="@string/menu_cerrarSesion" />
+            </menu>
+        </item>
+
+    </group>
+</menu>

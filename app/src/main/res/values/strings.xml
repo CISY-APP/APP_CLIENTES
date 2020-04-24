@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">APP_CLIENTES</string>
+    <string name="title_activity_ventana_principal">VentanaPrincipal</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_configuracion">Configuración</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_tusViajes">Tus viajes</string>
+    <string name="menu_cartera">Cartera</string>
+    <string name="menu_mensajes">Mensajes</string>
+    <string name="menu_incidencias">Incidencias</string>
+    <string name="menu_cuenta">Cuenta</string>
+    <string name="menu_vehiculos">Vehículos</string>
+    <string name="menu_configuracion">Configuración</string>
+    <string name="menu_otras">Otras opciones</string>
+    <string name="menu_cerrarSesion">Cerrar sesión</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="home_third">Home Third</string>
+
+    <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
+
 </resources>

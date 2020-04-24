@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.app_clientes.ui.Home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home"/>
+    <fragment
+        android:id="@+id/nav_viajes"
+        android:name="com.example.app_clientes.ui.Viajes.TusViajesFragment"
+        android:label="@string/menu_tusViajes"
+        tools:layout="@layout/fragment_tusviajes" />
+
+    <fragment
+        android:id="@+id/nav_cartera"
+        android:name="com.example.app_clientes.ui.Cartera.CarteraFragment"
+        android:label="@string/menu_cartera"
+        tools:layout="@layout/fragment_cartera"/>
+
+    <fragment
+        android:id="@+id/nav_mensajes"
+        android:name="com.example.app_clientes.ui.Mensajes.MensajesFragment"
+        android:label="@string/menu_mensajes"
+        tools:layout="@layout/fragment_mensajes"/>
+
+    <fragment
+        android:id="@+id/nav_incidencias"
+        android:name="com.example.app_clientes.ui.Incidencias.IncidenciasFragment"
+        android:label="@string/menu_incidencias"
+        tools:layout="@layout/fragment_incidencias"/>
+
+    <fragment
+        android:id="@+id/nav_cuenta"
+        android:name="com.example.app_clientes.ui.Cuenta.CuentaFragment"
+        android:label="@string/menu_cuenta"
+        tools:layout="@layout/fragment_cuenta"/>
+
+    <fragment
+        android:id="@+id/nav_vehiculos"
+        android:name="com.example.app_clientes.ui.Vehiculos.VehiculosFragment"
+        android:label="@string/menu_vehiculos"
+        tools:layout="@layout/fragment_cuenta"/>
+
+    <fragment
+    android:id="@+id/nav_configuracion"
+    android:name="com.example.app_clientes.ui.Configuracion.CerrarSesionFragment"
+    android:label="@string/menu_configuracion"
+    tools:layout="@layout/fragment_configuracion"/>
+
+    <fragment
+        android:id="@+id/nav_cerrarSesion"
+        android:name="com.example.app_clientes.ui.Sesion.CerrarSesionFragment"
+        android:label="@string/menu_cerrarSesion"
+        tools:layout="@layout/fragment_cerrarSesion"/>
+</navigation>
