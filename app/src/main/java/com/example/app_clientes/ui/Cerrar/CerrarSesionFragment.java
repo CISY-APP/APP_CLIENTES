@@ -1,4 +1,4 @@
-package com.example.app_clientes.ui.Configuracion;
+package com.example.app_clientes.ui.Cerrar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

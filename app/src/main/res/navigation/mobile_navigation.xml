@@ -47,14 +47,15 @@
         tools:layout="@layout/fragment_cuenta"/>
 
     <fragment
-    android:id="@+id/nav_configuracion"
-    android:name="com.example.app_clientes.ui.Configuracion.CerrarSesionFragment"
-    android:label="@string/menu_configuracion"
-    tools:layout="@layout/fragment_configuracion"/>
+        android:id="@+id/nav_configuracion"
+        android:name="com.example.app_clientes.ui.Configuracion.ConfiguracionFragment"
+        android:label="@string/menu_configuracion"
+        tools:layout="@layout/fragment_configuracion"/>
 
     <fragment
         android:id="@+id/nav_cerrarSesion"
-        android:name="com.example.app_clientes.ui.Sesion.CerrarSesionFragment"
+        android:name="com.example.app_clientes.ui.Cartera.CarteraFragment"
         android:label="@string/menu_cerrarSesion"
-        tools:layout="@layout/fragment_cerrarSesion"/>
+        tools:layout="@layout/fragment_cerrarsesion"/>
+
 </navigation>

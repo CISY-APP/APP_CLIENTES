@@ -1,4 +1,4 @@
-package com.example.app_clientes.ui.Cerrar;
+package com.example.app_clientes.ui.Configuracion;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

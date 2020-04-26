@@ -16,4 +16,8 @@ public class CuentaViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
+
+    public void tupu(){
+        mText.setValue("tupu");
+    }
 }
