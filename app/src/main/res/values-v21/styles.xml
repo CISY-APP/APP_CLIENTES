@@ -4,4 +4,16 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+    <style name="spinnerItem" parent="android:Widget.TextView.SpinnerItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">34dp</item>
+        <item name="android:textColor">@color/colorBlanco</item>
+
+    </style>
+    <style name="spinnerDropDownItem" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">25dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:background">@color/colorBlanco</item>
+    </style>
 </resources>
