@@ -23,6 +23,10 @@
             android:name=".Vistas.VentanaPublicarViaje"
             android:parentActivityName=".Vistas.VentanaPrincipal">
         </activity>
+        <activity
+            android:name=".Vistas.VentanaViajePublicado"
+            android:parentActivityName=".Vistas.VentanaPublicarViaje">
+        </activity>
     </application>
 
 </manifest>

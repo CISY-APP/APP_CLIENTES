@@ -4,16 +4,13 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.net.sip.SipSession;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -23,23 +20,16 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.widget.ImageViewCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_clientes.Otros.CalendarioFragment;
 import com.example.app_clientes.Otros.HoraFragment;
 import com.example.app_clientes.R;
-import com.example.app_clientes.ui.Home.HomeFragment;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 public class VentanaPublicarViaje extends AppCompatActivity {
 
     //Atributos de la clase
+    private Button BTPublicar;
     private EditText ETFecha;
     private EditText ETHora;
     private SeekBar seekBarPrecio;
@@ -47,9 +37,9 @@ public class VentanaPublicarViaje extends AppCompatActivity {
     private ImageView IVMas;
     private ImageView IVMenos;
     private TextView TVNum_Asientos;
-    private int contAsientos=1;
+    private int contAsientos = 1;
 
-
+    //Esta clase deberán llegar IDUsuario y todos sus datos, debemos manejar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +49,20 @@ public class VentanaPublicarViaje extends AppCompatActivity {
         loadSpinner();
 
         //Editext al pulsar sobre este muestra un calendario
+        BTPublicar = findViewById(R.id.BTPublicar);
+        BTPublicar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
+                VentanaViajePublicado ventanaViajePublicado = new VentanaViajePublicado();
+                Intent VentanaPublicarViaje = new Intent(VentanaPublicarViaje.this, VentanaViajePublicado.class);
+                //VentanaPublicarViaje.putExtra("usuario",ETUsuario.getText().toString());
+                //VentanaPublicarViaje.putExtra("control",ETControl.getText().toString());
+                startActivity(VentanaPublicarViaje);
+            }
+        });
+
+        //Editext al pulsar sobre este muestra un calendario
         ETFecha = findViewById(R.id.ETFecha);
         ETFecha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +70,7 @@ public class VentanaPublicarViaje extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
+
         //Editext al pulsar sobre este muestra un reloj
         ETHora = findViewById(R.id.ETHora);
         ETHora.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +114,7 @@ public class VentanaPublicarViaje extends AppCompatActivity {
                 if(contAsientos!=8){
                     ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
                     ImageViewCompat.setImageTintList(IVMas, csl);
-                }
-                else{
+                }else{
                     ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
                     ImageViewCompat.setImageTintList(IVMas, csl);
                 }if(contAsientos!=1){
@@ -133,8 +137,7 @@ public class VentanaPublicarViaje extends AppCompatActivity {
                 if(contAsientos!=8){
                     ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
                     ImageViewCompat.setImageTintList(IVMas, csl);
-                }
-                else{
+                } else{
                     ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
                     ImageViewCompat.setImageTintList(IVMas, csl);
                 }if(contAsientos!=1){
@@ -144,11 +147,8 @@ public class VentanaPublicarViaje extends AppCompatActivity {
                     ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
                     ImageViewCompat.setImageTintList(IVMenos, csl);
                 }
-
             }
         });
-
-
     }
 
     //Muestra un cuadro de dialogo con un calendario al pulsar sobre el EditextFecha
@@ -157,12 +157,11 @@ public class VentanaPublicarViaje extends AppCompatActivity {
         CalendarioFragment newFragment = CalendarioFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // +1 because January is zero
+                // +1 porque el mes de enero es 0
                 final String selectedDate = day + " / " + (month+1) + " / " + year;
                 ETFecha.setText(selectedDate);
             }
         });
-
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
@@ -193,7 +192,6 @@ public class VentanaPublicarViaje extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //AQUI VA LAS ACCIONES CUANDO UN ITEM ES SELECCIONADO
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
