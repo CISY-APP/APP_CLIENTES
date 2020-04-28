@@ -16,20 +16,9 @@ import com.example.app_clientes.R;
 
 public class VehiculosFragment extends Fragment {
 
-    private VehiculosViewModel mensajesViewModel;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_mensajes, container, false);
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        mensajesViewModel =
-                ViewModelProviders.of(this).get(VehiculosViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_mensajes, container, false);
-        final TextView textView = root.findViewById(R.id.text_mensajes);
-        mensajesViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        return view;
     }
 }

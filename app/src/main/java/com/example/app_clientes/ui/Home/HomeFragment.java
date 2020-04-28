@@ -21,14 +21,11 @@ import com.example.app_clientes.Vistas.VentanaPublicarViaje;
 
 public class HomeFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
     private Button BTPublicar;
     private Button BTBuscar;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View vista = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = vista.findViewById(R.id.text_home);
 
         //Asociamos los atributos de la clase con los item del fragment.
         BTPublicar =  vista.findViewById(R.id.BTPublicar);
@@ -39,7 +36,7 @@ public class HomeFragment extends Fragment {
         BTPublicar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                publishAction();
+                llamadaVentanaPublicarViaje();
             }
         });
         BTBuscar.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +48,7 @@ public class HomeFragment extends Fragment {
         return vista;
     }
 
-    private void publishAction() {
+    private void llamadaVentanaPublicarViaje() {
         VentanaPublicarViaje ventanaPublicarViaje = new VentanaPublicarViaje();
         Intent VentanaPublicarViaje = new Intent(getContext(), ventanaPublicarViaje.getClass());
         //VentanaPublicarViaje.putExtra("usuario",ETUsuario.getText().toString());

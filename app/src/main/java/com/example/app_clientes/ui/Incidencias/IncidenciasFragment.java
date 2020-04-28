@@ -16,20 +16,10 @@ import com.example.app_clientes.R;
 
 public class IncidenciasFragment extends Fragment {
 
-    private IncidenciasViewModel incidenciasViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        incidenciasViewModel =
-                ViewModelProviders.of(this).get(IncidenciasViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_incidencias, container, false);
-        final TextView textView = root.findViewById(R.id.text_incidencias);
-        incidenciasViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_incidencias, container, false);
+
+        return view;
     }
 }

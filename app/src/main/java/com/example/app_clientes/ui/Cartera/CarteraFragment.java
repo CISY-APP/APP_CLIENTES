@@ -16,20 +16,10 @@ import com.example.app_clientes.R;
 
 public class CarteraFragment extends Fragment {
 
-    private CarteraViewModel carteraViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        carteraViewModel =
-                ViewModelProviders.of(this).get(CarteraViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_cartera, container, false);
-        final TextView textView = root.findViewById(R.id.text_cerrarSesion);
-        carteraViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_cartera, container, false);
+
+        return view;
     }
 }

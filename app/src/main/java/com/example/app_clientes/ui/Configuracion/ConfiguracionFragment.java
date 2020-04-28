@@ -16,20 +16,10 @@ import com.example.app_clientes.R;
 
 public class ConfiguracionFragment extends Fragment {
 
-    private ConfiguracionViewModel carteraViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        carteraViewModel =
-                ViewModelProviders.of(this).get(ConfiguracionViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_configuracion, container, false);
-        final TextView textView = root.findViewById(R.id.text_configuracion);
-        carteraViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_configuracion, container, false);
+
+        return view;
     }
 }

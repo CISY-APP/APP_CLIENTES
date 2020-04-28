@@ -1,21 +1,11 @@
 package com.example.app_clientes.Vistas;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.app.*;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
+import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -44,6 +34,7 @@ public class VentanaPublicarViaje extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_publicar_viaje);
+
 
         //Cargamos el spinner con los vehiculos que tiene el usuario
         loadSpinner();
@@ -110,19 +101,7 @@ public class VentanaPublicarViaje extends AppCompatActivity {
                 if(contAsientos<8){
                     contAsientos++;
                     TVNum_Asientos.setText(contAsientos+"");
-                }
-                if(contAsientos!=8){
-                    ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
-                    ImageViewCompat.setImageTintList(IVMas, csl);
-                }else{
-                    ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
-                    ImageViewCompat.setImageTintList(IVMas, csl);
-                }if(contAsientos!=1){
-                    ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
-                    ImageViewCompat.setImageTintList(IVMenos, csl);
-                }else{
-                    ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
-                    ImageViewCompat.setImageTintList(IVMenos, csl);
+                    colorMorado(contAsientos,IVMas,IVMenos );
                 }
             }
         });
@@ -133,20 +112,9 @@ public class VentanaPublicarViaje extends AppCompatActivity {
                 if(contAsientos>1){
                     contAsientos--;
                     TVNum_Asientos.setText(contAsientos+"");
+                    colorMorado(contAsientos,IVMas,IVMenos );
                 }
-                if(contAsientos!=8){
-                    ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
-                    ImageViewCompat.setImageTintList(IVMas, csl);
-                } else{
-                    ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
-                    ImageViewCompat.setImageTintList(IVMas, csl);
-                }if(contAsientos!=1){
-                    ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
-                    ImageViewCompat.setImageTintList(IVMenos, csl);
-                }else{
-                    ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
-                    ImageViewCompat.setImageTintList(IVMenos, csl);
-                }
+
             }
         });
     }
@@ -204,5 +172,23 @@ public class VentanaPublicarViaje extends AppCompatActivity {
         comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         //Cargo el spinner con los datos
         SpinnerVehiculos.setAdapter(comboAdapter);
+    }
+
+    //Metodo encargado de cambiar los colores de los botones "+" y "-" al pulsarlos
+    private void colorMorado(int contAsientos, ImageView vMas, ImageView vMenos){
+        if(contAsientos!=8){
+            ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
+            ImageViewCompat.setImageTintList(IVMas, csl);
+        }else{
+            ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
+            ImageViewCompat.setImageTintList(IVMas, csl);
+        }
+        if(contAsientos!=1){
+            ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
+            ImageViewCompat.setImageTintList(IVMenos, csl);
+        }else{
+            ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
+            ImageViewCompat.setImageTintList(IVMenos, csl);
+        }
     }
 }
