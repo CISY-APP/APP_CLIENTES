@@ -31,6 +31,7 @@
     <string name="publicar">Publicar</string>
     <string name="buscar">Buscar</string>
     <string name="listo">Listo</string>
+    <string name="cancelar">Cancelar</string>
 
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>

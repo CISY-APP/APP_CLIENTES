@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.app_clientes.R;
 
 public class TusViajesFragment extends Fragment {
-    
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vehiculo, container, false);
 

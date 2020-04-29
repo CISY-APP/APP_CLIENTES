@@ -1,21 +1,33 @@
 package com.example.app_clientes.ui.Home;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.app_clientes.Otros.CalendarioFragment;
+import com.example.app_clientes.Otros.HoraFragment;
 import com.example.app_clientes.R;
 import com.example.app_clientes.Vistas.VentanaPublicarViaje;
 
@@ -23,6 +35,11 @@ public class HomeFragment extends Fragment {
 
     private Button BTPublicar;
     private Button BTBuscar;
+    private EditText ETFecha;
+    private EditText ETHora;
+    private EditText ETOrigen;
+    private EditText ETDestino;
+    private Button BTBuscarDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_home, container, false);
@@ -42,17 +59,91 @@ public class HomeFragment extends Fragment {
         BTBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showDialogBuscarViaje();
             }
         });
         return vista;
     }
 
+    //LLamamos al Dialog de buscar viaje
+    private void showDialogBuscarViaje() {
+        //Creacion del dialog
+        //Instanciamos un objeto de tipo  AlertDialog.Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getLayoutInflater();
+        //Inflamos la vista con el  layoud correspondiente
+        View v = inflater.inflate(R.layout.dialog_buscar_viaje,null);
+        builder.setView(v); // Asociamos la vista creada a nuestra ventana de dialogo
+        //Creamos un objeto de tipo AlertDialog y le asociamos el AlertDialog.Builder creado anteriormente
+        final AlertDialog dialog = builder.create();
+        ETFecha =  v.findViewById(R.id.ETFecha);
+        ETHora =  v.findViewById(R.id.ETHora);
+        BTBuscarDialog = v.findViewById(R.id.BTBuscarDialog);
+        ETOrigen = v.findViewById(R.id.ETOrigen);
+        ETDestino = v.findViewById(R.id.ETDestino);
+        //Volvemos el fondo del layoud transparente
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        //Recogemosel boton del layoud  y se lo asiganamos a un atributo para poder trabajar con el y recoger los eventos sobre este
+        //Asociamos el resto de elementos del layoud a atributos para poder trabajar con ellos
+        //Evento onClickListener del boton agregar de nuestro layoud
+        ETFecha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+        ETHora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog();
+            }
+        });
+        BTBuscarDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //CONSULTA CON RETROFIT A LA BASE DE DATOS
+                //Deben comprobarse que todos los campos tienes valores
+            }
+        });
+        //Mostramos la ventana del dialog
+        dialog.show();
+    }
+
+    //Llamamos al  ventanaPublicarViaje
     private void llamadaVentanaPublicarViaje() {
         VentanaPublicarViaje ventanaPublicarViaje = new VentanaPublicarViaje();
         Intent VentanaPublicarViaje = new Intent(getContext(), ventanaPublicarViaje.getClass());
         //VentanaPublicarViaje.putExtra("usuario",ETUsuario.getText().toString());
         //VentanaPublicarViaje.putExtra("control",ETControl.getText().toString());
         startActivity(VentanaPublicarViaje);
+    }
+
+    //Muestra un cuadro de dialogo con un calendario al pulsar sobre el EditextFecha
+    //Este nos permite copturar la fecha para posteriormente hacer un insert en la base de datos con esta
+    private void showDatePickerDialog() {
+        CalendarioFragment newFragment = CalendarioFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 porque el mes de enero es 0
+                final String selectedDate = day + " / " + (month+1) + " / " + year;
+                ETFecha.setText(selectedDate);
+            }
+        });
+        newFragment.show(getChildFragmentManager(), "datePicker");
+    }
+
+    //Muestra un cuadro de dialogo con un reloj al pulsar sobre el EditextFecha
+    //Este nos permite copturar la hora para posteriormente hacer un insert en la base de datos con esta
+    private void showTimePickerDialog() {
+        HoraFragment newFragment = HoraFragment.newInstance(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                // +1 because January is zero
+                final String selectedDate = hourOfDay + ":" + minute;
+                ETHora.setText(selectedDate);
+            }
+
+        });
+        newFragment.show(getChildFragmentManager(), "datePicker");
     }
 }
