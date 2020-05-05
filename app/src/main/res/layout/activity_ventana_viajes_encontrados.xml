@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorGrisLight"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp" 
+                android:paddingBottom="5dp"
                 android:gravity="center"
                 android:text="05/05/2020"
                 android:textColor="@color/colorGris"
