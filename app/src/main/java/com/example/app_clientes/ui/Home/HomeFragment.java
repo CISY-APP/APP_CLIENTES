@@ -28,8 +28,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.app_clientes.Otros.CalendarioFragment;
 import com.example.app_clientes.Otros.HoraFragment;
+import com.example.app_clientes.Pojos.Viaje;
 import com.example.app_clientes.R;
 import com.example.app_clientes.Vistas.VentanaPublicarViaje;
+import com.example.app_clientes.Vistas.VentanaViajePublicado;
+import com.example.app_clientes.Vistas.VentanaViajesEncontrados;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class HomeFragment extends Fragment {
 
@@ -45,7 +51,7 @@ public class HomeFragment extends Fragment {
         View vista = inflater.inflate(R.layout.fragment_home, container, false);
 
         //Asociamos los atributos de la clase con los item del fragment.
-        BTPublicar =  vista.findViewById(R.id.BTPublicar);
+        BTPublicar = vista.findViewById(R.id.BTPublicar);
         BTBuscar = vista.findViewById(R.id.BTBuscar);
 
         //Se asigna un setOnClickListener al atributo BTPublicar para que el boton del fragment pueda reaccionar a eventos onClick del usuario
@@ -72,15 +78,18 @@ public class HomeFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         //Inflamos la vista con el  layoud correspondiente
-        View v = inflater.inflate(R.layout.dialog_buscar_viaje,null);
+        View v = inflater.inflate(R.layout.dialog_buscar_viaje, null);
         builder.setView(v); // Asociamos la vista creada a nuestra ventana de dialogo
         //Creamos un objeto de tipo AlertDialog y le asociamos el AlertDialog.Builder creado anteriormente
         final AlertDialog dialog = builder.create();
-        ETFecha =  v.findViewById(R.id.ETFecha);
-        ETHora =  v.findViewById(R.id.ETHora);
+        ETFecha = v.findViewById(R.id.ETFechaDialogo);
+        ETFecha.setText(getFechaSistema());
+        ETHora = v.findViewById(R.id.ETHoraDialogo);
+        ETHora.setText(getHoraSistema());
         BTBuscarDialog = v.findViewById(R.id.BTBuscarDialog);
-        ETOrigen = v.findViewById(R.id.ETOrigen);
-        ETDestino = v.findViewById(R.id.ETDestino);
+        ETOrigen = v.findViewById(R.id.ETOrigenDialogo);
+        ETDestino = v.findViewById(R.id.ETDestinoDialogo);
+
         //Volvemos el fondo del layoud transparente
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         //Recogemosel boton del layoud  y se lo asiganamos a un atributo para poder trabajar con el y recoger los eventos sobre este
@@ -101,6 +110,14 @@ public class HomeFragment extends Fragment {
         BTBuscarDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
+                VentanaViajesEncontrados ventanaViajesEncontrados = new VentanaViajesEncontrados();
+                Intent VentanaViajesEncontrados = new Intent(getContext(), VentanaViajesEncontrados.class);
+                VentanaViajesEncontrados.putExtra("origen",ETOrigen.getText()+"");
+                VentanaViajesEncontrados.putExtra("destino",ETDestino.getText()+"");
+                VentanaViajesEncontrados.putExtra("fecha",ETFecha.getText()+"");
+                VentanaViajesEncontrados.putExtra("hora",ETHora.getText()+"");
+                startActivity(VentanaViajesEncontrados);
                 //CONSULTA CON RETROFIT A LA BASE DE DATOS
                 //Deben comprobarse que todos los campos tienes valores
             }
@@ -125,7 +142,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 porque el mes de enero es 0
-                final String selectedDate = day + " / " + (month+1) + " / " + year;
+                final String selectedDate = day + " / " + (month + 1) + " / " + year;
                 ETFecha.setText(selectedDate);
             }
         });
@@ -138,12 +155,33 @@ public class HomeFragment extends Fragment {
         HoraFragment newFragment = HoraFragment.newInstance(new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                // +1 because January is zero
-                final String selectedDate = hourOfDay + ":" + minute;
+                String minutos ="0";
+                if(minute<10){
+                    minutos = minutos + minute;
+                }else {
+                    minutos = ""+minute;
+                }
+                final String selectedDate = hourOfDay + ":" + minutos;
                 ETHora.setText(selectedDate);
             }
 
         });
         newFragment.show(getChildFragmentManager(), "datePicker");
+    }
+
+    //Obtiene la fecha del sistema
+    private String getFechaSistema() {
+        Calendar c1 = Calendar.getInstance();
+        String dia = Integer.toString(c1.get(Calendar.DATE));
+        String mes = Integer.toString(c1.get(Calendar.MONTH) + 1);
+        String annio = Integer.toString(c1.get(Calendar.YEAR));
+        return dia+"/"+mes+"/"+annio;
+    }
+
+    //Obtiene la hora del sistema
+    private String getHoraSistema() {
+        Calendar c1 = Calendar.getInstance();
+        String time;
+        return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
     }
 }

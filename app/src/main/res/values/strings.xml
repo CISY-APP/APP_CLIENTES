@@ -38,6 +38,7 @@
 
     <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
     <string name="viaje_publicado">!Tu viaje ha sido publido¡ Gracias por reducir los niveles de contaminación.</string>
+    <string name="viajes_encontrado">Viajes encontrados</string>
     <string name="quieres_publicar">¿Quieres publicar un viaje?</string>
 
 </resources>

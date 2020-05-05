@@ -30,7 +30,6 @@ public class HoraFragment extends DialogFragment {
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR);
         int minute = c.get(Calendar.MINUTE);
-
         return new TimePickerDialog(getActivity(), listener, hour, minute, true);
     }
 

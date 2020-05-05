@@ -34,7 +34,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/ETOrigen"
+            android:id="@+id/ETOrigenDialogo"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
@@ -49,7 +49,7 @@
             android:textStyle="normal" />
 
         <EditText
-            android:id="@+id/ETDestino"
+            android:id="@+id/ETDestinoDialogo"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
@@ -64,7 +64,7 @@
             android:textStyle="normal" />
 
         <EditText
-            android:id="@+id/ETFecha"
+            android:id="@+id/ETFechaDialogo"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
@@ -89,7 +89,7 @@
             app:layout_constraintVertical_bias="0.337" />
 
         <EditText
-            android:id="@+id/ETHora"
+            android:id="@+id/ETHoraDialogo"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/button_background"
@@ -105,6 +105,7 @@
             android:textColor="@color/colorPrimary"
             android:textColorHint="@color/colorPrimary"
             android:textStyle="normal"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.486"
@@ -117,7 +118,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBlanco"
+        android:background="@drawable/btn_drawable_1"
         android:gravity="end"
         android:orientation="horizontal"
         android:textAlignment="textEnd">
@@ -126,10 +127,10 @@
             android:id="@+id/BTBuscarDialog"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:background="@color/colorBlanco"
+            android:background="@drawable/btn_drawable_1"
             android:text="@string/buscar"
-            android:textColor="@color/quantum_googgreen800"
-            android:layout_marginTop="10dp"/>
+            android:textColor="@color/colorBlanco"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

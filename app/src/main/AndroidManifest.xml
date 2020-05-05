@@ -29,6 +29,10 @@
             android:name=".Vistas.VentanaViajePublicado"
             android:parentActivityName=".Vistas.VentanaPublicarViaje">
         </activity>
+        <activity
+            android:name=".Vistas.VentanaViajesEncontrados"
+            android:parentActivityName=".Vistas.VentanaPrincipal">
+        </activity>
     </application>
 
 </manifest>
