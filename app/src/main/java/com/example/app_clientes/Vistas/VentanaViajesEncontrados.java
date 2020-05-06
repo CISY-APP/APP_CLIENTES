@@ -7,16 +7,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 
 import androidx.appcompat.app.AlertDialog;
@@ -97,11 +94,16 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         adapter.setOnClickListener(new miAdapterViajesEncontrados.OnItemClickListener() {
             @Override
             public void OnMensajeClick(int position) {
+
             }
 
             @Override
             public void OnReservaClick(int position) {
-
+                //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
+                Intent VentanaPublicarViaje = new Intent(getApplicationContext(), VentanaViajeReservado.class);
+                //VentanaPublicarViaje.putExtra("usuario",ETUsuario.getText().toString());
+                //VentanaPublicarViaje.putExtra("control",ETControl.getText().toString());
+                startActivity(VentanaPublicarViaje);
             }
         });
     }

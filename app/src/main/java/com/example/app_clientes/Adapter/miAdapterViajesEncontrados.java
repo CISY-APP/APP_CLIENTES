@@ -78,15 +78,15 @@ public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterVi
     //CLASE INTERNA ESTATICA
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView mImageUsuario;
-        ImageView mImageValoracion;
-        Button BTMensaje;
-        Button BTReservar;
-        TextView TVNombre;
-        TextView TVApellidos;
-        TextView TVEdad;
-        TextView TVAsientosLibres;
-        TextView TVPrecio;
+        private ImageView mImageUsuario;
+        private ImageView mImageValoracion;
+        private Button BTMensaje;
+        private Button BTReservar;
+        private TextView TVNombre;
+        private TextView TVApellidos;
+        private TextView TVEdad;
+        private TextView TVAsientosLibres;
+        private TextView TVPrecio;
 
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que

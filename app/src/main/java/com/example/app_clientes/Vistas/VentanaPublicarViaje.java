@@ -45,7 +45,6 @@ public class VentanaPublicarViaje extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
-                VentanaViajePublicado ventanaViajePublicado = new VentanaViajePublicado();
                 Intent VentanaPublicarViaje = new Intent(VentanaPublicarViaje.this, VentanaViajePublicado.class);
                 //VentanaPublicarViaje.putExtra("usuario",ETUsuario.getText().toString());
                 //VentanaPublicarViaje.putExtra("control",ETControl.getText().toString());

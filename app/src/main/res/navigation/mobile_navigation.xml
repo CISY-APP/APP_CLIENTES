@@ -58,4 +58,10 @@
         android:label="@string/menu_cerrarSesion"
         tools:layout="@layout/fragment_cerrarsesion"/>
 
+    <fragment
+        android:id="@+id/nav_chat"
+        android:name="com.example.app_clientes.ui.Chat.ChatFragment"
+        android:label="@string/menu_chat"
+        tools:layout="@layout/fragment_chat"/>
+
 </navigation>

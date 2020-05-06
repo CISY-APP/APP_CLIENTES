@@ -104,6 +104,7 @@
                 android:textColor="@color/colorPrimaryLight"
                 android:textSize="12dp" />
 
+
             <ImageView
                 android:id="@+id/IVUsuario"
                 android:layout_width="400dp"

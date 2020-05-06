@@ -33,6 +33,14 @@
             android:name=".Vistas.VentanaViajesEncontrados"
             android:parentActivityName=".Vistas.VentanaPrincipal">
         </activity>
+        <activity
+            android:name=".Vistas.VentanaViajeReservado"
+            android:parentActivityName=".Vistas.VentanaViajesEncontrados">
+        </activity>
+        <activity
+            android:name=".Vistas.VentanaChat"
+            android:parentActivityName=".Vistas.VentanaViajesEncontrados">
+        </activity>
     </application>
 
 </manifest>

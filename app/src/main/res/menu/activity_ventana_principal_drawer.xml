@@ -36,6 +36,10 @@
             android:icon="@drawable/vehiculo"
             android:title="@string/menu_vehiculos" />
         <item
+            android:id="@+id/nav_chat"
+            android:icon="@drawable/chat"
+            android:title="@string/menu_chat" />
+        <item
             android:id="@+id/navigation_subheader"
             android:title="@string/menu_otras">
             <menu>
@@ -49,7 +53,6 @@
                     android:title="@string/menu_cerrarSesion" />
             </menu>
         </item>
-
 
     </group>
 </menu>
