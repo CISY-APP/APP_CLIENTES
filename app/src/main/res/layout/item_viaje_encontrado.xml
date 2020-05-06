@@ -20,6 +20,9 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -28,7 +31,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/TVNombre"
+                        android:id="@+id/TVdatosViaje"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorPrimary"
@@ -52,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryLight"
-                    android:textSize="18dp"
+                    android:textSize="14dp"
                     android:text="Edad:" />
 
                 <TextView
@@ -60,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimaryLight"
-                    android:textSize="18dp"
+                    android:textSize="14dp"
                     android:layout_weight="1"
                     android:text="Asientos disponibles:" />
 
@@ -73,18 +76,18 @@
                         android:id="@+id/TVValoracion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Valoración: "
                         android:textColor="@color/colorPrimaryLight"
-                        android:textSize="18dp"
-                        android:text="Puntuación: " />
+                        android:textSize="14dp" />
 
                     <ImageView
                         android:id="@+id/IMGValoracion"
-                        android:layout_width="104dp"
+                        android:layout_width="83dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="start"
                         android:textAlignment="textStart"
-                        app:srcCompat="@android:drawable/star_big_on"
-                        android:gravity="start" />
+                        app:srcCompat="@android:drawable/star_big_on" />
 
                 </LinearLayout>
 
@@ -92,13 +95,14 @@
 
             <TextView
                 android:id="@+id/TVPrecio"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="26dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:text="@string/TV_Precio_minimo"
                 android:textColor="@color/colorPrimaryLight"
-                android:textSize="18dp"
-                android:text="@string/TV_Precio_minimo" />
+                android:textSize="12dp" />
 
             <ImageView
                 android:id="@+id/IVUsuario"
@@ -113,16 +117,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorPrimaryLightLight"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/BTReservar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
                 android:layout_weight="1"
                 android:background="@color/colorBlanco"
                 android:text="Reservar"
@@ -132,9 +136,9 @@
                 android:id="@+id/BTMensaje"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="2dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
                 android:layout_weight="1"
                 android:background="@color/colorBlanco"
                 android:text="Mensaje"

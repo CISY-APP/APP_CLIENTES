@@ -19,7 +19,7 @@
     <string name="menu_otras">Otras opciones</string>
     <string name="menu_cerrarSesion">Cerrar sesión</string>
     <string name="menu_publicarViaje">Publicar viaje</string>
-    <string name="Publicarviaje_Origen">Origen</string>
+    <string name="Publicarviaje_Origen">Escribe tu dirección</string>
     <string name="Publicarviaje_Destino">Destino</string>
     <string name="Publicarviaje_Fecha">Aquí va la fecha actual</string>
     <string name="TV_Asientos">Asientos</string>

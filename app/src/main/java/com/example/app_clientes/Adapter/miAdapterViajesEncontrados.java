@@ -95,7 +95,7 @@ public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterVi
 
             super(itemView);
 
-            this.TVNombre = itemView.findViewById(R.id.TVNombre);
+            this.TVNombre = itemView.findViewById(R.id.TVdatosViaje);
             this.TVApellidos = itemView.findViewById(R.id.TVApellidos);
             this.TVEdad = itemView.findViewById(R.id.TVEdad);
             this.TVAsientosLibres = itemView.findViewById(R.id.TVAsientosDisponibles);
