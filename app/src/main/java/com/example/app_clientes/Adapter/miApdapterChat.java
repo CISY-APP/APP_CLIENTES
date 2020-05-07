@@ -2,19 +2,30 @@ package com.example.app_clientes.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleViewHolder> {
 
@@ -25,6 +36,7 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     //Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private Context c;
     private String emailUsuario;
+    private StorageReference storageReference;
 
     private HashMap<String, String> userColors = new HashMap<String, String>();
 
@@ -86,7 +98,6 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     @Override
     public int getItemViewType(int position) {
         Mensaje message = MensajesList.get(position);
-
         if (message.getEmail().equals(emailUsuario)) {
             return OWN_MESSAGE_TYPE;
         }
@@ -99,16 +110,21 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
         TextView TVNombreMensaje;
         TextView TVHoraMensaje;
         TextView TVMensajeMensaje;
+        CircleImageView IVImagenUsuario;
 
         public ExampleViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
         public void bindMessage(Mensaje message) {
+
             TVNombreMensaje.setTextColor(Color.parseColor(userColors.get(message.getEmail())));
             TVNombreMensaje.setText(message.getNombre());
             TVMensajeMensaje.setText(message.getMensaje());
             TVHoraMensaje.setText(message.getHora());
+            IVImagenUsuario = itemView.findViewById(R.id.IVImagenUsuario);
+
+
         }
     }
 
@@ -119,6 +135,7 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
             this.TVNombreMensaje = itemView.findViewById(R.id.TVNombreMensaje);
             this.TVHoraMensaje = itemView.findViewById(R.id.TVHoraMensaje);
             this.TVMensajeMensaje = itemView.findViewById(R.id.TVMensajeMensaje);
+            this.IVImagenUsuario = itemView.findViewById(R.id.IVImagenUsuario);
         }
     }
 
@@ -129,6 +146,21 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
             this.TVNombreMensaje = itemView.findViewById(R.id.TVNombreMensaje);
             this.TVHoraMensaje = itemView.findViewById(R.id.TVHoraMensaje);
             this.TVMensajeMensaje = itemView.findViewById(R.id.TVMensajeMensaje);
+            this.IVImagenUsuario = itemView.findViewById(R.id.IVImagenUsuario);
+
+            //Deberia de cambiar la imagen en funcion del email del usuario registrado en firebase
+            storageReference = FirebaseStorage.getInstance().getReference();
+            storageReference.child("Fotos").child(getEmailUsuario()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(c.getApplicationContext()).load(uri).into(IVImagenUsuario);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
         }
     }
 
@@ -143,14 +175,13 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     //Metodo para generar colores aleatorios
     private String getRandomColor() {
         ArrayList<String> coloresAleatorios = new ArrayList<>();
-        coloresAleatorios.add("#07a0c3");
-        coloresAleatorios.add("#f0c808");
-        coloresAleatorios.add("#dd1c1a");
-        coloresAleatorios.add("#ffffff");
-        coloresAleatorios.add("#FFAE00");
-        coloresAleatorios.add("#00FF9E");
-        coloresAleatorios.add("#00FF9E");
-        return coloresAleatorios.get((int) ((Math.random() * 1000f) % 7f));
+        coloresAleatorios.add("#FC0000");
+        coloresAleatorios.add("#89FC00");
+        coloresAleatorios.add("#00FC89");
+        coloresAleatorios.add("#0041FC");
+        coloresAleatorios.add("#7E00FC");
+        coloresAleatorios.add("#FC009D");
+        return coloresAleatorios.get((int) ((Math.random() * 1000f) % 6f));
     }
 
 }

@@ -3,6 +3,7 @@
     package="com.example.app_clientes">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -35,10 +36,6 @@
         </activity>
         <activity
             android:name=".Vistas.VentanaViajeReservado"
-            android:parentActivityName=".Vistas.VentanaViajesEncontrados">
-        </activity>
-        <activity
-            android:name=".Vistas.VentanaChat"
             android:parentActivityName=".Vistas.VentanaViajesEncontrados">
         </activity>
     </application>

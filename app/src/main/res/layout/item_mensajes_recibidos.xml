@@ -9,10 +9,17 @@
     android:layout_margin="5dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/IVImagenUsuario"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            cardview:srcCompat="@drawable/user" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,7 +50,6 @@
                     android:text="00:00"
                     android:textColor="@color/colorGris"
                     android:textSize="18sp" />
-
 
 
             </LinearLayout>

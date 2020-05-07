@@ -1,12 +1,17 @@
 package com.example.app_clientes.ui.Chat;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,17 +19,29 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.Adapter.miApdapterChat;
 import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ChatFragment extends Fragment {
 
@@ -32,24 +49,46 @@ public class ChatFragment extends Fragment {
     private RecyclerView RVMensajesChat;
     private EditText ETTXTMensaje;
     private Button BTNEnviar ;
-    private String colorUsuario;
+    private CircleImageView fotoPerfil;
 
     private miApdapterChat adapterMensajes;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private StorageReference storageReference;
+
+    private static final int GALERY_INTENT = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         TVNombreChat = view.findViewById(R.id.TVNombreChatUsuario);
         RVMensajesChat = view.findViewById(R.id.RVMensajesChat);
         ETTXTMensaje = view.findViewById(R.id.ETTXTMensaje);
         BTNEnviar = view.findViewById(R.id.BTMenajeEnviar);
+        fotoPerfil = view.findViewById(R.id.fotoPerfil);
+        fotoPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent,GALERY_INTENT);
+            }
+        });
 
-        //Color aleatorio para cada usuario
-        colorUsuario = getRandomColor();
+        storageReference.child("Fotos").child("javdeiiier@gmail.com").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getActivity()).load(uri).into(fotoPerfil);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
 
         //esto debera llegar en un BUNDLE
         TVNombreChat.setText("Javier");
@@ -60,7 +99,8 @@ public class ChatFragment extends Fragment {
 
 
         adapterMensajes = new miApdapterChat(getActivity());
-        adapterMensajes.setEmailUsuario("javiiier@gmail.com");
+        adapterMensajes.setEmailUsuario("javdeiiier@gmail.com");
+
         LinearLayoutManager l= new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);
         RVMensajesChat.setAdapter(adapterMensajes);
@@ -68,7 +108,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "javiiier@gmail.com" ,getHoraSistema(), colorUsuario));
+                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "javdeiiier@gmail.com" ,getHoraSistema()));
                 ETTXTMensaje.setText("");
             }
         });
@@ -112,6 +152,25 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == GALERY_INTENT &&  resultCode == RESULT_OK) {
+            if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
+
+                Uri uri = data.getData();
+                Glide.with(requireContext()).load(uri).into(fotoPerfil);
+                StorageReference filePath = storageReference.child("Fotos").child("javdeiiier@gmail.com");
+                Toast.makeText(getActivity(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
+                filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    }
+                });
+            }
+        }
+    }
+
     //Metodo utilizado para que el adparter se arrastre hacia abajo con cada nuevo mensaje
     private void setScrollBar(){
         RVMensajesChat.scrollToPosition(adapterMensajes.getItemCount()-1);
@@ -124,17 +183,5 @@ public class ChatFragment extends Fragment {
         return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
     }
 
-    //Metodo para generar colores aleatorios
-    public String getRandomColor(){
-        ArrayList<String> coloresAleatorios = new ArrayList<>();
-        coloresAleatorios.add("#07a0c3");
-        coloresAleatorios.add("#f0c808");
-        coloresAleatorios.add("#dd1c1a");
-        coloresAleatorios.add("#ffffff");
-        coloresAleatorios.add("#FFAE00");
-        coloresAleatorios.add("#00FF9E");
-        coloresAleatorios.add("#00FF9E");
-        return coloresAleatorios.get((int) ((Math.random() * 1000f) % 7f));
-    }
 
 }

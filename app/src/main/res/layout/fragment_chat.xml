@@ -17,7 +17,9 @@
             android:id="@+id/fotoPerfil"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/yo"/>
+            android:clickable="true"
+            android:src="@drawable/user"
+            android:focusable="true" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/enLinea"

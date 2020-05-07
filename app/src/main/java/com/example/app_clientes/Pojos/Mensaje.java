@@ -1,21 +1,22 @@
 package com.example.app_clientes.Pojos;
 
+import android.widget.ImageView;
+
 public class Mensaje {
     private String mensaje;
     private String nombre;
-    private String colorNombre;
     private String email;
     private String hora;
+    private ImageView imageViewUsuario;
 
     public Mensaje() {
     }
 
-    public Mensaje(String mensaje, String nombre, String email, String hora, String colorNombre) {
+    public Mensaje(String mensaje, String nombre, String email, String hora) {
         this.mensaje = mensaje;
         this.nombre = nombre;
         this.email = email;
         this.hora = hora;
-        this.colorNombre = colorNombre;
     }
 
     public String getMensaje() {
@@ -50,11 +51,4 @@ public class Mensaje {
         this.hora = hora;
     }
 
-    public String getColorNombre() {
-        return colorNombre;
-    }
-
-    public void setColorNombre(String colorNombre) {
-        this.colorNombre = colorNombre;
-    }
 }
