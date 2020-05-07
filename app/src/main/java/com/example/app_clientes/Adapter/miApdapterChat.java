@@ -25,6 +25,7 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
 
     private ArrayList<Mensaje> MensajesList= new ArrayList<>();//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private Context c;
+    private String emailUsuario;
 
     public miApdapterChat(Context c) {
         this.c=c;
@@ -52,10 +53,16 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     //El método onBindViewHolder() personaliza un elemento de tipo ViewHolder según su posicion.
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        holder.TVNombreMensaje.setTextColor(getRandomColor());
+
+        if(getEmailUsuario().equals(MensajesList.get(position).getEmail())){
+            holder.TVNombreMensaje.setTextColor(Color.parseColor(MensajesList.get(position).getColorNombre()));
+        }else{
+            holder.TVNombreMensaje.setTextColor(Color.BLUE);
+        }
         holder.TVNombreMensaje.setText(MensajesList.get(position).getNombre());
         holder.TVMensajeMensaje.setText(MensajesList.get(position).getMensaje());
         holder.TVHoraMensaje.setText(MensajesList.get(position).getHora());
+
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem
@@ -68,7 +75,6 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     //CLASE INTERNA ESTATICA
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
-        private CircleImageView fotoPerfilMensaje;
         private TextView TVNombreMensaje;
         private TextView TVHoraMensaje;
         private TextView TVMensajeMensaje;
@@ -84,8 +90,11 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
         }
     }
 
-    public int getRandomColor(){
-        Random rnd = new Random();
-        return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    public void setEmailUsuario(String emailUsuario){
+        this.emailUsuario = emailUsuario;
     }
+    private String getEmailUsuario(){
+        return emailUsuario;
+    }
+
 }

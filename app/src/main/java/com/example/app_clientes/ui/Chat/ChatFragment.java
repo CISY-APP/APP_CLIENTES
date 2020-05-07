@@ -1,8 +1,5 @@
 package com.example.app_clientes.ui.Chat;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,19 +23,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Random;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatFragment extends Fragment {
 
-    private CircleImageView fotoPerfil;
-    private TextView TVNombre;
-    private TextView   TVNombreMensajeChat;
+    private TextView   TVNombreChat;
     private RecyclerView RVMensajesChat;
     private EditText ETTXTMensaje;
     private Button BTNEnviar ;
+    private String colorUsuario;
 
     private miApdapterChat adapterMensajes;
 
@@ -47,20 +41,26 @@ public class ChatFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
-        fotoPerfil = view.findViewById(R.id.fotoPerfil);
-        TVNombre = view.findViewById(R.id.TVNombreChat);
+
+
+        TVNombreChat = view.findViewById(R.id.TVNombreChatUsuario);
         RVMensajesChat = view.findViewById(R.id.RVMensajesChat);
         ETTXTMensaje = view.findViewById(R.id.ETTXTMensaje);
         BTNEnviar = view.findViewById(R.id.BTMenajeEnviar);
 
+        //Color aleatorio para cada usuario
+        colorUsuario = getRandomColor();
+
         //esto debera llegar en un BUNDLE
-        TVNombre.setText("Javier");
+        TVNombreChat.setText("Pepito");
 
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("chat"); //Sala de chat (nombre)
 
+
         adapterMensajes = new miApdapterChat(getActivity());
+        adapterMensajes.setEmailUsuario("javier@gmail.com");
         LinearLayoutManager l= new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);
         RVMensajesChat.setAdapter(adapterMensajes);
@@ -68,7 +68,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombre.getText().toString()+"", "" ,getHoraSistema()));
+                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "javier@gmail.com" ,getHoraSistema(), colorUsuario));
                 ETTXTMensaje.setText("");
             }
         });
@@ -124,5 +124,17 @@ public class ChatFragment extends Fragment {
         return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
     }
 
+    //Metodo para generar colores aleatorios
+    public String getRandomColor(){
+        ArrayList<String> coloresAleatorios = new ArrayList<>();
+        coloresAleatorios.add("#07a0c3");
+        coloresAleatorios.add("#f0c808");
+        coloresAleatorios.add("#dd1c1a");
+        coloresAleatorios.add("#ffffff");
+        coloresAleatorios.add("#FFAE00");
+        coloresAleatorios.add("#00FF9E");
+        coloresAleatorios.add("#00FF9E");
+        return coloresAleatorios.get((int) ((Math.random() * 1000f) % 7f));
+    }
 
 }
