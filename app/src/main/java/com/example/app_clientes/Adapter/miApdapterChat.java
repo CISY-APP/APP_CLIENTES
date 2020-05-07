@@ -5,22 +5,16 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_clientes.Item.ItemViajesEncontrados;
 import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleViewHolder> {
 
@@ -56,14 +50,14 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
 
         switch (viewType) {
             case OWN_MESSAGE_TYPE: {
-                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_own, parent,
+                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_enviados, parent,
                         false);
                 return new OwnViewHolder(v);
             }
 
             case DEFAULT_MESSAGE_TYPE:
             default: {
-                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes, parent,
+                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_recibidos, parent,
                         false);
                 return new DefaultViewHolder(v);
             }
@@ -88,6 +82,7 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
         return MensajesList.size();
     }
 
+    //Método utilizado para saber si un mensaje es enviado o recibido
     @Override
     public int getItemViewType(int position) {
         Mensaje message = MensajesList.get(position);

@@ -1,13 +1,13 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <corners
-        android:topLeftRadius="0dp"
+        android:topRightRadius="0dp"
         android:radius="10dp" />
 
     <gradient
         android:angle="360"
-        android:endColor="@color/colorBlanco"
-        android:startColor="@color/colorBlanco"
+        android:endColor="@color/colorChatEnvado"
+        android:startColor="@color/colorChatEnvado"
         android:type="linear" />
 
 

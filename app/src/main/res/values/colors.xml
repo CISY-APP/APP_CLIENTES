@@ -8,4 +8,5 @@
     <color name="colorBlanco">#ffffff</color>
     <color name="colorGris">#aaa</color>
     <color name="colorGrisLight">#DCDCDC</color>
+    <color name="colorChatEnvado">#A5EEFF</color>
 </resources>

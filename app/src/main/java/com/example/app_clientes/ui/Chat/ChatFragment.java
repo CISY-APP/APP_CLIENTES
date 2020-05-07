@@ -52,7 +52,7 @@ public class ChatFragment extends Fragment {
         colorUsuario = getRandomColor();
 
         //esto debera llegar en un BUNDLE
-        TVNombreChat.setText("Pepito");
+        TVNombreChat.setText("Javier");
 
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -60,7 +60,7 @@ public class ChatFragment extends Fragment {
 
 
         adapterMensajes = new miApdapterChat(getActivity());
-        adapterMensajes.setEmailUsuario("javier@gmail.com");
+        adapterMensajes.setEmailUsuario("javiiier@gmail.com");
         LinearLayoutManager l= new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);
         RVMensajesChat.setAdapter(adapterMensajes);
@@ -68,7 +68,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "javier@gmail.com" ,getHoraSistema(), colorUsuario));
+                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "javiiier@gmail.com" ,getHoraSistema(), colorUsuario));
                 ETTXTMensaje.setText("");
             }
         });

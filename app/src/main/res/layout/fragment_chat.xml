@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
+    android:background="@drawable/fondochat"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -16,11 +19,18 @@
             android:layout_height="48dp"
             android:src="@drawable/yo"/>
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/enLinea"
+            android:layout_width="13dp"
+            android:layout_height="14dp"
+            android:background="@android:drawable/presence_online" />
+
         <TextView
             android:id="@+id/TVNombreChatUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/colorBlanco"
             android:layout_marginLeft="15dp"
             android:text="Nombre usuario"
             android:textSize="18sp"
@@ -28,26 +38,19 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorGrisLight"
-        android:layout_marginTop="5dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RVMensajesChat"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:padding="5dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="5dp"
         android:orientation="horizontal">
 
         <EditText
@@ -55,11 +58,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/layout_drawable_1"
+            android:background="@drawable/layout_drawable_2"
             android:hint="Escriba un mensaje"
+            android:inputType="textCapSentences"
             android:padding="10dp"
-            android:textColor="@color/colorBlanco"
-            android:textColorHint="@color/colorBlanco" />
+            android:textColor="@color/places_ui_default_primary_dark"
+            android:textColorHint="@color/colorGris" />
 
         <Button
             android:id="@+id/BTMenajeEnviar"
