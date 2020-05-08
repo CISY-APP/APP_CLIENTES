@@ -1,10 +1,9 @@
 package com.example.app_clientes.ui.Chat;
 
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,6 @@ import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,9 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -56,6 +52,11 @@ public class ChatFragment extends Fragment {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
+
+
+    private PendingIntent pendingIntent;
+    private final static String CHANNEL_ID = "NOTIFICACION";
+    private final static int NOTIFICACION = 0;
 
     private static final int GALERY_INTENT = 1;
 
@@ -78,7 +79,7 @@ public class ChatFragment extends Fragment {
             }
         });
 
-        storageReference.child("Fotos").child("javdeiiier@gmail.com").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("Fotos").child("qqq").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(getActivity()).load(uri).into(fotoPerfil);
@@ -99,7 +100,7 @@ public class ChatFragment extends Fragment {
 
 
         adapterMensajes = new miApdapterChat(getActivity());
-        adapterMensajes.setEmailUsuario("javdeiiier@gmail.com");
+        adapterMensajes.setEmailUsuario("qqq");
 
         LinearLayoutManager l= new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);
@@ -107,9 +108,9 @@ public class ChatFragment extends Fragment {
         BTNEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "javdeiiier@gmail.com" ,getHoraSistema()));
+                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "qqq" ,getHoraSistema()));
                 ETTXTMensaje.setText("");
+
             }
         });
 
@@ -132,6 +133,7 @@ public class ChatFragment extends Fragment {
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+
             }
 
             @Override
@@ -152,6 +154,7 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -160,7 +163,7 @@ public class ChatFragment extends Fragment {
 
                 Uri uri = data.getData();
                 Glide.with(requireContext()).load(uri).into(fotoPerfil);
-                StorageReference filePath = storageReference.child("Fotos").child("javdeiiier@gmail.com");
+                StorageReference filePath = storageReference.child("Fotos").child("qqq");
                 Toast.makeText(getActivity(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
                 filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override

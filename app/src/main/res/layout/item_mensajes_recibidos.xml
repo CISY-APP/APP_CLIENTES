@@ -16,9 +16,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/IVImagenUsuario"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_weight="1"
+            android:padding="4dp"
             cardview:srcCompat="@drawable/user" />
 
         <LinearLayout

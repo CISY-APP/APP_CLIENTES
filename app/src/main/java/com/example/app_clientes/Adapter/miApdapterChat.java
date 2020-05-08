@@ -59,18 +59,15 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     //para posteriormente instanciar un objeto de la clase interna ExampleViewHolder, pasandole por parametro la vista anterior y un listener
     //finaliza devolviendo un objeto de tipo exampleViewHolder
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         switch (viewType) {
             case OWN_MESSAGE_TYPE: {
-                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_enviados, parent,
-                        false);
+                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_enviados, parent,false);
                 return new OwnViewHolder(v);
             }
 
             case DEFAULT_MESSAGE_TYPE:
             default: {
-                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_recibidos, parent,
-                        false);
+                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_recibidos, parent, false);
                 return new DefaultViewHolder(v);
             }
         }
@@ -122,20 +119,20 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
             TVNombreMensaje.setText(message.getNombre());
             TVMensajeMensaje.setText(message.getMensaje());
             TVHoraMensaje.setText(message.getHora());
-            IVImagenUsuario = itemView.findViewById(R.id.IVImagenUsuario);
-
 
         }
+
     }
 
     class OwnViewHolder extends ExampleViewHolder {
 
         public OwnViewHolder(View itemView) {
+
             super(itemView);
             this.TVNombreMensaje = itemView.findViewById(R.id.TVNombreMensaje);
             this.TVHoraMensaje = itemView.findViewById(R.id.TVHoraMensaje);
             this.TVMensajeMensaje = itemView.findViewById(R.id.TVMensajeMensaje);
-            this.IVImagenUsuario = itemView.findViewById(R.id.IVImagenUsuario);
+
         }
     }
 
@@ -148,12 +145,18 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
             this.TVMensajeMensaje = itemView.findViewById(R.id.TVMensajeMensaje);
             this.IVImagenUsuario = itemView.findViewById(R.id.IVImagenUsuario);
 
+        }
+
+        @Override
+        public void bindMessage(Mensaje message) {
+            super.bindMessage(message);
+
             //Deberia de cambiar la imagen en funcion del email del usuario registrado en firebase
             storageReference = FirebaseStorage.getInstance().getReference();
-            storageReference.child("Fotos").child(getEmailUsuario()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            storageReference.child("Fotos").child(message.getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    Glide.with(c.getApplicationContext()).load(uri).into(IVImagenUsuario);
+                    Glide.with(c).load(uri).into(IVImagenUsuario);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -161,6 +164,7 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
                     // Handle any errors
                 }
             });
+
         }
     }
 
@@ -181,7 +185,13 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
         coloresAleatorios.add("#0041FC");
         coloresAleatorios.add("#7E00FC");
         coloresAleatorios.add("#FC009D");
-        return coloresAleatorios.get((int) ((Math.random() * 1000f) % 6f));
+        coloresAleatorios.add("#3AC286");
+        coloresAleatorios.add("#3A53C2");
+        coloresAleatorios.add("#728AF6");
+        coloresAleatorios.add("#664605");
+        coloresAleatorios.add("#E29784");
+        coloresAleatorios.add("#67007C");
+        return coloresAleatorios.get((int) ((Math.random() * 1000f) % 12f));
     }
 
 }

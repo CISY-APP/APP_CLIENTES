@@ -3,11 +3,11 @@ package com.example.app_clientes.Pojos;
 import android.widget.ImageView;
 
 public class Mensaje {
+
     private String mensaje;
     private String nombre;
     private String email;
     private String hora;
-    private ImageView imageViewUsuario;
 
     public Mensaje() {
     }

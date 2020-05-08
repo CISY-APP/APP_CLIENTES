@@ -2,7 +2,6 @@ package com.example.app_clientes.Vistas;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,9 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.app_clientes.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class VentanaPrincipal extends AppCompatActivity{
 
@@ -34,7 +31,7 @@ public class VentanaPrincipal extends AppCompatActivity{
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_viajes, R.id.nav_cartera, R.id.nav_mensajes,  R.id.nav_incidencias, R.id.nav_cuenta,  R.id.nav_vehiculos,  R.id.nav_configuracion,  R.id.nav_cerrarSesion, R.id.nav_chat)
+                R.id.nav_home, R.id.nav_viajes, R.id.nav_cartera, R.id.nav_mensajes,  R.id.nav_incidencias, R.id.nav_datos,  R.id.nav_vehiculos,  R.id.nav_configuracion,  R.id.nav_cerrarSesion, R.id.nav_chat)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

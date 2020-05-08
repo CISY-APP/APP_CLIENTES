@@ -1,9 +1,7 @@
 package com.example.app_clientes.ui.Home;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,28 +12,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProviders;
+
 
 import com.example.app_clientes.Otros.CalendarioFragment;
 import com.example.app_clientes.Otros.HoraFragment;
-import com.example.app_clientes.Pojos.Viaje;
 import com.example.app_clientes.R;
 import com.example.app_clientes.Vistas.VentanaPublicarViaje;
-import com.example.app_clientes.Vistas.VentanaViajePublicado;
 import com.example.app_clientes.Vistas.VentanaViajesEncontrados;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class HomeFragment extends Fragment {
 

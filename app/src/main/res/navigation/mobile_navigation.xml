@@ -35,16 +35,16 @@
         tools:layout="@layout/fragment_incidencias"/>
 
     <fragment
-        android:id="@+id/nav_cuenta"
-        android:name="com.example.app_clientes.ui.Cuenta.CuentaFragment"
-        android:label="@string/menu_cuenta"
-        tools:layout="@layout/fragment_cuenta"/>
+        android:id="@+id/nav_datos"
+        android:name="com.example.app_clientes.ui.Datos.DatosFragment"
+        android:label="@string/menu_datos"
+        tools:layout="@layout/fragment_datos"/>
 
     <fragment
         android:id="@+id/nav_vehiculos"
         android:name="com.example.app_clientes.ui.Vehiculos.VehiculosFragment"
         android:label="@string/menu_vehiculos"
-        tools:layout="@layout/fragment_cuenta"/>
+        tools:layout="@layout/fragment_datos"/>
 
     <fragment
         android:id="@+id/nav_configuracion"
