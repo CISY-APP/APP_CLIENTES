@@ -30,6 +30,9 @@
 
     <!--BOTONES-->
     <string name="publicar">Publicar</string>
+    <string name="cambiarContrasena">Cambiar contraseña</string>
+    <string name="guardarCambios">Guardar cambios</string>
+    <string name="eliminarCuenta">Borrar cuenta</string>
     <string name="buscar">Buscar</string>
     <string name="listo">Listo</string>
     <string name="cancelar">Cancelar</string>
@@ -42,5 +45,34 @@
     <string name="viaje_reservado">Has reservado una plaza con NOMBRE, si necesitas algo no dudes en contactar con el.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
     <string name="quieres_publicar">¿Quieres publicar un viaje?</string>
+    <string name="sobre_mi">Sobre mi...</string>
 
+    <string-array name="gradosDesde">
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6a</item>
+        <item>6a+</item>
+        <item>6b</item>
+        <item>6b+</item>
+        <item>6c</item>
+        <item>6c+</item>
+        <item>7a</item>
+        <item>7a+</item>
+        <item>7b</item>
+        <item>7b+</item>
+        <item>7c</item>
+        <item>7c+</item>
+        <item>8a</item>
+        <item>8a+</item>
+        <item>8b</item>
+        <item>8b+</item>
+        <item>8c</item>
+        <item>8c+</item>
+        <item>9a</item>
+        <item>9a+</item>
+        <item>9b</item>
+        <item>9b+</item>
+        <item>9c</item>
+    </string-array>
 </resources>

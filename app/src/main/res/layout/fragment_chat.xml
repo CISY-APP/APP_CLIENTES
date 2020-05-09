@@ -1,51 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondochat"
     android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:background="@color/colorPrimary"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fotoPerfil"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:clickable="true"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/user"
-            android:focusable="true" />
+            app:civ_border_color="@android:color/holo_green_light"
+            app:civ_border_width="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.35" />
+
+        <ImageView
+            android:id="@+id/imageView18"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="12dp"
+            android:alpha="0.35"
+            android:tint="#11FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/fotoPerfil"
+            app:layout_constraintEnd_toEndOf="@+id/fotoPerfil"
+            app:layout_constraintStart_toStartOf="@+id/fotoPerfil"
+            app:layout_constraintTop_toTopOf="@+id/IMGUsuarioDatos"
+            app:srcCompat="@drawable/editar" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/enLinea"
-            android:layout_width="13dp"
+            android:layout_width="14dp"
             android:layout_height="14dp"
-            android:background="@android:drawable/presence_online" />
+            android:background="@android:drawable/presence_online"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:civ_border_color="@color/material_on_primary_emphasis_medium"
+            app:civ_border_width="2dp"
+            app:civ_border_overlay="true"
+            app:layout_constraintHorizontal_bias="0.11"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/fotoPerfil"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/TVNombreChatUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/colorBlanco"
-            android:layout_marginLeft="15dp"
             android:text="Nombre usuario"
+            android:textColor="@color/colorBlanco"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.207"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RVMensajesChat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="5dp">
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 

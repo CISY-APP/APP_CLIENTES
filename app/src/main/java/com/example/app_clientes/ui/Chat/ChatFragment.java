@@ -53,17 +53,15 @@ public class ChatFragment extends Fragment {
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
 
-
     private PendingIntent pendingIntent;
     private final static String CHANNEL_ID = "NOTIFICACION";
     private final static int NOTIFICACION = 0;
-
     private static final int GALERY_INTENT = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        storageReference = FirebaseStorage.getInstance().getReference();
+        cargarImagenUsuario();
 
         TVNombreChat = view.findViewById(R.id.TVNombreChatUsuario);
         RVMensajesChat = view.findViewById(R.id.RVMensajesChat);
@@ -79,18 +77,6 @@ public class ChatFragment extends Fragment {
             }
         });
 
-        storageReference.child("Fotos").child("qqq").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(getActivity()).load(uri).into(fotoPerfil);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-
         //esto debera llegar en un BUNDLE
         TVNombreChat.setText("Javier");
 
@@ -98,17 +84,15 @@ public class ChatFragment extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("chat"); //Sala de chat (nombre)
 
-
         adapterMensajes = new miApdapterChat(getActivity());
-        adapterMensajes.setEmailUsuario("qqq");
-
+        adapterMensajes.setEmailUsuario("rrr");
         LinearLayoutManager l= new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);
         RVMensajesChat.setAdapter(adapterMensajes);
         BTNEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "qqq" ,getHoraSistema()));
+                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "rrr" ,getHoraSistema()));
                 ETTXTMensaje.setText("");
 
             }
@@ -159,19 +143,32 @@ public class ChatFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == GALERY_INTENT &&  resultCode == RESULT_OK) {
-            if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
-
-                Uri uri = data.getData();
-                Glide.with(requireContext()).load(uri).into(fotoPerfil);
-                StorageReference filePath = storageReference.child("Fotos").child("qqq");
-                Toast.makeText(getActivity(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
-                filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    }
-                });
-            }
+            Uri uri = data.getData();
+            Glide.with(requireContext()).load(uri).into(fotoPerfil);
+            StorageReference filePath = storageReference.child("Fotos").child("rrr");
+            Toast.makeText(getActivity(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
+            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                }
+            });
         }
+    }
+
+    //Metodo para cargar la imagen del usuario
+    public void cargarImagenUsuario(){
+        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference.child("Fotos").child("rrr").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getActivity()).load(uri).into(fotoPerfil);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                fotoPerfil.setImageResource(R.drawable.user);
+            }
+        });
     }
 
     //Metodo utilizado para que el adparter se arrastre hacia abajo con cada nuevo mensaje
