@@ -85,14 +85,14 @@ public class ChatFragment extends Fragment {
         databaseReference = firebaseDatabase.getReference("chat"); //Sala de chat (nombre)
 
         adapterMensajes = new miApdapterChat(getActivity());
-        adapterMensajes.setEmailUsuario("rrr");
+        adapterMensajes.setEmailUsuario("ppp");
         LinearLayoutManager l= new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);
         RVMensajesChat.setAdapter(adapterMensajes);
         BTNEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "rrr" ,getHoraSistema()));
+                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", "ppp" ,getHoraSistema()));
                 ETTXTMensaje.setText("");
 
             }
@@ -145,7 +145,7 @@ public class ChatFragment extends Fragment {
         if(requestCode == GALERY_INTENT &&  resultCode == RESULT_OK) {
             Uri uri = data.getData();
             Glide.with(requireContext()).load(uri).into(fotoPerfil);
-            StorageReference filePath = storageReference.child("Fotos").child("rrr");
+            StorageReference filePath = storageReference.child("Fotos").child("ppp");
             Toast.makeText(getActivity(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -158,7 +158,7 @@ public class ChatFragment extends Fragment {
     //Metodo para cargar la imagen del usuario
     public void cargarImagenUsuario(){
         storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("Fotos").child("rrr").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("Fotos").child("ppp").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(getActivity()).load(uri).into(fotoPerfil);

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_example_lottie_view"
+        android:layout_width="277dp"
+        android:layout_height="403dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="67dp"
+        android:layout_marginLeft="67dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="67dp"
+        android:layout_marginRight="67dp"
+        android:layout_marginBottom="284dp"
+        android:background="@color/colorPrimary"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="13357-route-finder.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="true" />
+
+
+</RelativeLayout>

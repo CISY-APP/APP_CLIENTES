@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.app_clientes.Otros.CalendarioFragment;
 import com.example.app_clientes.R;
+import com.example.app_clientes.Vistas.VentanaAgregarVehiculo;
 import com.example.app_clientes.Vistas.VentanaCambiarContrasena;
 import com.example.app_clientes.Vistas.VentanaPublicarViaje;
 import com.example.app_clientes.Vistas.VentanaViajePublicado;
@@ -57,8 +59,9 @@ public class DatosFragment extends Fragment {
     private EditText ETDocumentoDatos;
     private EditText ETDescripcionDatos;
     private CircleImageView ImgPais;
+    private TextView TVAgregarCoche;
 
-    private Switch switch1Coche;
+    private Switch BTAgregarCoche;
     private Button BTCambiarContrasena;
     private Button BTEliminarCuenta;
     private Button BTGuardarCambios;
@@ -117,6 +120,15 @@ public class DatosFragment extends Fragment {
                 showDatePickerDialog();
             }
         });
+        TVAgregarCoche = view.findViewById(R.id.TVAgregarCoche);
+        TVAgregarCoche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VentanaAgregarVehiculo ventanaAgregarVehiculo = new VentanaAgregarVehiculo();
+                Intent VentanaAgregarVehiculo = new Intent(getContext(), ventanaAgregarVehiculo.getClass());
+                startActivity(VentanaAgregarVehiculo);
+            }
+        });
         /*ImgPais = view.findViewById(R.id.ImgPais);
         ImgPais.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,17 +155,34 @@ public class DatosFragment extends Fragment {
         return view;
     }
 
+    //Coge la direccion del dispositivo
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
+                //Coge la Uri del dispositivo
                 Uri uri = data.getData();
+                //Carla la imagen desde el dispositivo
                 Glide.with(requireContext()).load(uri).into(IMGUsuarioDatos);
-                StorageReference filePath = storageReference.child("Fotos").child("rrr");
-                Toast.makeText(getActivity(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
+                //Crea una direccion para poder subir la imagen a firebase
+                StorageReference filePath = storageReference.child("Fotos").child("EMAIL DE EL USUARIO");
+                //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
+                storageReference.child("Fotos").child("EMAIL DE EL USUARIO").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        //Meter la URI en un String para posteriormente hacer el update o el insert en la base de datos
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                //Utiliza la direccion, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
                 filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getActivity(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -162,15 +191,19 @@ public class DatosFragment extends Fragment {
 
     //Metodo para cargar la imagen del usuario
     public void cargarImagenUsuario(){
+        //Inatancia el objeto de tipo storageReference
         storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("Fotos").child("rrr").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
+        storageReference.child("Fotos").child("EMAIL DE EL USUARIO").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
+                //Si la carga es optima la coloca en IMGUsuarioDatos
                 Glide.with(getActivity()).load(uri).into(IMGUsuarioDatos);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                //Si la carga no es optima es decir que no existe la direccion proporcinada carga una imagen por defecto
                 IMGUsuarioDatos.setImageResource(R.drawable.user);
             }
         });

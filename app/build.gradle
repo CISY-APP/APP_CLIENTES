@@ -39,6 +39,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.libraries.places:places:2.2.0'
 
+    // Lottie
+    implementation 'com.airbnb.android:lottie:3.0.0'
+
+    //ColorPiker
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+    
     //noinspection GradleCompatible
     implementation "com.android.support:support-compat:28.0.0"
 

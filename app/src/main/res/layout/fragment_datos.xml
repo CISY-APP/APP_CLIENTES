@@ -179,70 +179,70 @@
 
                 </LinearLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/BTSeleccionarColorCoche"
+                        style="@android:style/Widget.Holo.EditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/layout_drawable_2"
+                        android:clickable="false"
+                        android:ems="4"
+                        android:focusable="false"
+                        android:hint="+34"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="40dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textColorHint="@color/colorGrisLight"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ImgPais"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/spain"
+                        android:clickable="true"
+                        app:layout_constraintBottom_toBottomOf="@+id/TVPREFIJO"
+                        app:layout_constraintEnd_toEndOf="@+id/TVPREFIJO"
+                        app:layout_constraintHorizontal_bias="0.262"
+                        app:layout_constraintStart_toStartOf="@+id/TVPREFIJO"
+                        app:layout_constraintTop_toTopOf="@+id/TVPREFIJO" />
+
+                    <EditText
+                        android:id="@+id/ETNumeroTelefonoDatos"
+                        style="@android:style/Widget.Holo.EditText"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="100dp"
+                        android:background="@drawable/layout_drawable_2"
+                        android:clickable="true"
+                        android:ems="10"
+                        android:focusable="true"
+                        android:hint="NÚMERO"
+                        android:inputType="phone"
+                        android:padding="10dp"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textColorHint="@color/colorGrisLight"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.662"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                        <EditText
-                            android:id="@+id/TVPREFIJO"
-                            style="@android:style/Widget.Holo.EditText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/layout_drawable_2"
-                            android:clickable="false"
-                            android:ems="4"
-                            android:focusable="false"
-                            android:hint="+34"
-                            android:inputType="textPersonName"
-                            android:paddingLeft="40dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:textColor="@color/places_ui_default_primary_dark"
-                            android:textColorHint="@color/colorGrisLight"
-                            android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/ImgPais"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/spain"
-                            android:clickable="true"
-                            app:layout_constraintBottom_toBottomOf="@+id/TVPREFIJO"
-                            app:layout_constraintEnd_toEndOf="@+id/TVPREFIJO"
-                            app:layout_constraintHorizontal_bias="0.262"
-                            app:layout_constraintStart_toStartOf="@+id/TVPREFIJO"
-                            app:layout_constraintTop_toTopOf="@+id/TVPREFIJO" />
-
-                        <EditText
-                            android:id="@+id/ETNumeroTelefonoDatos"
-                            style="@android:style/Widget.Holo.EditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginLeft="100dp"
-                            android:background="@drawable/layout_drawable_2"
-                            android:clickable="true"
-                            android:ems="10"
-                            android:focusable="true"
-                            android:hint="NÚMERO"
-                            android:inputType="phone"
-                            android:padding="10dp"
-                            android:textColor="@color/places_ui_default_primary_dark"
-                            android:textColorHint="@color/colorGrisLight"
-                            android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.662"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -369,7 +369,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/switch1Coche"
+                        android:id="@+id/TVAgregarCoche"
                         android:layout_width="match_parent"
                         android:layout_height="32dp"
                         android:background="@drawable/cell_background"

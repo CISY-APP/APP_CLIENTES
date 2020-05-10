@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -94,7 +93,7 @@ public class VentanaPrincipal extends AppCompatActivity{
         if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             Glide.with(this).load(uri).into(IVImagenUsuarioMenuLateral);
-            StorageReference filePath = storageReference.child("Fotos").child("rrr");
+            StorageReference filePath = storageReference.child("Fotos").child("ppp");
             Toast.makeText(this, "Imagen cambiada", Toast.LENGTH_SHORT).show();
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -114,7 +113,7 @@ public class VentanaPrincipal extends AppCompatActivity{
 
     public void cargarImagenUsuario(final View headView) {
         storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("Fotos").child("rrr").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("Fotos").child("ppp").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(headView.getContext()).load(uri).into(IVImagenUsuarioMenuLateral);

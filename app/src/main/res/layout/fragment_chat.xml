@@ -13,15 +13,16 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/fotoPerfil"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/user"
-            app:civ_border_color="@android:color/holo_green_light"
-            app:civ_border_width="1dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,18 +43,18 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/enLinea"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
-            android:background="@android:drawable/presence_online"
+            android:layout_width="24dp"
+            android:layout_height="19dp"
+            android:background="@drawable/online"
+            app:civ_border_color="@color/material_on_primary_emphasis_medium"
+            app:civ_border_overlay="true"
+            app:civ_border_width="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:civ_border_color="@color/material_on_primary_emphasis_medium"
-            app:civ_border_width="2dp"
-            app:civ_border_overlay="true"
-            app:layout_constraintHorizontal_bias="0.11"
+            app:layout_constraintHorizontal_bias="0.112"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/fotoPerfil"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.131" />
 
         <TextView
             android:id="@+id/TVNombreChatUsuario"

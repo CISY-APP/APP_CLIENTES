@@ -25,17 +25,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_example_lottie_view"
+        android:layout_width="match_parent"
+        android:layout_height="288dp"
+        android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.173"
-        app:srcCompat="@drawable/like" />
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="20940-clap-animation-yellow.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="true" />
 
     <Button
         android:id="@+id/BTPublicar"
