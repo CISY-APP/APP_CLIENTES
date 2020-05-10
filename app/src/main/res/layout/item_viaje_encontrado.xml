@@ -105,7 +105,7 @@
                 android:textSize="12dp" />
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/IVUsuario"
                 android:layout_width="400dp"
                 android:layout_height="match_parent"

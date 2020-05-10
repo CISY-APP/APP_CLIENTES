@@ -49,7 +49,7 @@
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/IMGUsuarioDatos"
+                        android:id="@+id/mImageVehiculoPeque"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/user"
@@ -64,10 +64,10 @@
                         android:alpha="0.35"
                         android:background="#04FFFFFF"
                         android:tint="#11FFFFFF"
-                        app:layout_constraintBottom_toBottomOf="@+id/IMGUsuarioDatos"
-                        app:layout_constraintEnd_toEndOf="@+id/IMGUsuarioDatos"
-                        app:layout_constraintStart_toStartOf="@+id/IMGUsuarioDatos"
-                        app:layout_constraintTop_toTopOf="@+id/IMGUsuarioDatos"
+                        app:layout_constraintBottom_toBottomOf="@+id/mImageVehiculoPeque"
+                        app:layout_constraintEnd_toEndOf="@+id/mImageVehiculoPeque"
+                        app:layout_constraintStart_toStartOf="@+id/mImageVehiculoPeque"
+                        app:layout_constraintTop_toTopOf="@+id/mImageVehiculoPeque"
                         app:srcCompat="@drawable/editar" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -185,7 +185,7 @@
                     android:layout_marginTop="5dp">
 
                     <EditText
-                        android:id="@+id/BTSeleccionarColorCoche"
+                        android:id="@+id/BTPrefijo"
                         style="@android:style/Widget.Holo.EditText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -211,13 +211,13 @@
                         android:id="@+id/ImgPais"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/spain"
                         android:clickable="true"
-                        app:layout_constraintBottom_toBottomOf="@+id/TVPREFIJO"
-                        app:layout_constraintEnd_toEndOf="@+id/TVPREFIJO"
-                        app:layout_constraintHorizontal_bias="0.262"
-                        app:layout_constraintStart_toStartOf="@+id/TVPREFIJO"
-                        app:layout_constraintTop_toTopOf="@+id/TVPREFIJO" />
+                        android:src="@drawable/spain"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/BTPrefijo"
+                        app:layout_constraintHorizontal_bias="0.114"
+                        app:layout_constraintStart_toStartOf="@+id/BTPrefijo"
+                        app:layout_constraintTop_toTopOf="@+id/BTPrefijo" />
 
                     <EditText
                         android:id="@+id/ETNumeroTelefonoDatos"
@@ -371,12 +371,12 @@
                     <TextView
                         android:id="@+id/TVAgregarCoche"
                         android:layout_width="match_parent"
-                        android:layout_height="32dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_background"
                         android:text="Añadir"
                         android:gravity="center"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="10sp"
+                        android:textSize="14sp"
                         android:layout_marginLeft="220dp" />
 
 

@@ -26,5 +26,8 @@
         <activity android:name=".Vistas.VentanaViajeReservado"></activity>
         <activity android:name=".Vistas.VentanaCambiarContrasena"></activity>
         <activity android:name=".Vistas.VentanaAgregarVehiculo"></activity>
+        <activity android:name=".Vistas.VentanaBuscarViaje"></activity>
+        <activity android:name=".Vistas.VentanaViajeNoEncontrado"></activity>
+
     </application>
 </manifest>

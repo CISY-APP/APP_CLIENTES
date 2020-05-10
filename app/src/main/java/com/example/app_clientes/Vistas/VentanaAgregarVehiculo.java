@@ -30,17 +30,21 @@ import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class VentanaAgregarVehiculo extends AppCompatActivity {
 
-    private EditText BTColorPiker;
+
     private EditText ETMatriculaVehiculo;
-    private CircleImageView ImgColorCoche;
-    private CircleImageView IMGCocheAgregar;
     private Spinner spinner_numero_plazas;
+    private EditText ETMarcaVehiculo;
+    private EditText ETModeloVehiculo;
     private Spinner spinner_tipo_combustible;
+    private EditText BTColorPiker;
     private ArrayList<String> colores = new ArrayList<>();
     private String colorSeleccionado;
+    private CircleImageView ImgColorCoche;
+    private CircleImageView IMGCocheAgregar;
     private ImageView IVFlechaAtrasAgregarVehiculo;
     private ImageView IVAceptarAgregarVehiculo;
-    private Uri uri;
+
+    private String uriParaElInsert;
     private StorageReference storageReference;
 
     private static final int GALERY_INTENT = 1;
@@ -54,6 +58,8 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
         //cargarImagenVehiculo();
 
         ETMatriculaVehiculo = findViewById(R.id.ETMatriculaVehiculo);
+        ETMarcaVehiculo = findViewById(R.id.ETMarcaVehiculo);
+        ETModeloVehiculo = findViewById(R.id.ETModeloVehiculo);
 
         //Imagen que representa el color del coche
         ImgColorCoche = findViewById(R.id.ImgColorCoche);
@@ -123,7 +129,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                storageReference.child("EMAILUSUARIO").child(uri.toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                storageReference.child("EMAILUSUARIO").child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
                         //INSERTA A LA BASE DE DATOS
@@ -167,6 +173,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
     public void colorPiker() {
         ColorPicker colorPicker = new ColorPicker(this);
         colorPicker.setTitle("¿De que color es?");
+        colores.clear();
         colores.add("#000000");colores.add("#FFFFFF");colores.add("#616161");colores.add("#C8C8C8");colores.add("#7A0000");colores.add("#E70000");colores.add("#011474");
         colores.add("#01742E");colores.add("#00BA27");colores.add("#8E6D3D");colores.add("#F5C886");colores.add("#F17C00");colores.add("#E7E300");colores.add("#6900E7");
         colores.add("#FFA3F8");
@@ -195,7 +202,8 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
             //Carla la imagen desde el dispositivo
             Glide.with(this).load(uri).into(IMGCocheAgregar);
             //Crea una direccion para poder subir la imagen a firebase
-            StorageReference filePath = storageReference.child("EMAILUSUARIO").child(Long.toString(System.currentTimeMillis()));
+            uriParaElInsert = Long.toString(System.currentTimeMillis());
+            StorageReference filePath = storageReference.child("EMAILUSUARIO").child(uriParaElInsert);
             //Utiliza la direccion, sube la imagen a firebase y escucha si se ha realizado de manera adecuada Uri entera de la imagen
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override

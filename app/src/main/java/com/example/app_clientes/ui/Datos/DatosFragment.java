@@ -1,30 +1,21 @@
 package com.example.app_clientes.ui.Datos;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -32,17 +23,11 @@ import com.example.app_clientes.Otros.CalendarioFragment;
 import com.example.app_clientes.R;
 import com.example.app_clientes.Vistas.VentanaAgregarVehiculo;
 import com.example.app_clientes.Vistas.VentanaCambiarContrasena;
-import com.example.app_clientes.Vistas.VentanaPublicarViaje;
-import com.example.app_clientes.Vistas.VentanaViajePublicado;
-import com.example.app_clientes.Vistas.VentanaViajesEncontrados;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -83,7 +68,7 @@ public class DatosFragment extends Fragment {
         ETFechaNacimientoDatos = view.findViewById(R.id.ETFechaNacimientoDatos);
         ETDocumentoDatos = view.findViewById(R.id.ETDocumentoDatos);
         ETDescripcionDatos = view.findViewById(R.id.ETDescripcionDatos);
-        IMGUsuarioDatos = view.findViewById(R.id.IMGUsuarioDatos);
+        IMGUsuarioDatos = view.findViewById(R.id.mImageVehiculoPeque);
         IMGUsuarioDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

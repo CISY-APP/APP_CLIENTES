@@ -14,7 +14,7 @@
     <string name="menu_mensajes">Mensajes</string>
     <string name="menu_incidencias">Incidencias</string>
     <string name="menu_datos">Mi cuenta</string>
-    <string name="menu_vehiculos">Vehículos</string>
+    <string name="menu_vehiculos">Mis vehículos</string>
     <string name="menu_chat">Chat</string>
     <string name="menu_configuracion">Configuración</string>
     <string name="menu_otras">Otras opciones</string>
@@ -42,9 +42,11 @@
 
     <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
     <string name="viaje_publicado">!Tu viaje ha sido publido¡ Gracias por reducir los niveles de contaminación.</string>
-    <string name="viaje_reservado">Has reservado una plaza con NOMBRE, si necesitas algo no dudes en contactar con el.</string>
+    <string name="viaje_no_encontrado">!Vaya¡ Parece que no hay ningún viaje con esos criterios de búsqueda.</string>
+    <string name="viaje_reservado">Has reservado una plaza, si necesitas algo no dudes en contactar con el conductor.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
     <string name="quieres_publicar">¿Quieres publicar un viaje?</string>
     <string name="sobre_mi">Sobre mi...</string>
+    <string name="marca">MARCA</string>
 
 </resources>

@@ -58,7 +58,7 @@ public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterVi
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         ItemViajesEncontrados nuevoViajeEncontrado=viajesEncontradosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
         holder.mImageUsuario.setImageResource(nuevoViajeEncontrado.getmImageUsuario());
-        holder.TVNombre.setText(viajesEncontradosList.get(position).getNombre()+" ");
+        holder.TVNombre.setText(viajesEncontradosList.get(position).getNombre());
         holder.TVApellidos.setText(viajesEncontradosList.get(position).getApellidos());
         holder.TVEdad.setText("Edad: "+viajesEncontradosList.get(position).getEdad()+" años");
         holder.TVAsientosLibres.setText("Asientos disponibles: "+viajesEncontradosList.get(position).getAsientosLibres());

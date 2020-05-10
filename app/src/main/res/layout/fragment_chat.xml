@@ -38,7 +38,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/fotoPerfil"
             app:layout_constraintEnd_toEndOf="@+id/fotoPerfil"
             app:layout_constraintStart_toStartOf="@+id/fotoPerfil"
-            app:layout_constraintTop_toTopOf="@+id/IMGUsuarioDatos"
+            app:layout_constraintTop_toTopOf="@+id/mImageVehiculoPeque"
             app:srcCompat="@drawable/editar" />
 
         <de.hdodenhof.circleimageview.CircleImageView

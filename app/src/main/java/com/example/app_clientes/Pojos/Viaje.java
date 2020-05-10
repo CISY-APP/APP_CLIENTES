@@ -79,7 +79,5 @@ public class Viaje implements java.io.Serializable {
         return numplazasDisponibles;
     }
 
-    public void setNumplazasDisponibles(int numplazasDisponibles) {
-        this.numplazasDisponibles = numplazasDisponibles;
-    }
+    public void setNumplazasDisponibles(int numplazasDisponibles) { this.numplazasDisponibles = numplazasDisponibles; }
 }

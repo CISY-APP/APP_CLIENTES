@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/text_home"
         android:layout_width="wrap_content"
@@ -18,31 +17,31 @@
         android:gravity="center"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
-        android:text="@string/viaje_reservado"
+        android:text="@string/viaje_no_encontrado"
         android:textColor="@color/colorPrimary"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
+        app:layout_constraintVertical_bias="0.584" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_example_lottie_view"
         android:layout_width="match_parent"
         android:layout_height="288dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="52dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="7079-happy-emoji-smile.json"
+        app:lottie_fileName="10223-search-empty.json"
         app:lottie_imageAssetsFolder="assets"
         app:lottie_loop="true" />
 
     <Button
-        android:id="@+id/BTPublicar"
+        android:id="@+id/BTVolver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -50,7 +49,7 @@
         android:layout_marginBottom="90dp"
         android:background="@color/colorPrimary"
         android:clickable="true"
-        android:text="@string/listo"
+        android:text="VOLVER"
         android:textColor="@color/colorBlanco"
         android:textSize="18sp"
         android:textStyle="bold"
