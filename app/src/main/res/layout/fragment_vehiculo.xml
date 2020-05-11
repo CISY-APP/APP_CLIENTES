@@ -48,7 +48,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
-                android:id="@+id/IVAceptarAgregarVehiculoMisvehiculos"
+                android:id="@+id/IVModificarVehiculoMisvehiculos"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:tint="@color/colorPrimary"
@@ -104,9 +104,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/layout_drawable_2"
-            android:clickable="true"
+            android:clickable="false"
             android:ems="10"
-            android:focusable="true"
+            android:focusable="false"
             android:hint="MATRICULA"
             android:inputType="textPersonName"
             android:padding="8dp"
@@ -155,22 +155,25 @@
             android:textColor="@color/colorPrimary"
             android:textSize="10sp" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout8"
+        <EditText
+            android:id="@+id/spinner_tipo_combustible_mis_vehiculos"
+            style="@android:style/Widget.Holo.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/layout_drawable_2">
-
-            <Spinner
-                android:id="@+id/spinner_tipo_combustible_mis_vehiculos"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/colorPrimary" />
-
-        </LinearLayout>
+            android:background="@drawable/layout_drawable_2"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="TIPO DE COMBUSTIBLE"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:textColor="@color/places_ui_default_primary_dark"
+            android:textColorHint="@color/colorGrisLight"
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/TVColorCoche"

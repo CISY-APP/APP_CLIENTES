@@ -8,15 +8,25 @@ public class Mensaje {
     private String nombre;
     private String email;
     private String hora;
+    private String direccionFotoUsuario;
 
     public Mensaje() {
     }
 
-    public Mensaje(String mensaje, String nombre, String email, String hora) {
+    public Mensaje(String mensaje, String nombre, String email, String hora, String direccionFotoUsuario) {
         this.mensaje = mensaje;
         this.nombre = nombre;
         this.email = email;
         this.hora = hora;
+        this.direccionFotoUsuario = direccionFotoUsuario;
+    }
+
+    public String getDireccionFotoUsuario() {
+        return direccionFotoUsuario;
+    }
+
+    public void setDireccionFotoUsuario(String direccionFotoUsuario) {
+        this.direccionFotoUsuario = direccionFotoUsuario;
     }
 
     public String getMensaje() {

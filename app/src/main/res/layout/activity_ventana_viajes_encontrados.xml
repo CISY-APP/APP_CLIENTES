@@ -52,119 +52,137 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="48dp">
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ORIGEN"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.154"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.235" />
-
-            <TextView
-                android:id="@+id/TVOrigenViajesEncontrados"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ORIGEN"
-                android:textColor="@color/colorBlanco"
-                android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.245"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.687" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:tint="@color/colorBlanco"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.144"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.684"
-                app:srcCompat="@drawable/circulo" />
-
-            <TextView
-                android:id="@+id/TVDestinoViajesEncontrados"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DESTINO"
-                android:textColor="@color/colorBlanco"
-                android:textSize="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.822"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.687" />
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:tint="@color/colorBlanco"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.668"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.684"
-                app:srcCompat="@drawable/marcador" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DESTINO"
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.613"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.235" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/TVOrigenViajesEncontrados"
+                style="@android:style/Widget.Holo.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/layout_drawable_2"
+                android:ems="10"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_marginTop="5dp"
+                android:hint="¿Desde donde sales?"
+                android:inputType="textCapWords"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorGrisLight"
+                android:textSize="26dp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.042" />
+
+            <EditText
+                android:id="@+id/TVDestinoViajesEncontrados"
+                style="@android:style/Widget.Holo.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/layout_drawable_2"
+                android:ems="10"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="¿Hacia donde vas?"
+                android:inputType="textCapWords"
+                android:padding="8dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorGrisLight"
+                android:textSize="26dp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.21" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorGrisLight"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageView8"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView8"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.152" />
+
 
             <TextView
-                android:id="@+id/TVFechaViajesEncontrados"
-                android:layout_width="200dp"
+                android:id="@+id/TVFechaViajesEncontrados2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorGrisLight"
-                android:gravity="center"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="05/05/2020"
-                android:textColor="@color/colorGris"
-                android:textSize="18dp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:clickable="true"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="Fecha y hora"
+                android:inputType="text"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textSize="18dp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.547" />
 
             <TextView
                 android:id="@+id/TVHoraViajesEncontrados"
-                android:layout_width="211dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:clickable="true"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="22/01/2020 a las 20:20"
+                android:inputType="text"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textSize="18dp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.547" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/colorGrisLight"
-                android:gravity="center"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="17:30"
-                android:textColor="@color/colorGris"
-                android:textSize="18dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/imageView8"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/imageView8"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.152" />
 
         </LinearLayout>
 
@@ -172,10 +190,9 @@
             android:id="@+id/RVViajesEncontrados"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorBlanco"
+            android:background="@drawable/cell_background"
             android:clipToPadding="false"
             android:paddingLeft="18dp"
-            android:paddingTop="18dp"
             android:paddingRight="18dp">
 
         </androidx.recyclerview.widget.RecyclerView>

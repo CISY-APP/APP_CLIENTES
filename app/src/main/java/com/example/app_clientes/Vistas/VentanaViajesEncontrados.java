@@ -38,15 +38,13 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<ItemViajesEncontrados> viajesEncontradosList = new ArrayList<>();
     private Viaje viaje;
-    private TextView ETFecha;
-    private TextView ETHora;
+    private TextView ETFechaYHora;
     private TextView ETOrigen;
     private TextView ETDestino;
     private Button BTBuscarDialog;
     private ImageView IVFlechaAtras;
 
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +52,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
 
         ETOrigen = findViewById(R.id.TVOrigenViajesEncontrados);
         ETDestino = findViewById(R.id.TVDestinoViajesEncontrados);
-        ETFecha = findViewById(R.id.TVFechaViajesEncontrados);
-        ETHora = findViewById(R.id.TVHoraViajesEncontrados);
+        ETFechaYHora = findViewById(R.id.TVHoraViajesEncontrados);
         IVFlechaAtras = findViewById(R.id.IVFlechaAtras);
         IVFlechaAtras.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +104,8 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         String horaBundle = datosIN.getString("hora");
         ETOrigen.setText(origenBundle);
         ETDestino.setText(destinoBundle);
-        ETFecha.setText(fechaBundle);
-        ETHora.setText(horaBundle);
+        ETFechaYHora.setText(fechaBundle+" a las " +horaBundle);
+
     }
 
 }

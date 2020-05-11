@@ -3,6 +3,7 @@ package com.example.app_clientes.Vistas;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,9 +44,12 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
     private CircleImageView IMGCocheAgregar;
     private ImageView IVFlechaAtrasAgregarVehiculo;
     private ImageView IVAceptarAgregarVehiculo;
-
+    private String uriFotoCoche;
     private String uriParaElInsert;
     private StorageReference storageReference;
+    private Uri uriImagenEndispositivo;
+
+    private static final String EMAIL_USUARIO = "EMAIL DE EL USUARIO 1";
 
     private static final int GALERY_INTENT = 1;
 
@@ -56,6 +60,9 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
 
         //Carga la imagen del vehiculo por defecto
         //cargarImagenVehiculo();
+        //Inatancia el objeto de tipo storageReference
+        storageReference = FirebaseStorage.getInstance().getReference();
+
 
         ETMatriculaVehiculo = findViewById(R.id.ETMatriculaVehiculo);
         ETMarcaVehiculo = findViewById(R.id.ETMarcaVehiculo);
@@ -128,20 +135,39 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
         IVAceptarAgregarVehiculo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                storageReference.child("EMAILUSUARIO").child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                uriParaElInsert = Long.toString(System.currentTimeMillis());
+                StorageReference filePath = storageReference.child(EMAIL_USUARIO).child(uriParaElInsert);
+                //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
+                filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(Uri uri) {
-                        //INSERTA A LA BASE DE DATOS
-                        String uriDeLaImagenAInsertarEnLaBaseDeDatos = uri.toString();
-                        //Faltan el resto de datos del vehiculo solo es obligatorio
-                        // - Numero de plazas
-                        // - Matrícula
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
+                        storageReference.child(EMAIL_USUARIO).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                //Meter la URI en un String para posteriormente hacer el update o el insert en la base de datos
+                                //INSERTA A LA BASE DE DATOS
+
+                                //Faltan el resto de datos del vehiculo solo es obligatorio
+                                // - Numero de plazas
+                                // - Matrícula
+                                // - Se inserta la uri de la imagen del coche --> uriFotoCoche LINEA 218
+                                uri.toString(); //Meterla en la base de datos
+                                Toast.makeText(getApplicationContext(), "Vehículo agregado", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(getApplicationContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }
@@ -195,22 +221,10 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
-            //Inatancia el objeto de tipo storageReference
-            storageReference = FirebaseStorage.getInstance().getReference();
             //Coge la Uri del dispositivo
-            Uri uri = data.getData();
-            //Carla la imagen desde el dispositivo
-            Glide.with(this).load(uri).into(IMGCocheAgregar);
-            //Crea una direccion para poder subir la imagen a firebase
-            uriParaElInsert = Long.toString(System.currentTimeMillis());
-            StorageReference filePath = storageReference.child("EMAILUSUARIO").child(uriParaElInsert);
-            //Utiliza la direccion, sube la imagen a firebase y escucha si se ha realizado de manera adecuada Uri entera de la imagen
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                }
-            });
+            uriImagenEndispositivo = data.getData();
+            //Cambia la imagen desde el dispositivo
+            Glide.with(getApplicationContext()).load(uriImagenEndispositivo).into(IMGCocheAgregar);
         }
     }
 

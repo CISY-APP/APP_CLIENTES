@@ -60,21 +60,21 @@ public class VentanaBuscarViaje extends AppCompatActivity {
             public void onClick(View v) {
                 //Consulta a la base de datos para ver si hay viajes con esas condiciones
 
-                VentanaViajeNoEncontrado ventanaViajeNoEncontrado = new VentanaViajeNoEncontrado();
+                /*VentanaViajeNoEncontrado ventanaViajeNoEncontrado = new VentanaViajeNoEncontrado();
                 Intent VentanaViajeNoEncontrado = new Intent(getApplicationContext(), VentanaViajeNoEncontrado.class);
                 startActivity(VentanaViajeNoEncontrado);
 
                 VentanaViajeReservado ventanaViajeReservado = new VentanaViajeReservado();
                 Intent VentanaViajeReservado = new Intent(getApplicationContext(), VentanaViajeReservado.class);
-                startActivity(VentanaViajeReservado);
+                startActivity(VentanaViajeReservado);*/
                 
-                /*VentanaViajesEncontrados ventanaViajesEncontrados = new VentanaViajesEncontrados();
+                VentanaViajesEncontrados ventanaViajesEncontrados = new VentanaViajesEncontrados();
                 Intent VentanaViajesEncontrados = new Intent(getApplicationContext(), VentanaViajesEncontrados.class);
                 VentanaViajesEncontrados.putExtra("origen",ETOrigenBuscarViaje.getText().toString());
                 VentanaViajesEncontrados.putExtra("destino",ETDestinoBuscarViaje.getText().toString());
                 VentanaViajesEncontrados.putExtra("fecha",ETFechaViajeBuscarViaje.getText().toString());
                 VentanaViajesEncontrados.putExtra("hora",ETHoraViajeBuscarViaje.getText().toString());
-                startActivity(VentanaViajesEncontrados);*/
+                startActivity(VentanaViajesEncontrados);
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.example.app_clientes.ui.Vehiculos;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +11,31 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.Adapter.miAdapterMisVehiculos;
 import com.example.app_clientes.Item.ItemVehiculo;
 import com.example.app_clientes.R;
 import com.example.app_clientes.Vistas.VentanaAgregarVehiculo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import petrov.kristiyan.colorpicker.ColorPicker;
+
+import static android.app.Activity.RESULT_OK;
 
 public class VehiculosFragment extends Fragment {
 
@@ -33,23 +44,29 @@ public class VehiculosFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<ItemVehiculo> misVehiculosList = new ArrayList<>();
     private ArrayList<String> colores = new ArrayList<>();
-    //Elementos del Layout
 
+    //Elementos del Layout
     private CircleImageView IMGVehiculoGrande;
     private EditText ETMatriculaVehiculoMisVehiculos;
     private Spinner spinner_numero_plazas_mis_vehiculos;
-    private Spinner spinner_tipo_combustible_mis_vehiculos;
+    private EditText spinner_tipo_combustible_mis_vehiculos;
     private EditText  BTSeleccionarColorCocheMisVehiculos;
     private ImageView IMGModificarFotoVehiculo;
-    private ImageView IVAceptarAgregarVehiculoMisvehiculos;
+    private ImageView IVModificarVehiculoMisvehiculos;
     private CircleImageView  ImgColorCocheMisCoches;
 
     private String colorSeleccionado;
+
+    private StorageReference storageReference;
+    private Uri uriImagenEndispositivo;
 
     private static final int GALERY_INTENT = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vehiculo, container, false);
+
+        //Inatancia el objeto de tipo storageReference
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         IMGVehiculoGrande = view.findViewById(R.id.IMGVehiculoGrande);
         ETMatriculaVehiculoMisVehiculos = view.findViewById(R.id.ETMatriculaVehiculoMisVehiculos);
@@ -72,12 +89,12 @@ public class VehiculosFragment extends Fragment {
             }
         });
 
-        //Tick para agregar un vehiculo
-        IVAceptarAgregarVehiculoMisvehiculos = view.findViewById(R.id.IVAceptarAgregarVehiculoMisvehiculos);
-        IVAceptarAgregarVehiculoMisvehiculos.setOnClickListener(new View.OnClickListener() {
+        //Tick para actualizar informacion de un vehiculo un vehiculo
+        IVModificarVehiculoMisvehiculos = view.findViewById(R.id.IVModificarVehiculoMisvehiculos);
+        IVModificarVehiculoMisvehiculos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //COMPROVACIONES PARA HACER UN INSERT A LA BASE DE DATOS
+               //COMPROVACIONES PARA HACER UN UPDATE A LA BASE DE DATOS
             }
         });
 
@@ -98,22 +115,6 @@ public class VehiculosFragment extends Fragment {
             }
         });
 
-        //SPINNER TIPO COMBUSTIBLE
-        spinner_tipo_combustible_mis_vehiculos = view.findViewById(R.id.spinner_tipo_combustible_mis_vehiculos);
-        inicializacionSpinnerCombustible();
-        spinner_tipo_combustible_mis_vehiculos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                //Habrá que meterlo en una variable para poder trabajar con ella
-                //en este caso el numero de plazas disponibles
-                spinner_tipo_combustible_mis_vehiculos.getSelectedItem();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-        });
 
         //Agrega los coches al Array de vehiculo
         agregarCoches();
@@ -153,16 +154,6 @@ public class VehiculosFragment extends Fragment {
         spinner_numero_plazas_mis_vehiculos.setAdapter(spinnerArrayAdapter);
     }
 
-    //Inicializa el spinner de vehiculos
-    private void inicializacionSpinnerCombustible() {
-        // Initializing a String Array
-        String[] combustibles = new String[]{"Gasolina", "Diesel", "Híbrido", "Electrico"};
-        // Initializing an ArrayAdapter.
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getContext(),R.layout.color_spinner,combustibles);
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.color_spinner);
-        spinner_tipo_combustible_mis_vehiculos.setAdapter(spinnerArrayAdapter);
-    }
-
     //Inicializa el ColorPiker del color del vehiculo.
     public void colorPiker() {
         ColorPicker colorPicker = new ColorPicker(getActivity());
@@ -197,5 +188,17 @@ public class VehiculosFragment extends Fragment {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,GALERY_INTENT);
+    }
+
+    //Coge la direccion del dispositivo
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
+            //Coge la Uri del dispositivo
+            uriImagenEndispositivo = data.getData();
+            //Cambia la imagen desde el dispositivo
+            Glide.with(getContext()).load(uriImagenEndispositivo).into(IMGVehiculoGrande);
+        }
     }
 }

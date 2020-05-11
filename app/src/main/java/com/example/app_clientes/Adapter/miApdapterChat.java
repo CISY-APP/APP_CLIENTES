@@ -150,8 +150,12 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
         @Override
         public void bindMessage(Mensaje message) {
             super.bindMessage(message);
-
-            //Deberia de cambiar la imagen en funcion del email del usuario registrado en firebase
+            if(message.getDireccionFotoUsuario().equals("")){
+                Glide.with(c).load(R.drawable.user).into(IVImagenUsuario);
+            }else{
+                Glide.with(c).load(message.getDireccionFotoUsuario()).into(IVImagenUsuario);
+            }
+            /*//Deberia de cambiar la imagen en funcion del email del usuario registrado en firebase
             storageReference = FirebaseStorage.getInstance().getReference();
             storageReference.child("Fotos").child(message.getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -163,8 +167,7 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
                 public void onFailure(@NonNull Exception exception) {
                     // Handle any errors
                 }
-            });
-
+            });*/
         }
     }
 

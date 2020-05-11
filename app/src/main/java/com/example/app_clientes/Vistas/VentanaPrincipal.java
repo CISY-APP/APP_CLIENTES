@@ -35,6 +35,7 @@ public class VentanaPrincipal extends AppCompatActivity{
     private StorageReference storageReference;
     private static final int GALERY_INTENT = 1;
     private CircleImageView IVImagenUsuarioMenuLateral;
+    private static final String EMAIL_USUARIO = "EMAIL DE EL USUARIO 1";
 
     public VentanaPrincipal() {
     }
@@ -43,7 +44,6 @@ public class VentanaPrincipal extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_principal);
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -93,7 +93,7 @@ public class VentanaPrincipal extends AppCompatActivity{
         if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             Glide.with(this).load(uri).into(IVImagenUsuarioMenuLateral);
-            StorageReference filePath = storageReference.child("Fotos").child("ppp");
+            StorageReference filePath = storageReference.child("Fotos").child(EMAIL_USUARIO);
             Toast.makeText(this, "Imagen cambiada", Toast.LENGTH_SHORT).show();
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -113,7 +113,7 @@ public class VentanaPrincipal extends AppCompatActivity{
 
     public void cargarImagenUsuario(final View headView) {
         storageReference = FirebaseStorage.getInstance().getReference();
-        storageReference.child("Fotos").child("ppp").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("Fotos").child(EMAIL_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(headView.getContext()).load(uri).into(IVImagenUsuarioMenuLateral);
@@ -121,6 +121,7 @@ public class VentanaPrincipal extends AppCompatActivity{
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+                Toast.makeText(getApplicationContext(), "No tiene imaganes para cargar", Toast.LENGTH_SHORT).show();
                 IVImagenUsuarioMenuLateral.setImageResource(R.drawable.user);
             }
         });

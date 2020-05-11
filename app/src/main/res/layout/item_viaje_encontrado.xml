@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,143 +15,154 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryLightLight"
+            android:layout_weight="1"
             android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/IVUsuario"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:srcCompat="@android:mipmap/sym_def_app_icon" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical">
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/layout_drawable_6"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/TVdatosViaje"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nombre"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/TVApellidos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:text="Apellidos"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/TVdatosViaje"
+                        android:id="@+id/TVEdad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:text="Nombre" />
+                        android:text="Edad:"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14dp" />
 
                     <TextView
-                        android:id="@+id/TVApellidos"
+                        android:id="@+id/TVAsientosDisponibles"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:text="Apellidos" />
+                        android:layout_weight="1"
+                        android:text="Asientos disponibles:"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14dp" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/TVValoracion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Valoración: "
+                            android:textColor="@color/places_ui_default_primary_dark"
+                            android:textSize="14dp" />
+
+                        <ImageView
+                            android:id="@+id/IMGValoracion"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="left"
+                            app:srcCompat="@android:drawable/star_big_on" />
+
+                    </LinearLayout>
+
+
+
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/TVEdad"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryLight"
-                    android:textSize="14dp"
-                    android:text="Edad:" />
-
-                <TextView
-                    android:id="@+id/TVAsientosDisponibles"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryLight"
-                    android:textSize="14dp"
-                    android:layout_weight="1"
-                    android:text="Asientos disponibles:" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/TVValoracion"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/TVPrecio"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Valoración: "
-                        android:textColor="@color/colorPrimaryLight"
-                        android:textSize="14dp" />
-
-                    <ImageView
-                        android:id="@+id/IMGValoracion"
-                        android:layout_width="83dp"
-                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
                         android:layout_weight="1"
-                        android:gravity="start"
-                        android:textAlignment="textStart"
-                        app:srcCompat="@android:drawable/star_big_on" />
+                        android:layout_gravity="center"
+                        android:text="@string/TV_Precio_minimo"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="12dp" />
 
+                    <Button
+                        android:id="@+id/BTReservar"
+                        android:layout_width="match_parent"
+                        android:layout_height="28dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/layout_drawable_2"
+                        android:text="Reservar"
+                        android:textColor="@color/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/BTMensaje"
+                        android:layout_width="match_parent"
+                        android:layout_height="28dp"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/layout_drawable_2"
+                        android:text="Mensaje"
+                        android:textColor="@color/colorPrimary" />
                 </LinearLayout>
-
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/TVPrecio"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="26dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/TV_Precio_minimo"
-                android:textColor="@color/colorPrimaryLight"
-                android:textSize="12dp" />
-
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/IVUsuario"
-                android:layout_width="400dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="left"
-                android:layout_weight="1"
-                app:srcCompat="@android:mipmap/sym_def_app_icon" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryLightLight"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/BTReservar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginBottom="1dp"
-                android:layout_weight="1"
-                android:background="@color/colorBlanco"
-                android:text="Reservar"
-                android:textColor="@color/colorPrimary" />
 
-            <Button
-                android:id="@+id/BTMensaje"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:layout_marginBottom="1dp"
-                android:layout_weight="1"
-                android:background="@color/colorBlanco"
-                android:text="Mensaje"
-                android:textColor="@color/colorPrimary" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/sombra" />
 
     </LinearLayout>
 
