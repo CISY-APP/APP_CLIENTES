@@ -86,7 +86,7 @@ public class ChatFragment extends Fragment {
 
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("chat"); //Sala de chat (nombre)
+        databaseReference = firebaseDatabase.getReference("CHAT GENERAL"); //Sala de chat (nombre)
 
         adapterMensajes = new miApdapterChat(getActivity());
         adapterMensajes.setEmailUsuario(EMAIL_USUARIO);
@@ -96,9 +96,8 @@ public class ChatFragment extends Fragment {
         BTNEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", EMAIL_USUARIO ,getHoraSistema(), uriFotoUsuario ));
+                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", EMAIL_USUARIO, getHoraSistema(), uriFotoUsuario ));
                 ETTXTMensaje.setText("");
-
             }
         });
 

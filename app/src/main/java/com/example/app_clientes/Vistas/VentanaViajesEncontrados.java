@@ -44,6 +44,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
     private Button BTBuscarDialog;
     private ImageView IVFlechaAtras;
 
+    private String cod_conducto_1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,11 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
             @Override
             public void OnMensajeClick(int position) {
                 //PROGRAMAR CHAT INDIVIDUAL SI NOS DA TIEMPO
+                //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
+                Intent VentanaChatIndividual = new Intent(getApplicationContext(), VentanaChatIndividual.class);
+                VentanaChatIndividual.putExtra("COD_CONDUCTOR_1",cod_conducto_1);
+                VentanaChatIndividual.putExtra("COD_CONDUCTOR_2",viajesEncontradosList.get(position).getCod_usuario());
+                startActivity(VentanaChatIndividual);
             }
 
             @Override
@@ -102,6 +108,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         String destinoBundle = datosIN.getString("destino");
         String fechaBundle = datosIN.getString("fecha");
         String horaBundle = datosIN.getString("hora");
+        cod_conducto_1 = datosIN.getString("COD_CONDUCTOR_1");
         ETOrigen.setText(origenBundle);
         ETDestino.setText(destinoBundle);
         ETFechaYHora.setText(fechaBundle+" a las " +horaBundle);

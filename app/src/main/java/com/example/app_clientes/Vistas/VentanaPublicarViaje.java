@@ -28,6 +28,7 @@ public class VentanaPublicarViaje extends AppCompatActivity {
     private ImageView IVMenos;
     private TextView TVNum_Asientos;
     private int contAsientos = 1;
+    private String cod_conductor;
 
     //Esta clase deberán llegar IDUsuario y todos sus datos, debemos manejar
     @Override
@@ -46,7 +47,7 @@ public class VentanaPublicarViaje extends AppCompatActivity {
             public void onClick(View v) {
                 //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
                 Intent VentanaPublicarViaje = new Intent(VentanaPublicarViaje.this, VentanaViajePublicado.class);
-                //VentanaPublicarViaje.putExtra("usuario",ETUsuario.getText().toString());
+                VentanaPublicarViaje.putExtra("COD_CONDUCTOR",cod_conductor);
                 //VentanaPublicarViaje.putExtra("control",ETControl.getText().toString());
                 startActivity(VentanaPublicarViaje);
             }
@@ -189,5 +190,9 @@ public class VentanaPublicarViaje extends AppCompatActivity {
             ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
             ImageViewCompat.setImageTintList(IVMenos, csl);
         }
+    }
+    private void recibirDatosViaje() {
+        Bundle datosIN=getIntent().getExtras();
+        cod_conductor = datosIN.getString("COD_CONDUCTOR"); //Le llega desde el Login
     }
 }

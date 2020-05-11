@@ -28,6 +28,6 @@
         <activity android:name=".Vistas.VentanaAgregarVehiculo"></activity>
         <activity android:name=".Vistas.VentanaBuscarViaje"></activity>
         <activity android:name=".Vistas.VentanaViajeNoEncontrado"></activity>
-
+        <activity android:name=".Vistas.VentanaChatIndividual"></activity>
     </application>
 </manifest>

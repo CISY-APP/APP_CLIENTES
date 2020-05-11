@@ -3,6 +3,7 @@ package com.example.app_clientes.Item;
 public class ItemViajesEncontrados {
 
     private int mImageUsuario;
+    private String cod_usuario;
     private String nombre;
     private String apellidos;
     private String edad;
@@ -18,6 +19,14 @@ public class ItemViajesEncontrados {
         this.asientosLibres = asientosLibres;
         this.valoracion = valoracion;
         this.precio = precio;
+    }
+
+    public String getCod_usuario() {
+        return cod_usuario;
+    }
+
+    public void setCod_usuario(String cod_usuario) {
+        this.cod_usuario = cod_usuario;
     }
 
     public int getmImageUsuario() {
