@@ -1,0 +1,21 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <corners
+        android:topRightRadius="0dp"
+        android:radius="10dp" />
+
+    <gradient
+        android:angle="360"
+        android:endColor="@color/colorChatEnvado"
+        android:startColor="@color/colorChatEnvado"
+        android:type="linear" />
+
+
+    <!--Use android:dashWidth="2dp" and android:dashGap="2dp"
+    to add dashes to your stroke-->
+    <stroke
+        android:width="1dp"
+        android:color="@color/cardview_shadow_end_color" />
+
+
+</shape>
