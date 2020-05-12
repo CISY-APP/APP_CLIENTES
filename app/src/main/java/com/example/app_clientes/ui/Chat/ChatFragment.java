@@ -1,10 +1,8 @@
 package com.example.app_clientes.ui.Chat;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,15 +53,11 @@ public class ChatFragment extends Fragment {
     private StorageReference storageReference;
     private String uriFotoUsuario = "";
 
-    private PendingIntent pendingIntent;
-    private final static String CHANNEL_ID = "NOTIFICACION";
-    private final static int NOTIFICACION = 0;
     private static final int GALERY_INTENT = 1;
-    private static final String EMAIL_USUARIO = "EMAIL DE EL USUARIO 1";
+    private static final String ID_USUARIO = "1";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
-
 
         cargarImagenUsuario();
 
@@ -87,29 +81,8 @@ public class ChatFragment extends Fragment {
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("CHAT GENERAL"); //Sala de chat (nombre)
-
-        adapterMensajes = new miApdapterChat(getActivity());
-        adapterMensajes.setEmailUsuario(EMAIL_USUARIO);
-        LinearLayoutManager l= new LinearLayoutManager(getContext());
-        RVMensajesChat.setLayoutManager(l);
-        RVMensajesChat.setAdapter(adapterMensajes);
-        BTNEnviar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", EMAIL_USUARIO, getHoraSistema(), uriFotoUsuario ));
-                ETTXTMensaje.setText("");
-            }
-        });
-
-        //Hce que el adapter este observando los nuevos cambios que en este se produzcan.
-        adapterMensajes.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                super.onItemRangeInserted(positionStart, itemCount);
-            }
-        });
-
         databaseReference.addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Mensaje m = dataSnapshot.getValue(Mensaje.class);
@@ -137,6 +110,26 @@ public class ChatFragment extends Fragment {
 
             }
         });
+        adapterMensajes = new miApdapterChat(getActivity());
+        adapterMensajes.setIDUsuario(ID_USUARIO);
+        LinearLayoutManager l= new LinearLayoutManager(getContext());
+        RVMensajesChat.setLayoutManager(l);
+        RVMensajesChat.setAdapter(adapterMensajes);
+        BTNEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", ID_USUARIO, getHoraSistema(), uriFotoUsuario ));
+                ETTXTMensaje.setText("");
+            }
+        });
+
+        /*//Hace que el adapter este observando los nuevos cambios que en este se produzcan.
+        adapterMensajes.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+            }
+        });*/
         return view;
     }
     //Coge la direccion del dispositivo
@@ -149,14 +142,14 @@ public class ChatFragment extends Fragment {
             //Cambia la imagen desde el dispositivo
             Glide.with(getContext()).load(uri).into(fotoPerfil);
             //Crea una direccion para poder subir la imagen a firebase
-            StorageReference filePath = storageReference.child("Fotos").child(EMAIL_USUARIO);
+            StorageReference filePath = storageReference.child("Fotos").child(ID_USUARIO);
             //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(getContext(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
                     //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                    storageReference.child("Fotos").child(EMAIL_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             //Meter la URI en un String para posteriormente hacer el update o el insert en la base de datos
@@ -179,7 +172,7 @@ public class ChatFragment extends Fragment {
         //Inatancia el objeto de tipo storageReference
         storageReference = FirebaseStorage.getInstance().getReference();
         //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
-        storageReference.child("Fotos").child(EMAIL_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 //Si la carga es optima la coloca en fotoPerfil

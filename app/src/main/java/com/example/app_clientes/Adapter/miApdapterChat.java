@@ -2,13 +2,9 @@ package com.example.app_clientes.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,9 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -33,12 +26,9 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     private static final int OWN_MESSAGE_TYPE = 1;
 
     private ArrayList<Mensaje> MensajesList = new ArrayList<>();
-    //Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private Context c;
-    private String emailUsuario;
-    private StorageReference storageReference;
-
-    private HashMap<String, String> userColors = new HashMap<String, String>();
+    private String IDUsuario;
+    private HashMap<String, String> coloresUsuarios = new HashMap<String, String>();
 
     public miApdapterChat(Context c) {
         this.c = c;
@@ -48,8 +38,8 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
         MensajesList.add(mensaje);
         notifyItemChanged(MensajesList.size());
 
-        if (!userColors.containsKey(mensaje.getEmail())) {
-            userColors.put(mensaje.getEmail(), getRandomColor());
+        if (!coloresUsuarios.containsKey(mensaje.getIDUsuario())) {
+            coloresUsuarios.put(mensaje.getIDUsuario(), getRandomColor());
         }
     }
 
@@ -95,13 +85,12 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     @Override
     public int getItemViewType(int position) {
         Mensaje message = MensajesList.get(position);
-        if (message.getEmail().equals(emailUsuario)) {
+        if (message.getIDUsuario().equals(IDUsuario)) {
             return OWN_MESSAGE_TYPE;
         }
         return DEFAULT_MESSAGE_TYPE;
     }
 
-    //CLASE INTERNA ESTATICA
     abstract class ExampleViewHolder extends RecyclerView.ViewHolder {
 
         TextView TVNombreMensaje;
@@ -115,7 +104,7 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
 
         public void bindMessage(Mensaje message) {
 
-            TVNombreMensaje.setTextColor(Color.parseColor(userColors.get(message.getEmail())));
+            TVNombreMensaje.setTextColor(Color.parseColor(coloresUsuarios.get(message.getIDUsuario())));
             TVNombreMensaje.setText(message.getNombre());
             TVMensajeMensaje.setText(message.getMensaje());
             TVHoraMensaje.setText(message.getHora());
@@ -144,7 +133,6 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
             this.TVHoraMensaje = itemView.findViewById(R.id.TVHoraMensaje);
             this.TVMensajeMensaje = itemView.findViewById(R.id.TVMensajeMensaje);
             this.IVImagenUsuario = itemView.findViewById(R.id.IVImagenUsuario);
-
         }
 
         @Override
@@ -155,28 +143,11 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
             }else{
                 Glide.with(c).load(message.getDireccionFotoUsuario()).into(IVImagenUsuario);
             }
-            /*//Deberia de cambiar la imagen en funcion del email del usuario registrado en firebase
-            storageReference = FirebaseStorage.getInstance().getReference();
-            storageReference.child("Fotos").child(message.getEmail()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(c).load(uri).into(IVImagenUsuario);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle any errors
-                }
-            });*/
         }
     }
 
-    public void setEmailUsuario(String emailUsuario) {
-        this.emailUsuario = emailUsuario;
-    }
-
-    private String getEmailUsuario() {
-        return emailUsuario;
+    public void setIDUsuario(String IDUsuario) {
+        this.IDUsuario = IDUsuario;
     }
 
     //Metodo para generar colores aleatorios
@@ -196,5 +167,4 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
         coloresAleatorios.add("#67007C");
         return coloresAleatorios.get((int) ((Math.random() * 1000f) % 12f));
     }
-
 }

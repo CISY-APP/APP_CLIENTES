@@ -49,7 +49,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
     private StorageReference storageReference;
     private Uri uriImagenEndispositivo;
 
-    private static final String EMAIL_USUARIO = "EMAIL DE EL USUARIO 1";
+    private static final String ID_USUARIO = "1";
 
     private static final int GALERY_INTENT = 1;
 
@@ -136,13 +136,13 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 uriParaElInsert = Long.toString(System.currentTimeMillis());
-                StorageReference filePath = storageReference.child(EMAIL_USUARIO).child(uriParaElInsert);
+                StorageReference filePath = storageReference.child(ID_USUARIO).child(uriParaElInsert);
                 //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
                 filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                        storageReference.child(EMAIL_USUARIO).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        storageReference.child(ID_USUARIO).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 //Meter la URI en un String para posteriormente hacer el update o el insert en la base de datos

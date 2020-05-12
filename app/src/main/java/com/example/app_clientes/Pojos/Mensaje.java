@@ -6,19 +6,23 @@ public class Mensaje {
 
     private String mensaje;
     private String nombre;
-    private String email;
+    private String IDUsuario;
     private String hora;
     private String direccionFotoUsuario;
 
     public Mensaje() {
     }
 
-    public Mensaje(String mensaje, String nombre, String email, String hora, String direccionFotoUsuario) {
+    public Mensaje(String mensaje, String nombre, String IDUsuario, String hora, String direccionFotoUsuario) {
         this.mensaje = mensaje;
         this.nombre = nombre;
-        this.email = email;
+        this.IDUsuario = IDUsuario;
         this.hora = hora;
         this.direccionFotoUsuario = direccionFotoUsuario;
+    }
+    public Mensaje(String hora, String mensaje) {
+        this.mensaje = mensaje;
+        this.hora = hora;
     }
 
     public String getDireccionFotoUsuario() {
@@ -45,12 +49,12 @@ public class Mensaje {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
+    public String getIDUsuario() {
+        return IDUsuario;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setIDUsuario(String IDUsuario) {
+        this.IDUsuario = IDUsuario;
     }
 
     public String getHora() {

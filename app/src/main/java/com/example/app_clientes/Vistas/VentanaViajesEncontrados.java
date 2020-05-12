@@ -1,32 +1,23 @@
 package com.example.app_clientes.Vistas;
 
-import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_clientes.Adapter.miAdapterViajesEncontrados;
 import com.example.app_clientes.Item.ItemViajesEncontrados;
-import com.example.app_clientes.Otros.CalendarioFragment;
-import com.example.app_clientes.Otros.HoraFragment;
-import com.example.app_clientes.Pojos.Viaje;
+import com.example.app_clientes.Pojos.Conversacion;
+import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,12 +28,16 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
     private miAdapterViajesEncontrados adapterViajesEncontrados;
     private RecyclerView recyclerView;
     private ArrayList<ItemViajesEncontrados> viajesEncontradosList = new ArrayList<>();
-    private Viaje viaje;
+
     private TextView ETFechaYHora;
     private TextView ETOrigen;
     private TextView ETDestino;
     private Button BTBuscarDialog;
     private ImageView IVFlechaAtras;
+
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference1;
+    private DatabaseReference databaseReference2;
 
     private String cod_conducto_1;
 
@@ -83,11 +78,9 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         adapterViajesEncontrados.setOnClickListener(new miAdapterViajesEncontrados.OnItemClickListener() {
             @Override
             public void OnMensajeClick(int position) {
-                //PROGRAMAR CHAT INDIVIDUAL SI NOS DA TIEMPO
-                //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
+
                 Intent VentanaChatIndividual = new Intent(getApplicationContext(), VentanaChatIndividual.class);
-                VentanaChatIndividual.putExtra("COD_CONDUCTOR_1",cod_conducto_1);
-                VentanaChatIndividual.putExtra("COD_CONDUCTOR_2",viajesEncontradosList.get(position).getCod_usuario());
+                VentanaChatIndividual.putExtra("CODIGO_SALA","1-4");
                 startActivity(VentanaChatIndividual);
             }
 
@@ -113,6 +106,13 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         ETDestino.setText(destinoBundle);
         ETFechaYHora.setText(fechaBundle+" a las " +horaBundle);
 
+    }
+
+    //Obtiene la hora del sistema
+    private String getHoraSistema() {
+        Calendar c1 = Calendar.getInstance();
+        String time;
+        return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
     }
 
 }

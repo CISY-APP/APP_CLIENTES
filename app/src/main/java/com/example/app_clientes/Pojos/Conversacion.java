@@ -1,0 +1,61 @@
+package com.example.app_clientes.Pojos;
+
+public class Conversacion  {
+
+    public String idConversacion;
+    public String id_usuario;
+    public String horaUltimoMensaje;
+    public String ultimoMensaje;
+    public int fotoUsuarioContrario;
+
+    public Conversacion() {
+    }
+
+    public Conversacion(String idConversacion, String id_usuario, String horaUltimoMensaje, String ultimoMensaje, int fotoUsuarioContrario) {
+        this.idConversacion = idConversacion;
+        this.id_usuario = id_usuario;
+        this.horaUltimoMensaje = horaUltimoMensaje;
+        this.ultimoMensaje = ultimoMensaje;
+        this.fotoUsuarioContrario = fotoUsuarioContrario;
+    }
+
+    public String getIdConversacion() {
+        return idConversacion;
+    }
+
+    public void setIdConversacion(String idConversacion) {
+        this.idConversacion = idConversacion;
+    }
+
+    public String getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(String id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    public String getHoraUltimoMensaje() {
+        return horaUltimoMensaje;
+    }
+
+    public void setHoraUltimoMensaje(String horaUltimoMensaje) {
+        this.horaUltimoMensaje = horaUltimoMensaje;
+    }
+
+    public String getUltimoMensaje() {
+        return ultimoMensaje;
+    }
+
+    public void setUltimoMensaje(String ultimoMensaje) {
+        this.ultimoMensaje = ultimoMensaje;
+    }
+
+    public int getFotoUsuarioContrario() {
+        return fotoUsuarioContrario;
+    }
+
+    public void setFotoUsuarioContrario(int fotoUsuarioContrario) {
+        this.fotoUsuarioContrario = fotoUsuarioContrario;
+    }
+}

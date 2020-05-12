@@ -55,7 +55,7 @@ public class DatosFragment extends Fragment {
     private String uriFotoUsuario = "";
 
     private static final int GALERY_INTENT = 1;
-    private static final String EMAIL_USUARIO = "EMAIL DE EL USUARIO 1";
+    private static final String ID_USUARIO = "1";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_datos, container, false);
@@ -154,14 +154,14 @@ public class DatosFragment extends Fragment {
             //Cambia la imagen desde el dispositivo
             Glide.with(getContext()).load(uri).into(IMGUsuarioDatos);
             //Crea una direccion para poder subir la imagen a firebase
-            StorageReference filePath = storageReference.child("Fotos").child(EMAIL_USUARIO);
+            StorageReference filePath = storageReference.child("Fotos").child(ID_USUARIO);
             //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(getContext(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
                     //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                    storageReference.child("Fotos").child(EMAIL_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             //Meter la URI en un String para posteriormente hacer el update o el insert en la base de datos
@@ -186,7 +186,7 @@ public class DatosFragment extends Fragment {
         //Inatancia el objeto de tipo storageReference
         storageReference = FirebaseStorage.getInstance().getReference();
         //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
-        storageReference.child("Fotos").child(EMAIL_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 //Si la carga es optima la coloca en IMGUsuarioDatos

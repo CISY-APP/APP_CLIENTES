@@ -22,12 +22,19 @@ import androidx.fragment.app.Fragment;
 
 import com.example.app_clientes.Otros.CalendarioFragment;
 import com.example.app_clientes.Otros.HoraFragment;
+import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
 import com.example.app_clientes.Vistas.VentanaBuscarViaje;
 import com.example.app_clientes.Vistas.VentanaCambiarContrasena;
 import com.example.app_clientes.Vistas.VentanaPublicarViaje;
 import com.example.app_clientes.Vistas.VentanaViajesEncontrados;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
@@ -39,6 +46,9 @@ public class HomeFragment extends Fragment {
     private EditText ETOrigen;
     private EditText ETDestino;
     private Button BTBuscarDialog;
+
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_home, container, false);
