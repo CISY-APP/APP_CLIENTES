@@ -18,6 +18,7 @@ import com.example.app_clientes.Pojos.Conversacion;
 import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
 import com.example.app_clientes.Vistas.VentanaChatIndividual;
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Map;
 
 public class MensajesFragment extends Fragment {
 
@@ -44,28 +46,29 @@ public class MensajesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mensajes, container, false);
 
-
-
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO); //Sala de chat (nombre)
         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-              @Override
-              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                  Conversacion c = dataSnapshot.getValue(Conversacion.class);
-                  conversacionList.add(c);
-                  miAdapterMensajes.notifyDataSetChanged();
-              }
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                    Conversacion c = dsp.getValue(Conversacion.class);
+                    conversacionList.add(c);
+                    miAdapterMensajes.notifyDataSetChanged();
+                }
+            }
 
-              @Override
-              public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-              }
+            }
         });
         //Asociamos los atributos con los objeto del layoud para poder usarlos
         //INSTANCIAMOS Y ASOCIAMOS ELEMENTOS NECESARIOS PARA EL CORRECTO FUNCIONAMIENTO DEL RECYCLERVIEW
         recyclerView = view.findViewById(R.id.RVConversacionesChat); //Vinculamos el recyclerview del xml con el de la clase main
-        recyclerView.setHasFixedSize(true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento)
+        recyclerView.setHasFixedSize(
+                true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento)
         layoutManager = new LinearLayoutManager(getContext());//Creamos el layoutManager de tipo GridLayaout que vamos a utilizar
         miAdapterMensajes = new miAdapterMensajes(conversacionList);//Instanciamos un objeto de tipo Example_Adapter
         recyclerView.setLayoutManager(layoutManager);//Asociamos al recyclerView el layoutManager que creamos en el paso anterior
@@ -81,6 +84,7 @@ public class MensajesFragment extends Fragment {
         });
         return view;
     }
+
     //Obtiene la hora del sistema
     private String getHoraSistema() {
         Calendar c1 = Calendar.getInstance();
