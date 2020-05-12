@@ -1,17 +1,15 @@
 package com.example.app_clientes.Vistas;
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.app_clientes.R;
-import com.example.app_clientes.ui.Datos.DatosFragment;
 
 public class VentanaCambiarContrasena extends AppCompatActivity {
 
@@ -23,10 +21,14 @@ public class VentanaCambiarContrasena extends AppCompatActivity {
     private ImageView IVAceptar;
     private ImageView IVFlechaAtras;
 
+    private String ID_USUARIO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cambiar_contrasena);
+
+        ID_USUARIO = cargarCredencialesIdUsuario();
 
         ETContrasena = findViewById(R.id.ETContrasena);
         ETcontrasenaNueva = findViewById(R.id.ETcontrasenaNueva);
@@ -46,5 +48,10 @@ public class VentanaCambiarContrasena extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
     }
 }

@@ -2,7 +2,9 @@ package com.example.app_clientes.Vistas;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
@@ -25,10 +27,14 @@ public class VentanaBuscarViaje extends AppCompatActivity {
     private EditText ETFechaViajeBuscarViaje;
     private EditText ETHoraViajeBuscarViaje;
 
+    private String ID_USUARIO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar_viaje);
+
+        ID_USUARIO = cargarCredencialesIdUsuario();
 
         ETOrigenBuscarViaje = findViewById(R.id.ETOrigenBuscarViaje);
         ETDestinoBuscarViaje = findViewById(R.id.ETDestinoBuscarViaje);
@@ -111,4 +117,10 @@ public class VentanaBuscarViaje extends AppCompatActivity {
         });
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
+    }
 }
+

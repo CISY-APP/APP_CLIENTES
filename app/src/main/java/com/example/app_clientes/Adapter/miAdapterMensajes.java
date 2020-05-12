@@ -36,6 +36,15 @@ public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.Ex
         this.conversacionArrayListList = conversacionArrayListList;
     }
 
+    public Conversacion getConversacion(int i){
+        return conversacionArrayListList.get(i);
+    }
+
+    public void setConversaciones(ArrayList<Conversacion> conversaciones) {
+        conversacionArrayListList = conversaciones;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     //Sobreescribimos el metodo onCreateViewHolder que se va a encargar de asignar a una vista los elementos que contiene la plantilla creada en XML

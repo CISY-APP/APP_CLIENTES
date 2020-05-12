@@ -1,7 +1,9 @@
 package com.example.app_clientes.ui.Datos;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -55,12 +57,12 @@ public class DatosFragment extends Fragment {
     private String uriFotoUsuario = "";
 
     private static final int GALERY_INTENT = 1;
-    private static final String ID_USUARIO = "1";
+    private String ID_USUARIO;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_datos, container, false);
 
-
+        ID_USUARIO = cargarCredencialesIdUsuario();
 
         //Carga la imagen del usuario al abrir la ventana
         cargarImagenUsuario();
@@ -219,6 +221,11 @@ public class DatosFragment extends Fragment {
             }
         });
         newFragment.show(getChildFragmentManager(), "datePicker");
+    }
+
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getContext().getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
     }
 
     //Hacer si nos queda tiempo cambiar pais de origen

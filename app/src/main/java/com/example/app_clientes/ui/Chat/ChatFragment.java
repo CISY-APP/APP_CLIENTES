@@ -1,6 +1,8 @@
 package com.example.app_clientes.ui.Chat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,10 +56,12 @@ public class ChatFragment extends Fragment {
     private String uriFotoUsuario = "";
 
     private static final int GALERY_INTENT = 1;
-    private static final String ID_USUARIO = "1";
+    private String ID_USUARIO;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
+
+        ID_USUARIO = cargarCredencialesIdUsuario();
 
         cargarImagenUsuario();
 
@@ -198,6 +202,11 @@ public class ChatFragment extends Fragment {
         Calendar c1 = Calendar.getInstance();
         String time;
         return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
+    }
+
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getContext().getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
     }
 
 

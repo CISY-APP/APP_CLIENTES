@@ -1,6 +1,8 @@
 package com.example.app_clientes.Vistas;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_clientes.Adapter.miAdapterViajesEncontrados;
 import com.example.app_clientes.Item.ItemViajesEncontrados;
-import com.example.app_clientes.Pojos.Conversacion;
-import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -42,13 +42,16 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
 
     private String cod_conducto_1;
 
-    private static final String ID_USUARIO = "1";
-    private static final String ID_USUARIO_COMBER = "2";
+    private String ID_USUARIO;
+
+    private static final String ID_USUARIO_CONVER = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_viajes_encontrados);
+
+        ID_USUARIO = cargarCredencialesIdUsuario();
 
         ETOrigen = findViewById(R.id.TVOrigenViajesEncontrados);
         ETDestino = findViewById(R.id.TVDestinoViajesEncontrados);
@@ -82,9 +85,8 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         adapterViajesEncontrados.setOnClickListener(new miAdapterViajesEncontrados.OnItemClickListener() {
             @Override
             public void OnMensajeClick(int position) {
-
                 Intent VentanaChatIndividual = new Intent(getApplicationContext(), VentanaChatIndividual.class);
-                VentanaChatIndividual.putExtra("CODIGO_SALA",getChatName(ID_USUARIO, ID_USUARIO_COMBER));
+                VentanaChatIndividual.putExtra("ID_USUARIO_CONVER",ID_USUARIO_CONVER);
                 startActivity(VentanaChatIndividual);
             }
 
@@ -124,6 +126,11 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         String[] ids = new String[]{user1, user2};
         Arrays.sort(ids);
         return ids[0] + "-" + ids[1];
+    }
+
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
     }
 
 }

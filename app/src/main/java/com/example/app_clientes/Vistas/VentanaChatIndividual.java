@@ -1,5 +1,7 @@
 package com.example.app_clientes.Vistas;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -47,8 +49,8 @@ public class VentanaChatIndividual extends AppCompatActivity {
     private String uriFotoUsuario = "";
 
     private miApdapterChat adapterMensajes;
-    private static final String ID_USUARIO = "1";
-    private static final String ID_USUARIO_COMBER = "2";
+    private String ID_USUARIO;
+    private String ID_USUARIO_CONVER;
     private String chatName;
 
     @Override
@@ -56,17 +58,20 @@ public class VentanaChatIndividual extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_individual);
 
-        chatName = getChatName(ID_USUARIO, ID_USUARIO_COMBER);
+        ID_USUARIO = cargarCredencialesIdUsuario();
+        ID_USUARIO_CONVER = recibirIDUsuarioConver();
+
+        chatName = getChatName(ID_USUARIO, ID_USUARIO_CONVER);
 
         RVMensajesChat = findViewById(R.id.RVMensajesChat);
         ETTXTMensajeChatIndividual = findViewById(R.id.ETTXTMensajeChatIndividual);
         BTMenajeEnviarChatIndividual = findViewById(R.id.BTMenajeEnviarChatIndividual);
 
-        crearSalaSiEsNecesario(ID_USUARIO, ID_USUARIO_COMBER);
+        crearSalaSiEsNecesario(ID_USUARIO, ID_USUARIO_CONVER);
 
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        chatReference = firebaseDatabase.getReference(recibirNombreSala()); //Sala de chat (nombre)
+        chatReference = firebaseDatabase.getReference(chatName); //Sala de chat (nombre)
         chatReference.addChildEventListener(new ChildEventListener() {
 
             @Override
@@ -106,7 +111,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 chatReference.push().setValue(
-                        new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), "Javier", "1", getHoraSistema(), uriFotoUsuario));
+                        new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), "Javier", ID_USUARIO, getHoraSistema(), uriFotoUsuario));
 
                 DatabaseReference hopperRef = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO).child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates = new HashMap<>();
@@ -114,14 +119,13 @@ public class VentanaChatIndividual extends AppCompatActivity {
                 hopperUpdates.put("ultimoMensaje", ETTXTMensajeChatIndividual.getText().toString());
                 hopperRef.updateChildren(hopperUpdates);
 
-                DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_COMBER).child(chatName); //Sala de chat (nombre)
+                DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER).child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates1 = new HashMap<>();
                 hopperUpdates1.put("horaUltimoMensaje", getHoraSistema());
                 hopperUpdates1.put("ultimoMensaje", ETTXTMensajeChatIndividual.getText().toString());
                 hopperRef1.updateChildren(hopperUpdates);
 
                 ETTXTMensajeChatIndividual.setText("");
-
 
             }
         });
@@ -152,10 +156,9 @@ public class VentanaChatIndividual extends AppCompatActivity {
         RVMensajesChat.scrollToPosition(adapterMensajes.getItemCount() - 1);
     }
 
-    private String recibirNombreSala() {
+    private String recibirIDUsuarioConver() {
         Bundle datosIN = getIntent().getExtras();
-        CODIGO_SALA = datosIN.getString("CODIGO_SALA");
-        return CODIGO_SALA;
+        return datosIN.getString("ID_USUARIO_CONVER");
     }
 
     //Obtiene la hora del sistema
@@ -194,11 +197,11 @@ public class VentanaChatIndividual extends AppCompatActivity {
         databaseReference1.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_1).child(chatName); //Sala de chat (nombre)
-        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_1.toString(), "", "", R.drawable.user));
+        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", R.drawable.user));
         databaseReference2.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_2).child(chatName); //Sala de chat (nombre)
-        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", R.drawable.user));
+        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_1.toString(), "", "", R.drawable.user));
         databaseReference2.push();
     }
 
@@ -208,6 +211,11 @@ public class VentanaChatIndividual extends AppCompatActivity {
         String[] ids = new String[]{user1, user2};
         Arrays.sort(ids);
         return ids[0] + "-" + ids[1];
+    }
+
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
     }
 
 }

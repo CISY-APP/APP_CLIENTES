@@ -1,6 +1,8 @@
 package com.example.app_clientes.Vistas;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,7 +51,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
     private StorageReference storageReference;
     private Uri uriImagenEndispositivo;
 
-    private static final String ID_USUARIO = "1";
+    private String ID_USUARIO;
 
     private static final int GALERY_INTENT = 1;
 
@@ -57,6 +59,8 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_vehiculo);
+
+        ID_USUARIO = cargarCredencialesIdUsuario();
 
         //Carga la imagen del vehiculo por defecto
         //cargarImagenVehiculo();
@@ -233,6 +237,11 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,GALERY_INTENT);
+    }
+
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
     }
 
     //Coge la direccion de firebase

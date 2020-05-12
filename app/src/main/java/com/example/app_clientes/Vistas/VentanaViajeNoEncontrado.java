@@ -12,6 +12,7 @@ public class VentanaViajeNoEncontrado extends AppCompatActivity {
 
     private Button BTVolver;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,8 @@
 package com.example.app_clientes.Vistas;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Pojos.Conversacion;
 import com.example.app_clientes.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,7 +38,7 @@ public class VentanaPrincipal extends AppCompatActivity{
     private StorageReference storageReference;
     private static final int GALERY_INTENT = 1;
     private CircleImageView IVImagenUsuarioMenuLateral;
-    private static final String ID_USUARIO = "1";
+    private String ID_USUARIO;
 
     public VentanaPrincipal() {
     }
@@ -44,6 +47,9 @@ public class VentanaPrincipal extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_principal);
+
+        guardarCredencialesIdUsuario();
+        ID_USUARIO = cargarCredencialesIdUsuario();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -125,5 +131,16 @@ public class VentanaPrincipal extends AppCompatActivity{
                 IVImagenUsuarioMenuLateral.setImageResource(R.drawable.user);
             }
         });
+    }
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
+    }
+
+    private void guardarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = credenciales.edit();
+        editor.putString("idUsuario", "2");
+        editor.commit();
     }
 }

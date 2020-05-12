@@ -1,6 +1,8 @@
 package com.example.app_clientes.ui.Vehiculos;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -61,9 +63,12 @@ public class VehiculosFragment extends Fragment {
     private Uri uriImagenEndispositivo;
 
     private static final int GALERY_INTENT = 1;
+    private String ID_USUARIO;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vehiculo, container, false);
+
+        ID_USUARIO = cargarCredencialesIdUsuario();
 
         //Inatancia el objeto de tipo storageReference
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -200,5 +205,10 @@ public class VehiculosFragment extends Fragment {
             //Cambia la imagen desde el dispositivo
             Glide.with(getContext()).load(uriImagenEndispositivo).into(IMGVehiculoGrande);
         }
+    }
+
+    private String cargarCredencialesIdUsuario(){
+        SharedPreferences credenciales = getContext().getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+        return credenciales.getString("idUsuario","0");
     }
 }
