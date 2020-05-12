@@ -48,7 +48,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
 
     private miApdapterChat adapterMensajes;
     private static final String ID_USUARIO = "1";
-
+    private static final String ID_USUARIO_COMBER = "2";
     private String chatName;
 
     @Override
@@ -56,13 +56,13 @@ public class VentanaChatIndividual extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_individual);
 
-        chatName = getChatName(ID_USUARIO, "4");
+        chatName = getChatName(ID_USUARIO, ID_USUARIO_COMBER);
 
         RVMensajesChat = findViewById(R.id.RVMensajesChat);
         ETTXTMensajeChatIndividual = findViewById(R.id.ETTXTMensajeChatIndividual);
         BTMenajeEnviarChatIndividual = findViewById(R.id.BTMenajeEnviarChatIndividual);
 
-        crearSalaSiEsNecesario(ID_USUARIO, "4");
+        crearSalaSiEsNecesario(ID_USUARIO, ID_USUARIO_COMBER);
 
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -114,7 +114,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
                 hopperUpdates.put("ultimoMensaje", ETTXTMensajeChatIndividual.getText().toString());
                 hopperRef.updateChildren(hopperUpdates);
 
-                DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child("4").child(chatName); //Sala de chat (nombre)
+                DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_COMBER).child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates1 = new HashMap<>();
                 hopperUpdates1.put("horaUltimoMensaje", getHoraSistema());
                 hopperUpdates1.put("ultimoMensaje", ETTXTMensajeChatIndividual.getText().toString());

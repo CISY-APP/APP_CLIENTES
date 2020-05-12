@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class VentanaViajesEncontrados  extends AppCompatActivity {
@@ -40,6 +41,9 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
     private DatabaseReference databaseReference2;
 
     private String cod_conducto_1;
+
+    private static final String ID_USUARIO = "1";
+    private static final String ID_USUARIO_COMBER = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +84,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
             public void OnMensajeClick(int position) {
 
                 Intent VentanaChatIndividual = new Intent(getApplicationContext(), VentanaChatIndividual.class);
-                VentanaChatIndividual.putExtra("CODIGO_SALA","1-4");
+                VentanaChatIndividual.putExtra("CODIGO_SALA",getChatName(ID_USUARIO, ID_USUARIO_COMBER));
                 startActivity(VentanaChatIndividual);
             }
 
@@ -113,6 +117,13 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         Calendar c1 = Calendar.getInstance();
         String time;
         return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
+    }
+
+    //ordena los numeros de los salas
+    private String getChatName(String user1, String user2) {
+        String[] ids = new String[]{user1, user2};
+        Arrays.sort(ids);
+        return ids[0] + "-" + ids[1];
     }
 
 }
