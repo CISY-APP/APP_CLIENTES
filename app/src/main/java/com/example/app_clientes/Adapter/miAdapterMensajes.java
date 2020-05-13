@@ -21,7 +21,7 @@ import java.util.ArrayList;
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.ExampleViewHolder> {
 
-    public Context c;
+    private Context c;
     private ArrayList<Conversacion> conversacionArrayListList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 

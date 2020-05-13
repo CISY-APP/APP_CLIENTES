@@ -1,6 +1,7 @@
 package com.example.app_clientes.Adapter;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_clientes.Item.ItemViajesEncontrados;
+import com.example.app_clientes.Pojos.Conversacion;
 import com.example.app_clientes.R;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterViajesEncontrados.ExampleViewHolder> {
 
     private ArrayList<ItemViajesEncontrados> viajesEncontradosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
+    private Context c;
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 
     //INTERFAZ dentro de la clase la cual nos obliga a implementar y sobreescribir el metodo OnItemClick
@@ -33,7 +36,8 @@ public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterVi
         mListener = listener;
     }
 
-    public miAdapterViajesEncontrados(ArrayList<ItemViajesEncontrados> viajesEncontradosList) {
+    public miAdapterViajesEncontrados(Context c, ArrayList<ItemViajesEncontrados> viajesEncontradosList ) {
+        this.c = c;
         this.viajesEncontradosList = viajesEncontradosList;
     }
 

@@ -21,7 +21,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/IVFlechaAtrasAgregarVehiculo"
+                    android:id="@+id/IVFlechaAtrasChatIndividual"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"

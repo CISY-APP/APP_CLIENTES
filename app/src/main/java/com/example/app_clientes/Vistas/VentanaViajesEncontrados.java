@@ -65,14 +65,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         });
 
         recibirDatosViaje();
-
-        //Deberemos comprobar que valoracion tiene el usuario para meter una imagen u otra.
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.yo, "Javier","Gomez Fernandez", "28", "3",  R.drawable.unaestrella,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.yo, "Javier","Gomez Fernandez", "28", "3",  R.drawable.dosestrellas,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.yo, "Javier","Gomez Fernandez", "28", "3",  R.drawable.tresestrellas,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.yo, "Javier","Gomez Fernandez", "28", "3",  R.drawable.cuatroestrellas,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.yo, "Javier","Gomez Fernandez", "28", "3",  R.drawable.cincoestrellas,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.yo, "Javier","Gomez Fernandez", "28", "3",  R.drawable.unaestrella,  "2.22"));
+        cargarViajes();
 
         //Asociamos los atributos con los objeto del layoud para poder usarlos
         //INSTANCIAMOS Y ASOCIAMOS ELEMENTOS NECESARIOS PARA EL CORRECTO FUNCIONAMIENTO DEL RECYCLERVIEW
@@ -99,6 +92,16 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
                 startActivity(VentanaPublicarViaje);
             }
         });
+    }
+
+    private void cargarViajes() {
+        //Deberemos comprobar que valoracion tiene el usuario para meter una imagen u otra.
+        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.unaestrella,  "2.22"));
+        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.dosestrellas,  "2.22"));
+        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.tresestrellas,  "2.22"));
+        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.cuatroestrellas,  "2.22"));
+        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.cincoestrellas,  "2.22"));
+        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.unaestrella,  "2.22"));
     }
 
     private void recibirDatosViaje() {

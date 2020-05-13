@@ -1,5 +1,6 @@
 package com.example.app_clientes.Vistas;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -7,10 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +48,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
     private Button BTMenajeEnviarChatIndividual;
     private EditText ETTXTMensajeChatIndividual;
     private CircleImageView IVfotoUsuarioChatIndividual;
+    private ImageView IVFlechaAtrasChatIndividual;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference chatReference;
@@ -51,7 +56,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
 
     private String uriFotoUsuario = "";
     private String uriFotoUsuarioContrario = "";
-
+    private String CHANNEL_ID = "1";
     private miApdapterChat adapterMensajes;
     private String ID_USUARIO;
     private String ID_USUARIO_CONVER;
@@ -67,16 +72,24 @@ public class VentanaChatIndividual extends AppCompatActivity {
 
         chatName = getChatName(ID_USUARIO, ID_USUARIO_CONVER);
 
-        RVMensajesChat = findViewById(R.id.RVMensajesChat);
-        ETTXTMensajeChatIndividual = findViewById(R.id.ETTXTMensajeChatIndividual);
-        BTMenajeEnviarChatIndividual = findViewById(R.id.BTMenajeEnviarChatIndividual);
-        IVfotoUsuarioChatIndividual = findViewById(R.id.IVfotoUsuarioChatIndividual);
-
-
         cargarImagenUsuario();
         cargarMiImagen();
 
         crearSalaSiEsNecesario(ID_USUARIO, ID_USUARIO_CONVER);
+
+
+        RVMensajesChat = findViewById(R.id.RVMensajesChat);
+        ETTXTMensajeChatIndividual = findViewById(R.id.ETTXTMensajeChatIndividual);
+        BTMenajeEnviarChatIndividual = findViewById(R.id.BTMenajeEnviarChatIndividual);
+        IVfotoUsuarioChatIndividual = findViewById(R.id.IVfotoUsuarioChatIndividual);
+        IVFlechaAtrasChatIndividual = findViewById(R.id.IVFlechaAtrasChatIndividual);
+        IVFlechaAtrasChatIndividual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -88,6 +101,17 @@ public class VentanaChatIndividual extends AppCompatActivity {
                 Mensaje m = dataSnapshot.getValue(Mensaje.class);
                 adapterMensajes.addMensaje(m);
                 setScrollBar();
+
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                        .setSmallIcon(R.drawable.enviar)
+                        .setContentTitle("Nuevo mensaje de " + ID_USUARIO_CONVER)
+                        .setContentText(m.getMensaje())
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(m.getMensaje()))
+                        .setPriority(NotificationCompat.PRIORITY_MAX);
+
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(1, builder.build());
             }
 
             @Override
@@ -119,8 +143,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
         BTMenajeEnviarChatIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatReference.push().setValue(
-                        new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), "Eduardo", ID_USUARIO, getHoraSistema(), uriFotoUsuario));
+                chatReference.push().setValue(new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), "Eduardo", ID_USUARIO, getHoraSistema(), uriFotoUsuario));
 
                 DatabaseReference hopperRef = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO).child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates = new HashMap<>();
