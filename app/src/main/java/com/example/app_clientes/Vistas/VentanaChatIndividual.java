@@ -173,7 +173,6 @@ public class VentanaChatIndividual extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Glide.with(getApplicationContext()).load(uri).into(IVfotoUsuarioChatIndividual);
-                uriFotoUsuarioContrario = uri.toString();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

@@ -12,8 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.Item.ItemViajesEncontrados;
-import com.example.app_clientes.Pojos.Conversacion;
 import com.example.app_clientes.R;
 
 import java.util.ArrayList;
@@ -61,13 +61,13 @@ public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterVi
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         ItemViajesEncontrados nuevoViajeEncontrado=viajesEncontradosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
-        holder.mImageUsuario.setImageResource(nuevoViajeEncontrado.getmImageUsuario());
         holder.TVNombre.setText(viajesEncontradosList.get(position).getNombre());
         holder.TVApellidos.setText(viajesEncontradosList.get(position).getApellidos());
         holder.TVEdad.setText("Edad: "+viajesEncontradosList.get(position).getEdad()+" años");
         holder.TVAsientosLibres.setText("Asientos disponibles: "+viajesEncontradosList.get(position).getAsientosLibres());
         holder.TVPrecio.setText(viajesEncontradosList.get(position).getPrecio() +"€");
         holder.mImageValoracion.setImageResource(nuevoViajeEncontrado.getValoracion());
+        Glide.with(c).load(viajesEncontradosList.get(position).getUriImagenUsuario()).into(holder.mImageUsuario);
 
 
     }

@@ -2,7 +2,7 @@ package com.example.app_clientes.Item;
 
 public class ItemViajesEncontrados {
 
-    private int mImageUsuario;
+    private String uriImagenUsuario;
     private String cod_usuario;
     private String nombre;
     private String apellidos;
@@ -11,14 +11,15 @@ public class ItemViajesEncontrados {
     private String precio;
     private int valoracion;
 
-    public ItemViajesEncontrados(int mImageUsuario, String nombre, String apellidos, String edad, String asientosLibres, int valoracion, String precio) {
-        this.mImageUsuario=mImageUsuario;
+    public ItemViajesEncontrados(String uriImagenUsuario,  String cod_usuario, String nombre, String apellidos, String edad, String asientosLibres, int valoracion, String precio) {
+        this.uriImagenUsuario = uriImagenUsuario;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.edad = edad;
         this.asientosLibres = asientosLibres;
         this.valoracion = valoracion;
         this.precio = precio;
+        this.cod_usuario=cod_usuario;
     }
 
     public String getCod_usuario() {
@@ -29,12 +30,12 @@ public class ItemViajesEncontrados {
         this.cod_usuario = cod_usuario;
     }
 
-    public int getmImageUsuario() {
-        return mImageUsuario;
+    public String getUriImagenUsuario() {
+        return uriImagenUsuario;
     }
 
-    public void setmImageUsuario(int mImageUsuario) {
-        this.mImageUsuario = mImageUsuario;
+    public void setUriImagenUsuario(String uriImagenUsuario) {
+        this.uriImagenUsuario = uriImagenUsuario;
     }
 
     public String getNombre() {

@@ -3,12 +3,14 @@ package com.example.app_clientes.Vistas;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.app_clientes.Adapter.miAdapterViajesEncontrados;
 import com.example.app_clientes.Item.ItemViajesEncontrados;
 import com.example.app_clientes.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,14 +39,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
     private TextView ETFechaYHora;
     private TextView ETOrigen;
     private TextView ETDestino;
-    private Button BTBuscarDialog;
     private ImageView IVFlechaAtras;
-
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference1;
-    private DatabaseReference databaseReference2;
-
-    private String cod_conducto_1;
 
     private String ID_USUARIO;
 
@@ -65,7 +64,10 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         });
 
         recibirDatosViaje();
-        cargarViajes();
+
+        viajesEncontradosList.add(new ItemViajesEncontrados("https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F1?alt=media&token=f59bccd3-4c6e-4872-ab50-14b39743685d","1","Javier","Gomez Fernandez", "28", "3",  R.drawable.unaestrella,  "2.22"));
+        viajesEncontradosList.add(new ItemViajesEncontrados("https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F2?alt=media&token=d29a5deb-1476-4ad9-ab7c-fd853a705ac7","2","Eduardo","Gomez Fernandez", "29", "1",  R.drawable.dosestrellas,  "1.90"));
+
 
         //Asociamos los atributos con los objeto del layoud para poder usarlos
         //INSTANCIAMOS Y ASOCIAMOS ELEMENTOS NECESARIOS PARA EL CORRECTO FUNCIONAMIENTO DEL RECYCLERVIEW
@@ -73,7 +75,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento)
         layoutManager = new LinearLayoutManager(VentanaViajesEncontrados.this);//Creamos el layoutManager de tipo GridLayaout que vamos a utilizar
         recyclerView.setLayoutManager(layoutManager);//Asociamos al recyclerView el layoutManager que creamos en el paso anterior
-        adapterViajesEncontrados = new miAdapterViajesEncontrados(viajesEncontradosList);//Instanciamos un objeto de tipo Example_Adapter
+        adapterViajesEncontrados = new miAdapterViajesEncontrados(this, viajesEncontradosList);//Instanciamos un objeto de tipo Example_Adapter
         recyclerView.setAdapter(adapterViajesEncontrados);//Vinculamos el adapter al recyclerView
         adapterViajesEncontrados.setOnClickListener(new miAdapterViajesEncontrados.OnItemClickListener() {
             @Override
@@ -94,28 +96,18 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         });
     }
 
-    private void cargarViajes() {
-        //Deberemos comprobar que valoracion tiene el usuario para meter una imagen u otra.
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.unaestrella,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.dosestrellas,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.tresestrellas,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.cuatroestrellas,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.cincoestrellas,  "2.22"));
-        viajesEncontradosList.add(new ItemViajesEncontrados(R.drawable.user, "Javier","Gomez Fernandez", "28", "3",  R.drawable.unaestrella,  "2.22"));
-    }
-
     private void recibirDatosViaje() {
         Bundle datosIN=getIntent().getExtras();
         String origenBundle = datosIN.getString("origen");
         String destinoBundle = datosIN.getString("destino");
         String fechaBundle = datosIN.getString("fecha");
         String horaBundle = datosIN.getString("hora");
-        cod_conducto_1 = datosIN.getString("COD_CONDUCTOR_1");
         ETOrigen.setText(origenBundle);
         ETDestino.setText(destinoBundle);
         ETFechaYHora.setText(fechaBundle+" a las " +horaBundle);
 
     }
+
 
     //Obtiene la hora del sistema
     private String getHoraSistema() {
