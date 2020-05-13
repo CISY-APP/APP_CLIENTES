@@ -4,14 +4,11 @@ import android.app.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.widget.ImageViewCompat;
 
 import com.example.app_clientes.Otros.CalendarioFragment;
 import com.example.app_clientes.Otros.HoraFragment;
@@ -21,15 +18,14 @@ import com.example.app_clientes.R;
 public class VentanaPublicarViaje extends AppCompatActivity {
 
     //Atributos de la clase
-    private Button BTPublicar;
+    private ImageView BTPublicar;
+    private ImageView IVAtras;
     private EditText ETFecha;
     private EditText ETHora;
     private SeekBar seekBarPrecio;
     private TextView TVPrecio;
-    private ImageView IVMas;
-    private ImageView IVMenos;
-    private TextView TVNum_Asientos;
-    private int contAsientos = 1;
+    private Spinner spinner_numero_plazas;
+    private Spinner SpinnerMatriculaVehiculos;
 
     private String ID_USUARIO;
 
@@ -41,9 +37,6 @@ public class VentanaPublicarViaje extends AppCompatActivity {
 
         ID_USUARIO = cargarCredencialesIdUsuario();
 
-        //Cargamos el spinner con los vehiculos que tiene el usuario
-        loadSpinner();
-
         //Editext al pulsar sobre este muestra un calendario
         BTPublicar = findViewById(R.id.BTPublicar);
         BTPublicar.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +47,15 @@ public class VentanaPublicarViaje extends AppCompatActivity {
                 VentanaPublicarViaje.putExtra("ID_USUARIO",ID_USUARIO);
                 //VentanaPublicarViaje.putExtra("control",ETControl.getText().toString());
                 startActivity(VentanaPublicarViaje);
+            }
+        });
+
+        //Editext al pulsar sobre este muestra un calendario
+        IVAtras = findViewById(R.id.IVFlechaAtrasAgregarVehiculo);
+        IVAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -96,31 +98,39 @@ public class VentanaPublicarViaje extends AppCompatActivity {
             }
         });
 
-        //Mediante este controzo de codigo se aumento o disminuye el contador de los asientos que el conductor va a publicitar en el anuncion.
-        TVNum_Asientos = findViewById(R.id.TVNum_Asientos);
-        IVMas = findViewById(R.id.IVMas);
-        IVMas.setOnClickListener(new View.OnClickListener() {
+        SpinnerMatriculaVehiculos = findViewById(R.id.spinnerVehiculo);
+        inicializacionSpinnerMatricula();
+        SpinnerMatriculaVehiculos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                if(contAsientos<8){
-                    contAsientos++;
-                    TVNum_Asientos.setText(contAsientos+"");
-                    colorMorado(contAsientos,IVMas,IVMenos );
-                }
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                //Habrá que meterlo en una variable para poder trabajar con ella
+                //en este caso el numero de plazas disponibles
+                SpinnerMatriculaVehiculos.getSelectedItem();
             }
-        });
-        IVMenos = findViewById(R.id.IVMenos);
-        IVMenos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(contAsientos>1){
-                    contAsientos--;
-                    TVNum_Asientos.setText(contAsientos+"");
-                    colorMorado(contAsientos,IVMas,IVMenos );
-                }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
             }
         });
+
+        //SPINNER NUMERO PLAZAS
+        spinner_numero_plazas = findViewById(R.id.spinner_numero_plazas);
+        inicializacionSpinnerVehículos();
+        spinner_numero_plazas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                //Habrá que meterlo en una variable para poder trabajar con ella
+                //en este caso el numero de plazas disponibles
+                spinner_numero_plazas.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+
     }
 
     //Muestra un cuadro de dialogo con un calendario al pulsar sobre el EditextFecha
@@ -154,46 +164,24 @@ public class VentanaPublicarViaje extends AppCompatActivity {
 
     //Este método carga los datos en el Spinner cuando se abre por primera vez la ventana.
     //cargando en el spinner tantos coches como el usuario que se ha logueado tenga.
-    private void loadSpinner(){
-        //================Datos cargados desde Array=====================//
-        //Hago referencia al spinner con el id `spinnerVehiculo`
-        Spinner SpinnerVehiculos = (Spinner) findViewById(R.id.spinnerVehiculo);
-        //Implemento el setOnItemSelectedListener: para realizar acciones cuando se seleccionen los ítems
-        SpinnerVehiculos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //AQUI VA LAS ACCIONES CUANDO UN ITEM ES SELECCIONADO
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+    private void inicializacionSpinnerMatricula(){
         //Cargar datos de vehiculos del conductor logueado
         String [] vehiculos = new String[] {"Seleccione vehículo", "Matricula 1", "Matricula 2", "Matricula 3", "Matricula 4"};
         //Implemento el adapter con el contexto, layout, arrayVehiculos
-        ArrayAdapter<String>  comboAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, vehiculos);
+        ArrayAdapter<String>  comboAdapter = new ArrayAdapter<>(this,R.layout.color_spinner, vehiculos);
         comboAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         //Cargo el spinner con los datos
-        SpinnerVehiculos.setAdapter(comboAdapter);
+        SpinnerMatriculaVehiculos.setAdapter(comboAdapter);
     }
 
-    //Metodo encargado de cambiar los colores de los botones "+" y "-" al pulsarlos
-    private void colorMorado(int contAsientos, ImageView vMas, ImageView vMenos){
-        if(contAsientos!=8){
-            ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
-            ImageViewCompat.setImageTintList(IVMas, csl);
-        }else{
-            ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
-            ImageViewCompat.setImageTintList(IVMas, csl);
-        }
-        if(contAsientos!=1){
-            ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorPrimary);
-            ImageViewCompat.setImageTintList(IVMenos, csl);
-        }else{
-            ColorStateList csl = AppCompatResources.getColorStateList(VentanaPublicarViaje.this, R.color.colorGris);
-            ImageViewCompat.setImageTintList(IVMenos, csl);
-        }
+    //Inicializa el spinner de vehiculos
+    private void inicializacionSpinnerVehículos() {
+        // Initializing a String Array
+        String[] numeroPlazas = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
+        // Initializing an ArrayAdapter.
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,R.layout.color_spinner,numeroPlazas);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.color_spinner);
+        spinner_numero_plazas.setAdapter(spinnerArrayAdapter);
     }
 
     private String cargarCredencialesIdUsuario(){

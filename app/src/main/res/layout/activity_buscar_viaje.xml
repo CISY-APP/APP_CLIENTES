@@ -140,16 +140,18 @@
             android:textSize="26dp"
             android:textStyle="normal" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_example_lottie_view"
-            android:layout_width="match_parent"
-            android:layout_marginTop="130dp"
-            android:layout_height="157dp"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="12164-travel-app.json"
-            app:lottie_imageAssetsFolder="assets"
-            app:lottie_loop="true" />
+
     </LinearLayout>
 
-
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_example_lottie_view"
+        android:layout_width="match_parent"
+        android:layout_height="157dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="12164-travel-app.json"
+        app:lottie_imageAssetsFolder="assets"
+        app:lottie_loop="true" />
 </androidx.constraintlayout.widget.ConstraintLayout>
