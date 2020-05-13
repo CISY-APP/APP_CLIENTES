@@ -223,11 +223,11 @@ public class VentanaChatIndividual extends AppCompatActivity {
         databaseReference1.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_1).child(chatName); //Sala de chat (nombre)
-        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", uriFotoUsuario));
+        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", uriFotoUsuarioContrario));
         databaseReference2.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_2).child(chatName); //Sala de chat (nombre)
-        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_1.toString(), "", "", uriFotoUsuarioContrario));
+        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_1.toString(), "", "", uriFotoUsuario));
         databaseReference2.push();
     }
 

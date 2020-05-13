@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.app_clientes.Adapter.miAdapterMensajes;
+import com.example.app_clientes.Adapter.miApdapterChat;
+import com.example.app_clientes.Item.ItemVehiculo;
 import com.example.app_clientes.Pojos.Conversacion;
 import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
@@ -39,6 +41,7 @@ public class MensajesFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference1;
+    private ArrayList<Conversacion> conversacionArrayList = new ArrayList<>();
 
     private String ID_USUARIO;
 
@@ -53,7 +56,7 @@ public class MensajesFragment extends Fragment {
         recyclerView.setHasFixedSize(
                 true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento)
         layoutManager = new LinearLayoutManager(getContext());//Creamos el layoutManager de tipo GridLayaout que vamos a utilizar
-        miAdapterMensajes = new miAdapterMensajes(new ArrayList<Conversacion>());//Instanciamos un objeto de tipo Example_Adapter
+        miAdapterMensajes = new miAdapterMensajes(getActivity(),conversacionArrayList);
         recyclerView.setLayoutManager(layoutManager);//Asociamos al recyclerView el layoutManager que creamos en el paso anterior
         recyclerView.setAdapter(miAdapterMensajes);//Vinculamos el adapter al recyclerView
         miAdapterMensajes.setOnClickListener(new miAdapterMensajes.OnItemClickListener() {

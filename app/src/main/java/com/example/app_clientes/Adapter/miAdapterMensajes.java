@@ -1,6 +1,7 @@
 package com.example.app_clientes.Adapter;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.Pojos.Conversacion;
 import com.example.app_clientes.R;
 
@@ -19,9 +21,14 @@ import java.util.ArrayList;
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.ExampleViewHolder> {
 
+    public Context c;
     private ArrayList<Conversacion> conversacionArrayListList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 
+    public miAdapterMensajes(Context c, ArrayList<Conversacion> conversacionArrayListList ) {
+        this.c = c;
+        this.conversacionArrayListList = conversacionArrayListList;
+    }
     //INTERFAZ dentro de la clase la cual nos obliga a implementar y sobreescribir el metodo OnItemClick
     public interface OnItemClickListener {
         void OnAbreChatClick(int position);//Metodo abstracto que recibe por parametro la posicion del item que ha sido pulsado
@@ -32,9 +39,6 @@ public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.Ex
         mListener = listener;
     }
 
-    public miAdapterMensajes(ArrayList<Conversacion> conversacionArrayListList) {
-        this.conversacionArrayListList = conversacionArrayListList;
-    }
 
     public Conversacion getConversacion(int i){
         return conversacionArrayListList.get(i);
@@ -64,11 +68,10 @@ public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.Ex
     //El método onBindViewHolder() personaliza un elemento de tipo ViewHolder según su posicion.
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        Conversacion nuevaConversacion = conversacionArrayListList.get(position);
         holder.TVNombreUsuario.setText(conversacionArrayListList.get(position).getId_usuario());
         holder.TVUltimoMensaje.setText(conversacionArrayListList.get(position).getUltimoMensaje());
         holder.TVHoraUltimoMensaje.setText(conversacionArrayListList.get(position).getHoraUltimoMensaje());
-        //holder.CIUsuarioCoversacion.setImageResource(conversacionArrayListList.get(position).fotoUsuarioContrario);
+        Glide.with(c).load(conversacionArrayListList.get(position).getFotoUsuarioContrario()).into(holder.CIUsuarioCoversacion);
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem
