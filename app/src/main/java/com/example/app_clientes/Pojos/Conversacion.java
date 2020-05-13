@@ -6,12 +6,12 @@ public class Conversacion  {
     public String id_usuario;
     public String horaUltimoMensaje;
     public String ultimoMensaje;
-    public int fotoUsuarioContrario;
+    public String fotoUsuarioContrario;
 
     public Conversacion() {
     }
 
-    public Conversacion(String idConversacion, String id_usuario, String horaUltimoMensaje, String ultimoMensaje, int fotoUsuarioContrario) {
+    public Conversacion(String idConversacion, String id_usuario, String horaUltimoMensaje, String ultimoMensaje, String fotoUsuarioContrario) {
         this.idConversacion = idConversacion;
         this.id_usuario = id_usuario;
         this.horaUltimoMensaje = horaUltimoMensaje;
@@ -51,11 +51,11 @@ public class Conversacion  {
         this.ultimoMensaje = ultimoMensaje;
     }
 
-    public int getFotoUsuarioContrario() {
+    public String getFotoUsuarioContrario() {
         return fotoUsuarioContrario;
     }
 
-    public void setFotoUsuarioContrario(int fotoUsuarioContrario) {
+    public void setFotoUsuarioContrario(String fotoUsuarioContrario) {
         this.fotoUsuarioContrario = fotoUsuarioContrario;
     }
 }

@@ -68,7 +68,7 @@ public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.Ex
         holder.TVNombreUsuario.setText(conversacionArrayListList.get(position).getId_usuario());
         holder.TVUltimoMensaje.setText(conversacionArrayListList.get(position).getUltimoMensaje());
         holder.TVHoraUltimoMensaje.setText(conversacionArrayListList.get(position).getHoraUltimoMensaje());
-        holder.CIUsuarioCoversacion.setImageResource(conversacionArrayListList.get(position).fotoUsuarioContrario);
+        //holder.CIUsuarioCoversacion.setImageResource(conversacionArrayListList.get(position).fotoUsuarioContrario);
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem
@@ -114,4 +114,3 @@ public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.Ex
     }
 
 }
-

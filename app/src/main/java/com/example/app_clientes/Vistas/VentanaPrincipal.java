@@ -140,7 +140,7 @@ public class VentanaPrincipal extends AppCompatActivity{
     private void guardarCredencialesIdUsuario(){
         SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = credenciales.edit();
-        editor.putString("idUsuario", "2");
+        editor.putString("idUsuario", "1");
         editor.commit();
     }
 }

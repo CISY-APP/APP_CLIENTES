@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.Adapter.miApdapterChat;
 import com.example.app_clientes.Pojos.Conversacion;
 import com.example.app_clientes.Pojos.Mensaje;
@@ -35,18 +36,21 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class VentanaChatIndividual extends AppCompatActivity {
 
     private RecyclerView RVMensajesChat;
     private Button BTMenajeEnviarChatIndividual;
     private EditText ETTXTMensajeChatIndividual;
+    private CircleImageView IVfotoUsuarioChatIndividual;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference chatReference;
     private StorageReference storageReference;
 
-    private String CODIGO_SALA;
     private String uriFotoUsuario = "";
+    private String uriFotoUsuarioContrario = "";
 
     private miApdapterChat adapterMensajes;
     private String ID_USUARIO;
@@ -66,6 +70,11 @@ public class VentanaChatIndividual extends AppCompatActivity {
         RVMensajesChat = findViewById(R.id.RVMensajesChat);
         ETTXTMensajeChatIndividual = findViewById(R.id.ETTXTMensajeChatIndividual);
         BTMenajeEnviarChatIndividual = findViewById(R.id.BTMenajeEnviarChatIndividual);
+        IVfotoUsuarioChatIndividual = findViewById(R.id.IVfotoUsuarioChatIndividual);
+
+
+        cargarImagenUsuario();
+        cargarMiImagen();
 
         crearSalaSiEsNecesario(ID_USUARIO, ID_USUARIO_CONVER);
 
@@ -111,7 +120,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 chatReference.push().setValue(
-                        new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), "Javier", ID_USUARIO, getHoraSistema(), uriFotoUsuario));
+                        new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), "Eduardo", ID_USUARIO, getHoraSistema(), uriFotoUsuario));
 
                 DatabaseReference hopperRef = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO).child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates = new HashMap<>();
@@ -137,10 +146,27 @@ public class VentanaChatIndividual extends AppCompatActivity {
         //Inatancia el objeto de tipo storageReference
         storageReference = FirebaseStorage.getInstance().getReference();
         //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
-        storageReference.child("Fotos").child("Javie_javier@gmail").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        storageReference.child("Fotos").child(ID_USUARIO_CONVER).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                //Si la carga es optima la coloca en fotoPerfil
+                Glide.with(getApplicationContext()).load(uri).into(IVfotoUsuarioChatIndividual);
+                uriFotoUsuarioContrario = uri.toString();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        });
+    }
+    //Metodo para cargar la imagen del usuario
+    public void cargarMiImagen() {
+        //Inatancia el objeto de tipo storageReference
+        storageReference = FirebaseStorage.getInstance().getReference();
+        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
+        storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
                 uriFotoUsuario = uri.toString();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -197,11 +223,11 @@ public class VentanaChatIndividual extends AppCompatActivity {
         databaseReference1.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_1).child(chatName); //Sala de chat (nombre)
-        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", R.drawable.user));
+        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", uriFotoUsuario));
         databaseReference2.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_2).child(chatName); //Sala de chat (nombre)
-        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_1.toString(), "", "", R.drawable.user));
+        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_1.toString(), "", "", uriFotoUsuarioContrario));
         databaseReference2.push();
     }
 
