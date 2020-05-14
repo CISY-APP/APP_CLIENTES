@@ -14,14 +14,15 @@
             android:name=".Splash_Screen.splash_screen"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            android:name=".Vistas.VentanaLogin"
-            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Vistas.VentanaPrincipal"></activity>
+        <activity android:name=".Vistas.VentanaLogin" ></activity>
+        <activity android:name=".Vistas.VentanaPrincipal" ></activity>
+        <activity android:name=".Vistas.VentanaRegistro" ></activity>
+        <activity android:name=".Vistas.VentanaClaveOlvidada" ></activity>
         <activity android:name=".Vistas.VentanaPublicarViaje"></activity>
         <activity android:name=".Vistas.VentanaViajePublicado"></activity>
         <activity android:name=".Vistas.VentanaViajesEncontrados"></activity>
@@ -30,6 +31,6 @@
         <activity android:name=".Vistas.VentanaAgregarVehiculo"></activity>
         <activity android:name=".Vistas.VentanaBuscarViaje"></activity>
         <activity android:name=".Vistas.VentanaViajeNoEncontrado"></activity>
-        <activity android:name=".Vistas.VentanaChatIndividual"></activity>
+	<activity android:name=".Vistas.VentanaChatIndividual"></activity>
     </application>
 </manifest>
