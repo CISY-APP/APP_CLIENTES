@@ -13,8 +13,6 @@ import com.example.app_clientes.Vistas.VentanaPrincipal;
 
 public class splash_screen  extends AppCompatActivity {
 
-    private final int DURATION_SPLASH = 3000;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +21,7 @@ public class splash_screen  extends AppCompatActivity {
 
         setContentView(R.layout.splash_screen);
 
+        int DURATION_SPLASH = 3000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -30,8 +29,6 @@ public class splash_screen  extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-
-            ;
         }, DURATION_SPLASH);
     }
 }

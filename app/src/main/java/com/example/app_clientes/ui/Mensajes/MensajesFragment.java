@@ -41,7 +41,7 @@ public class MensajesFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference1;
-    private ArrayList<Conversacion> conversacionArrayList = new ArrayList<>();
+    private final ArrayList<Conversacion> conversacionArrayList = new ArrayList<>();
 
     private String ID_USUARIO;
 

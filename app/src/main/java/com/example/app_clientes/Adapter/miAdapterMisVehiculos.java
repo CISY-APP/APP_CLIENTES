@@ -18,7 +18,7 @@ import java.util.ArrayList;
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class miAdapterMisVehiculos extends RecyclerView.Adapter<miAdapterMisVehiculos.ExampleViewHolder> {
 
-    private ArrayList<ItemVehiculo> misVehiculosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
+    private final ArrayList<ItemVehiculo> misVehiculosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 
     //INTERFAZ dentro de la clase la cual nos obliga a implementar y sobreescribir el metodo OnItemClick
@@ -67,14 +67,14 @@ public class miAdapterMisVehiculos extends RecyclerView.Adapter<miAdapterMisVehi
     }
 
     //CLASE INTERNA ESTATICA
-    public static class ExampleViewHolder extends RecyclerView.ViewHolder {
+    static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView mImageVehiculo;
-        private TextView TVMatriculaItem;
+        private final ImageView mImageVehiculo;
+        private final TextView TVMatriculaItem;
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
         //al ser una clase estatica de no pasarselo no podria acceder a el listener
-        public ExampleViewHolder(View itemView, final OnItemClickListener listener) {
+        ExampleViewHolder(View itemView, final OnItemClickListener listener) {
 
             super(itemView);
             this.TVMatriculaItem = itemView.findViewById(R.id.TVMatriculaItem);

@@ -37,7 +37,9 @@
                     android:layout_height="32dp"
                     android:clickable="true"
                     android:tint="@color/quantum_black_100"
-                    app:srcCompat="@drawable/regreso" />
+                    app:srcCompat="@drawable/regreso"
+                    android:contentDescription="TODO"
+                    android:focusable="true" />
 
                 <TextView
                     android:id="@+id/textView15"
@@ -54,7 +56,8 @@
                     android:layout_height="32dp"
                     android:layout_marginLeft="165dp"
                     android:tint="@color/colorPrimary"
-                    app:srcCompat="@drawable/check" />
+                    app:srcCompat="@drawable/check"
+                    android:contentDescription="TODO" />
 
             </LinearLayout>
 
@@ -110,7 +113,7 @@
             android:background="@drawable/layout_drawable_2"
             android:clickable="true"
             android:ems="10"
-            android:focusable="false"
+            android:focusable="true"
             android:hint="¿Qué día?"
             android:inputType="text"
             android:padding="8dp"
@@ -131,7 +134,7 @@
             android:background="@drawable/layout_drawable_2"
             android:clickable="true"
             android:ems="10"
-            android:focusable="false"
+            android:focusable="true"
             android:hint="¿A qué hora?"
             android:inputType="text"
             android:padding="8dp"

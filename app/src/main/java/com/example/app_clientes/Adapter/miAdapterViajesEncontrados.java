@@ -21,8 +21,8 @@ import java.util.ArrayList;
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterViajesEncontrados.ExampleViewHolder> {
 
-    private ArrayList<ItemViajesEncontrados> viajesEncontradosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
-    private Context c;
+    private final ArrayList<ItemViajesEncontrados> viajesEncontradosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
+    private final Context c;
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 
     //INTERFAZ dentro de la clase la cual nos obliga a implementar y sobreescribir el metodo OnItemClick
@@ -82,15 +82,13 @@ public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterVi
     //CLASE INTERNA ESTATICA
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView mImageUsuario;
-        private ImageView mImageValoracion;
-        private Button BTMensaje;
-        private Button BTReservar;
-        private TextView TVNombre;
-        private TextView TVApellidos;
-        private TextView TVEdad;
-        private TextView TVAsientosLibres;
-        private TextView TVPrecio;
+        private final ImageView mImageUsuario;
+        private final ImageView mImageValoracion;
+        private final TextView TVNombre;
+        private final TextView TVApellidos;
+        private final TextView TVEdad;
+        private final TextView TVAsientosLibres;
+        private final TextView TVPrecio;
 
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
@@ -106,7 +104,7 @@ public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterVi
             this.TVPrecio = itemView.findViewById(R.id.TVPrecio);
             mImageUsuario = itemView.findViewById(R.id.IVUsuario);//Asocia el atributo de la clase al XML (imagen para el tablero)
             mImageValoracion = itemView.findViewById(R.id.IMGValoracion);
-            BTMensaje = itemView.findViewById(R.id.BTMensaje);
+            Button BTMensaje = itemView.findViewById(R.id.BTMensaje);
             BTMensaje.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -119,7 +117,7 @@ public class miAdapterViajesEncontrados extends RecyclerView.Adapter<miAdapterVi
                     }
                 }
             });
-            BTReservar = itemView.findViewById(R.id.BTReservar);
+            Button BTReservar = itemView.findViewById(R.id.BTReservar);
             BTReservar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

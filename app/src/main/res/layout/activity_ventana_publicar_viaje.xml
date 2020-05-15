@@ -32,7 +32,8 @@
                 android:layout_height="32dp"
                 android:clickable="true"
                 android:tint="@color/quantum_black_100"
-                app:srcCompat="@drawable/regreso" />
+                app:srcCompat="@drawable/regreso"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -49,7 +50,8 @@
                 android:layout_height="32dp"
                 android:layout_marginLeft="150dp"
                 android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/check" />
+                app:srcCompat="@drawable/check"
+                android:contentDescription="TODO" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -78,7 +80,8 @@
             android:layout_marginTop="15dp"
             android:text="ORIGEN"
             android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
         <EditText
             android:id="@+id/ETOrigenViaje"
@@ -105,7 +108,8 @@
             android:layout_marginTop="15dp"
             android:text="DESTINO"
             android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
         <EditText
             android:id="@+id/ETDestinoViaje"
@@ -137,7 +141,8 @@
                 android:layout_height="wrap_content"
                 android:text="HORA"
                 android:textColor="@color/colorPrimary"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/textView22"
@@ -146,7 +151,8 @@
                 android:layout_marginLeft="130dp"
                 android:text="FECHA"
                 android:textColor="@color/colorPrimary"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
 
 
         </LinearLayout>
@@ -213,7 +219,8 @@
             android:layout_marginTop="15dp"
             android:text="VEHÍCULO"
             android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -241,7 +248,8 @@
                 android:layout_height="wrap_content"
                 android:text="PRECIO POR PLAZA"
                 android:textColor="@color/colorPrimary"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/TVPrecio"
@@ -249,9 +257,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginLeft="260dp"
-                android:text="0,00 €"
+                android:text="0.00"
                 android:textColor="@color/colorPrimary"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
         </LinearLayout>
 
         <SeekBar
@@ -272,7 +281,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -285,7 +295,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/colorPrimary" />
-
         </LinearLayout>
 
     </LinearLayout>

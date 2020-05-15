@@ -21,7 +21,7 @@ import java.util.ArrayList;
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.ExampleViewHolder> {
 
-    private Context c;
+    private final Context c;
     private ArrayList<Conversacion> conversacionArrayListList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 
@@ -84,15 +84,14 @@ public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.Ex
     //CLASE INTERNA ESTATICA
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
-        private CardView cardViewCoversacion;
-        private TextView TVNombreUsuario;
-        private TextView TVUltimoMensaje;
-        private TextView TVHoraUltimoMensaje;
-        private ImageView CIUsuarioCoversacion;
+        private final TextView TVNombreUsuario;
+        private final TextView TVUltimoMensaje;
+        private final TextView TVHoraUltimoMensaje;
+        private final ImageView CIUsuarioCoversacion;
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
         //al ser una clase estatica de no pasarselo no podria acceder a el listener
-        public ExampleViewHolder(View itemView, final OnItemClickListener listener) {
+        ExampleViewHolder(View itemView, final OnItemClickListener listener) {
 
             super(itemView);
 
@@ -100,7 +99,7 @@ public class miAdapterMensajes extends RecyclerView.Adapter<miAdapterMensajes.Ex
             TVUltimoMensaje = itemView.findViewById(R.id.TVUltimoMensajeConversacion);
             TVHoraUltimoMensaje = itemView.findViewById(R.id.TVHoraUltimoMensaje);
             CIUsuarioCoversacion = itemView.findViewById(R.id.CIUsuarioCoversacion);
-            cardViewCoversacion = itemView.findViewById(R.id.cardViewCoversacion);
+            CardView cardViewCoversacion = itemView.findViewById(R.id.cardViewCoversacion);
             cardViewCoversacion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

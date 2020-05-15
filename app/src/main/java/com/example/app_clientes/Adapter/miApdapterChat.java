@@ -25,10 +25,10 @@ public class miApdapterChat extends RecyclerView.Adapter<miApdapterChat.ExampleV
     private static final int DEFAULT_MESSAGE_TYPE = 0;
     private static final int OWN_MESSAGE_TYPE = 1;
 
-    private ArrayList<Mensaje> MensajesList = new ArrayList<>();
-    private Context c;
+    private final ArrayList<Mensaje> MensajesList = new ArrayList<>();
+    private final Context c;
     private String IDUsuario;
-    private HashMap<String, String> coloresUsuarios = new HashMap<String, String>();
+    private final HashMap<String, String> coloresUsuarios = new HashMap<String, String>();
 
     public miApdapterChat(Context c) {
         this.c = c;

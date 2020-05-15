@@ -39,7 +39,9 @@
                     android:layout_height="32dp"
                     android:clickable="true"
                     android:tint="@color/quantum_black_100"
-                    app:srcCompat="@drawable/regreso" />
+                    app:srcCompat="@drawable/regreso"
+                    android:contentDescription="TODO"
+                    android:focusable="true" />
 
                 <TextView
                     android:id="@+id/textView15"
@@ -56,7 +58,8 @@
                     android:layout_height="32dp"
                     android:layout_marginLeft="120dp"
                     android:tint="@color/colorPrimary"
-                    app:srcCompat="@drawable/check" />
+                    app:srcCompat="@drawable/check"
+                    android:contentDescription="TODO" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -98,7 +101,8 @@
                     app:layout_constraintEnd_toEndOf="@+id/IMGCocheAgregar"
                     app:layout_constraintStart_toStartOf="@+id/IMGCocheAgregar"
                     app:layout_constraintTop_toTopOf="@+id/IMGCocheAgregar"
-                    app:srcCompat="@drawable/editar" />
+                    app:srcCompat="@drawable/editar"
+                    android:contentDescription="TODO" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -113,7 +117,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp" />
 
             <EditText
                 android:id="@+id/ETMatriculaVehiculo"
@@ -131,20 +136,22 @@
                 android:padding="8dp"
                 android:textColor="@color/places_ui_default_primary_dark"
                 android:textColorHint="@color/colorGrisLight"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/TVNumeroPlazas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NUMERO DE PLAZAS *"
+                android:text="NUMERO DE PLAZAS"
                 android:textColor="@color/colorPrimary"
                 android:textSize="10sp"
                 android:layout_marginTop="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -171,7 +178,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp" />
 
             <EditText
                 android:id="@+id/ETMarcaVehiculo"
@@ -202,7 +210,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp" />
 
             <EditText
                 android:id="@+id/ETModeloVehiculo"
@@ -235,7 +244,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -262,7 +272,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -297,11 +308,12 @@
                     android:layout_width="4dp"
                     android:layout_height="0dp"
                     android:background="@color/colorPrimary"
-                    android:clickable="true"
+                    android:clickable="false"
                     app:layout_constraintBottom_toBottomOf="@id/BTSeleccionarColorCoche"
                     app:layout_constraintStart_toStartOf="@id/BTSeleccionarColorCoche"
                     app:layout_constraintTop_toTopOf="@id/BTSeleccionarColorCoche"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintVertical_bias="0.0"
+                    android:focusable="false" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -58,7 +58,8 @@
                 app:layout_constraintStart_toStartOf="@+id/IMGVehiculoGrande"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.031"
-                app:srcCompat="@drawable/check" />
+                app:srcCompat="@drawable/check"
+                android:contentDescription="TODO" />
 
             <ImageView
                 android:id="@+id/IMGModificarFotoVehiculo"
@@ -71,7 +72,8 @@
                 app:layout_constraintEnd_toEndOf="@+id/IMGVehiculoGrande"
                 app:layout_constraintStart_toStartOf="@+id/IMGVehiculoGrande"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/editar" />
+                app:srcCompat="@drawable/editar"
+                android:contentDescription="TODO" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -92,7 +94,8 @@
             android:layout_marginRight="20dp"
             android:text="MATRÍCULA"
             android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
         <EditText
             android:id="@+id/ETMatriculaVehiculoMisVehiculos"
@@ -123,7 +126,8 @@
             android:layout_marginRight="20dp"
             android:text="NÚMERO DE PLAZAS"
             android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
 
         <LinearLayout
@@ -153,7 +157,8 @@
             android:layout_marginRight="20dp"
             android:text="TIPO DE COMBUSTIBLE"
             android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
         <EditText
             android:id="@+id/spinner_tipo_combustible_mis_vehiculos"
@@ -189,7 +194,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.782" />
+            app:layout_constraintVertical_bias="0.782"
+            tools:ignore="SmallSp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"

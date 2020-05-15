@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,11 +25,8 @@ import com.example.app_clientes.Adapter.miAdapterMisVehiculos;
 import com.example.app_clientes.Item.ItemVehiculo;
 import com.example.app_clientes.R;
 import com.example.app_clientes.Vistas.VentanaAgregarVehiculo;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
@@ -44,8 +40,8 @@ public class VehiculosFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private miAdapterMisVehiculos miAdapterMisVehiculos;
     private RecyclerView recyclerView;
-    private ArrayList<ItemVehiculo> misVehiculosList = new ArrayList<>();
-    private ArrayList<String> colores = new ArrayList<>();
+    private final ArrayList<ItemVehiculo> misVehiculosList = new ArrayList<>();
+    private final ArrayList<String> colores = new ArrayList<>();
 
     //Elementos del Layout
     private CircleImageView IMGVehiculoGrande;
@@ -105,7 +101,7 @@ public class VehiculosFragment extends Fragment {
 
         //SPINNER NUMERO PLAZAS
         spinner_numero_plazas_mis_vehiculos = view.findViewById(R.id.spinner_numero_plazas_mis_vehiculos);
-        inicializacionSpinnerVehículos();
+        inicializacionSpinnerVehiculos();
         spinner_numero_plazas_mis_vehiculos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -150,7 +146,7 @@ public class VehiculosFragment extends Fragment {
     }
 
     //Inicializa el spinner de vehiculos
-    private void inicializacionSpinnerVehículos() {
+    private void inicializacionSpinnerVehiculos() {
         // Initializing a String Array
         String[] numeroPlazas = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
         // Initializing an ArrayAdapter.

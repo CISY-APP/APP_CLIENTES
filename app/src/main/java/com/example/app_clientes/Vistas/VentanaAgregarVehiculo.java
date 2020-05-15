@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,7 +39,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
     private EditText ETModeloVehiculo;
     private Spinner spinner_tipo_combustible;
     private EditText BTColorPiker;
-    private ArrayList<String> colores = new ArrayList<>();
+    private final ArrayList<String> colores = new ArrayList<>();
     private String colorSeleccionado;
     private CircleImageView ImgColorCoche;
     private CircleImageView IMGCocheAgregar;
@@ -95,7 +94,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
 
         //SPINNER NUMERO PLAZAS
         spinner_numero_plazas = findViewById(R.id.spinner_numero_plazas);
-        inicializacionSpinnerVehículos();
+        inicializacionSpinnerVehiculos();
         spinner_numero_plazas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -180,7 +179,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity {
     }
 
     //Inicializa el spinner de vehiculos
-    private void inicializacionSpinnerVehículos() {
+    private void inicializacionSpinnerVehiculos() {
         // Initializing a String Array
         String[] numeroPlazas = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
         // Initializing an ArrayAdapter.

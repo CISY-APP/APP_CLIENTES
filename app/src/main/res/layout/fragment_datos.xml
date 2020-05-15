@@ -68,7 +68,8 @@
                         app:layout_constraintEnd_toEndOf="@+id/mImageVehiculoPeque"
                         app:layout_constraintStart_toStartOf="@+id/mImageVehiculoPeque"
                         app:layout_constraintTop_toTopOf="@+id/mImageVehiculoPeque"
-                        app:srcCompat="@drawable/editar" />
+                        app:srcCompat="@drawable/editar"
+                        android:contentDescription="TODO" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -79,7 +80,8 @@
                     android:layout_marginTop="15dp"
                     android:text="NOMBRE"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
                 <EditText
                     android:id="@+id/ETNombreDatos"
@@ -106,7 +108,8 @@
                     android:layout_marginTop="15dp"
                     android:text="APELLIDOS"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
                 <EditText
                     android:id="@+id/ETApellidosDatos"
@@ -133,7 +136,8 @@
                     android:layout_marginTop="15dp"
                     android:text="DIRECCIÓN CORREO ELECTRÓNICO"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
                 <EditText
                     android:id="@+id/ETEmailDatos"
@@ -166,7 +170,8 @@
                         android:layout_height="wrap_content"
                         android:text="PREFIJO"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
 
                     <TextView
                         android:id="@+id/textView21"
@@ -175,7 +180,8 @@
                         android:text="NÚMERO"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
-                        android:paddingLeft="70dp" />
+                        android:paddingLeft="70dp"
+                        tools:ignore="SmallSp" />
 
                 </LinearLayout>
 
@@ -256,7 +262,8 @@
                         android:layout_height="wrap_content"
                         android:text="FECHA NACIMIENTO"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
 
                     <TextView
                         android:id="@+id/textView23"
@@ -265,7 +272,8 @@
                         android:text="DOCUMENTO NACIONAL DE IDENTIDAD"
                         android:textColor="@color/colorPrimary"
                         android:layout_marginLeft="65dp"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
 
 
                 </LinearLayout>
@@ -326,7 +334,8 @@
                     android:layout_marginTop="15dp"
                     android:text="DESCRIPCIÓN"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
                 <EditText
                     android:id="@+id/ETDescripcionDatos"

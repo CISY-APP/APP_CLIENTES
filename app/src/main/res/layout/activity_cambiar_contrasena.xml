@@ -31,7 +31,8 @@
                             android:layout_height="32dp"
                             android:clickable="true"
                             android:tint="@color/quantum_black_100"
-                            app:srcCompat="@drawable/regreso" />
+                            app:srcCompat="@drawable/regreso"
+                            android:contentDescription="TODO" />
 
                         <TextView
                             android:id="@+id/textView15"
@@ -48,7 +49,8 @@
                             android:layout_height="32dp"
                             android:layout_marginLeft="90dp"
                             android:tint="@color/colorPrimary"
-                            app:srcCompat="@drawable/check" />
+                            app:srcCompat="@drawable/check"
+                            android:contentDescription="TODO" />
                 </LinearLayout>
 
         </androidx.cardview.widget.CardView>

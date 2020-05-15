@@ -55,8 +55,8 @@ public class VentanaChatIndividual extends AppCompatActivity {
     private StorageReference storageReference;
 
     private String uriFotoUsuario = "";
-    private String uriFotoUsuarioContrario = "";
-    private String CHANNEL_ID = "1";
+    private final String uriFotoUsuarioContrario = "";
+    private final String CHANNEL_ID = "1";
     private miApdapterChat adapterMensajes;
     private String ID_USUARIO;
     private String ID_USUARIO_CONVER;

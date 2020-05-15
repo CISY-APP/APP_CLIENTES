@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +25,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
-import com.example.app_clientes.Pojos.Conversacion;
+import com.example.app_clientes.JSONPLACEHOLDER.JsonPlaceHolderApi;
+import com.example.app_clientes.Pojos.Usuario;
 import com.example.app_clientes.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +36,11 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class VentanaPrincipal extends AppCompatActivity{
 
@@ -42,7 +49,8 @@ public class VentanaPrincipal extends AppCompatActivity{
     private static final int GALERY_INTENT = 1;
     private CircleImageView IVImagenUsuarioMenuLateral;
     private String ID_USUARIO;
-    private String CHANNEL_ID = "1";
+    private final String CHANNEL_ID = "1";
+    public static Usuario usuario;
 
     public VentanaPrincipal() {
     }
@@ -52,9 +60,12 @@ public class VentanaPrincipal extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_principal);
 
-        guardarCredencialesIdUsuario();
         createNotificationChannel();
+
+
         ID_USUARIO = cargarCredencialesIdUsuario();
+        guardarCredencialesIdUsuario();
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -121,7 +132,6 @@ public class VentanaPrincipal extends AppCompatActivity{
         startActivityForResult(intent,GALERY_INTENT);
     }
 
-
     public void cargarImagenUsuario(final View headView) {
         storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -143,17 +153,36 @@ public class VentanaPrincipal extends AppCompatActivity{
     }
 
     private void guardarCredencialesIdUsuario(){
-        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = credenciales.edit();
-        editor.putString("idUsuario", "1");
-        editor.commit();
+        //Controlador controlador = new Controlador();
+        //usuario = controlador.getCliente("1","1");
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+        Call<Usuario> call = jsonPlaceHolderApi.getUsuario("1","1");
+        call.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if (!response.isSuccessful()) {
+                    Log.i("Coder" , response.code()+"" );
+                    return;
+                }
+                //SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
+                //SharedPreferences.Editor editor = credenciales.edit();
+                //editor.putString("idUsuario", response.body().getIdusuario().toString());
+                //editor.commit();
+                usuario = response.body();
+            }
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.i("Code: " ,  t.getMessage()+"" );
+            }
+        });
     }
 
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString("A");
+            CharSequence name = getString();
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             // Register the channel with the system; you can't change the importance
@@ -163,7 +192,7 @@ public class VentanaPrincipal extends AppCompatActivity{
         }
     }
 
-    private CharSequence getString(String dwdw) {
+    private CharSequence getString() {
         CharSequence charSequence = new StringBuffer("A");
         return charSequence;
     }

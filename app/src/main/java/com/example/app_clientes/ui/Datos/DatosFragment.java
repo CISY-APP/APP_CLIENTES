@@ -38,20 +38,7 @@ import static android.app.Activity.RESULT_OK;
 public class DatosFragment extends Fragment {
 
     private CircleImageView IMGUsuarioDatos;
-    private EditText ETNombreDatos;
-    private EditText ETApellidosDatos;
-    private EditText ETEmailDatos;
-    private EditText ETNumeroTelefonoDatos;
     private EditText ETFechaNacimientoDatos;
-    private EditText ETDocumentoDatos;
-    private EditText ETDescripcionDatos;
-    private CircleImageView ImgPais;
-    private TextView TVAgregarCoche;
-
-    private Switch BTAgregarCoche;
-    private Button BTCambiarContrasena;
-    private Button BTEliminarCuenta;
-    private Button BTGuardarCambios;
 
     private StorageReference storageReference;
     private String uriFotoUsuario = "";
@@ -67,13 +54,13 @@ public class DatosFragment extends Fragment {
         //Carga la imagen del usuario al abrir la ventana
         cargarImagenUsuario();
 
-        ETNombreDatos = view.findViewById(R.id.ETNombreDatos);
-        ETApellidosDatos = view.findViewById(R.id.ETApellidosDatos);
-        ETEmailDatos = view.findViewById(R.id.ETEmailDatos);
-        ETNumeroTelefonoDatos = view.findViewById(R.id.ETNumeroTelefonoDatos);
+        EditText ETNombreDatos = view.findViewById(R.id.ETNombreDatos);
+        EditText ETApellidosDatos = view.findViewById(R.id.ETApellidosDatos);
+        EditText ETEmailDatos = view.findViewById(R.id.ETEmailDatos);
+        EditText ETNumeroTelefonoDatos = view.findViewById(R.id.ETNumeroTelefonoDatos);
         ETFechaNacimientoDatos = view.findViewById(R.id.ETFechaNacimientoDatos);
-        ETDocumentoDatos = view.findViewById(R.id.ETDocumentoDatos);
-        ETDescripcionDatos = view.findViewById(R.id.ETDescripcionDatos);
+        EditText ETDocumentoDatos = view.findViewById(R.id.ETDocumentoDatos);
+        EditText ETDescripcionDatos = view.findViewById(R.id.ETDescripcionDatos);
         IMGUsuarioDatos = view.findViewById(R.id.mImageVehiculoPeque);
         IMGUsuarioDatos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +68,7 @@ public class DatosFragment extends Fragment {
                 abrirGaleria();
             }
         });
-        BTCambiarContrasena = view.findViewById(R.id.BTCambiarContrasena);
+        Button BTCambiarContrasena = view.findViewById(R.id.BTCambiarContrasena);
         BTCambiarContrasena.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,14 +77,14 @@ public class DatosFragment extends Fragment {
                 startActivity(VentanaCambiarContrasena);
             }
         });
-        BTEliminarCuenta = view.findViewById(R.id.BTEliminarCuenta);
+        Button BTEliminarCuenta = view.findViewById(R.id.BTEliminarCuenta);
         BTEliminarCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Consulta a la base de datos eliminando la cuenta
             }
         });
-        BTGuardarCambios = view.findViewById(R.id.BTGuardarCambios);
+        Button BTGuardarCambios = view.findViewById(R.id.BTGuardarCambios);
         BTGuardarCambios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +98,7 @@ public class DatosFragment extends Fragment {
                 showDatePickerDialog();
             }
         });
-        TVAgregarCoche = view.findViewById(R.id.TVAgregarCoche);
+        TextView TVAgregarCoche = view.findViewById(R.id.TVAgregarCoche);
         TVAgregarCoche.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

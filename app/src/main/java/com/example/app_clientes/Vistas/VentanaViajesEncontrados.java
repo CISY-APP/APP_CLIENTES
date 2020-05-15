@@ -34,7 +34,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private miAdapterViajesEncontrados adapterViajesEncontrados;
     private RecyclerView recyclerView;
-    private ArrayList<ItemViajesEncontrados> viajesEncontradosList = new ArrayList<>();
+    private final ArrayList<ItemViajesEncontrados> viajesEncontradosList = new ArrayList<>();
 
     private TextView ETFechaYHora;
     private TextView ETOrigen;

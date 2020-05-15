@@ -32,7 +32,8 @@
             android:layout_height="12dp"
             android:layout_marginTop="50dp"
             android:tint="@color/colorBlanco"
-            app:srcCompat="@drawable/lapiz" />
+            app:srcCompat="@drawable/lapiz"
+            android:contentDescription="TODO" />
 
     </LinearLayout>
 

@@ -45,12 +45,11 @@ public class ChatFragment extends Fragment {
     private TextView   TVNombreChat;
     private RecyclerView RVMensajesChat;
     private EditText ETTXTMensaje;
-    private Button BTNEnviar ;
     private CircleImageView fotoPerfil;
+    private Button BTMenajeEnviar;
 
     private miApdapterChat adapterMensajes;
 
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
     private String uriFotoUsuario = "";
@@ -68,7 +67,7 @@ public class ChatFragment extends Fragment {
         TVNombreChat = view.findViewById(R.id.TVNombreChatUsuario);
         RVMensajesChat = view.findViewById(R.id.RVMensajesChat);
         ETTXTMensaje = view.findViewById(R.id.ETTXTMensaje);
-        BTNEnviar = view.findViewById(R.id.BTMenajeEnviar);
+        BTMenajeEnviar = view.findViewById(R.id.BTMenajeEnviar);
         fotoPerfil = view.findViewById(R.id.fotoPerfil);
         fotoPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +79,10 @@ public class ChatFragment extends Fragment {
         });
 
         //esto debera llegar en un BUNDLE
-        TVNombreChat.setText("Javier");
+        TVNombreChat.setText("Usuario 1");
 
         //Implementacion de firebase
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("CHAT GENERAL"); //Sala de chat (nombre)
         databaseReference.addChildEventListener(new ChildEventListener() {
 
@@ -119,7 +118,7 @@ public class ChatFragment extends Fragment {
         LinearLayoutManager l= new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);
         RVMensajesChat.setAdapter(adapterMensajes);
-        BTNEnviar.setOnClickListener(new View.OnClickListener() {
+        BTMenajeEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", ID_USUARIO, getHoraSistema(), uriFotoUsuario ));

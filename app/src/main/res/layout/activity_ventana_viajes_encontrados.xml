@@ -37,7 +37,8 @@
                     android:layout_height="32dp"
                     android:clickable="true"
                     android:tint="@color/quantum_black_100"
-                    app:srcCompat="@drawable/regreso" />
+                    app:srcCompat="@drawable/regreso"
+                    android:contentDescription="TODO" />
 
                 <TextView
                     android:id="@+id/textView15"
