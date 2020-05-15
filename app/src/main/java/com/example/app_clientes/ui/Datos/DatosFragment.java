@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +20,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.app_clientes.Otros.CalendarioFragment;
+import com.example.app_clientes.otros.CalendarioFragment;
 import com.example.app_clientes.R;
-import com.example.app_clientes.Vistas.VentanaAgregarVehiculo;
-import com.example.app_clientes.Vistas.VentanaCambiarContrasena;
+import com.example.app_clientes.vistas.VentanaAgregarVehiculo;
+import com.example.app_clientes.vistas.VentanaCambiarContrasena;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;

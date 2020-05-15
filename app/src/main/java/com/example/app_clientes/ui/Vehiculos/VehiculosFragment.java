@@ -21,10 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.app_clientes.Adapter.miAdapterMisVehiculos;
-import com.example.app_clientes.Item.ItemVehiculo;
+import com.example.app_clientes.adapter.MiAdapterMisVehiculos;
+import com.example.app_clientes.item.ItemVehiculo;
 import com.example.app_clientes.R;
-import com.example.app_clientes.Vistas.VentanaAgregarVehiculo;
+import com.example.app_clientes.vistas.VentanaAgregarVehiculo;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -38,7 +38,7 @@ import static android.app.Activity.RESULT_OK;
 public class VehiculosFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
-    private miAdapterMisVehiculos miAdapterMisVehiculos;
+    private MiAdapterMisVehiculos miAdapterMisVehiculos;
     private RecyclerView recyclerView;
     private final ArrayList<ItemVehiculo> misVehiculosList = new ArrayList<>();
     private final ArrayList<String> colores = new ArrayList<>();
@@ -126,9 +126,9 @@ public class VehiculosFragment extends Fragment {
         recyclerView = view.findViewById(R.id.RVVehiculosEncontrados); //Vinculamos el recyclerview del xml con el de la clase main
         recyclerView.setHasFixedSize(true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento)
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        miAdapterMisVehiculos = new miAdapterMisVehiculos(misVehiculosList);//Instanciamos un objeto de tipo Example_Adapter
+        miAdapterMisVehiculos = new MiAdapterMisVehiculos(misVehiculosList);//Instanciamos un objeto de tipo Example_Adapter
         recyclerView.setAdapter(miAdapterMisVehiculos);//Vinculamos el adapter al recyclerView
-        miAdapterMisVehiculos.setOnClickListener(new miAdapterMisVehiculos.OnItemClickListener() {
+        miAdapterMisVehiculos.setOnClickListener(new MiAdapterMisVehiculos.OnItemClickListener() {
             @Override
             public void OnVehiculoClick(int position) {
                 if(position == misVehiculosList.size()-1){

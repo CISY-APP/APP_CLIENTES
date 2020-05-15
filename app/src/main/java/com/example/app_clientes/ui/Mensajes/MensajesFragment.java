@@ -4,26 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_clientes.Adapter.miAdapterMensajes;
-import com.example.app_clientes.Adapter.miApdapterChat;
-import com.example.app_clientes.Item.ItemVehiculo;
-import com.example.app_clientes.Pojos.Conversacion;
-import com.example.app_clientes.Pojos.Mensaje;
+import com.example.app_clientes.adapter.MiAdapterMensajes;
+import com.example.app_clientes.pojos.Conversacion;
 import com.example.app_clientes.R;
-import com.example.app_clientes.Vistas.VentanaChatIndividual;
+import com.example.app_clientes.vistas.VentanaChatIndividual;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,12 +26,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Map;
 
 public class MensajesFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
-    private miAdapterMensajes miAdapterMensajes;
+    private MiAdapterMensajes miAdapterMensajes;
     private RecyclerView recyclerView;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference1;
@@ -56,10 +49,10 @@ public class MensajesFragment extends Fragment {
         recyclerView.setHasFixedSize(
                 true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento)
         layoutManager = new LinearLayoutManager(getContext());//Creamos el layoutManager de tipo GridLayaout que vamos a utilizar
-        miAdapterMensajes = new miAdapterMensajes(getActivity(),conversacionArrayList);
+        miAdapterMensajes = new MiAdapterMensajes(getActivity(),conversacionArrayList);
         recyclerView.setLayoutManager(layoutManager);//Asociamos al recyclerView el layoutManager que creamos en el paso anterior
         recyclerView.setAdapter(miAdapterMensajes);//Vinculamos el adapter al recyclerView
-        miAdapterMensajes.setOnClickListener(new miAdapterMensajes.OnItemClickListener() {
+        miAdapterMensajes.setOnClickListener(new MiAdapterMensajes.OnItemClickListener() {
             @Override
             public void OnAbreChatClick(int position) {
                 VentanaChatIndividual ventanaChatIndividual = new VentanaChatIndividual();

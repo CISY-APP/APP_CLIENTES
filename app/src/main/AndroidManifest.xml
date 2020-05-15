@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Splash_Screen.splash_screen"
+            android:name=".splash_screen.Splash_screen"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,18 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Vistas.VentanaLogin" ></activity>
-        <activity android:name=".Vistas.VentanaPrincipal" ></activity>
-        <activity android:name=".Vistas.VentanaRegistro" ></activity>
-        <activity android:name=".Vistas.VentanaClaveOlvidada" ></activity>
-        <activity android:name=".Vistas.VentanaPublicarViaje"></activity>
-        <activity android:name=".Vistas.VentanaViajePublicado"></activity>
-        <activity android:name=".Vistas.VentanaViajesEncontrados"></activity>
-        <activity android:name=".Vistas.VentanaViajeReservado"></activity>
-        <activity android:name=".Vistas.VentanaCambiarContrasena"></activity>
-        <activity android:name=".Vistas.VentanaAgregarVehiculo"></activity>
-        <activity android:name=".Vistas.VentanaBuscarViaje"></activity>
-        <activity android:name=".Vistas.VentanaViajeNoEncontrado"></activity>
-	<activity android:name=".Vistas.VentanaChatIndividual"></activity>
+        <activity android:name=".vistas.VentanaLogin" />
+        <activity android:name=".vistas.VentanaPrincipal" />
+        <activity android:name=".vistas.VentanaRegistro" />
+        <activity android:name=".vistas.VentanaClaveOlvidada" />
+        <activity android:name=".vistas.VentanaPublicarViaje" />
+        <activity android:name=".vistas.VentanaViajePublicado" />
+        <activity android:name=".vistas.VentanaViajesEncontrados" />
+        <activity android:name=".vistas.VentanaViajeReservado" />
+        <activity android:name=".vistas.VentanaCambiarContrasena" />
+        <activity android:name=".vistas.VentanaAgregarVehiculo" />
+        <activity android:name=".vistas.VentanaBuscarViaje" />
+        <activity android:name=".vistas.VentanaViajeNoEncontrado" />
+        <activity android:name=".vistas.VentanaChatIndividual" />
     </application>
 </manifest>

@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.app_clientes.Adapter.miApdapterChat;
-import com.example.app_clientes.Pojos.Mensaje;
+import com.example.app_clientes.adapter.MiApdapterChat;
+import com.example.app_clientes.pojos.Mensaje;
 import com.example.app_clientes.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,7 +48,7 @@ public class ChatFragment extends Fragment {
     private CircleImageView fotoPerfil;
     private Button BTMenajeEnviar;
 
-    private miApdapterChat adapterMensajes;
+    private MiApdapterChat adapterMensajes;
 
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
@@ -113,7 +113,7 @@ public class ChatFragment extends Fragment {
 
             }
         });
-        adapterMensajes = new miApdapterChat(getActivity());
+        adapterMensajes = new MiApdapterChat(getActivity());
         adapterMensajes.setIDUsuario(ID_USUARIO);
         LinearLayoutManager l= new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);

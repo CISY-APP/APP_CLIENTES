@@ -1,41 +1,22 @@
 package com.example.app_clientes.ui.Home;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 
-import android.widget.TimePicker;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 
-import com.example.app_clientes.Otros.CalendarioFragment;
-import com.example.app_clientes.Otros.HoraFragment;
-import com.example.app_clientes.Pojos.Mensaje;
 import com.example.app_clientes.R;
-import com.example.app_clientes.Vistas.VentanaBuscarViaje;
-import com.example.app_clientes.Vistas.VentanaCambiarContrasena;
-import com.example.app_clientes.Vistas.VentanaPublicarViaje;
-import com.example.app_clientes.Vistas.VentanaViajesEncontrados;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.example.app_clientes.vistas.VentanaBuscarViaje;
+import com.example.app_clientes.vistas.VentanaPublicarViaje;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 
 public class HomeFragment extends Fragment {
 
