@@ -7,11 +7,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.app_clientes.controlador.Controlador;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.otros.CalendarioFragment;
 import com.example.app_clientes.otros.HoraFragment;
@@ -39,7 +36,6 @@ public class VentanaPublicarViaje extends AppCompatActivity {
     private  String matricula;
 
     private JsonPlaceHolderApi jsonPlaceHolderApi;
-    private Controlador controlador = new Controlador();
     private String ID_USUARIO;
 
     //Esta clase deberán llegar IDUsuario y todos sus datos, debemos manejar

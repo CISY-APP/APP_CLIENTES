@@ -25,9 +25,6 @@ public class Usuario implements java.io.Serializable {
     private Boolean telefonoverificado;
     private Boolean emailverificado;
     private Boolean doblefactoractivado;
-    private Set<Vehiculo> vehiculos = new HashSet<Vehiculo>(0);
-    private Set<Reserva> reservas = new HashSet<Reserva>(0);
-    private Set<Viaje> viajes = new HashSet<Viaje>(0);
 
 
     public Usuario() {
@@ -44,8 +41,7 @@ public class Usuario implements java.io.Serializable {
     public Usuario(String nombre, String apellidos, Boolean espasajero, Boolean esconductor, Integer telefono,
                    String email, String clave, Date fechanacimiento, String fotousuario, String fotokyc, String descripcion,
                    Integer valoracion, Date fecharegistro, Date fechadesconexion, Boolean sesioniniciada,
-                   Boolean telefonoverificado, Boolean emailverificado, Boolean doblefactoractivado, Set<Vehiculo> vehiculos,
-                   Set<Reserva> reservas, Set<Viaje> viajes) {
+                   Boolean telefonoverificado, Boolean emailverificado, Boolean doblefactoractivado) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.espasajero = espasajero;
@@ -64,9 +60,6 @@ public class Usuario implements java.io.Serializable {
         this.telefonoverificado = telefonoverificado;
         this.emailverificado = emailverificado;
         this.doblefactoractivado = doblefactoractivado;
-        this.vehiculos = vehiculos;
-        this.reservas = reservas;
-        this.viajes = viajes;
     }
 
     public Integer getIdusuario() {
@@ -221,28 +214,5 @@ public class Usuario implements java.io.Serializable {
         this.doblefactoractivado = doblefactoractivado;
     }
 
-    public Set<Vehiculo> getVehiculos() {
-        return this.vehiculos;
-    }
-
-    public void setVehiculos(Set<Vehiculo> vehiculos) {
-        this.vehiculos = vehiculos;
-    }
-
-    public Set<Reserva> getReservas() {
-        return this.reservas;
-    }
-
-    public void setReservas(Set<Reserva> reservas) {
-        this.reservas = reservas;
-    }
-
-    public Set<Viaje> getViajes() {
-        return this.viajes;
-    }
-
-    public void setViajes(Set<Viaje> viajes) {
-        this.viajes = viajes;
-    }
 
 }

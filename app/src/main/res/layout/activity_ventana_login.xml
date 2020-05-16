@@ -91,6 +91,7 @@
                 android:text="Error"
                 android:textColor="@color/colorBlanco"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 android:visibility="gone" />
 
             <TextView
