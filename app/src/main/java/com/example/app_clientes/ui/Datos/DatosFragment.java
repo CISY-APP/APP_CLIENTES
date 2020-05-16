@@ -20,46 +20,53 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.otros.CalendarioFragment;
 import com.example.app_clientes.R;
+import com.example.app_clientes.pojos.Usuario;
 import com.example.app_clientes.vistas.VentanaAgregarVehiculo;
 import com.example.app_clientes.vistas.VentanaCambiarContrasena;
+import com.example.app_clientes.vistas.VentanaLogin;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.app.Activity.RESULT_OK;
 
 public class DatosFragment extends Fragment {
-
+    //Atributos de la clase:
     private CircleImageView IMGUsuarioDatos;
-    private EditText ETFechaNacimientoDatos;
-
+    private EditText ETFechaNacimientoDatos, ETNombreDatos, ETApellidosDatos, ETEmailDatos, ETNumeroTelefonoDatos, ETDescripcionDatos;
     private StorageReference storageReference;
     private String uriFotoUsuario = "";
-
     private static final int GALERY_INTENT = 1;
     private String ID_USUARIO;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_datos, container, false);
 
-        ID_USUARIO = cargarCredencialesIdUsuario();
+        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
 
         //Carga la imagen del usuario al abrir la ventana
         cargarImagenUsuario();
-
-        EditText ETNombreDatos = view.findViewById(R.id.ETNombreDatos);
-        EditText ETApellidosDatos = view.findViewById(R.id.ETApellidosDatos);
-        EditText ETEmailDatos = view.findViewById(R.id.ETEmailDatos);
-        EditText ETNumeroTelefonoDatos = view.findViewById(R.id.ETNumeroTelefonoDatos);
+        //Vinculamos los atributos de la clase:
+        ETNombreDatos = view.findViewById(R.id.ETNombreDatos);
+        ETApellidosDatos = view.findViewById(R.id.ETApellidosDatos);
+        ETEmailDatos = view.findViewById(R.id.ETEmailDatos);
+        ETNumeroTelefonoDatos = view.findViewById(R.id.ETNumeroTelefonoDatos);
         ETFechaNacimientoDatos = view.findViewById(R.id.ETFechaNacimientoDatos);
-        EditText ETDocumentoDatos = view.findViewById(R.id.ETDocumentoDatos);
-        EditText ETDescripcionDatos = view.findViewById(R.id.ETDescripcionDatos);
+        ETDescripcionDatos = view.findViewById(R.id.ETDescripcionDatos);
         IMGUsuarioDatos = view.findViewById(R.id.mImageVehiculoPeque);
         IMGUsuarioDatos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +113,43 @@ public class DatosFragment extends Fragment {
                 startActivity(VentanaAgregarVehiculo);
             }
         });
+
+        //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+        //Vinculamos el cliente con la interfaz.
+        //En esa interfaz se definen los metodos y los verbos que usan
+        //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
+        JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+        //Creamos una peticion para buscar un usuario por id
+        Call<Usuario> call = peticiones.getUsuarioById(VentanaLogin.usuarioSesion.getIdusuario());
+        //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
+        // y esperamos a la respuesta
+        call.enqueue(new Callback<Usuario>() {
+            //Gestionamos la respuesta del servidor
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
+                if (!response.isSuccessful()) {
+                    Toast.makeText(getContext(),"Code: "+response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //Recogemos el usuario
+                Usuario u= response.body();
+                //Cargamos los datos en la vista:
+                ETNombreDatos.setText(u.getNombre());
+                ETApellidosDatos.setText(u.getApellidos());
+                ETEmailDatos.setText(u.getEmail());
+                if(u.getTelefono()!=null){ETNumeroTelefonoDatos.setText(u.getTelefono().toString());}
+                if(u.getFechanacimiento()!=null){ETFechaNacimientoDatos.setText(new SimpleDateFormat("dd / MM / yyyy").format(u.getFechanacimiento()));}
+                ETDescripcionDatos.setText(u.getDescripcion());
+            }
+            //En caso de que no responda el servidor mostramos mensaje de error
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
         /*ImgPais = view.findViewById(R.id.ImgPais);
         ImgPais.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,10 +253,6 @@ public class DatosFragment extends Fragment {
         newFragment.show(getChildFragmentManager(), "datePicker");
     }
 
-    private String cargarCredencialesIdUsuario(){
-        SharedPreferences credenciales = getContext().getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        return credenciales.getString("idUsuario","0");
-    }
 
     //Hacer si nos queda tiempo cambiar pais de origen
     /*private void showRadioButtonDialog() {

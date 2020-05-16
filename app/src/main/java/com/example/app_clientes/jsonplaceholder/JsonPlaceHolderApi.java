@@ -17,7 +17,11 @@ import retrofit2.http.Path;
 
 
 public interface JsonPlaceHolderApi {
-    //Busca cliente por NIF, el cual se le pasa por la cabecera
+    //Busca cliente por usuario y clave, el cual se le pasa por la cabecera
     @GET("loginUser/{usuario}/{clave}")
-    Call<Usuario> getUsuario(@NonNull @Path("usuario") String usuario, @NonNull @Path("clave") String clave);
+    Call<Usuario> getUsuarioLogin(@NonNull @Path("usuario") String usuario, @NonNull @Path("clave") String clave);
+    //Busca cliente por id, el cual se le pasa por la cabecera
+    @GET("consultarUsuarioPorId/{id}")
+    Call<Usuario> getUsuarioById(@NonNull @Path("id") Integer id);
+
 }

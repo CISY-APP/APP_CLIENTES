@@ -126,7 +126,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
                 //Creamos una peticion para buscar un usuario por email y clave
-                Call<Usuario> call = peticiones.getUsuario(editTextUsuario.getText().toString(),editTextClave.getText().toString());
+                Call<Usuario> call = peticiones.getUsuarioLogin(editTextUsuario.getText().toString(),editTextClave.getText().toString());
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
                 // y esperamos a la respuesta
                 call.enqueue(new Callback<Usuario>() {
@@ -135,14 +135,25 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                     public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
                         if (!response.isSuccessful()) {
+                            //Si la clave no es valida:
                             if(response.code()==403){
                                 txtErrorClave.setText("Clave invalida.");
                                 txtErrorClave.setVisibility(View.VISIBLE);
                                 editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
-                            }else if(response.code()==404){
+                            }else {
+                                txtErrorClave.setVisibility(View.GONE);
+                                txtErrorClave.setText("Error");
+                                editTextClave.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
+                            }
+                            //Si el usuario no es encontrado:
+                            if(response.code()==404){
                                 txtErrorUsuario.setText("Usuario no existente.");
                                 txtErrorUsuario.setVisibility(View.VISIBLE);
                                 editTextUsuario.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
+                            }else{
+                                txtErrorUsuario.setVisibility(View.GONE);
+                                txtErrorUsuario.setText("Error");
+                                editTextUsuario.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
                             }
                             return;
                         }
@@ -150,7 +161,17 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                         Usuario u = response.body();
                         usuarioSesion = u;
                         u.setClave("");
-
+                        //Reiniciamos colores si todoo esta bien:
+                        if (txtErrorClave.getVisibility()==View.VISIBLE){
+                            txtErrorClave.setVisibility(View.GONE);
+                            txtErrorClave.setText("Error");
+                            editTextClave.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
+                        }
+                        if (txtErrorUsuario.getVisibility()==View.VISIBLE){
+                            txtErrorUsuario.setVisibility(View.GONE);
+                            txtErrorUsuario.setText("Error");
+                            editTextUsuario.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
+                        }
                         Toast.makeText(getApplication(),"Bienvenido "+ usuarioSesion.getNombre(), Toast.LENGTH_SHORT).show();
                         //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
                         //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
@@ -165,10 +186,6 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                         Toast.makeText(getApplication(),t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-
-
-
-
             }
         }else if(v.equals(btRegistrar)){
             //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta

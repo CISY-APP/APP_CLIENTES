@@ -63,8 +63,7 @@ public class VentanaPrincipal extends AppCompatActivity{
         createNotificationChannel();
 
 
-        ID_USUARIO = cargarCredencialesIdUsuario();
-        guardarCredencialesIdUsuario();
+        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -147,6 +146,7 @@ public class VentanaPrincipal extends AppCompatActivity{
             }
         });
     }
+    /*
     private String cargarCredencialesIdUsuario(){
         SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
         return credenciales.getString("idUsuario","0");
@@ -177,7 +177,7 @@ public class VentanaPrincipal extends AppCompatActivity{
             }
         });
     }
-
+*/
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
