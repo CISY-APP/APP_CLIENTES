@@ -1,13 +1,11 @@
 package com.example.app_clientes.vistas;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,7 +22,6 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
     private EditText editTextUsuario, editTextClave;
     private Button btIniciarSesion, btRegistrar;
     private TextView txtBtClaveOlvidada, txtInformativoRegistro;
-    private ImageView fondoAutopista;
     //Metodo onCreate encargado de crear la actividad
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,55 +35,45 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         btRegistrar=findViewById(R.id.buttonRegistrarInicioSesion);
         txtBtClaveOlvidada=findViewById(R.id.textViewOlvidasteTuClaveInicioSesion);
         txtInformativoRegistro=findViewById(R.id.textViewNoCuentaInicioSesion);
-        fondoAutopista=findViewById(R.id.imageViewFondoInicioSesion);
+
         //Vinculamos los botones al listener del metodo onclick, que esta implementado en esta clase
         btIniciarSesion.setOnClickListener(this);
         btRegistrar.setOnClickListener(this);
 
-        //Animacion para el edittext Usuario
-        fondoAutopista.post(new Runnable() {
+        //Animaciones
+        txtInformativoRegistro.post(new Runnable() {
             @Override
             public void run() {
                 //Conjuntos de animators
-                final AnimatorSet animatorSetFinal = new AnimatorSet();
-                AnimatorSet animatorSetSimultaneo = new AnimatorSet();
-                AnimatorSet animatorSetEscale_inicioSesion = new AnimatorSet();
-                AnimatorSet animatorSetEscale_registro = new AnimatorSet();
+                AnimatorSet animatorSetEscale = new AnimatorSet();
                 //Animacion para el boton incio sesion
                 ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 0.0f, 1.0f);
                 //Animacion para el boton registrar
                 ObjectAnimator scaleDownX_registro = ObjectAnimator.ofFloat(btRegistrar, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_registro = ObjectAnimator.ofFloat(btRegistrar, "scaleY", 0.0f, 1.0f);
-                //Animacion para el fondo
-
-                ObjectAnimator objectAnimatorFondo = ObjectAnimator.ofFloat(fondoAutopista,"y", fondoAutopista.getHeight()*0.45f,fondoAutopista.getTop());
                 //Animacion para el edittext Usuario
-                ObjectAnimator objectAnimatorTxtUsuario = ObjectAnimator.ofFloat(editTextUsuario,View.ALPHA, 0.0f,1.0f);
+                ObjectAnimator scaleDownX_TxtUsuario = ObjectAnimator.ofFloat(editTextUsuario, "scaleX", 0.0f, 1.0f);
+                ObjectAnimator scaleDownY_TxtUsuario = ObjectAnimator.ofFloat(editTextUsuario, "scaleY", 0.0f, 1.0f);
                 //Animacion para el edittext clave
-                ObjectAnimator objectAnimatorTxtClave = ObjectAnimator.ofFloat(editTextClave,View.ALPHA, 0.0f,1.0f);
+                ObjectAnimator scaleDownX_TxtClave = ObjectAnimator.ofFloat(editTextClave, "scaleX", 0.0f, 1.0f);
+                ObjectAnimator scaleDownY_TxtClave = ObjectAnimator.ofFloat(editTextClave, "scaleY", 0.0f, 1.0f);
                 //Animacion para el textview clave olvidada
-                ObjectAnimator objectAnimatorTxtClaveOlvidada = ObjectAnimator.ofFloat(txtBtClaveOlvidada,"x", 0.0f-txtBtClaveOlvidada.getWidth(),txtBtClaveOlvidada.getLeft());
+                ObjectAnimator scaleDownX_TxtClaveOlvidada = ObjectAnimator.ofFloat(txtBtClaveOlvidada, "scaleX", 0.0f, 1.0f);
+                ObjectAnimator scaleDownY_TxtClaveOlvidada = ObjectAnimator.ofFloat(txtBtClaveOlvidada, "scaleY", 0.0f, 1.0f);
                 //Animacion para el boton registrarse
-                ObjectAnimator objectAnimatorTxtRegistro = ObjectAnimator.ofFloat(txtInformativoRegistro,View.ALPHA, 0.0f,1.0f);
+                ObjectAnimator scaleDownX_TxtRegistro = ObjectAnimator.ofFloat(txtInformativoRegistro, "scaleX", 0.0f, 1.0f);
+                ObjectAnimator scaleDownY_TxtRegistro = ObjectAnimator.ofFloat(txtInformativoRegistro, "scaleY", 0.0f, 1.0f);
                 //Configuramos los animatorsets
-                animatorSetEscale_inicioSesion.play(scaleDownX_inicioSesion).with(scaleDownY_inicioSesion);
-                animatorSetEscale_registro.play(scaleDownX_registro).with(scaleDownY_registro);
-                animatorSetFinal.play(objectAnimatorFondo);
-                animatorSetFinal.setDuration(650);
-                animatorSetFinal.setInterpolator(new LinearInterpolator());
-                animatorSetSimultaneo.play(objectAnimatorTxtUsuario).with(objectAnimatorTxtClave).with(objectAnimatorTxtClaveOlvidada).with(objectAnimatorTxtRegistro).with(animatorSetEscale_inicioSesion).with(animatorSetEscale_registro);
-                animatorSetSimultaneo.setDuration(650);
-                animatorSetSimultaneo.setInterpolator(new LinearInterpolator());
-                animatorSetSimultaneo.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        animatorSetFinal.start();
-                        fondoAutopista.setVisibility(View.VISIBLE);
-                        super.onAnimationEnd(animation);
-                    }
-                });
-                animatorSetSimultaneo.start();
+                animatorSetEscale.play(scaleDownX_inicioSesion).with(scaleDownY_inicioSesion)
+                        .with(scaleDownX_registro).with(scaleDownY_registro)
+                        .with(scaleDownX_TxtUsuario).with(scaleDownY_TxtUsuario)
+                        .with(scaleDownX_TxtClave).with(scaleDownY_TxtClave)
+                        .with(scaleDownX_TxtRegistro).with(scaleDownY_TxtRegistro)
+                        .with(scaleDownX_TxtClaveOlvidada).with(scaleDownY_TxtClaveOlvidada);
+                animatorSetEscale.setDuration(550);
+                animatorSetEscale.setInterpolator(new AccelerateDecelerateInterpolator());
+                animatorSetEscale.start();
             }
         });
 
@@ -105,6 +92,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
             Intent intentInicioSesion = new Intent(this, VentanaPrincipal.class);
             //Iniciamos la nueva actividad:
             startActivity(intentInicioSesion);
+            finish();
         }else if(v.equals(btRegistrar)){
             //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
             //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
