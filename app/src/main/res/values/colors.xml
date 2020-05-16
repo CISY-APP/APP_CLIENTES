@@ -9,4 +9,5 @@
     <color name="colorGris">#aaa</color>
     <color name="colorGrisLight">#DCDCDC</color>
     <color name="colorChatEnvado">#A5EEFF</color>
+    <color name="colorErrorsitoEditText">#DA4444</color>
 </resources>

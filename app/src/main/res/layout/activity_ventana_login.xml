@@ -14,9 +14,10 @@
         android:layout_gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.029"
+        app:layout_constraintVertical_bias="0.007"
         app:lottie_autoPlay="true"
         app:lottie_fileName="animacion_logo_coche_felis.json"
         app:lottie_imageAssetsFolder="assets"
@@ -39,7 +40,6 @@
             android:id="@+id/editTextUsuarioInicioSesion"
             style="@android:style/Widget.Holo.EditText"
             android:drawableLeft="@drawable/ic_usuario"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -52,6 +52,18 @@
             android:textColor="@color/places_ui_default_primary_dark"
             android:textColorHint="@color/colorGrisLight"
             android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/textViewErrorUsuarioInicioSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="start"
+            android:text="Error"
+            android:visibility="gone"
+            android:textColor="@color/colorBlanco"
+            android:textStyle="bold"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/editTextClaveInicioSesion"
@@ -71,12 +83,22 @@
             android:textColorHint="@color/colorGrisLight"
             android:textStyle="normal" />
 
+        <TextView
+            android:id="@+id/textViewErrorClaveInicioSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="start"
+            android:visibility="gone"
+            android:text="Error"
+            android:textColor="@color/colorBlanco"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textViewOlvidasteTuClaveInicioSesion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="end"
             android:clickable="true"
             android:focusable="true"
@@ -88,13 +110,14 @@
         <Button
             android:id="@+id/buttonLoginInicioSesion"
             android:layout_width="match_parent"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="40dp"
             android:layout_height="50dp"
             android:background="@drawable/layout_drawable_2"
             android:clickable="true"
             android:focusable="true"
+            android:enabled="false"
             android:text="@string/login"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorGris"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -102,7 +125,7 @@
             android:id="@+id/textViewNoCuentaInicioSesion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_gravity="center_horizontal"
             android:text="¿No tienes una cuenta?"
             android:textColor="@color/colorBlanco"
@@ -111,7 +134,7 @@
         <Button
             android:id="@+id/buttonRegistrarInicioSesion"
             android:layout_width="match_parent"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:layout_height="50dp"
             android:background="@drawable/layout_drawable_2"

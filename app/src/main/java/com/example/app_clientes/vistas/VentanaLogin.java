@@ -4,30 +4,37 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.app_clientes.R;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //Clase que contiene toda la logica y conexion con la ventana de login de la app:
-public class VentanaLogin extends AppCompatActivity implements View.OnClickListener{
+public class VentanaLogin extends AppCompatActivity implements View.OnClickListener, TextWatcher{
     //Atributos pertenecientes a la clase
     private EditText editTextUsuario, editTextClave;
     private Button btIniciarSesion, btRegistrar;
     private TextView txtBtClaveOlvidada, txtInformativoRegistro;
+    private TextView txtErrorUsuario, txtErrorClave;
+    //Variables para comprobacion de formatos:
+    private boolean pruebaFormatoUsuario, pruebaFormatoClave;
     //Metodo onCreate encargado de crear la actividad
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_login);
-
+        //Inicializamos variables
+        pruebaFormatoUsuario=false;
+        pruebaFormatoClave=false;
         //Asociamos los elementos XML a los atributos
         editTextUsuario=findViewById(R.id.editTextUsuarioInicioSesion);
         editTextClave=findViewById(R.id.editTextClaveInicioSesion);
@@ -35,20 +42,23 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         btRegistrar=findViewById(R.id.buttonRegistrarInicioSesion);
         txtBtClaveOlvidada=findViewById(R.id.textViewOlvidasteTuClaveInicioSesion);
         txtInformativoRegistro=findViewById(R.id.textViewNoCuentaInicioSesion);
-
-        //Vinculamos los botones al listener del metodo onclick, que esta implementado en esta clase
+        txtErrorUsuario=findViewById(R.id.textViewErrorUsuarioInicioSesion);
+        txtBtClaveOlvidada=findViewById(R.id.textViewErrorClaveInicioSesion);
+        //Vinculamos los botones al listener del metodo onclick, que esta implementado en esta clase:
         btIniciarSesion.setOnClickListener(this);
         btRegistrar.setOnClickListener(this);
-
+        //Vinculamos los edittext a su listener para el metodo afterTextChanged, que esta implementado en esta clase:
+        editTextUsuario.addTextChangedListener(this);
+        editTextClave.addTextChangedListener(this);
         //Animaciones
-        txtInformativoRegistro.post(new Runnable() {
+        txtBtClaveOlvidada.post(new Runnable() {
             @Override
             public void run() {
                 //Conjuntos de animators
                 AnimatorSet animatorSetEscale = new AnimatorSet();
                 //Animacion para el boton incio sesion
-                ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 0.0f, 1.0f);
-                ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 0.0f, 1.0f);
+                ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 0.0f, 0.95f);
+                ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 0.0f, 0.95f);
                 //Animacion para el boton registrar
                 ObjectAnimator scaleDownX_registro = ObjectAnimator.ofFloat(btRegistrar, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_registro = ObjectAnimator.ofFloat(btRegistrar, "scaleY", 0.0f, 1.0f);
@@ -76,23 +86,38 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                 animatorSetEscale.start();
             }
         });
-
     }
     //Metodo onClick implementado de la interfaz View.OnClickListener.
     @Override
     public void onClick(View v) {
         //Segun el boton clickado hacemos lo siguiente:
         if(v.equals(btIniciarSesion)){
-            //HACER COMPROBACIONES SEGUN DE LOS DATOS LEIDOS EN LOS EDITEXT, Y A TRAVES DE RETROFIT CONSEGUIR LA INFORMACION PARA VALIDARLO
-            //-----------------------------------------------------------------------------------------------------------------------------
+            //Variables booleanas
+            boolean usuario=false, clave=false;
+            //Antes de hacer la peticion al servidor realizamos las siguientes comprobaciones:
+            //Comprobamos con una expresion regular que sea un email valido:
+            //Patrón con la expresion regular
+            Pattern patronEmail = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
+            Matcher match = patronEmail.matcher(editTextUsuario.getText().toString());
+            if (!match.find()) {
+                txtErrorUsuario.setText("Email con formato no valido.");
+                txtErrorUsuario.setVisibility(View.VISIBLE);
+                editTextUsuario.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
+            }else{
+                txtErrorUsuario.setVisibility(View.GONE);
+                txtErrorUsuario.setText("Error");
+                editTextUsuario.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
+                //Peticion al servidor a traves de Retrofit:
 
 
-            //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
-            //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
-            Intent intentInicioSesion = new Intent(this, VentanaPrincipal.class);
-            //Iniciamos la nueva actividad:
-            startActivity(intentInicioSesion);
-            finish();
+
+                //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
+                //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
+                Intent intentInicioSesion = new Intent(this, VentanaPrincipal.class);
+                //Iniciamos la nueva actividad:
+                startActivity(intentInicioSesion);
+                finish();
+            }
         }else if(v.equals(btRegistrar)){
             //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
             //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
@@ -107,4 +132,64 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
             startActivity(intentClaveOlvidada);
         }
     }
+
+    //Comprobacion de que los campos no esten vacios y tengan un formato correcto antes de poder intentar iniciar sesion:
+    @Override
+    public void afterTextChanged(Editable s) {
+        //Boolean prueba de que el estado anterior era true
+        boolean anterior=false;
+        if(pruebaFormatoUsuario&&pruebaFormatoClave){anterior=true;}
+        //Si el texto de usuario ha cambiado:
+        if(s==editTextUsuario.getEditableText()){
+            //Quitamos espacios a el usuario:
+            String usuarioAux=s.toString().replaceAll("\\s","");
+            //Si no esta vacio:
+            if(!usuarioAux.equals("")&&usuarioAux.length()>=5){
+                pruebaFormatoUsuario=true;
+            }else{
+                pruebaFormatoUsuario=false;
+            }
+        }
+        //Si el texto de clave ha cambiado:
+        else if (s==editTextClave.getEditableText()){
+            //Quitamos espacios a la clave
+            String claveAux=s.toString().replaceAll("\\s","");
+            //Si no esta vacio y tiene mas de 5 caracteres:
+            if(!claveAux.equals("")&&claveAux.length()>=6){
+                pruebaFormatoClave=true;
+            }else{
+                pruebaFormatoClave=false;
+            }
+        }
+        //Si las dos pruebas de formato son correctas pasamos a liberar el boton de iniciar sesion:
+        if (pruebaFormatoUsuario&&pruebaFormatoClave&&!anterior){
+            //Conjunto de animator
+            AnimatorSet animator = new AnimatorSet();
+            //Animacion para el boton incio sesion
+            ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 0.95f, 1.0f);
+            ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 0.95f, 1.0f);
+            animator.play(scaleDownX_inicioSesion).with(scaleDownY_inicioSesion);
+            animator.setDuration(200);
+            animator.start();
+            //Habilitamos el boton inicio de sesion
+            btIniciarSesion.setEnabled(true);
+            btIniciarSesion.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }else if ((!pruebaFormatoUsuario||!pruebaFormatoClave)&&anterior){
+            //Conjunto de animator
+            AnimatorSet animator = new AnimatorSet();
+            //Animacion para el boton incio sesion
+            ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 1.0f, 0.95f);
+            ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 1.0f, 0.95f);
+            animator.play(scaleDownX_inicioSesion).with(scaleDownY_inicioSesion);
+            animator.setDuration(200);
+            animator.start();
+            //Deshabilitamos el boton inicio de sesion
+            btIniciarSesion.setEnabled(false);
+            btIniciarSesion.setTextColor(getResources().getColor(R.color.colorGris));
+        }
+    }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
 }
