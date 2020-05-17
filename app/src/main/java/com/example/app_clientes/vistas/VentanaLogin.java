@@ -105,20 +105,38 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         //Segun el boton clickado hacemos lo siguiente:
         if(v.equals(btIniciarSesion)){
             //Variables booleanas
-            boolean usuario=false, clave=false;
+            boolean usuario=true, clave=true;
             //Antes de hacer la peticion al servidor realizamos las siguientes comprobaciones:
             //Comprobamos con una expresion regular que sea un email valido:
-            //Patrón con la expresion regular
             Pattern patronEmail = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
             Matcher match = patronEmail.matcher(editTextUsuario.getText().toString());
             if (!match.find()) {
                 txtErrorUsuario.setText("Email con formato no valido.");
                 txtErrorUsuario.setVisibility(View.VISIBLE);
                 editTextUsuario.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
+                usuario=false;
             }else{
                 txtErrorUsuario.setVisibility(View.GONE);
                 txtErrorUsuario.setText("Error");
                 editTextUsuario.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
+            }
+            //Control clave que contenga solo caracteres alfanumericos
+            for (int i = 0 ; i < editTextClave.getText().toString().length() && clave; i++){
+                if(editTextClave.getText().toString().toUpperCase().charAt(i) >='A' &&editTextClave.getText().toString().toUpperCase().charAt(i)<='Z'||editTextClave.getText().toString().charAt(i) >='0' &&editTextClave.getText().toString().charAt(i)<='9'){
+                }else{
+                    clave=false;
+                }
+            }
+            if (clave){
+                txtErrorClave.setVisibility(View.GONE);
+                txtErrorClave.setText("Error");
+                editTextClave.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
+            }else{
+                txtErrorClave.setText("Clave con caracteres no alfanumericos.");
+                txtErrorClave.setVisibility(View.VISIBLE);
+                editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
+            }
+            if(clave&&usuario){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
                 Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz.
@@ -187,6 +205,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                     }
                 });
             }
+
         }else if(v.equals(btRegistrar)){
             //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
             //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
@@ -210,9 +229,8 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         if(pruebaFormatoUsuario&&pruebaFormatoClave){anterior=true;}
         //Si el texto de usuario ha cambiado:
         if(s==editTextUsuario.getEditableText()){
-            //Quitamos espacios a el usuario:
-            String usuarioAux=s.toString().replaceAll("\\s","");
-            //Si no esta vacio:
+            String usuarioAux=s.toString();
+            //Si no esta vacio y tiene mas de 4 caracteres:
             if(!usuarioAux.equals("")&&usuarioAux.length()>=5){
                 pruebaFormatoUsuario=true;
             }else{
@@ -221,8 +239,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         }
         //Si el texto de clave ha cambiado:
         else if (s==editTextClave.getEditableText()){
-            //Quitamos espacios a la clave
-            String claveAux=s.toString().replaceAll("\\s","");
+            String claveAux=s.toString();
             //Si no esta vacio y tiene mas de 5 caracteres:
             if(!claveAux.equals("")&&claveAux.length()>=6){
                 pruebaFormatoClave=true;
