@@ -205,7 +205,6 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                     }
                 });
             }
-
         }else if(v.equals(btRegistrar)){
             //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
             //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
@@ -230,8 +229,8 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         //Si el texto de usuario ha cambiado:
         if(s==editTextUsuario.getEditableText()){
             String usuarioAux=s.toString();
-            //Si no esta vacio y tiene mas de 4 caracteres:
-            if(!usuarioAux.equals("")&&usuarioAux.length()>=5){
+            //Si no esta vacio y tiene mas de 4 caracteres y menos de 31 caracteres:
+            if(!usuarioAux.equals("")&&usuarioAux.length()>=5&&usuarioAux.length()<=30){
                 pruebaFormatoUsuario=true;
             }else{
                 pruebaFormatoUsuario=false;
@@ -240,8 +239,8 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         //Si el texto de clave ha cambiado:
         else if (s==editTextClave.getEditableText()){
             String claveAux=s.toString();
-            //Si no esta vacio y tiene mas de 5 caracteres:
-            if(!claveAux.equals("")&&claveAux.length()>=6){
+            //Si no esta vacio y tiene mas de 5 caracteres y menos de 31 caracteres:
+            if(!claveAux.equals("")&&claveAux.length()>=6&&claveAux.length()<=30){
                 pruebaFormatoClave=true;
             }else{
                 pruebaFormatoClave=false;

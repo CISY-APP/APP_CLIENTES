@@ -30,12 +30,11 @@ public class Usuario implements java.io.Serializable {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellidos, String email, String clave, Date fecharegistro) {
+    public Usuario(String nombre, String apellidos, String email, String clave) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.email = email;
         this.clave = clave;
-        this.fecharegistro = fecharegistro;
     }
 
     public Usuario(String nombre, String apellidos, Boolean espasajero, Boolean esconductor, Integer telefono,

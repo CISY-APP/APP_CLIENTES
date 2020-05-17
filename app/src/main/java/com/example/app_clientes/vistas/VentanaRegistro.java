@@ -123,16 +123,43 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
                 if(editTextClave.getText().toString().toUpperCase().charAt(i) >='A' &&editTextClave.getText().toString().toUpperCase().charAt(i)<='Z'||editTextClave.getText().toString().charAt(i) >='0' &&editTextClave.getText().toString().charAt(i)<='9'){
                 }else{
                     clave=false;
+                    txtErrorClave.setText("Clave con caracteres no alfanumericos.");
+                    txtErrorClave.setVisibility(View.VISIBLE);
+                    editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                 }
+            }
+            boolean existMinuscula = false, existMayuscula = false, existNumero = false;
+            for (int i = 0 ; i < editTextClave.getText().toString().length() && (!existMayuscula || !existMinuscula || !existNumero); i++){
+                if(editTextClave.getText().toString().charAt(i) >='A' &&editTextClave.getText().toString().charAt(i)<='Z'){
+                    existMayuscula=true;
+                }
+                else if (editTextClave.getText().toString().charAt(i) >='a' &&editTextClave.getText().toString().charAt(i)<='z'){
+                    existMinuscula=true;
+                }
+                else if(editTextClave.getText().toString().charAt(i) >='0' &&editTextClave.getText().toString().charAt(i)<='9'){
+                    existNumero=true;
+                }
+            }
+            if(!existMayuscula&&clave){
+                clave=false;
+                txtErrorClave.setText("Introduzca una letra mayuscula como minimo.");
+                txtErrorClave.setVisibility(View.VISIBLE);
+                editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
+            }else if(!existMinuscula&&clave){
+                clave=false;
+                txtErrorClave.setText("Introduzca una letra minuscula como minimo.");
+                txtErrorClave.setVisibility(View.VISIBLE);
+                editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
+            }else if(!existNumero&&clave){
+                clave=false;
+                txtErrorClave.setText("Introduzca un numero como minimo.");
+                txtErrorClave.setVisibility(View.VISIBLE);
+                editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
             }
             if (clave){
                 txtErrorClave.setVisibility(View.GONE);
                 txtErrorClave.setText("Error");
                 editTextClave.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
-            }else{
-                txtErrorClave.setText("Clave con caracteres no alfanumericos.");
-                txtErrorClave.setVisibility(View.VISIBLE);
-                editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
             }
             //Control de nombre para ver si han metido algun caracter no letra ni espacio:
             //Quitamos espacios al nombre pero dejamos uno entre palabras:
@@ -194,16 +221,17 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
                 txtErrorApellidos.setVisibility(View.VISIBLE);
                 editTextApellidos.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
             }
-            /*
-            if(clave&&usuario){
+            //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
+            if(clave&&usuario&&nombre&&apellidos){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
                 Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz.
                 //En esa interfaz se definen los metodos y los verbos que usan
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para buscar un usuario por email y clave
-                Call<Usuario> call = peticiones.getUsuarioLogin(editTextUsuario.getText().toString(),editTextClave.getText().toString());
+                //Creamos una peticion para registrar un usuario, que creamos con los valores de los editext:
+                Usuario uObject = new Usuario(editTextNombre.getText().toString(),editTextApellidos.getText().toString(),editTextUsuario.getText().toString(),editTextClave.getText().toString());
+                Call<Usuario> call = peticiones.registrarUsuario(uObject);
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
                 // y esperamos a la respuesta
                 call.enqueue(new Callback<Usuario>() {
@@ -212,49 +240,18 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
                     public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
                         if (!response.isSuccessful()) {
-                            //Si la clave no es valida:
-                            if(response.code()==403){
-                                txtErrorClave.setText("Clave invalida.");
-                                txtErrorClave.setVisibility(View.VISIBLE);
-                                editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
-                            }else {
-                                txtErrorClave.setVisibility(View.GONE);
-                                txtErrorClave.setText("Error");
-                                editTextClave.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
-                            }
-                            //Si el usuario no es encontrado:
-                            if(response.code()==404){
-                                txtErrorUsuario.setText("Usuario no existente.");
-                                txtErrorUsuario.setVisibility(View.VISIBLE);
-                                editTextUsuario.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
-                            }else{
-                                txtErrorUsuario.setVisibility(View.GONE);
-                                txtErrorUsuario.setText("Error");
-                                editTextUsuario.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
-                            }
+                            //500 si ya existe
+                            //400 si da error
+                            Toast.makeText(getApplication(),"Code: "+ response.code()
+                                    + "\nEs exitoso: "+response.isSuccessful()
+                                    + "\nRAW: "+response.raw().headers().names().toString(), Toast.LENGTH_LONG).show();
                             return;
                         }
-                        //El servidor responde con datos y lo almacenamos en nuestra variable estatica
-                        Usuario u = response.body();
-                        usuarioSesion = u;
-                        u.setClave("");
-                        //Reiniciamos colores si todoo esta bien:
-                        if (txtErrorClave.getVisibility()==View.VISIBLE){
-                            txtErrorClave.setVisibility(View.GONE);
-                            txtErrorClave.setText("Error");
-                            editTextClave.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
-                        }
-                        if (txtErrorUsuario.getVisibility()==View.VISIBLE){
-                            txtErrorUsuario.setVisibility(View.GONE);
-                            txtErrorUsuario.setText("Error");
-                            editTextUsuario.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
-                        }
-                        Toast.makeText(getApplication(),"Bienvenido "+ usuarioSesion.getNombre(), Toast.LENGTH_SHORT).show();
                         //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
                         //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
-                        Intent intentInicioSesion = new Intent(getApplication(), VentanaPrincipal.class);
+                        Intent intentRegistro = new Intent(getApplication(), VentanaLogin.class);
                         //Iniciamos la nueva actividad:
-                        startActivity(intentInicioSesion);
+                        startActivity(intentRegistro);
                         finish();
                     }
                     //En caso de que no responda el servidor mostramos mensaje de error
@@ -263,7 +260,7 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
                         Toast.makeText(getApplication(),t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }*/
+            }
         }
     }
     //Comprobacion de que los campos no esten vacios y tengan un formato correcto antes de poder intentar iniciar sesion:
@@ -275,8 +272,8 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
         //Si el texto de usuario ha cambiado:
         if(s==editTextUsuario.getEditableText()){
             String usuarioAux=s.toString();
-            //Si no esta vacio y tiene mas de 4 caracteres:
-            if(!usuarioAux.equals("")&&usuarioAux.length()>=5){
+            //Si no esta vacio y tiene mas de 4 caracteres y menos de 31 caracteres:
+            if(!usuarioAux.equals("")&&usuarioAux.length()>=5&&usuarioAux.length()<=30){
                 pruebaFormatoUsuario=true;
             }else{
                 pruebaFormatoUsuario=false;
@@ -285,8 +282,8 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
         //Si el texto de clave ha cambiado:
         else if (s==editTextClave.getEditableText()){
             String claveAux=s.toString();
-            //Si no esta vacio y tiene mas de 5 caracteres:
-            if(!claveAux.equals("")&&claveAux.length()>=6){
+            //Si no esta vacio y tiene mas de 5 caracteres y menos de 31 caracteres:
+            if(!claveAux.equals("")&&claveAux.length()>=6&&claveAux.length()<=30){
                 pruebaFormatoClave=true;
             }else{
                 pruebaFormatoClave=false;
@@ -310,7 +307,7 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
             }
             nombre= aux.toString();
             //Si no esta vacio y tiene mas de 0 caracter:
-            if(!nombre.equals("")&&nombre.length()>=1){
+            if(!nombre.equals("")&&nombre.length()>=1&&nombre.length()<=20){
                 pruebaFormatoNombre=true;
             }else{
                 pruebaFormatoNombre=false;
@@ -334,7 +331,7 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
             }
             apellidos= aux.toString();
             //Si no esta vacio y tiene mas de 1 caracter:
-            if(!apellidos.equals("")&&apellidos.length()>=1){
+            if(!apellidos.equals("")&&apellidos.length()>=1&&apellidos.length()<=20){
                 pruebaFormatoApellidos=true;
             }else{
                 pruebaFormatoApellidos=false;
