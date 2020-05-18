@@ -31,7 +31,9 @@
         <activity android:name=".vistas.VentanaViajePublicado" />
         <activity android:name=".vistas.VentanaViajesEncontrados" />
         <activity android:name=".vistas.VentanaViajeReservado" />
-        <activity android:name=".vistas.VentanaCambiarContrasena" />
+        <activity
+            android:name=".vistas.VentanaCambiarContrasena"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".vistas.VentanaAgregarVehiculo" />
         <activity android:name=".vistas.VentanaBuscarViaje" />
         <activity android:name=".vistas.VentanaViajeNoEncontrado" />
