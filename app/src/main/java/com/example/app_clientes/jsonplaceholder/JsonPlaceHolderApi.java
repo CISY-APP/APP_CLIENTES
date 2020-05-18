@@ -12,6 +12,7 @@ import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -19,6 +20,7 @@ import retrofit2.http.Path;
 
 
 public interface JsonPlaceHolderApi {
+    //METODOS PARA USUARIO********************************************************************************************
     //Login de usuario por nombre usuario y clave, el cual se le pasa por la cabecera
     @GET("loginUser/{usuario}/{clave}")
     Call<Usuario> getUsuarioLogin(@NonNull @Path("usuario") String usuario, @NonNull @Path("clave") String clave);
@@ -31,5 +33,7 @@ public interface JsonPlaceHolderApi {
     //Cambiar contrasena de usuario por id usuario
     @PUT("actualizarClaveUsuario")
     Call<Usuario> actualizarClaveUsuario(@Body Map<String, String> param);
-
+    //Dar de baja al usuario por id
+    @DELETE("eliminarUsuario/{id}")
+    Call<Void> eliminarUsuarioById(@NonNull @Path("id") Integer id);
 }

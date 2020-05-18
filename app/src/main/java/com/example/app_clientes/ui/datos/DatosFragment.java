@@ -85,7 +85,42 @@ public class DatosFragment extends Fragment {
         BTEliminarCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Consulta a la base de datos eliminando la cuenta
+                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
+                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+                //Vinculamos el cliente con la interfaz.
+                //En esa interfaz se definen los metodos y los verbos que usan
+                //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
+                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                //Creamos una peticion para dar de baja al usuario por id
+                //Creamos un Map para pasarle valores por el cuerpo a la siguiente peticion
+                Call<Void> call = peticiones.eliminarUsuarioById(VentanaLogin.usuarioSesion.getIdusuario());
+                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
+                // y esperamos a la respuesta
+                call.enqueue(new Callback<Void>() {
+                    //Gestionamos la respuesta del servidor
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(getActivity(),"Code: "+response.code(), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        //Si la baja ha sido exitosa
+                        VentanaLogin.usuarioSesion=null;
+                        Toast.makeText(getActivity(),"Baja realizada con exito.", Toast.LENGTH_LONG).show();
+                        //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
+                        //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
+                        Intent intentInicioSesion = new Intent(getActivity(), VentanaLogin.class);
+                        //Iniciamos la nueva actividad:
+                        startActivity(intentInicioSesion);
+                        getActivity().finish();
+                    }
+                    //En caso de que no responda el servidor mostramos mensaje de error
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getActivity(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
         Button BTGuardarCambios = view.findViewById(R.id.BTGuardarCambios);
