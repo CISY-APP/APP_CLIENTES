@@ -1,4 +1,4 @@
-package com.example.app_clientes.ui.Home;
+package com.example.app_clientes.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;

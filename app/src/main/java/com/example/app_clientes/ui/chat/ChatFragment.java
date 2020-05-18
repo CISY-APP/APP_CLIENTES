@@ -1,4 +1,4 @@
-package com.example.app_clientes.ui.Chat;
+package com.example.app_clientes.ui.chat;
 
 import android.content.Context;
 import android.content.Intent;

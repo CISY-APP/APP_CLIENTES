@@ -7,60 +7,60 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.app_clientes.ui.Home.HomeFragment"
+        android:name="com.example.app_clientes.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/nav_viajes"
-        android:name="com.example.app_clientes.ui.Viajes.TusViajesFragment"
+        android:name="com.example.app_clientes.ui.viajes.TusViajesFragment"
         android:label="@string/menu_tusViajes"
         tools:layout="@layout/fragment_tusviajes" />
 
     <fragment
         android:id="@+id/nav_cartera"
-        android:name="com.example.app_clientes.ui.Cartera.CarteraFragment"
+        android:name="com.example.app_clientes.ui.cartera.CarteraFragment"
         android:label="@string/menu_cartera"
         tools:layout="@layout/fragment_cartera"/>
 
     <fragment
         android:id="@+id/nav_mensajes"
-        android:name="com.example.app_clientes.ui.Mensajes.MensajesFragment"
+        android:name="com.example.app_clientes.ui.mensajes.MensajesFragment"
         android:label="@string/menu_mensajes"
         tools:layout="@layout/fragment_mensajes"/>
 
     <fragment
         android:id="@+id/nav_incidencias"
-        android:name="com.example.app_clientes.ui.Incidencias.IncidenciasFragment"
+        android:name="com.example.app_clientes.ui.incidencias.IncidenciasFragment"
         android:label="@string/menu_incidencias"
         tools:layout="@layout/fragment_incidencias"/>
 
     <fragment
         android:id="@+id/nav_datos"
-        android:name="com.example.app_clientes.ui.Datos.DatosFragment"
+        android:name="com.example.app_clientes.ui.datos.DatosFragment"
         android:label="@string/menu_datos"
         tools:layout="@layout/fragment_datos"/>
 
     <fragment
         android:id="@+id/nav_vehiculos"
-        android:name="com.example.app_clientes.ui.Vehiculos.VehiculosFragment"
+        android:name="com.example.app_clientes.ui.vehiculos.VehiculosFragment"
         android:label="@string/menu_vehiculos"
         tools:layout="@layout/fragment_datos"/>
 
     <fragment
         android:id="@+id/nav_configuracion"
-        android:name="com.example.app_clientes.ui.Configuracion.ConfiguracionFragment"
+        android:name="com.example.app_clientes.ui.configuracion.ConfiguracionFragment"
         android:label="@string/menu_configuracion"
         tools:layout="@layout/fragment_configuracion"/>
 
     <fragment
         android:id="@+id/nav_cerrarSesion"
-        android:name="com.example.app_clientes.ui.Cartera.CarteraFragment"
+        android:name="com.example.app_clientes.ui.cartera.CarteraFragment"
         android:label="@string/menu_cerrarSesion"
         tools:layout="@layout/fragment_cerrarsesion"/>
 
     <fragment
         android:id="@+id/nav_chat"
-        android:name="com.example.app_clientes.ui.Chat.ChatFragment"
+        android:name="com.example.app_clientes.ui.chat.ChatFragment"
         android:label="@string/menu_chat"
         tools:layout="@layout/fragment_chat"/>
 

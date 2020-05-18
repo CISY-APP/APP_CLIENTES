@@ -1,4 +1,4 @@
-package com.example.app_clientes.ui.Vehiculos;
+package com.example.app_clientes.ui.vehiculos;
 
 import android.content.Context;
 import android.content.Intent;

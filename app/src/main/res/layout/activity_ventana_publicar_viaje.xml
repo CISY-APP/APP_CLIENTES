@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/cell_background"
-    tools:context=".ui.Datos.DatosFragment">
+    tools:context=".ui.datos.DatosFragment">
 
     <androidx.cardview.widget.CardView
 

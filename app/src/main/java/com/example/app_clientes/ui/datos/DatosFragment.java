@@ -1,9 +1,7 @@
-package com.example.app_clientes.ui.Datos;
+package com.example.app_clientes.ui.datos;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;

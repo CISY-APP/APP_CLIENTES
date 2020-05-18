@@ -1,4 +1,4 @@
-package com.example.app_clientes.ui.Mensajes;
+package com.example.app_clientes.ui.mensajes;
 
 import android.content.Context;
 import android.content.Intent;

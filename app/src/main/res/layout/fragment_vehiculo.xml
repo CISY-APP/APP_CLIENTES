@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/cell_background"
     android:layout_height="match_parent"
-    tools:context=".ui.Vehiculos.VehiculosFragment">
+    tools:context=".ui.vehiculos.VehiculosFragment">
 
 
     <LinearLayout
