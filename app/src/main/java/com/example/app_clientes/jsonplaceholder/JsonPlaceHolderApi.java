@@ -14,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 
@@ -27,5 +28,8 @@ public interface JsonPlaceHolderApi {
     //Registrar usuario por body
     @POST("registrarUsuario")
     Call<Usuario> registrarUsuario(@Body Usuario usuario);
+    //Cambiar contrasena de usuario por id usuario
+    @PUT("actualizarClaveUsuario")
+    Call<Usuario> actualizarClaveUsuario(@Body Map<String, String> param);
 
 }

@@ -2,6 +2,7 @@ package com.example.app_clientes.vistas;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,10 +11,22 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_clientes.R;
+import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
+import com.example.app_clientes.pojos.Usuario;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 //Clase que contiene toda la logica y conexion con la ventana de cambiar contrasena de la app:
 public class VentanaCambiarContrasena extends AppCompatActivity implements View.OnClickListener, TextWatcher {
@@ -37,7 +50,7 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
         editTextClaveNueva = findViewById(R.id.editTextClaveNew1CambiarContrasena);
         editTextClaveNuevaRepetida = findViewById(R.id.editTextClaveNew2CambiarContrasena);
         btConfirmar = findViewById(R.id.btAceptarCambiosVentanaCambiarContrasena);
-        btVolver = findViewById(R.id.IVFlechaAtras);
+        btVolver = findViewById(R.id.btFlechaAtrasCambiarContrasena);
         txtErrorClaveActual=findViewById(R.id.textViewErrorClaveOldCambiarContrasena);
         txtErrorClaveNueva=findViewById(R.id.textViewErrorNew1CambiarContrasena);
         txtErrorClaveNuevaRepetida=findViewById(R.id.textViewErrorNew2CambiarContrasena);
@@ -159,7 +172,7 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
                 txtErrorClaveNuevaRepetida.setVisibility(View.GONE);
                 txtErrorClaveNuevaRepetida.setText("Error");
                 editTextClaveNuevaRepetida.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
-            }/*
+            }
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(claveAct&&claveNew&&claveRep){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
@@ -168,9 +181,13 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
                 //En esa interfaz se definen los metodos y los verbos que usan
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para registrar un usuario, que creamos con los valores de los editext:
-                Usuario uObject = new Usuario(editTextNombre.getText().toString(),editTextApellidos.getText().toString(),editTextUsuario.getText().toString(),editTextClave.getText().toString());
-                Call<Usuario> call = peticiones.registrarUsuario(uObject);
+                //Creamos una peticion para cambiar la contrasena de un usuario por su idusuario:ç
+                //Creamos un Map para pasarle valores por el cuerpo a la siguiente peticion
+                Map<String, String> infoMap = new HashMap<String, String>();
+                infoMap.put("idUsuario", VentanaLogin.usuarioSesion.getIdusuario().toString());
+                infoMap.put("claveActual", editTextClaveActual.getText().toString());
+                infoMap.put("nuevaClave", editTextClaveNueva.getText().toString());
+                Call<Usuario> call = peticiones.actualizarClaveUsuario(infoMap);
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
                 // y esperamos a la respuesta
                 call.enqueue(new Callback<Usuario>() {
@@ -179,19 +196,27 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
                     public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
                         if (!response.isSuccessful()) {
-                            //500 si ya existe
-                            //400 si da error
-                            Toast.makeText(getApplication(),"Code: "+ response.code()
-                                    + "\nEs exitoso: "+response.isSuccessful()
-                                    + "\nRAW: "+response.raw().headers().names().toString(), Toast.LENGTH_LONG).show();
+                            //Si la clave no es valida:
+                            if(response.code()==400){
+                                txtErrorClaveActual.setText("Clave invalida.");
+                                txtErrorClaveActual.setVisibility(View.VISIBLE);
+                                editTextClaveActual.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
+                            }else {
+                                txtErrorClaveActual.setVisibility(View.GONE);
+                                txtErrorClaveActual.setText("Error");
+                                editTextClaveActual.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
+                            }
                             return;
                         }
-                        //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
-                        //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
-                        Intent intentRegistro = new Intent(getApplication(), VentanaLogin.class);
-                        //Iniciamos la nueva actividad:
-                        startActivity(intentRegistro);
-                        finish();
+                        //Reiniciamos colores si todoo esta bien:
+                        if (txtErrorClaveActual.getVisibility()==View.VISIBLE){
+                            txtErrorClaveActual.setVisibility(View.GONE);
+                            txtErrorClaveActual.setText("Error");
+                            editTextClaveActual.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
+                        }
+                        //Si el cambio ha sido exitoso volvemos a la actividad anterior
+                        Toast.makeText(getApplication(),"Contraseña cambiada con exito.", Toast.LENGTH_LONG).show();
+                        onBackPressed();
                     }
                     //En caso de que no responda el servidor mostramos mensaje de error
                     @Override
@@ -199,7 +224,7 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
                         Toast.makeText(getApplication(),t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }*/
+            }
         }else if(v.equals(btVolver)){
             onBackPressed();
         }

@@ -178,7 +178,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                         //El servidor responde con datos y lo almacenamos en nuestra variable estatica
                         Usuario u = response.body();
                         usuarioSesion = u;
-                        u.setClave("");
+                        usuarioSesion.setClave("");
                         //Reiniciamos colores si todoo esta bien:
                         if (txtErrorClave.getVisibility()==View.VISIBLE){
                             txtErrorClave.setVisibility(View.GONE);
