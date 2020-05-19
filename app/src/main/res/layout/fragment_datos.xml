@@ -8,50 +8,49 @@
     tools:context=".ui.datos.DatosFragment">
 
     <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" >
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
+            android:id="@+id/linearLayoutPrincipalMisDatos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/textViewTituloDatosPersonalesMisDatos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Datos Personales"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/text_cuenta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Mis datos"
-                    android:textColor="@color/places_ui_default_primary_dark"
-                    android:textSize="36sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Toda tu información personal" />
+                android:layout_marginTop="10dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
+                    android:layout_weight="0"
+                    android:paddingRight="10dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/mImageVehiculoPeque"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:id="@+id/imageViewUsuarioDatosPersonales"
+                        android:layout_width="132dp"
+                        android:layout_height="132dp"
                         android:src="@drawable/user"
                         app:civ_circle_background_color="@color/colorBlanco"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -59,360 +58,357 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:alpha="0.35"
                         android:background="#04FFFFFF"
                         android:tint="#11FFFFFF"
-                        app:layout_constraintBottom_toBottomOf="@+id/mImageVehiculoPeque"
-                        app:layout_constraintEnd_toEndOf="@+id/mImageVehiculoPeque"
-                        app:layout_constraintStart_toStartOf="@+id/mImageVehiculoPeque"
-                        app:layout_constraintTop_toTopOf="@+id/mImageVehiculoPeque"
-                        app:srcCompat="@drawable/editar"
-                        android:contentDescription="TODO" />
+                        app:layout_constraintBottom_toBottomOf="@+id/imageViewUsuarioDatosPersonales"
+                        app:layout_constraintEnd_toEndOf="@+id/imageViewUsuarioDatosPersonales"
+                        app:layout_constraintStart_toStartOf="@+id/imageViewUsuarioDatosPersonales"
+                        app:layout_constraintTop_toTopOf="@+id/imageViewUsuarioDatosPersonales"
+                        app:srcCompat="@drawable/editar" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="NOMBRE"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp" />
-
-                <EditText
-                    android:id="@+id/ETNombreDatos"
-                    style="@android:style/Widget.Holo.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/layout_drawable_2"
-                    android:clickable="false"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:hint="NOMBRE"
-                    android:inputType="textPersonName"
-                    android:padding="8dp"
-                    android:textColor="@color/places_ui_default_primary_dark"
-                    android:textColorHint="@color/colorGrisLight"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="APELLIDOS"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp" />
-
-                <EditText
-                    android:id="@+id/ETApellidosDatos"
-                    style="@android:style/Widget.Holo.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/layout_drawable_2"
-                    android:clickable="false"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:hint="APELLIDOS"
-                    android:inputType="textPersonName"
-                    android:padding="8dp"
-                    android:textColor="@color/places_ui_default_primary_dark"
-                    android:textColorHint="@color/colorGrisLight"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:id="@+id/textView26"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="DIRECCIÓN CORREO ELECTRÓNICO"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp" />
-
-                <EditText
-                    android:id="@+id/ETEmailDatos"
-                    style="@android:style/Widget.Holo.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/layout_drawable_2"
-                    android:clickable="false"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:hint="EMAIL"
-                    android:inputType="textEmailAddress"
-                    android:padding="10dp"
-                    android:textColor="@color/places_ui_default_primary_dark"
-                    android:textColorHint="@color/colorGrisLight"
-                    android:textStyle="normal" />
-
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView20"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textViewTituloNombreDatosPersonales"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="PREFIJO"
+                        android:text="NOMBRE"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
-
-                    <TextView
-                        android:id="@+id/textView21"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="NÚMERO"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="10sp"
-                        android:paddingLeft="70dp"
-                        tools:ignore="SmallSp" />
-
-                </LinearLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp">
 
                     <EditText
-                        android:id="@+id/BTPrefijo"
+                        android:id="@+id/editTextNombreDatosPersonales"
                         style="@android:style/Widget.Holo.EditText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/layout_drawable_2"
                         android:clickable="false"
-                        android:ems="4"
-                        android:focusable="false"
-                        android:hint="+34"
-                        android:inputType="textPersonName"
-                        android:paddingLeft="40dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/places_ui_default_primary_dark"
-                        android:textColorHint="@color/colorGrisLight"
-                        android:textStyle="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/ImgPais"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:clickable="true"
-                        android:src="@drawable/spain"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/BTPrefijo"
-                        app:layout_constraintHorizontal_bias="0.114"
-                        app:layout_constraintStart_toStartOf="@+id/BTPrefijo"
-                        app:layout_constraintTop_toTopOf="@+id/BTPrefijo" />
-
-                    <EditText
-                        android:id="@+id/ETNumeroTelefonoDatos"
-                        style="@android:style/Widget.Holo.EditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="100dp"
-                        android:background="@drawable/layout_drawable_2"
-                        android:clickable="true"
+                        android:drawableStart="@drawable/ic_usuario"
+                        android:drawableLeft="@drawable/ic_usuario"
+                        android:drawablePadding="5dp"
                         android:ems="10"
-                        android:focusable="true"
-                        android:hint="NÚMERO"
-                        android:inputType="phone"
-                        android:padding="10dp"
+                        android:hint="Nombre"
+                        android:padding="8dp"
+                        android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
                         android:textColorHint="@color/colorGrisLight"
-                        android:textStyle="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.662"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
+                        android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/textView22"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textViewTituloApellidosDatosPersonales"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="FECHA NACIMIENTO"
+                        android:layout_marginTop="15dp"
+                        android:text="APELLIDOS"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
 
-
-                </LinearLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
-
                     <EditText
-                        android:id="@+id/ETFechaNacimientoDatos"
+                        android:id="@+id/editTextApellidosDatosPersonales"
+                        style="@android:style/Widget.Holo.EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/layout_drawable_2"
-                        android:clickable="true"
-                        android:focusable="false"
-                        android:gravity="left"
-                        android:hint="06 / 05 / 2020"
-                        android:inputType="date"
-                        android:maxLines="1"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/places_autocomplete_prediction_primary_text_highlight"
+                        android:clickable="false"
+                        android:drawableStart="@drawable/ic_usuario"
+                        android:drawableLeft="@drawable/ic_usuario"
+                        android:drawablePadding="5dp"
+                        android:ems="10"
+                        android:hint="Apellidos"
+                        android:padding="8dp"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
                         android:textColorHint="@color/colorGrisLight"
-                        android:textStyle="normal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:textStyle="normal" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewTituloUsuarioDatosPersonales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="USUARIO"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+            <EditText
+                android:id="@+id/editTextUsuarioDatosPersonales"
+                style="@android:style/Widget.Holo.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/layout_drawable_2"
+                android:clickable="false"
+                android:drawableStart="@drawable/ic_email"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="Usuario / Correo Electronico"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textColorHint="@color/colorGrisLight"
+                android:textStyle="normal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView214"
-                    android:layout_width="match_parent"
+                    android:id="@+id/textViewTituloPrefijoDatosPersonales"
+                    android:layout_width="73dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="DESCRIPCIÓN"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="PREFIJO"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
 
+                <TextView
+                    android:id="@+id/textViewTituloNumeroDatosPersonales"
+                    android:layout_width="133dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="NÚMERO"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:id="@+id/textViewTituloFechaDatosPersonales"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FECHA NACIMIENTO"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
                 <EditText
-                    android:id="@+id/ETDescripcionDatos"
+                    android:id="@+id/editTextPrefijoDatosPersonales"
                     style="@android:style/Widget.Holo.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:scrollbars="vertical"
-                    android:gravity="left"
-                    android:layout_marginTop="5dp"
+                    android:layout_width="73dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/layout_drawable_2"
+                    android:clickable="false"
+                    android:drawableStart="@drawable/spain"
+                    android:drawableLeft="@drawable/spain"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="+34"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/editTextNumeroDatosPersonales"
+                    style="@android:style/Widget.Holo.EditText"
+                    android:layout_width="133dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
                     android:background="@drawable/layout_drawable_2"
                     android:clickable="true"
                     android:focusable="true"
-                    android:hint="@string/sobre_mi"
-                    android:inputType="textMultiLine|textCapWords"
-                    android:lineHeight="20dp"
+                    android:drawableStart="@drawable/ic_telefono"
+                    android:drawableLeft="@drawable/ic_telefono"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="600600600"
+                    android:padding="8dp"
+                    android:inputType="number"
+                    android:singleLine="true"
                     android:textColor="@color/places_ui_default_primary_dark"
                     android:textColorHint="@color/colorGrisLight"
-                    android:textStyle="normal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:paddingTop="4dp"
-                    android:paddingStart="4dp"
-                    android:paddingLeft="4dp" />
+                    android:textStyle="normal" />
 
+                <EditText
+                    android:id="@+id/editTextFechaDatosPersonales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/layout_drawable_2"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:drawableStart="@drawable/ic_calendar"
+                    android:drawableLeft="@drawable/ic_calendar"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="06 / 05 / 2020"
+                    android:inputType="date"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:textColor="@color/places_autocomplete_prediction_primary_text_highlight"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
+                    android:layout_width="216dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp">
 
                     <TextView
-                        android:id="@+id/textView25"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="COCHES"
-                        android:gravity="center"
-                        android:textColor="@color/places_ui_default_primary_dark"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/TVAgregarCoche"
+                        android:id="@+id/textViewErrorTelefonoDatosPersonales"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/cell_background"
-                        android:text="Añadir"
-                        android:gravity="center"
-                        android:textColor="@color/colorPrimary"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="5dp"
+                        android:text="Error"
+                        android:textColor="@color/colorAccent"
                         android:textSize="14sp"
-                        android:layout_marginLeft="220dp" />
-
-
+                        android:textStyle="bold"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
-                    <Button
-                        android:id="@+id/BTCambiarContrasena"
+                    <TextView
+                        android:id="@+id/textViewErrorFechaDatosPersonales"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/layout_drawable_2"
-                        android:clickable="true"
+                        android:layout_gravity="start"
                         android:layout_marginBottom="5dp"
-                        android:text="@string/cambiarContrasena"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/BTBuscar"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <Button
-                        android:id="@+id/BTGuardarCambios"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/layout_drawable_2"
-                        android:clickable="true"
-                        android:text="@string/guardarCambios"
-                        android:textColor="@android:color/holo_green_light"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/BTBuscar"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <Button
-                        android:id="@+id/BTEliminarCuenta"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/layout_drawable_2"
-                        android:clickable="true"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/eliminarCuenta"
-                        android:textColor="@android:color/holo_red_light"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                 </LinearLayout>
+                        android:text="Error"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewTituloDescripcionDatosPersonales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="DESCRIPCIÓN"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+            <EditText
+                android:id="@+id/editTextDescripcionDatosPersonales"
+                style="@android:style/Widget.Holo.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/layout_drawable_2"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="start|top"
+                android:hint="@string/sobre_mi"
+                android:inputType="textMultiLine"
+                android:lineHeight="20dp"
+                android:isScrollContainer="true"
+                android:padding="4dp"
+                android:scrollbars="vertical"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textColorHint="@color/colorGrisLight"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/textViewErrorDescripcionRegistroUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="5dp"
+                android:text="Error"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textViewTituloOpcionesDatosPersonales"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:text="Opciones"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btGuardarCambiosDatosPersonales"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/layout_drawable_2"
+                android:clickable="true"
+                android:focusable="true"
+                android:enabled="false"
+                android:text="@string/guardarCambios"
+                android:textColor="@color/colorGris"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btCambiarContrasenaDatosPersonales"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/layout_drawable_2"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/cambiarContrasena"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btEliminarCuentaDatosPersonales"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/layout_drawable_2"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/eliminarCuenta"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
     </ScrollView>
 

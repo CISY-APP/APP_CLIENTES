@@ -109,7 +109,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
             //Antes de hacer la peticion al servidor realizamos las siguientes comprobaciones:
             //Comprobamos con una expresion regular que sea un email valido:
             Pattern patronEmail = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
-            Matcher match = patronEmail.matcher(editTextUsuario.getText().toString());
+            Matcher match = patronEmail.matcher(editTextUsuario.getText().toString().toLowerCase());
             if (!match.find()) {
                 txtErrorUsuario.setText("Email con formato no valido.");
                 txtErrorUsuario.setVisibility(View.VISIBLE);
@@ -144,7 +144,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
                 //Creamos una peticion para buscar un usuario por email y clave
-                Call<Usuario> call = peticiones.getUsuarioLogin(editTextUsuario.getText().toString(),editTextClave.getText().toString());
+                Call<Usuario> call = peticiones.getUsuarioLogin(editTextUsuario.getText().toString().toLowerCase(),editTextClave.getText().toString());
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
                 // y esperamos a la respuesta
                 call.enqueue(new Callback<Usuario>() {

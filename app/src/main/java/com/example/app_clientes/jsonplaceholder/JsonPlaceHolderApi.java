@@ -36,4 +36,7 @@ public interface JsonPlaceHolderApi {
     //Dar de baja al usuario por id
     @DELETE("eliminarUsuario/{id}")
     Call<Void> eliminarUsuarioById(@NonNull @Path("id") Integer id);
+    //Actualizar fecha nacimiento, o descripcion o numero de telefono
+    @PUT("actualizarUsuario")
+    Call<Usuario> actualizarDatosPersonalesUsuario(@Body Map<String, String> param);
 }

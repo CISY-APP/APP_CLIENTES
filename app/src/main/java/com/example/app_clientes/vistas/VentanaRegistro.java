@@ -107,7 +107,7 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
             //Antes de hacer la peticion al servidor realizamos las siguientes comprobaciones:
             //Comprobamos con una expresion regular que sea un email valido:
             Pattern patronEmail = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");
-            Matcher match = patronEmail.matcher(editTextUsuario.getText().toString());
+            Matcher match = patronEmail.matcher(editTextUsuario.getText().toString().toLowerCase());
             if (!match.find()) {
                 txtErrorUsuario.setText("Email con formato no valido.");
                 txtErrorUsuario.setVisibility(View.VISIBLE);
@@ -230,7 +230,7 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
                 //Creamos una peticion para registrar un usuario, que creamos con los valores de los editext:
-                Usuario uObject = new Usuario(editTextNombre.getText().toString(),editTextApellidos.getText().toString(),editTextUsuario.getText().toString(),editTextClave.getText().toString());
+                Usuario uObject = new Usuario(capitalizaString(editTextNombre.getText().toString()),capitalizaString(editTextApellidos.getText().toString()),editTextUsuario.getText().toString().toLowerCase(),editTextClave.getText().toString());
                 Call<Usuario> call = peticiones.registrarUsuario(uObject);
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
                 // y esperamos a la respuesta
@@ -368,4 +368,16 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    //EXTRACCION DE METODOS
+    public String capitalizaString(String txtOrigen){
+        //Dividimos el string en las palabras segun los caracteres vacios o en blanco
+        String []palabras = txtOrigen.split("\\s+");
+        StringBuilder txtFinal = new StringBuilder();
+        //Bucle para conseguir la primera letra en mayuscula
+        for(String palabra : palabras){
+            txtFinal.append(palabra.substring(0,1).toUpperCase().concat( palabra.substring(1,palabra.length()).toLowerCase()).concat(" "));
+        }
+        //Antes de devolverlo realizamos un trim por si ha metido espacios a la derecha de la ultima palabra
+        return txtFinal.toString().trim();
+    }
 }

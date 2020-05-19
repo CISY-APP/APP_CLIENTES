@@ -181,7 +181,7 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
                 //En esa interfaz se definen los metodos y los verbos que usan
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para cambiar la contrasena de un usuario por su idusuario:ç
+                //Creamos una peticion para cambiar la contrasena de un usuario por su idusuario:
                 //Creamos un Map para pasarle valores por el cuerpo a la siguiente peticion
                 Map<String, String> infoMap = new HashMap<String, String>();
                 infoMap.put("idUsuario", VentanaLogin.usuarioSesion.getIdusuario().toString());
