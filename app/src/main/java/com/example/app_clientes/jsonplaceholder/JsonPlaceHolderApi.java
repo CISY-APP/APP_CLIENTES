@@ -39,4 +39,7 @@ public interface JsonPlaceHolderApi {
     //Actualizar fecha nacimiento, o descripcion o numero de telefono
     @PUT("actualizarUsuario")
     Call<Usuario> actualizarDatosPersonalesUsuario(@Body Map<String, String> param);
+    //METODOS PARA VEHICULO********************************************************************************************
+    @POST("registrarVehiculo")
+    Call<Void> registrarVehiculo(@Body Map<String, String> param);
 }

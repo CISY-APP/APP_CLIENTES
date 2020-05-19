@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.app_clientes.R;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.pojos.Usuario;
+import com.example.app_clientes.pojos.Vehiculo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -302,42 +303,73 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             //Control de color de momento ninguno mas:
 
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
-            /*if(telefono&&fecha&&descripcion){
+            if(matricula&&marca&&modelo&&color&&combustible){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
                 Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz.
                 //En esa interfaz se definen los metodos y los verbos que usan
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para actualizar los datos personales de un usuario, que creamos con los valores de los editext:
+                //Creamos una peticion para registrar un vehiculo con el valor de los editexts y demas:
+                String modeloAux=editTextModelo.getText().toString().trim();
+                StringBuilder auxModelo= new StringBuilder();
+                for(int i=0,contEspacios=0;i<modeloAux.length();i++){
+                    if(modeloAux.charAt(i)!=' '){
+                        auxModelo.append(modeloAux.charAt(i));
+                        contEspacios=0;
+                    }else{
+                        if(contEspacios==0){
+                            auxModelo.append(modeloAux.charAt(i));
+                        }
+                        contEspacios++;
+                    }
+                }
+                modeloAux= auxModelo.toString();
+                String marcaAux=editTextMarca.getText().toString().trim();
+                StringBuilder auxMarca= new StringBuilder();
+                for(int i=0,contEspacios=0;i<marcaAux.length();i++){
+                    if(marcaAux.charAt(i)!=' '){
+                        auxMarca.append(marcaAux.charAt(i));
+                        contEspacios=0;
+                    }else{
+                        if(contEspacios==0){
+                            auxMarca.append(marcaAux.charAt(i));
+                        }
+                        contEspacios++;
+                    }
+                }
+                marcaAux= auxMarca.toString();
                 Map<String, String> infoMap = new HashMap<String, String>();
                 infoMap.put("idUsuario", VentanaLogin.usuarioSesion.getIdusuario().toString());
-                infoMap.put("telefono", editTextTelefono.getText().toString());
-                infoMap.put("fechaNac", fechaElegida);
-                infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
-                Call<Usuario> call = peticiones.actualizarDatosPersonalesUsuario(infoMap);
+                infoMap.put("matricula", editTextMatricula.getText().toString().replaceAll("\\s","").toUpperCase());
+                infoMap.put("modelo", capitalizaString(modeloAux));
+                infoMap.put("marca", capitalizaString(marcaAux));
+                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
+                infoMap.put("color", colorSeleccionado.toUpperCase());
+                Call<Void> call = peticiones.registrarVehiculo(infoMap);
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
                 // y esperamos a la respuesta
-                call.enqueue(new Callback<Usuario>() {
+                call.enqueue(new Callback<Void>() {
                     //Gestionamos la respuesta del servidor
                     @Override
-                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                    public void onResponse(Call<Void> call, Response<Void> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
                         if (!response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                             return;
                         }
                         //Si el cambio ha sido exitoso volvemos a la actividad anterior
-                        Toast.makeText(getContext(), "Datos actualizados con exito.", Toast.LENGTH_LONG).show();
-                        cargarDatosPersonalesUsuario();
+                        Toast.makeText(getApplicationContext(), "Registro realizado con exito.", Toast.LENGTH_LONG).show();
+                        //Refrescar aqui¿? los datos locoooooooo
+                        onBackPressed();
                     }
                     //En caso de que no responda el servidor mostramos mensaje de error
                     @Override
-                    public void onFailure(Call<Usuario> call, Throwable t) {
-                        Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }*/
+            }
         }
     }
     //Metodos para los editext para cuando cambia su contenido
@@ -450,5 +482,17 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             //Cambia la imagen desde el dispositivo
             Glide.with(getApplicationContext()).load(uriImagenEndispositivo).into(imgViewCoche);
         }
+    }
+    //EXTRACCION DE METODOS
+    public String capitalizaString(String txtOrigen){
+        //Dividimos el string en las palabras segun los caracteres vacios o en blanco
+        String []palabras = txtOrigen.split("\\s+");
+        StringBuilder txtFinal = new StringBuilder();
+        //Bucle para conseguir la primera letra en mayuscula
+        for(String palabra : palabras){
+            txtFinal.append(palabra.substring(0,1).toUpperCase().concat( palabra.substring(1,palabra.length()).toLowerCase()).concat(" "));
+        }
+        //Antes de devolverlo realizamos un trim por si ha metido espacios a la derecha de la ultima palabra
+        return txtFinal.toString().trim();
     }
 }
