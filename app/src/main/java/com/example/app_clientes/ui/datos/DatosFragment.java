@@ -64,6 +64,10 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
     private String ID_USUARIO;
     //Metodo que se ejecuta al crearse la vista
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //Inicializamos variables booleanas de prueba
+        pruebaFormatoNumero=false;
+        pruebaFormatoFecha=false;
+        pruebaFormatoDescripcion=false;
         View view = inflater.inflate(R.layout.fragment_datos, container, false);
         //Asociamos el id del usuario en sesion a la siguiente variable
         ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
@@ -101,7 +105,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             public void run() {
                 //Conjuntos de animators
                 AnimatorSet animatorSetEscale = new AnimatorSet();
-                //Animacion para el editext Nombre
+                //Animacion para la imagen del usuario
                 ObjectAnimator scaleDownX_ImUsuario = ObjectAnimator.ofFloat(imgUsuario, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_ImUsuario = ObjectAnimator.ofFloat(imgUsuario, "scaleY", 0.0f, 1.0f);
                 //Animacion para el editext Nombre
