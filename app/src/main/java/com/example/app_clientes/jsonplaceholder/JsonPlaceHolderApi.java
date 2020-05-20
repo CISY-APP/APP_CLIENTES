@@ -49,4 +49,7 @@ public interface JsonPlaceHolderApi {
     //Obtenemos un vehiculo por la matricula
     @GET("consultarVehiculoPorMatricula/{matricula}")
     Call<Vehiculo> getVehiculoByMatricula(@NonNull @Path("matricula") String matricula);
+    //Borramos el vehiculo seleccionado por matricula
+    @DELETE("eliminarVehiculoPorMatricula/{matricula}")
+    Call<Void> eliminarVehiculoByMatricula(@NonNull @Path("matricula") String matricula);
 }

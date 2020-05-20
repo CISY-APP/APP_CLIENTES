@@ -2,6 +2,7 @@ package com.example.app_clientes.ui.vehiculos;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -26,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.app_clientes.adapter.MiAdapterMisVehiculos;
 import com.example.app_clientes.item.ItemVehiculo;
 import com.example.app_clientes.R;
@@ -58,6 +60,8 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
     private ArrayList<ItemVehiculo> misVehiculosList = new ArrayList<>();
     private final ArrayList<String> colores = new ArrayList<>();
     //Elementos del Layout
+    private LottieAnimationView me_siento_vasio;
+    private TextView textViewMe_siento_vasio;
     private LinearLayout linearLayoutSpinnerCombustible;
     private EditText editTextMatricula, editTextMarca, editTextModelo;
     private TextView txtErrorMatricula, txtErrorMarca, txtErrorModelo;
@@ -84,6 +88,8 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
         colorSeleccionado="#07a0c3";
         //Vinculamos los atributos de la clase:
+        textViewMe_siento_vasio =view.findViewById(R.id.textViewTituloAnimacionMisVehiculos);
+        me_siento_vasio = view.findViewById(R.id.animation_vacio_vehiculos);
         tituloMatricula = view.findViewById(R.id.textViewTituloMatriculaMisVehiculos);
         tituloMarca = view.findViewById(R.id.textViewTituloMarcaMisVehiculos);
         tituloModelo = view.findViewById(R.id.textViewTituloModeloMisVehiculos);
@@ -254,6 +260,8 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                         }
                     }
                 });
+                visibilidadVista(View.GONE);
+
             }
             //En caso de que no responda el servidor mostramos mensaje de error
             @Override
@@ -277,7 +285,35 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         if (v.equals(imgViewCoche)){abrirGaleria();}
         else if (v.equals(btSeleccionarColor)){colorPiker();}
         else if(v.equals(btBorrarVehiculo)){
-
+            //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+            //Vinculamos el cliente con la interfaz.
+            //En esa interfaz se definen los metodos y los verbos que usan
+            //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
+            JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+            //Creamos una peticion para borrar un vehiculo:
+            Call<Void> call = peticiones.eliminarVehiculoByMatricula(editTextMatricula.getText().toString());
+            //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
+            // y esperamos a la respuesta
+            call.enqueue(new Callback<Void>() {
+                //Gestionamos la respuesta del servidor
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    //Si el cambio ha sido exitoso volvemos a la actividad anterior
+                    Toast.makeText(getContext(), "Borrado realizado con exito.", Toast.LENGTH_LONG).show();
+                    agregarCoches();
+                }
+                //En caso de que no responda el servidor mostramos mensaje de error
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
         }
         else if (v.equals(btActualizarDatos)){/*
             //Variables booleanas
@@ -532,6 +568,21 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         btActualizarDatos.setVisibility(tipo);
         btActualizarDatos.setScaleX(0.5f);
         btActualizarDatos.setScaleY(0.5f);
+        btActualizarDatos.setColorFilter(getResources().getColor(R.color.colorGris));
         imageViewEditar.setVisibility(tipo);
+        if(tipo==View.VISIBLE){
+            me_siento_vasio.setVisibility(View.GONE);
+            textViewMe_siento_vasio.setVisibility(View.GONE);
+        }else {
+            if(misVehiculosList.size()==1){
+                me_siento_vasio.setVisibility(View.VISIBLE);
+                me_siento_vasio.playAnimation();
+                me_siento_vasio.setRepeatCount(ValueAnimator.INFINITE);
+                textViewMe_siento_vasio.setVisibility(View.VISIBLE);
+            }else{
+                me_siento_vasio.setVisibility(View.GONE);
+                textViewMe_siento_vasio.setVisibility(View.GONE);
+            }
+        }
     }
 }
