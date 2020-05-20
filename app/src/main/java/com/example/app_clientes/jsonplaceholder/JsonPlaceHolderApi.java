@@ -40,6 +40,13 @@ public interface JsonPlaceHolderApi {
     @PUT("actualizarUsuario")
     Call<Usuario> actualizarDatosPersonalesUsuario(@Body Map<String, String> param);
     //METODOS PARA VEHICULO********************************************************************************************
+    //Registrar un vehiculo asociado al usuario
     @POST("registrarVehiculo")
-    Call<Void> registrarVehiculo(@Body Map<String, String> param);
+    Call<Vehiculo> registrarVehiculo(@Body Map<String, String> param);
+    //Obtenemos una lista con los vehiculos del usuario
+    @GET("consultarVehiculoPorIdUsuario/{id}")
+    Call <List<Vehiculo>> getListVehiculoById(@NonNull @Path("id") Integer id);
+    //Obtenemos un vehiculo por la matricula
+    @GET("consultarVehiculoPorMatricula/{matricula}")
+    Call<Vehiculo> getVehiculoByMatricula(@NonNull @Path("matricula") String matricula);
 }

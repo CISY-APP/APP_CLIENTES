@@ -18,7 +18,7 @@ import java.util.ArrayList;
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehiculos.ExampleViewHolder> {
 
-    private final ArrayList<ItemVehiculo> misVehiculosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
+    private ArrayList<ItemVehiculo> misVehiculosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 
     //INTERFAZ dentro de la clase la cual nos obliga a implementar y sobreescribir el metodo OnItemClick
@@ -32,6 +32,10 @@ public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehi
     }
 
     public MiAdapterMisVehiculos(ArrayList<ItemVehiculo> misVehiculosList) {
+        this.misVehiculosList = misVehiculosList;
+    }
+
+    public void setMisVehiculosList(ArrayList<ItemVehiculo> misVehiculosList){
         this.misVehiculosList = misVehiculosList;
     }
 
@@ -56,7 +60,7 @@ public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehi
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         ItemVehiculo nuevoVehiculo=misVehiculosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
         holder.mImageVehiculo.setImageResource(nuevoVehiculo.getmImageVehiculo());
-        holder.TVMatriculaItem.setText(misVehiculosList.get(position).getMatricula());
+        holder.TVMatriculaItem.setText(misVehiculosList.get(position).getMarcaYmodelo());
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem

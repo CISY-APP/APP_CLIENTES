@@ -80,7 +80,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:baselineAligned="false"
                         android:orientation="vertical"
                         android:gravity="center">
 
@@ -90,7 +89,7 @@
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/imageViewCocheAgregarVehiculo"
-                                android:layout_width="wrap_content"
+                                android:layout_width="132dp"
                                 android:layout_height="132dp"
                                 android:src="@drawable/coche"
                                 app:civ_circle_background_color="#eceff1"

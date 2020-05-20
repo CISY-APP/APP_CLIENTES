@@ -49,13 +49,12 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
         editTextClaveActual = findViewById(R.id.editTextClaveOldCambiarContrasena);
         editTextClaveNueva = findViewById(R.id.editTextClaveNew1CambiarContrasena);
         editTextClaveNuevaRepetida = findViewById(R.id.editTextClaveNew2CambiarContrasena);
-        btConfirmar = findViewById(R.id.btAceptarCambiosVentanaCambiarContrasena);
+        btConfirmar = findViewById(R.id.btAceptarCambiosVentanaCambiarContrasena);btConfirmar.setOnClickListener(null);
         btVolver = findViewById(R.id.btFlechaAtrasCambiarContrasena);
         txtErrorClaveActual=findViewById(R.id.textViewErrorClaveOldCambiarContrasena);
         txtErrorClaveNueva=findViewById(R.id.textViewErrorNew1CambiarContrasena);
         txtErrorClaveNuevaRepetida=findViewById(R.id.textViewErrorNew2CambiarContrasena);
         //Vinculamos los botones al listener del metodo onclick, que esta implementado en esta clase:
-        btConfirmar.setOnClickListener(this);
         btVolver.setOnClickListener(this);
         //Vinculamos los edittext a su listener para el metodo afterTextChanged, que esta implementado en esta clase:
         editTextClaveActual.addTextChangedListener(this);
@@ -277,6 +276,7 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
             animator.start();
             //Habilitamos el boton confirmar cambios
             btConfirmar.setEnabled(true);
+            btConfirmar.setOnClickListener(this);
             btConfirmar.setColorFilter(getResources().getColor(R.color.colorPrimary));
         }else if ((!pruebaFormatoClaveActual||!pruebaFormatoClaveNueva||!pruebaFormatoClaveNuevaRepetida)&&anterior){
             //Conjunto de animator
@@ -289,6 +289,7 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
             animator.start();
             //Deshabilitamos el boton confirmar cambios
             btConfirmar.setEnabled(false);
+            btConfirmar.setOnClickListener(null);
             btConfirmar.setColorFilter(getResources().getColor(R.color.colorGris));
         }
     }

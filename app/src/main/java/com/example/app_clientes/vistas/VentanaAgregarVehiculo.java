@@ -95,7 +95,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
         imgViewColorCoche = findViewById(R.id.imgLateralSeleccionarColorAgregarVehiculo);
         btSeleccionarColor = findViewById(R.id.btSeleccionarColorCocheAgregarVehiculo);
         btFlechaAtras = findViewById(R.id.btFlechaAtrasAgregarVehiculo);
-        btConfirmarRegistro = findViewById(R.id.btAceptarCambiosVentanaAgregarVehiculo);
+        btConfirmarRegistro = findViewById(R.id.btAceptarCambiosVentanaAgregarVehiculo);btConfirmarRegistro.setOnClickListener(null);
         txtErrorMatricula = findViewById(R.id.textViewErrorMatriculaAgregarVehiculo);
         txtErrorMarca = findViewById(R.id.textViewErrorMarcaAgregarVehiculo);
         txtErrorModelo = findViewById(R.id.textViewErrorModeloAgregarVehiculo);
@@ -103,7 +103,6 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
         imgViewCoche.setOnClickListener(this);
         btSeleccionarColor.setOnClickListener(this);
         btFlechaAtras.setOnClickListener(this);
-        btConfirmarRegistro.setOnClickListener(this);
         //Vinculamos el spiner al listener correspondiente:
         inicializacionSpinnerCombustible();
         spinnerTipoCombustible.setOnItemSelectedListener(this);
@@ -346,13 +345,13 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                 infoMap.put("marca", capitalizaString(marcaAux));
                 infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
                 infoMap.put("color", colorSeleccionado.toUpperCase());
-                Call<Void> call = peticiones.registrarVehiculo(infoMap);
+                Call<Vehiculo> call = peticiones.registrarVehiculo(infoMap);
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
                 // y esperamos a la respuesta
-                call.enqueue(new Callback<Void>() {
+                call.enqueue(new Callback<Vehiculo>() {
                     //Gestionamos la respuesta del servidor
                     @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
+                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
                         if (!response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
@@ -361,11 +360,15 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                         //Si el cambio ha sido exitoso volvemos a la actividad anterior
                         Toast.makeText(getApplicationContext(), "Registro realizado con exito.", Toast.LENGTH_LONG).show();
                         //Refrescar aqui¿? los datos locoooooooo
-                        onBackPressed();
+                        //Con el metodo setResult pasamos el codigo resultado de la operacion, que en este caso es una constante de clase que
+                        //significa OK, y el Intent que contiene la informacion del resultado.
+                        setResult(RESULT_OK);
+                        //Terminamos con la propia actividad con el siguiente metodo.
+                        finish();
                     }
                     //En caso de que no responda el servidor mostramos mensaje de error
                     @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
+                    public void onFailure(Call<Vehiculo> call, Throwable t) {
                         Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
@@ -446,6 +449,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             animator.start();
             //Habilitamos el boton agregar vehiculo:
             btConfirmarRegistro.setEnabled(true);
+            btConfirmarRegistro.setOnClickListener(this);
             btConfirmarRegistro.setColorFilter(getResources().getColor(R.color.colorPrimary));
         }else if ((!pruebaFormatoMatricula||!pruebaFormatoMarca||!pruebaFormatoModelo||!pruebaColor||!pruebaCombustible)&&anterior){
             //Conjunto de animator
@@ -458,6 +462,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             animator.start();
             //Deshabilitamos el boton agregar vehiculo:
             btConfirmarRegistro.setEnabled(false);
+            btConfirmarRegistro.setOnClickListener(null);
             btConfirmarRegistro.setColorFilter(getResources().getColor(R.color.colorGris));
         }
     }
