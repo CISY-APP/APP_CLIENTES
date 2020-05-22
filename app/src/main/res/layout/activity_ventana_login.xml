@@ -39,17 +39,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/layout_drawable_2"
-                android:drawableLeft="@drawable/ic_usuario"
+                android:drawableLeft="@drawable/ic_email"
                 android:drawablePadding="5dp"
                 android:layout_marginTop="15dp"
                 android:ems="10"
-                android:hint="Usuario / Correo Electronico"
+                android:hint="@string/edit_email_ventanaLogin"
                 android:inputType="textEmailAddress"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@color/places_ui_default_primary_dark"
                 android:textColorHint="@color/colorGrisLight"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:drawableStart="@drawable/ic_email" />
 
             <TextView
                 android:id="@+id/textViewErrorUsuarioInicioSesion"
@@ -57,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginTop="5dp"
-                android:text="Error"
+                android:text=""
                 android:textColor="@color/colorBlanco"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -74,13 +75,14 @@
                 android:drawableLeft="@drawable/ic_clave"
                 android:drawablePadding="5dp"
                 android:ems="10"
-                android:hint="Clave"
+                android:hint="@string/edit_clave_ventanaLogin"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@color/places_ui_default_primary_dark"
                 android:textColorHint="@color/colorGrisLight"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:drawableStart="@drawable/ic_clave" />
 
             <TextView
                 android:id="@+id/textViewErrorClaveInicioSesion"
@@ -88,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginTop="5dp"
-                android:text="Error"
+                android:text=""
                 android:textColor="@color/colorBlanco"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -103,7 +105,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="onClick"
-                android:text="¿Olvidaste tu contraseña?"
+                android:text="@string/txt_olvidasteClave_ventanaLogin"
                 android:textColor="@color/colorBlanco"
                 android:textSize="14sp" />
 
@@ -113,10 +115,12 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/layout_drawable_2"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:clickable="true"
                 android:enabled="false"
                 android:focusable="true"
-                android:text="@string/login"
+                android:text="@string/bt_login_ventanaLogin"
                 android:textColor="@color/colorGris"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -127,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="35dp"
-                android:text="¿No tienes una cuenta?"
+                android:text="@string/txt_informativoRegistro_ventanaLogin"
                 android:textColor="@color/colorBlanco"
                 android:textSize="14sp" />
 
@@ -137,10 +141,12 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="35dp"
                 android:layout_marginBottom="15dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/layout_drawable_2"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/registrar"
+                android:text="@string/bt_registrar_ventanaLogin"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold" />

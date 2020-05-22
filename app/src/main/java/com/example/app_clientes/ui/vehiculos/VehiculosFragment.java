@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.adapter.MiAdapterMisVehiculos;
 import com.example.app_clientes.item.ItemVehiculo;
 import com.example.app_clientes.R;
@@ -89,7 +90,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         pruebaCombustible=true;
         pruebaColor=true;
         //Asociamos el id del usuario en sesion a la siguiente variable
-        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
         colorSeleccionado="#07a0c3";
         //Vinculamos los atributos de la clase:
         textViewMe_siento_vasio =view.findViewById(R.id.textViewTituloAnimacionMisVehiculos);
@@ -223,7 +224,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
         final JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
         //Creamos una peticion para obtener una lista de los vehiculos asociados al cliente:
-        Call<List<Vehiculo>> call = peticiones.getListVehiculoById(VentanaLogin.usuarioSesion.getIdusuario());
+        Call<List<Vehiculo>> call = peticiones.getListVehiculoById(Biblioteca.usuarioSesion.getIdusuario());
         //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
         // y esperamos a la respuesta
         call.enqueue(new Callback<List<Vehiculo>>() {

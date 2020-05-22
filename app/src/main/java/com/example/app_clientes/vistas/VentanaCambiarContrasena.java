@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.pojos.Usuario;
@@ -183,7 +184,7 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
                 //Creamos una peticion para cambiar la contrasena de un usuario por su idusuario:
                 //Creamos un Map para pasarle valores por el cuerpo a la siguiente peticion
                 Map<String, String> infoMap = new HashMap<String, String>();
-                infoMap.put("idUsuario", VentanaLogin.usuarioSesion.getIdusuario().toString());
+                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
                 infoMap.put("claveActual", editTextClaveActual.getText().toString());
                 infoMap.put("nuevaClave", editTextClaveNueva.getText().toString());
                 Call<Usuario> call = peticiones.actualizarClaveUsuario(infoMap);

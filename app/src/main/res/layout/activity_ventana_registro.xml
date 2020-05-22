@@ -279,7 +279,7 @@
                 android:clickable="true"
                 android:enabled="false"
                 android:focusable="true"
-                android:text="@string/registrar"
+                android:text="@string/bt_registrar_ventanaRegistro"
                 android:textColor="@color/colorGris"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.otros.CalendarioFragment;
 import com.example.app_clientes.R;
@@ -70,7 +71,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         pruebaFormatoDescripcion=false;
         View view = inflater.inflate(R.layout.fragment_datos, container, false);
         //Asociamos el id del usuario en sesion a la siguiente variable
-        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
         //Vinculamos los atributos de la clase:
         editTextNombre = view.findViewById(R.id.editTextNombreDatosPersonales);editTextNombre.setKeyListener(null);
         editTextApellidos = view.findViewById(R.id.editTextApellidosDatosPersonales);editTextApellidos.setKeyListener(null);
@@ -185,7 +186,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
         JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
         //Creamos una peticion para buscar un usuario por id
-        Call<Usuario> call = peticiones.getUsuarioById(VentanaLogin.usuarioSesion.getIdusuario());
+        Call<Usuario> call = peticiones.getUsuarioById(Biblioteca.usuarioSesion.getIdusuario());
         //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
         // y esperamos a la respuesta
         call.enqueue(new Callback<Usuario>() {
@@ -200,8 +201,8 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 //Recogemos el usuario
                 Usuario u= response.body();
                 //Actualizamos la variable de sesion
-                VentanaLogin.usuarioSesion=u;
-                VentanaLogin.usuarioSesion.setClave("");
+                Biblioteca.usuarioSesion=u;
+                Biblioteca.usuarioSesion.setClave("");
                 //Cargamos los datos en la vista:
                 editTextNombre.setText(u.getNombre());
                 editTextApellidos.setText(u.getApellidos());
@@ -258,7 +259,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
             //Creamos una peticion para dar de baja al usuario por id
             //Creamos un Map para pasarle valores por el cuerpo a la siguiente peticion
-            Call<Void> call = peticiones.eliminarUsuarioById(VentanaLogin.usuarioSesion.getIdusuario());
+            Call<Void> call = peticiones.eliminarUsuarioById(Biblioteca.usuarioSesion.getIdusuario());
             //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
             // y esperamos a la respuesta
             call.enqueue(new Callback<Void>() {
@@ -271,7 +272,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                         return;
                     }
                     //Si la baja ha sido exitosa
-                    VentanaLogin.usuarioSesion=null;
+                    Biblioteca.usuarioSesion=null;
                     Toast.makeText(getActivity(),"Baja realizada con exito.", Toast.LENGTH_LONG).show();
                     //Instanciamos nuestro objeto Intent explicito, ya que en los parametros ponemos que empieza en esta
                     //clase que sera el contexto y que iniciara la clase que se encarga de la otra actividad en este caso.
@@ -381,7 +382,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
                 //Creamos una peticion para actualizar los datos personales de un usuario, que creamos con los valores de los editext:
                 Map<String, String> infoMap = new HashMap<String, String>();
-                infoMap.put("idUsuario", VentanaLogin.usuarioSesion.getIdusuario().toString());
+                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
                 infoMap.put("telefono", editTextTelefono.getText().toString());
                 infoMap.put("fechaNac", fechaElegida);
                 infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
@@ -418,7 +419,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         if(pruebaFormatoNumero||pruebaFormatoFecha||pruebaFormatoDescripcion){anterior=true;}
         //Si el texto de telefono ha cambiado:
         if(s==editTextTelefono.getEditableText()){
-            if(VentanaLogin.usuarioSesion.getTelefono()!=null&&VentanaLogin.usuarioSesion.getTelefono().toString().equals(s.toString())){
+            if(Biblioteca.usuarioSesion.getTelefono()!=null&&Biblioteca.usuarioSesion.getTelefono().toString().equals(s.toString())){
                 pruebaFormatoNumero=false;
             }else if(!s.toString().equals("")){
                 pruebaFormatoNumero=true;
@@ -428,7 +429,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         }
         //Si el texto de fecha ha cambiado:
         else if (s==editTextFecha.getEditableText()){
-            if(VentanaLogin.usuarioSesion.getFechanacimiento()!=null&&s.toString().equals(new SimpleDateFormat("dd / MM / yyyy").format(VentanaLogin.usuarioSesion.getFechanacimiento()))){
+            if(Biblioteca.usuarioSesion.getFechanacimiento()!=null&&s.toString().equals(new SimpleDateFormat("dd / MM / yyyy").format(Biblioteca.usuarioSesion.getFechanacimiento()))){
                 pruebaFormatoFecha=false;
             }else if(!s.toString().equals("")){
                 pruebaFormatoFecha=true;
@@ -438,7 +439,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         }
         //Si el texto de descripcion ha cambiado:
         else if (s==editTextDescripcion.getEditableText()){
-            if(VentanaLogin.usuarioSesion.getDescripcion()!=null&&VentanaLogin.usuarioSesion.getDescripcion().equals(s.toString().trim())){
+            if(Biblioteca.usuarioSesion.getDescripcion()!=null&&Biblioteca.usuarioSesion.getDescripcion().equals(s.toString().trim())){
                 pruebaFormatoDescripcion=false;
             }else if (!s.toString().trim().equals("")){
                 pruebaFormatoDescripcion=true;

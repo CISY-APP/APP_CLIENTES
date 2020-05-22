@@ -36,8 +36,7 @@
     <string name="buscar">Buscar</string>
     <string name="listo">Listo</string>
     <string name="cancelar">Cancelar</string>
-    <string name="login">Iniciar Sesion</string>
-    <string name="registrar">Registrarse</string>
+
 
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>
@@ -51,4 +50,18 @@
     <string name="sobre_mi">Sobre mi …</string>
     <string name="marca">MARCA</string>
 
+    <!-- *********************************** VENTANA LOGIN ***********************************-->
+    <string name="bt_login_ventanaLogin">Iniciar Sesion</string>
+    <string name="bt_registrar_ventanaLogin">Registrarse</string>
+    <string name="txt_emailError_Formato_ventanaLogin">Email con formato no valido.</string>
+    <string name="txt_claveError_Formato_ventanaLogin">Clave con caracteres no alfanumericos.</string>
+    <string name="txt_emailError_Servidor_ventanaLogin">Clave invalida.</string>
+    <string name="txt_claveError_Servidor_ventanaLogin">Usuario no existente.</string>
+    <string name="txt_olvidasteClave_ventanaLogin">¿Olvidaste tu contraseña?</string>
+    <string name="txt_informativoRegistro_ventanaLogin">¿No tienes una cuenta?</string>
+    <string name="txt_bienvenida_Toast_ventanaLogin">Bienvenido</string>
+    <string name="edit_email_ventanaLogin">Usuario / Correo Electronico</string>
+    <string name="edit_clave_ventanaLogin">Clave</string>
+    <!-- *********************************** VENTANA REGISTRAR ***********************************-->
+    <string name="bt_registrar_ventanaRegistro">Registrarse</string>
 </resources>

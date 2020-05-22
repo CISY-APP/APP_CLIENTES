@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.pojos.Usuario;
@@ -83,7 +84,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
         pruebaCombustible=true;
         pruebaColor=true;
         //Asociamos el id del usuario en sesion a la siguiente variable
-        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
         colorSeleccionado="#07a0c3";
         //Vinculamos los atributos de la clase:
         linearLayoutSpinnerCombustible=findViewById(R.id.linearLayoutSpinnerTipoCombustibleAgregarVehiculo);
@@ -339,7 +340,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                 }
                 marcaAux= auxMarca.toString();
                 Map<String, String> infoMap = new HashMap<String, String>();
-                infoMap.put("idUsuario", VentanaLogin.usuarioSesion.getIdusuario().toString());
+                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
                 infoMap.put("matricula", editTextMatricula.getText().toString().replaceAll("\\s","").toUpperCase());
                 infoMap.put("modelo", capitalizaString(modeloAux));
                 infoMap.put("marca", capitalizaString(marcaAux));
