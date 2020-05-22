@@ -20,10 +20,10 @@
             android:layout_height="83dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/mImageVehiculoPeque"
+                android:id="@+id/mImageUsuarioPeque"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/vehiculo"
+                android:src="@drawable/yo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -48,11 +48,11 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/TVMatriculaItem"
+            android:id="@+id/TVNombreItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/marca"
+            android:text="NOMBRE"
             android:textColor="@color/black_de"
             android:textSize="11sp" />
 

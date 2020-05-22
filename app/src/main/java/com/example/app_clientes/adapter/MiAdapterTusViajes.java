@@ -1,6 +1,7 @@
 package com.example.app_clientes.adapter;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,33 +11,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.app_clientes.item.ItemVehiculo;
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.R;
+import com.example.app_clientes.pojos.Usuario;
 
 import java.util.ArrayList;
 
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
-public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehiculos.ExampleViewHolder> {
+public class MiAdapterTusViajes extends RecyclerView.Adapter<MiAdapterTusViajes.ExampleViewHolder> {
 
-    private ArrayList<ItemVehiculo> misVehiculosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
-    private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
+    private ArrayList<Usuario> misUsuariosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
+    private MiAdapterTusViajes.OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
+    private final Context c;
 
     //INTERFAZ dentro de la clase la cual nos obliga a implementar y sobreescribir el metodo OnItemClick
     public interface OnItemClickListener {
-        void OnVehiculoClick(int position);//Metodo abstracto que recibe por parametro la posicion del item que ha sido pulsado
+        void OnUsuarioClick(int position);//Metodo abstracto que recibe por parametro la posicion del item que ha sido pulsado
     }
 
     //Metodo SET de la clase Adapter que nos permite asignar un listener
-    public void setOnClickListener(OnItemClickListener listener) {
+    public void setOnClickListener(MiAdapterTusViajes.OnItemClickListener listener) {
         mListener = listener;
     }
 
-    public MiAdapterMisVehiculos(ArrayList<ItemVehiculo> misVehiculosList) {
-        this.misVehiculosList = misVehiculosList;
+    public MiAdapterTusViajes(Context c, ArrayList<Usuario> misUsuariosList) {
+        this.c = c;
+        this.misUsuariosList = misUsuariosList;
     }
 
-    public void setMisVehiculosList(ArrayList<ItemVehiculo> misVehiculosList){
-        this.misVehiculosList = misVehiculosList;
+    public void setMisUsuariosList(ArrayList<Usuario> misUsuariosList){
+        this.misUsuariosList = misUsuariosList;
     }
 
     @NonNull
@@ -45,7 +49,7 @@ public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehi
     //para posteriormente instanciar un objeto de la clase interna ExampleViewHolder, pasandole por parametro la vista anterior y un listener
     //finaliza devolviendo un objeto de tipo exampleViewHolder
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_vehiculo,parent,false);    //Usamos el método inflate() para crear una vista a partir del layout XML definido en layout_listitem.
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_usuario,parent,false);    //Usamos el método inflate() para crear una vista a partir del layout XML definido en layout_listitem.
         ExampleViewHolder exampleViewHolder=new ExampleViewHolder(v,mListener);
 
         return exampleViewHolder;
@@ -58,39 +62,39 @@ public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehi
     //El método onBindViewHolder() personaliza un elemento de tipo ViewHolder según su posicion.
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        ItemVehiculo nuevoVehiculo=misVehiculosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
-        holder.mImageVehiculo.setImageResource(nuevoVehiculo.getmImageVehiculo());
-        holder.TVMatriculaItem.setText(misVehiculosList.get(position).getMarcaYmodelo());
+        Usuario nuevoUsuario= misUsuariosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
+        Glide.with(c).load(misUsuariosList.get(position).getFotousuario()).into(holder.mImageUsuarioPeque);
+        holder.TVNombreItem.setText(misUsuariosList.get(position).getNombre());
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem
     //Este metodo internamente establece la longuitud maxima que tendra la lista
     @Override
     public int getItemCount() {
-        return misVehiculosList.size();
+        return misUsuariosList.size();
     }
 
     //CLASE INTERNA ESTATICA
     static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView mImageVehiculo;
-        private final TextView TVMatriculaItem;
+        private final ImageView mImageUsuarioPeque;
+        private final TextView TVNombreItem;
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
         //al ser una clase estatica de no pasarselo no podria acceder a el listener
         ExampleViewHolder(View itemView, final OnItemClickListener listener) {
 
             super(itemView);
-            this.TVMatriculaItem = itemView.findViewById(R.id.TVMatriculaItem);
-            mImageVehiculo = itemView.findViewById(R.id.mImageVehiculoPeque);//Asocia el atributo de la clase al XML (imagen para el tablero)
-            mImageVehiculo.setOnClickListener(new View.OnClickListener() {
+            this.TVNombreItem = itemView.findViewById(R.id.TVNombreItem);
+            this.mImageUsuarioPeque = itemView.findViewById(R.id.mImageUsuarioPeque);//Asocia el atributo de la clase al XML (imagen para el tablero)
+            mImageUsuarioPeque.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {//Si el listener que recibimos en el constructor es valido
                         //El adapter es el que sabe la posición absoluta dentro de la vista,
                         int position = getAdapterPosition();//Almacenamos la posicion del elemento que ha activado el evento
                         if (position != RecyclerView.NO_POSITION) {//Si la posición recibida es una posición valida dentro del RecyclerView
-                            listener.OnVehiculoClick(position);//Asignamos un listener al Item de la posición que hemos comprobado
+                            listener.OnUsuarioClick(position);//Asignamos un listener al Item de la posición que hemos comprobado
                         }
                     }
                 }
