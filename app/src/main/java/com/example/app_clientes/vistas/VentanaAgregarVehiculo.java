@@ -160,7 +160,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                 animatorSetEscale.start();
             }
         });
-        /*btConfirmarRegistro.setOnClickListener(new View.OnClickListener() {
+        btConfirmarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uriParaElInsert = Long.toString(System.currentTimeMillis());
@@ -197,7 +197,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                     }
                 });
             }
-        });*/
+        });
     }
     //Inicializa el spinner de vehiculos
     private void inicializacionSpinnerCombustible() {
@@ -304,7 +304,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(matricula&&marca&&modelo&&color&&combustible){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz.
                 //En esa interfaz se definen los metodos y los verbos que usan
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica

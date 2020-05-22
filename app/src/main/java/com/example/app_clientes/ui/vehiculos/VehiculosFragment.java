@@ -131,7 +131,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
     //Metodo que carga los datos del coche en la interfaz
     public void cargarDatosCoche(final int pos){
         //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
         //Vinculamos el cliente con la interfaz.
         //En esa interfaz se definen los metodos y los verbos que usan
         //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
@@ -214,7 +214,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
     //Rellena el arrayList de vehiculo
     private void agregarCoches() {
         //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
         //Vinculamos el cliente con la interfaz.
         //En esa interfaz se definen los metodos y los verbos que usan
         //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
@@ -286,7 +286,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         else if (v.equals(btSeleccionarColor)){colorPiker();}
         else if(v.equals(btBorrarVehiculo)){
             //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
             //Vinculamos el cliente con la interfaz.
             //En esa interfaz se definen los metodos y los verbos que usan
             //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
@@ -357,7 +357,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(matricula&&marca&&modelo&&color&&combustible){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz.
                 //En esa interfaz se definen los metodos y los verbos que usan
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica

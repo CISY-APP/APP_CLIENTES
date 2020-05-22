@@ -224,7 +224,7 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(clave&&usuario&&nombre&&apellidos){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz.
                 //En esa interfaz se definen los metodos y los verbos que usan
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica

@@ -179,7 +179,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
     //Metodo que carga los datos personales del usuario
     private void cargarDatosPersonalesUsuario(){
         //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
         //Vinculamos el cliente con la interfaz.
         //En esa interfaz se definen los metodos y los verbos que usan
         //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
@@ -251,7 +251,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         }
         else if (v.equals(btBorrarCuenta)){
             //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
             //Vinculamos el cliente con la interfaz.
             //En esa interfaz se definen los metodos y los verbos que usan
             //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
@@ -374,7 +374,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(telefono&&fecha&&descripcion){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.107:8080/").addConverterFactory(GsonConverterFactory.create()).build();
+                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz.
                 //En esa interfaz se definen los metodos y los verbos que usan
                 //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica

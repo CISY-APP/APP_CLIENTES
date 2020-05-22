@@ -119,6 +119,20 @@ public class VentanaPrincipal extends AppCompatActivity{
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    storageReference = FirebaseStorage.getInstance().getReference();
+                    storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            //Cojemos la URI para hacer el inserta ala base de datos con la URI
+                            //uri --> https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F1?alt=media&token=f59bccd3-4c6e-4872-ab50-14b39743685d
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), "No tiene imaganes para cargar", Toast.LENGTH_SHORT).show();
+                            IVImagenUsuarioMenuLateral.setImageResource(R.drawable.user);
+                        }
+                    });
                 }
             });
         }
