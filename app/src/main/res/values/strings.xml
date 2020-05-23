@@ -35,7 +35,6 @@
     <string name="cancelar">Cancelar</string>
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>
-
     <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
     <string name="viaje_publicado">!Tu viaje ha sido publido¡ Gracias por reducir los niveles de contaminación.</string>
     <string name="viaje_no_encontrado">!Vaya¡ Parece que no hay ningún viaje con esos criterios de búsqueda.</string>
@@ -43,6 +42,7 @@
     <string name="viajes_encontrado">Viajes encontrados</string>
     <string name="quieres_publicar">¿Quieres publicar un viaje?</string>
     <string name="marca">MARCA</string>
+
 
     <!-- *********************************** VENTANA LOGIN ***********************************-->
     <string name="bt_login_ventanaLogin">Iniciar Sesion</string>
@@ -118,6 +118,25 @@
     <string name="bt_guardarCambios_ventanaDatosUsuario">Guardar cambios</string>
     <string name="bt_cambiarContrasena_ventanaDatosUsuario">Cambiar contraseña</string>
     <string name="bt_eliminarCuenta_ventanaDatosUsuario">Borrar cuenta</string>
+    <!-- *********************************** VENTANA DATOS AGREGAR VEHICULO ***********************************-->
+    <string name="spinner_datos_gasolina_ventanaAgregarVehiculo">Gasolina</string>
+    <string name="spinner_datos_diesel_ventanaAgregarVehiculo">Diesel</string>
+    <string name="spinner_datos_hibrido_ventanaAgregarVehiculo">Híbrido</string>
+    <string name="spinner_datos_electrico_ventanaAgregarVehiculo">Electrico</string>
+    <string name="colorPicker_preguntaTitulo_ventanaAgregarVehiculo">¿De que color es?</string>
+    <string name="txt_errorMatricula_Formato_ventanaAgregarVehiculo">Matricula no valida.</string>
+    <string name="txt_agregadoVehiculo_Toast_ventanaAgregarVehiculo">Registro realizado con exito.</string>
+    <string name="txt_cardViewTitulo_ventanaAgregarVehiculo">Agregar vehiculo</string>
+    <string name="txt_tituloMatricula_ventanaAgregarVehiculo">MATRICULA</string>
+    <string name="edit_matricula_ventanaAgregarVehiculo">Matricula</string>
+    <string name="txt_tituloMarca_ventanaAgregarVehiculo">MARCA</string>
+    <string name="edit_marca_ventanaAgregarVehiculo">Marca</string>
+    <string name="txt_tituloModelo_ventanaAgregarVehiculo">MODELO</string>
+    <string name="edit_modelo_ventanaAgregarVehiculo">Modelo</string>
+    <string name="txt_tituloTipoCombustible_ventanaAgregarVehiculo">TIPO DE COMBUSTIBLE</string>
+    <string name="txt_tituloColor_ventanaAgregarVehiculo">COLOR DEL VEHÍCULO</string>
+    <string name="bt_seleccionarColor_ventanaAgregarVehiculo">SELECCIONAR</string>
+
 
 
 </resources>

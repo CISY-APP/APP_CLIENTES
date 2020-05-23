@@ -31,7 +31,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:scaleType="fitStart"
-                        android:layout_weight="1"
+                        android:layout_weight="0"
                         android:clickable="true"
                         android:tint="@color/quantum_black_100"
                         app:srcCompat="@drawable/regreso"
@@ -40,10 +40,12 @@
                     <TextView
                         android:id="@+id/textViewTituloVentanaAgregarVehiculo"
                         android:layout_width="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:gravity="center_horizontal"
-                        android:text="Agregar vehiculo"
+                        android:layout_weight="5"
+                        android:gravity="start"
+                        android:text="@string/txt_cardViewTitulo_ventanaAgregarVehiculo"
                         android:textColor="@color/places_ui_default_primary_dark"
                         android:textSize="24sp"/>
 
@@ -51,7 +53,7 @@
                         android:id="@+id/btAceptarCambiosVentanaAgregarVehiculo"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:layout_weight="1"
+                        android:layout_weight="0"
                         android:scaleType="fitEnd"
                         android:enabled="false"
                         android:tint="@color/colorGris"
@@ -115,7 +117,7 @@
                         android:id="@+id/textViewTituloMatriculaAgregarVehiculo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="MATRICULA"
+                        android:text="@string/txt_tituloMatricula_ventanaAgregarVehiculo"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
@@ -133,7 +135,7 @@
                         android:drawableLeft="@drawable/ic_matricula"
                         android:drawablePadding="5dp"
                         android:ems="10"
-                        android:hint="Matricula"
+                        android:hint="@string/edit_matricula_ventanaAgregarVehiculo"
                         android:padding="8dp"
                         android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
@@ -146,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginTop="5dp"
-                        android:text="Error"
+                        android:text=""
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -157,7 +159,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:text="MARCA"
+                        android:text="@string/txt_tituloMarca_ventanaAgregarVehiculo"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
@@ -175,7 +177,7 @@
                         android:drawableLeft="@drawable/ic_marca"
                         android:drawablePadding="5dp"
                         android:ems="10"
-                        android:hint="Marca"
+                        android:hint="@string/edit_marca_ventanaAgregarVehiculo"
                         android:padding="8dp"
                         android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
@@ -188,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginTop="5dp"
-                        android:text="Error"
+                        android:text=""
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -198,7 +200,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:text="MODELO"
+                        android:text="@string/txt_tituloModelo_ventanaAgregarVehiculo"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
@@ -216,7 +218,7 @@
                         android:drawableLeft="@drawable/ic_marca"
                         android:drawablePadding="5dp"
                         android:ems="10"
-                        android:hint="Modelo"
+                        android:hint="@string/edit_modelo_ventanaAgregarVehiculo"
                         android:padding="8dp"
                         android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
@@ -229,7 +231,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
                         android:layout_marginTop="5dp"
-                        android:text="Error"
+                        android:text=""
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -240,7 +242,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:text="TIPO DE COMBUSTIBLE"
+                        android:text="@string/txt_tituloTipoCombustible_ventanaAgregarVehiculo"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
@@ -266,7 +268,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:text="COLOR DEL VEHÍCULO"
+                        android:text="@string/txt_tituloColor_ventanaAgregarVehiculo"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
@@ -289,7 +291,7 @@
                             android:focusable="false"
                             android:gravity="center"
                             android:padding="8dp"
-                            android:text="SELECCIONAR"
+                            android:text="@string/bt_seleccionarColor_ventanaAgregarVehiculo"
                             android:textColor="@color/colorPrimary"
                             android:textColorHint="@color/colorGrisLight"
                             android:textStyle="normal|bold"
@@ -311,8 +313,6 @@
                             android:focusable="false" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </LinearLayout>
         </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
