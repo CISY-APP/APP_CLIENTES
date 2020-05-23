@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/disfrutados"
+        android:title="DISFRUTADOS"
+        android:icon="@drawable/asiento"/>
+
+    <item
+        android:id="@+id/publicados"
+        android:title="PUBLICADOS"
+        android:icon="@drawable/volante"/>
+
+</menu>

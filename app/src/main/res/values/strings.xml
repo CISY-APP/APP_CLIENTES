@@ -9,7 +9,7 @@
     <string name="action_configuracion">Configuración</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_tusViajes">Tus viajes</string>
+    <string name="menu_tusViajes">Mis viajes</string>
     <string name="menu_cartera">Cartera</string>
     <string name="menu_mensajes">Mensajes</string>
     <string name="menu_incidencias">Incidencias</string>
