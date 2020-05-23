@@ -26,16 +26,56 @@ public class Biblioteca {
         }
         return prueba;
     }
-    //Metodo que comprueba si una cadena tiene caracteres alfanumericos solo (acentos y demas no validos), devuelve un booleano indicando el resultado:
+    //Metodo que comprueba si una cadena tiene caracteres alfanumericos y ñ solo (acentos y demas no validos), devuelve un booleano indicando el resultado:
     public static boolean compruebaSiCadenaContieneCaracteresAlfanumericos(String cadena){
         boolean prueba = true;
         cadena=cadena.toUpperCase();        //Cadena convertida a mayusculas para asi solo tener que comparar rangos de letras en mayusculas.
         //Bucle for donde se valida el rango:
         for (int i = 0 ; i < cadena.length() && prueba; i++){
-            if ((cadena.charAt(i) < 'A' || cadena.charAt(i) > 'Z') && (cadena.charAt(i) < '0' || cadena.charAt(i) > '9')) {
+            if ((cadena.charAt(i) < 'A' || cadena.charAt(i) > 'Z') && (cadena.charAt(i) < '0' || cadena.charAt(i) > '9') && (cadena.charAt(i) != 'Ñ')) {
                 prueba=false;
             }
         }
         return prueba;
+    }
+    //Metodo que quita espacios laterales y los repetidos entre las palabras, recibe una cadena y devuelve la cadena tratada:
+    public static String quitaEspaciosRepetidosEntrePalabras(String cadena){
+        StringBuilder aux = new StringBuilder();
+        for(int i = 0, contEspacios = 0 ; i < cadena.length() ; i++){
+            if(cadena.charAt(i)!=' '){
+                aux.append(cadena.charAt(i));
+                contEspacios=0;
+            }else{
+                if(contEspacios==0){
+                    aux.append(cadena.charAt(i));
+                }
+                contEspacios++;
+            }
+        }
+        return aux.toString().trim();
+    }
+    //Metodo que comprueba si un nombre o apellidos tiene caracteres validos incluye caracteres acentuados del español , espacio y la ñ, devuelve un booleano indicando el resultado:
+    public static boolean compruebaSiCadenaContieneCaracteresValidosConAcentos(String cadena){
+        boolean prueba = true;
+        cadena=cadena.toUpperCase();        //Cadena convertida a mayusculas para asi solo tener que comparar rangos de letras en mayusculas.
+        //Bucle for donde se valida el rango:
+        for (int i = 0 ; i < cadena.length() && prueba; i++){
+            if ((cadena.charAt(i) < 'A' || cadena.charAt(i) > 'Z') && (cadena.charAt(i) != 'Ñ') && (cadena.charAt(i) != 'Á')&& (cadena.charAt(i) != 'É')&& (cadena.charAt(i) != 'Í')&& (cadena.charAt(i) != 'Ó')&& (cadena.charAt(i) != 'Ú') && (cadena.charAt(i) != ' ')) {
+                prueba=false;
+            }
+        }
+        return prueba;
+    }
+    //Metodo que nos capitaliza cada palabra de un String, recibe un String y devuelve un String:
+    public static String capitalizaString(String txtOrigen){
+        //Dividimos el string en las palabras segun los caracteres vacios o en blanco
+        String []palabras = txtOrigen.split("\\s+");
+        StringBuilder txtFinal = new StringBuilder();
+        //Bucle para conseguir la primera letra en mayuscula
+        for(String palabra : palabras){
+            txtFinal.append(palabra.substring(0,1).toUpperCase().concat( palabra.substring(1).toLowerCase()).concat(" "));
+        }
+        //Antes de devolverlo realizamos un trim por si ha metido espacios a la derecha de la ultima palabra
+        return txtFinal.toString().trim();
     }
 }

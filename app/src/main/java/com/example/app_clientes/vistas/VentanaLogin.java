@@ -68,8 +68,8 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                 AnimatorSet animatorSetEscale = new AnimatorSet();
                 //Instanciamos el conjunto de animaciones:
                 //Animacion para el boton incio sesion (Este boton nace mas pequeño ya que segun el formato de los edittext se activara o no):
-                ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 0.0f, 0.95f);
-                ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 0.0f, 0.95f);
+                ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 0.0f, 0.85f);
+                ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 0.0f, 0.85f);
                 //Animacion para el boton registrar:
                 ObjectAnimator scaleDownX_registro = ObjectAnimator.ofFloat(btRegistrar, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_registro = ObjectAnimator.ofFloat(btRegistrar, "scaleY", 0.0f, 1.0f);
@@ -85,7 +85,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                 //Animacion para el boton registrarse:
                 ObjectAnimator scaleDownX_TxtRegistro = ObjectAnimator.ofFloat(txtInformativoRegistro, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_TxtRegistro = ObjectAnimator.ofFloat(txtInformativoRegistro, "scaleY", 0.0f, 1.0f);
-                //Configuramos el animatorSet, como se tienen que reproducir las animaciones, el tiempo que duran, que clase de interpolador utizan y la lanzamos:
+                //Configuramos el animatorSet, como se tienen que reproducir las animaciones, el tiempo que duran, que clase de interpolador utilizan y la lanzamos:
                 animatorSetEscale.play(scaleDownX_inicioSesion).with(scaleDownY_inicioSesion)
                         .with(scaleDownX_registro).with(scaleDownY_registro)
                         .with(scaleDownX_TxtUsuario).with(scaleDownY_TxtUsuario)
@@ -229,8 +229,8 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
             //Animacion para el boton incio sesion:
-            ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 0.95f, 1.0f);
-            ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 0.95f, 1.0f);
+            ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 0.85f, 1.0f);
+            ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 0.85f, 1.0f);
             animator.play(scaleDownX_inicioSesion).with(scaleDownY_inicioSesion);
             animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
             animator.start();
@@ -241,8 +241,8 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
             //Animacion para el boton incio sesion:
-            ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 1.0f, 0.95f);
-            ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 1.0f, 0.95f);
+            ObjectAnimator scaleDownX_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleX", 1.0f, 0.85f);
+            ObjectAnimator scaleDownY_inicioSesion = ObjectAnimator.ofFloat(btIniciarSesion, "scaleY", 1.0f, 0.85f);
             animator.play(scaleDownX_inicioSesion).with(scaleDownY_inicioSesion);
             animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
             animator.start();

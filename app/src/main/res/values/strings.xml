@@ -64,4 +64,20 @@
     <string name="edit_clave_ventanaLogin">Clave</string>
     <!-- *********************************** VENTANA REGISTRAR ***********************************-->
     <string name="bt_registrar_ventanaRegistro">Registrarse</string>
+    <string name="txt_emailError_Formato_ventanaRegistro">Email con formato no valido.</string>
+    <string name="txt_claveErrorMayuscula_Formato_ventanaRegistro">Introduzca una letra mayuscula como minimo.</string>
+    <string name="txt_claveErrorMinuscula_Formato_ventanaRegistro">Introduzca una letra minuscula como minimo.</string>
+    <string name="txt_claveErrorNumero_Formato_ventanaRegistro">Introduzca un numero como minimo.</string>
+    <string name="txt_nombreError_Formato_ventanaRegistro">Nombre no valido.</string>
+    <string name="txt_apellidosError_Formato_ventanaRegistro">Apellidos no validos.</string>
+    <string name="txt_registro_Toast_ventanaRegistro">Registro realizado con exito.</string>
+    <string name="txt_cardViewTitulo_ventanaRegistro">Registrar Usuario</string>
+    <string name="txt_tituloNombre_ventanaRegistro">NOMBRE</string>
+    <string name="txt_tituloApellidos_ventanaRegistro">APELLIDOS</string>
+    <string name="txt_tituloUsuario_ventanaRegistro">USUARIO</string>
+    <string name="txt_tituloClave_ventanaRegistro">CLAVE</string>
+    <string name="edit_nombre_ventanaRegistro">Nombre</string>
+    <string name="edit_apellidos_ventanaRegistro">Apellidos</string>
+    <string name="edit_email_ventanaRegistro">Usuario / Correo Electronico</string>
+    <string name="edit_clave_ventanaRegistro">Clave</string>
 </resources>
