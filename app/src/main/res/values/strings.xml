@@ -30,14 +30,9 @@
 
     <!--BOTONES-->
     <string name="publicar">Publicar</string>
-    <string name="cambiarContrasena">Cambiar contraseña</string>
-    <string name="guardarCambios">Guardar cambios</string>
-    <string name="eliminarCuenta">Borrar cuenta</string>
     <string name="buscar">Buscar</string>
     <string name="listo">Listo</string>
     <string name="cancelar">Cancelar</string>
-
-
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>
 
@@ -47,7 +42,6 @@
     <string name="viaje_reservado">Has reservado una plaza, si necesitas algo no dudes en contactar con el conductor.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
     <string name="quieres_publicar">¿Quieres publicar un viaje?</string>
-    <string name="sobre_mi">Sobre mi …</string>
     <string name="marca">MARCA</string>
 
     <!-- *********************************** VENTANA LOGIN ***********************************-->
@@ -98,4 +92,32 @@
     <string name="edit_claveActual_ventanaCambiarContrasena">Contraseña actual</string>
     <string name="edit_claveNew_ventanaCambiarContrasena">Nueva contraseña</string>
     <string name="edit_claveRep_ventanaCambiarContrasena">Repetir nueva contraseña</string>
+    <!-- *********************************** VENTANA DATOS USUARIO ***********************************-->
+    <string name="txt_telefonoCaracteres_Formato_ventanaDatosUsuario">Telefono con caracteres no numericos.</string>
+    <string name="txt_telefonoTam_Formato_ventanaDatosUsuario">Telefono necesita 9 digitos.</string>
+    <string name="txt_descripcionTam_Formato_ventanaDatosUsuario">Excedido limite de 300 caracteres.</string>
+    <string name="txt_fecha_Formato_ventanaDatosUsuario">Fecha invalida.</string>
+    <string name="txt_baja_Toast_ventanaDatosUsuario">Baja realizada con exito.</string>
+    <string name="txt_actualizacion_Toast_ventanaDatosUsuario">Datos actualizados con exito.</string>
+    <string name="txt_Titulo1_ventanaDatosUsuario">Datos Personales</string>
+    <string name="txt_Titulo2_ventanaDatosUsuario">Opciones</string>
+    <string name="txt_tituloNombre_ventanaDatosUsuario">NOMBRE</string>
+    <string name="edit_nombre_ventanaDatosUsuario">Nombre</string>
+    <string name="txt_tituloApellidos_ventanaDatosUsuario">APELLIDOS</string>
+    <string name="edit_apellidos_ventanaDatosUsuario">Apellidos</string>
+    <string name="txt_tituloUsuario_ventanaDatosUsuario">USUARIO</string>
+    <string name="edit_usuario_ventanaDatosUsuario">Usuario / Correo Electronico</string>
+    <string name="txt_tituloPrefijo_ventanaDatosUsuario">PREFIJO</string>
+    <string name="edit_prefijo_ventanaDatosUsuario">+34</string>
+    <string name="txt_tituloNumero_ventanaDatosUsuario">NUMERO</string>
+    <string name="edit_numero_ventanaDatosUsuario">600600600</string>
+    <string name="txt_tituloFecha_ventanaDatosUsuario">FECHA NACIMIENTO</string>
+    <string name="edit_fecha_ventanaDatosUsuario">06 / 05 / 2020</string>
+    <string name="txt_tituloDescripcion_ventanaDatosUsuario">DESCRIPCION</string>
+    <string name="edit_descripcion_ventanaDatosUsuario">Sobre mi …</string>
+    <string name="bt_guardarCambios_ventanaDatosUsuario">Guardar cambios</string>
+    <string name="bt_cambiarContrasena_ventanaDatosUsuario">Cambiar contraseña</string>
+    <string name="bt_eliminarCuenta_ventanaDatosUsuario">Borrar cuenta</string>
+
+
 </resources>

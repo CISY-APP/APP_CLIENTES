@@ -2,6 +2,7 @@
 package com.example.app_clientes;
 //Importamos los siguientes paquetes:
 import com.example.app_clientes.pojos.Usuario;
+import java.sql.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 //Clase donde se crearan distintos metodos utilizados por otras clases.
@@ -71,5 +72,34 @@ public class Biblioteca {
         }
         //Antes de devolverlo realizamos un trim por si ha metido espacios a la derecha de la ultima palabra
         return txtFinal.toString().trim();
+    }
+    //Metodo que recoge un String con el valor de un datapickertime, y nos devuelve un String para pasar a date de ese string:
+    public static String obtieneFechaDataPicker(String aux){
+        String fechaElegida="";
+        int diaI=0, mesI=0, anoI=0;
+        //Bucle for que se encarga de coger los valores numericos de la fecha
+        //y guardarlo en variables de tipo Int:
+        for (int i=0, j=0;i<aux.length();i++){
+            if(aux.charAt(i)>='0'&&aux.charAt(i)<='9'){
+                fechaElegida+=aux.charAt(i);
+            }
+            else if(aux.charAt(i)=='/'&&j==0){
+                diaI += Integer.parseInt(fechaElegida);
+                j++;
+                fechaElegida="";
+            }
+            else if(aux.charAt(i)=='/'&&j==1){
+                mesI += Integer.parseInt(fechaElegida);
+                j++;
+                fechaElegida="";
+            }
+            if(i==aux.length()-1&&j==2){
+                anoI += Integer.parseInt(fechaElegida);
+                j++;
+                fechaElegida="";
+            }
+        }
+        fechaElegida=anoI+"-"+mesI+"-"+diaI;
+        return fechaElegida;
     }
 }
