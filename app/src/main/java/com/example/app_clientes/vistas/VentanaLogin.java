@@ -145,7 +145,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                         if (!response.isSuccessful()) {
                             //Si la clave no es valida:
                             if(response.code()==403){
-                                txtErrorClave.setText(getText(R.string.txt_emailError_Servidor_ventanaLogin));
+                                txtErrorClave.setText(getText(R.string.txt_claveError_Servidor_ventanaLogin));
                                 txtErrorClave.setVisibility(View.VISIBLE);
                                 editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                             }else {
@@ -155,7 +155,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                             }
                             //Si el usuario no es encontrado:
                             if(response.code()==404){
-                                txtErrorUsuario.setText(getText(R.string.txt_claveError_Servidor_ventanaLogin));
+                                txtErrorUsuario.setText(getText(R.string.txt_emailError_Servidor_ventanaLogin));
                                 txtErrorUsuario.setVisibility(View.VISIBLE);
                                 editTextUsuario.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                             }else{

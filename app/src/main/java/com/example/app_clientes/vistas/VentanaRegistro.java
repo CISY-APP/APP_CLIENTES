@@ -121,6 +121,9 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
             //Control clave que contenga solo caracteres alfanumericos(sin acentos ni demas variantes), y dependiendo del mensaje imprimimos mensaje de error o no:
             if(!Biblioteca.compruebaSiCadenaContieneCaracteresAlfanumericos(editTextClave.getText().toString())){
                 pbClave=false;
+                txtErrorClave.setText(getText(R.string.txt_claveError_Formato_ventanaRegistro));
+                txtErrorClave.setVisibility(View.VISIBLE);
+                editTextClave.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
             }
             boolean pbExistMinuscula = false, pbExistMayuscula = false, pbExistNumero = false;
             for (int i = 0 ; i < editTextClave.getText().toString().length() &&pbClave && (!pbExistMayuscula || !pbExistMinuscula || !pbExistNumero); i++){

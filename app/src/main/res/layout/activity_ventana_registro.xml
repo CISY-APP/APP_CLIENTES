@@ -31,7 +31,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:scaleType="fitStart"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:clickable="true"
                 android:tint="@color/quantum_black_100"
                 app:srcCompat="@drawable/regreso"
@@ -39,9 +39,12 @@
 
             <TextView
                 android:id="@+id/textViewTituloVentanaRegistro"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="5"
                 android:text="@string/txt_cardViewTitulo_ventanaRegistro"
                 android:textColor="@color/places_ui_default_primary_dark"
                 android:textSize="24sp" />

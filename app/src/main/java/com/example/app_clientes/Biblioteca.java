@@ -15,16 +15,10 @@ public class Biblioteca {
     //Metodos publicos y estaticos:
     //Metodo que comprueba si un email es valido recibido como String, y nos devuelve un booleano indicando el resultado:
     public static boolean compruebaEmailValido(String email){
-        boolean prueba;
         Pattern patronEmail = Pattern.compile("([a-z0-9]+(\\.?[a-z0-9])*)+@(([a-z]+)\\.([a-z]+))+");    //Expresion regular para email.
         Matcher match = patronEmail.matcher(email.toLowerCase());                                       //Email matcheado en minusculas.
         //Si hace match o coincide se devolvera true o false:
-        if (!match.find()) {
-            prueba=false;
-        }else{
-            prueba=true;
-        }
-        return prueba;
+        return match.find();
     }
     //Metodo que comprueba si una cadena tiene caracteres alfanumericos y ñ solo (acentos y demas no validos), devuelve un booleano indicando el resultado:
     public static boolean compruebaSiCadenaContieneCaracteresAlfanumericos(String cadena){
