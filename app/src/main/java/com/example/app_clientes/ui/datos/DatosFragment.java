@@ -343,9 +343,21 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 //Creamos una peticion para actualizar los datos personales de un usuario, que creamos con los valores de los editext:
                 Map<String, String> infoMap = new HashMap<String, String>();
                 infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
-                infoMap.put("telefono", editTextTelefono.getText().toString());
-                infoMap.put("fechaNac", fechaElegida);
-                infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
+                if(!editTextTelefono.getText().toString().equals("")){
+                    infoMap.put("telefono", editTextTelefono.getText().toString());
+                }else {
+                    infoMap.put("telefono", "");
+                }
+                if(!fechaElegida.equals("")){
+                    infoMap.put("fechaNac", fechaElegida);
+                }else {
+                    infoMap.put("fechaNac", "");
+                }
+                if(!editTextDescripcion.getText().toString().equals("")){
+                    infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
+                }else {
+                    infoMap.put("descripcion", "");
+                }
                 Call<Usuario> call = peticiones.actualizarDatosPersonalesUsuario(infoMap);
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
                 call.enqueue(new Callback<Usuario>() {
@@ -398,6 +410,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             }else pruebaFormatoDescripcion= !s.toString().trim().equals("");
         }
         //Si una de las 3 pruebas es verdadera, es decir al menos un campo ha cambiado y no estaba liberado el boton pasamos a habilitar el boton de registrar usuario:
+        //Y ninguno es cadena vacia:
         if ((pruebaFormatoNumero||pruebaFormatoFecha||pruebaFormatoDescripcion)&&!anterior){
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();

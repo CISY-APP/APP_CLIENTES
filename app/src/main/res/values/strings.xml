@@ -118,7 +118,7 @@
     <string name="bt_guardarCambios_ventanaDatosUsuario">Guardar cambios</string>
     <string name="bt_cambiarContrasena_ventanaDatosUsuario">Cambiar contraseña</string>
     <string name="bt_eliminarCuenta_ventanaDatosUsuario">Borrar cuenta</string>
-    <!-- *********************************** VENTANA DATOS AGREGAR VEHICULO ***********************************-->
+    <!-- *********************************** VENTANA AGREGAR VEHICULO ***********************************-->
     <string name="spinner_datos_gasolina_ventanaAgregarVehiculo">Gasolina</string>
     <string name="spinner_datos_diesel_ventanaAgregarVehiculo">Diesel</string>
     <string name="spinner_datos_hibrido_ventanaAgregarVehiculo">Híbrido</string>
@@ -136,7 +136,25 @@
     <string name="txt_tituloTipoCombustible_ventanaAgregarVehiculo">TIPO DE COMBUSTIBLE</string>
     <string name="txt_tituloColor_ventanaAgregarVehiculo">COLOR DEL VEHÍCULO</string>
     <string name="bt_seleccionarColor_ventanaAgregarVehiculo">SELECCIONAR</string>
-
+    <!-- *********************************** VENTANA DATOS VEHICULO ***********************************-->
+    <string name="spinner_datos_gasolina_ventanaDatosVehiculo">Gasolina</string>
+    <string name="spinner_datos_diesel_ventanaDatosVehiculo">Diesel</string>
+    <string name="spinner_datos_hibrido_ventanaDatosVehiculo">Híbrido</string>
+    <string name="spinner_datos_electrico_ventanaDatosVehiculo">Electrico</string>
+    <string name="colorPicker_preguntaTitulo_ventanaDatosVehiculo">¿De que color es?</string>
+    <string name="bt_añadirVehiculo_ventanaDatosVehiculo">Añadir</string>
+    <string name="txt_borradoVehiculo_Toast_ventanaDatosVehiculo">Borrado realizado con exito.</string>
+    <string name="txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo">Actualizacion realizada con exito.</string>
+    <string name="txt_vacio_ventanaDatosVehiculo">Esto se encuentra algo vacio ...</string>
+    <string name="txt_tituloMatricula_ventanaDatosVehiculo">MATRICULA</string>
+    <string name="edit_matricula_ventanaDatosVehiculo">Matricula</string>
+    <string name="txt_tituloMarca_ventanaDatosVehiculo">MARCA</string>
+    <string name="edit_marca_ventanaDatosVehiculo">Marca</string>
+    <string name="txt_tituloModelo_ventanaDatosVehiculo">MODELO</string>
+    <string name="edit_modelo_ventanaDatosVehiculo">Modelo</string>
+    <string name="txt_tituloTipoCombustible_ventanaDatosVehiculo">TIPO DE COMBUSTIBLE</string>
+    <string name="txt_tituloColor_ventanaDatosVehiculo">COLOR DEL VEHÍCULO</string>
+    <string name="bt_seleccionarColor_ventanaDatosVehiculo">SELECCIONAR</string>
 
 
 </resources>
