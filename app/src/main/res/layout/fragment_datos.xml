@@ -409,6 +409,19 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/btIncidenciaButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:text="ABRIR UNA INDICENCIA"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
         </LinearLayout>
     </ScrollView>
 

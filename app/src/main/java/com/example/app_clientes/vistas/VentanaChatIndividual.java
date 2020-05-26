@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -100,17 +102,6 @@ public class VentanaChatIndividual extends AppCompatActivity {
                 Mensaje m = dataSnapshot.getValue(Mensaje.class);
                 adapterMensajes.addMensaje(m);
                 setScrollBar();
-
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                        .setSmallIcon(R.drawable.enviar)
-                        .setContentTitle("Nuevo mensaje de " + ID_USUARIO_CONVER)
-                        .setContentText(m.getMensaje())
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(m.getMensaje()))
-                        .setPriority(NotificationCompat.PRIORITY_MAX);
-
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                notificationManager.notify(1, builder.build());
             }
 
             @Override

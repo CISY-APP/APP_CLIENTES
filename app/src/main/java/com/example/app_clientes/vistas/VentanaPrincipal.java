@@ -10,8 +10,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,12 +44,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.google.android.material.navigation.NavigationView.*;
+
 public class VentanaPrincipal extends AppCompatActivity{
 
     private AppBarConfiguration mAppBarConfiguration;
     private StorageReference storageReference;
     private static final int GALERY_INTENT = 1;
     private CircleImageView IVImagenUsuarioMenuLateral;
+    private TextView nombreUsuario;
+    private TextView correoUsuario;
     private String ID_USUARIO;
     private final String CHANNEL_ID = "1";
     public static Usuario usuario;
@@ -72,6 +78,10 @@ public class VentanaPrincipal extends AppCompatActivity{
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         final View headView = navigationView.getHeaderView(0);
+        nombreUsuario = headView.findViewById(R.id.nombreUsuario);
+        nombreUsuario.setText(VentanaLogin.usuarioSesion.getNombre().toString() + " " + VentanaLogin.usuarioSesion.getApellidos().toString());
+        correoUsuario = headView.findViewById(R.id.correoUsuario);
+        correoUsuario.setText(VentanaLogin.usuarioSesion.getEmail().toString());
         IVImagenUsuarioMenuLateral = headView.findViewById(R.id.IVImagenUsuarioMenuLateral);
         IVImagenUsuarioMenuLateral.setOnClickListener(new OnClickListener() {
             @Override
@@ -81,19 +91,15 @@ public class VentanaPrincipal extends AppCompatActivity{
         });
 
         cargarImagenUsuario(headView);
-
-
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_viajes, R.id.nav_cartera, R.id.nav_mensajes,  R.id.nav_incidencias, R.id.nav_datos,  R.id.nav_vehiculos,  R.id.nav_configuracion,  R.id.nav_cerrarSesion, R.id.nav_chat)
-                .setDrawerLayout(drawer)
-                .build();
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_viajes, R.id.nav_cartera, R.id.nav_mensajes, R.id.nav_incidencias, R.id.nav_datos, R.id.nav_vehiculos, R.id.nav_configuracion, R.id.nav_cerrarSesion, R.id.nav_chat).setDrawerLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-    }
 
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -104,9 +110,10 @@ public class VentanaPrincipal extends AppCompatActivity{
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -191,6 +198,7 @@ public class VentanaPrincipal extends AppCompatActivity{
             }
         });
     }
+
 */
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because

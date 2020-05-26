@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="activity_main">
 
     <group
         android:checkableBehavior="single"
@@ -22,11 +23,8 @@
         <item
             android:id="@+id/nav_mensajes"
             android:icon="@drawable/correo"
-            android:title="@string/menu_mensajes" />
-        <item
-            android:id="@+id/nav_incidencias"
-            android:icon="@drawable/riesgo"
-            android:title="@string/menu_incidencias" />
+            android:title="@string/menu_mensajes"
+            app:actionLayout="@layout/my_counter"/>
         <item
             android:id="@+id/nav_datos"
             android:icon="@drawable/datos"
@@ -44,6 +42,10 @@
             android:title="@string/menu_otras">
             <menu>
                 <item
+                    android:id="@+id/nav_incidencias"
+                    android:icon="@drawable/riesgo"
+                    android:title="@string/menu_incidencias" />
+                <item
                     android:id="@+id/nav_configuracion"
                     android:icon="@drawable/configuracion"
                     android:title="@string/menu_configuracion" />
@@ -53,6 +55,5 @@
                     android:title="@string/menu_cerrarSesion" />
             </menu>
         </item>
-
     </group>
 </menu>

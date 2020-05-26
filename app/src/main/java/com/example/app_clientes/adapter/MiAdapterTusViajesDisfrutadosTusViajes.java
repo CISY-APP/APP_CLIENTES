@@ -18,10 +18,10 @@ import com.example.app_clientes.pojos.Usuario;
 import java.util.ArrayList;
 
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
-public class MiAdapterTusViajes extends RecyclerView.Adapter<MiAdapterTusViajes.ExampleViewHolder> {
+public class MiAdapterTusViajesDisfrutadosTusViajes extends RecyclerView.Adapter<MiAdapterTusViajesDisfrutadosTusViajes.ExampleViewHolder> {
 
     private ArrayList<Usuario> misUsuariosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
-    private MiAdapterTusViajes.OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
+    private MiAdapterTusViajesDisfrutadosTusViajes.OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
     private final Context c;
 
     //INTERFAZ dentro de la clase la cual nos obliga a implementar y sobreescribir el metodo OnItemClick
@@ -30,11 +30,11 @@ public class MiAdapterTusViajes extends RecyclerView.Adapter<MiAdapterTusViajes.
     }
 
     //Metodo SET de la clase Adapter que nos permite asignar un listener
-    public void setOnClickListener(MiAdapterTusViajes.OnItemClickListener listener) {
+    public void setOnClickListener(MiAdapterTusViajesDisfrutadosTusViajes.OnItemClickListener listener) {
         mListener = listener;
     }
 
-    public MiAdapterTusViajes(Context c, ArrayList<Usuario> misUsuariosList) {
+    public MiAdapterTusViajesDisfrutadosTusViajes(Context c, ArrayList<Usuario> misUsuariosList) {
         this.c = c;
         this.misUsuariosList = misUsuariosList;
     }
@@ -49,7 +49,7 @@ public class MiAdapterTusViajes extends RecyclerView.Adapter<MiAdapterTusViajes.
     //para posteriormente instanciar un objeto de la clase interna ExampleViewHolder, pasandole por parametro la vista anterior y un listener
     //finaliza devolviendo un objeto de tipo exampleViewHolder
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_usuario,parent,false);    //Usamos el método inflate() para crear una vista a partir del layout XML definido en layout_listitem.
+        View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_usuariopeque,parent,false);    //Usamos el método inflate() para crear una vista a partir del layout XML definido en layout_listitem.
         ExampleViewHolder exampleViewHolder=new ExampleViewHolder(v,mListener);
 
         return exampleViewHolder;
@@ -64,7 +64,6 @@ public class MiAdapterTusViajes extends RecyclerView.Adapter<MiAdapterTusViajes.
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         Usuario nuevoUsuario= misUsuariosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
         Glide.with(c).load(misUsuariosList.get(position).getFotousuario()).into(holder.mImageUsuarioPeque);
-        holder.TVNombreItem.setText(misUsuariosList.get(position).getNombre());
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem
@@ -78,14 +77,12 @@ public class MiAdapterTusViajes extends RecyclerView.Adapter<MiAdapterTusViajes.
     static class ExampleViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView mImageUsuarioPeque;
-        private final TextView TVNombreItem;
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
         //al ser una clase estatica de no pasarselo no podria acceder a el listener
         ExampleViewHolder(View itemView, final OnItemClickListener listener) {
 
             super(itemView);
-            this.TVNombreItem = itemView.findViewById(R.id.TVNombreItem);
             this.mImageUsuarioPeque = itemView.findViewById(R.id.mImageUsuarioPeque);//Asocia el atributo de la clase al XML (imagen para el tablero)
             mImageUsuarioPeque.setOnClickListener(new View.OnClickListener() {
                 @Override

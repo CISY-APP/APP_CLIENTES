@@ -57,7 +57,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
     private CircleImageView imgUsuario;
     private EditText editTextNombre, editTextApellidos, editTextUsuario, editTextPrefijo, editTextTelefono, editTextFecha, editTextDescripcion;
     private Button btCambiarContrasena, btActualizarDatos, btBorrarCuenta;
-    private TextView txtErrorTelefono, txtErrorFecha, txtErrorDescripcion;
+    private TextView txtErrorTelefono, txtErrorFecha, txtErrorDescripcion, btIncidenciaButton;
     private StorageReference storageReference;
     private String uriFotoUsuario = "";
     private static final int GALERY_INTENT = 1;
@@ -83,6 +83,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         btCambiarContrasena = view.findViewById(R.id.btCambiarContrasenaDatosPersonales);
         btActualizarDatos = view.findViewById(R.id.btGuardarCambiosDatosPersonales);
         btBorrarCuenta = view.findViewById(R.id.btEliminarCuentaDatosPersonales);
+        btIncidenciaButton = view.findViewById(R.id.btIncidenciaButton);
         txtErrorTelefono = view.findViewById(R.id.textViewErrorTelefonoDatosPersonales);
         txtErrorFecha = view.findViewById(R.id.textViewErrorFechaDatosPersonales);
         txtErrorDescripcion = view.findViewById(R.id.textViewErrorDescripcionRegistroUsuario);
@@ -95,6 +96,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         btCambiarContrasena.setOnClickListener(this);
         btBorrarCuenta.setOnClickListener(this);
         editTextFecha.setOnClickListener(this);
+        btIncidenciaButton.setOnClickListener(this);
         //Vinculamos los edittext a su listener para el metodo afterTextChanged, que esta implementado en esta clase:
         editTextTelefono.addTextChangedListener(this);
         editTextDescripcion.addTextChangedListener(this);
@@ -408,8 +410,18 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                     }
                 });
             }
+        }else if (v.equals(btIncidenciaButton)){
+            abrirEmail();
         }
     }
+
+    private void abrirEmail() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto: cisyincidencias@gmail.com")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_EMAIL, VentanaLogin.usuarioSesion.getEmail());
+        startActivity(intent);
+    }
+
     //Comprobacion de que los campos no esten vacios y tengan un formato correcto antes de poder intentar iniciar sesion:
     @Override
     public void afterTextChanged(Editable s) {
