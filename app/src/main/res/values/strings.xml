@@ -30,25 +30,131 @@
 
     <!--BOTONES-->
     <string name="publicar">Publicar</string>
-    <string name="cambiarContrasena">Cambiar contraseña</string>
-    <string name="guardarCambios">Guardar cambios</string>
-    <string name="eliminarCuenta">Borrar cuenta</string>
     <string name="buscar">Buscar</string>
     <string name="listo">Listo</string>
     <string name="cancelar">Cancelar</string>
-    <string name="login">Iniciar Sesion</string>
-    <string name="registrar">Registrarse</string>
-
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>
-
     <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
     <string name="viaje_publicado">!Tu viaje ha sido publido¡ Gracias por reducir los niveles de contaminación.</string>
     <string name="viaje_no_encontrado">!Vaya¡ Parece que no hay ningún viaje con esos criterios de búsqueda.</string>
     <string name="viaje_reservado">Has reservado una plaza, si necesitas algo no dudes en contactar con el conductor.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
     <string name="quieres_publicar">¿Quieres publicar un viaje?</string>
-    <string name="sobre_mi">Sobre mi …</string>
     <string name="marca">MARCA</string>
+
+
+    <!-- *********************************** VENTANA LOGIN ***********************************-->
+    <string name="bt_login_ventanaLogin">Iniciar Sesion</string>
+    <string name="bt_registrar_ventanaLogin">Registrarse</string>
+    <string name="txt_emailError_Formato_ventanaLogin">Email con formato no valido.</string>
+    <string name="txt_claveError_Formato_ventanaLogin">Clave con caracteres no alfanumericos.</string>
+    <string name="txt_claveError_Servidor_ventanaLogin">Clave invalida.</string>
+    <string name="txt_emailError_Servidor_ventanaLogin">Usuario no existente.</string>
+    <string name="txt_olvidasteClave_ventanaLogin">¿Olvidaste tu contraseña?</string>
+    <string name="txt_informativoRegistro_ventanaLogin">¿No tienes una cuenta?</string>
+    <string name="txt_bienvenida_Toast_ventanaLogin">Bienvenido</string>
+    <string name="edit_email_ventanaLogin">Usuario / Correo Electronico</string>
+    <string name="edit_clave_ventanaLogin">Clave</string>
+    <!-- *********************************** VENTANA REGISTRAR ***********************************-->
+    <string name="bt_registrar_ventanaRegistro">Registrarse</string>
+    <string name="txt_emailError_Formato_ventanaRegistro">Email con formato no valido.</string>
+    <string name="txt_claveErrorMayuscula_Formato_ventanaRegistro">Introduzca una letra mayuscula como minimo.</string>
+    <string name="txt_claveErrorMinuscula_Formato_ventanaRegistro">Introduzca una letra minuscula como minimo.</string>
+    <string name="txt_claveErrorNumero_Formato_ventanaRegistro">Introduzca un numero como minimo.</string>
+    <string name="txt_claveError_Formato_ventanaRegistro">Clave con caracteres no alfanumericos.</string>
+    <string name="txt_nombreError_Formato_ventanaRegistro">Nombre no valido.</string>
+    <string name="txt_apellidosError_Formato_ventanaRegistro">Apellidos no validos.</string>
+    <string name="txt_registro_Toast_ventanaRegistro">Registro realizado con exito.</string>
+    <string name="txt_cardViewTitulo_ventanaRegistro">Registrar Usuario</string>
+    <string name="txt_tituloNombre_ventanaRegistro">NOMBRE</string>
+    <string name="txt_tituloApellidos_ventanaRegistro">APELLIDOS</string>
+    <string name="txt_tituloUsuario_ventanaRegistro">USUARIO</string>
+    <string name="txt_tituloClave_ventanaRegistro">CLAVE</string>
+    <string name="edit_nombre_ventanaRegistro">Nombre</string>
+    <string name="edit_apellidos_ventanaRegistro">Apellidos</string>
+    <string name="edit_email_ventanaRegistro">Usuario / Correo Electronico</string>
+    <string name="edit_clave_ventanaRegistro">Clave</string>
+    <!-- *********************************** VENTANA CAMBIAR CONTRASENA ***********************************-->
+    <string name="txt_claveActualError_Formato_ventanaCambiarContrasena">Clave con caracteres no alfanumericos.</string>
+    <string name="txt_claveNewErrorIgualActual_ventanaCambiarContrasena">La contraseña nueva es igual a la actual.</string>
+    <string name="txt_claveNewError_Formato_ventanaCambiarContrasena">Contraseña con caracteres no alfanumericos.</string>
+    <string name="txt_claveNewErrorMayuscula_Formato_ventanaCambiarContrasena">Introduzca una letra mayuscula como minimo.</string>
+    <string name="txt_claveNewErrorMinuscula_Formato_ventanaCambiarContrasena">Introduzca una letra minuscula como minimo.</string>
+    <string name="txt_claveNewErrorNumero_Formato_ventanaCambiarContrasena">Introduzca un numero como minimo.</string>
+    <string name="txt_claveRepErrorNoIgual_ventanaCambiarContrasena">Las claves no son iguales.</string>
+    <string name="txt_claveActual_Servidor_ventanaCambiarContrasena">Clave invalida.</string>
+    <string name="txt_cambio_Toast_ventanaCambiarContrasena">Contraseña cambiada con exito.</string>
+    <string name="txt_cardViewTitulo_ventanaCambiarContrasena">Cambiar contraseña</string>
+    <string name="txt_tituloClaveActual_ventanaCambiarContrasena">CONTRASEÑA ACTUAL</string>
+    <string name="txt_tituloClaveNew_ventanaCambiarContrasena">CONTRASEÑA NUEVA</string>
+    <string name="txt_tituloClaveRep_ventanaCambiarContrasena">CONTRASEÑA NUEVA REPETIDA</string>
+    <string name="edit_claveActual_ventanaCambiarContrasena">Contraseña actual</string>
+    <string name="edit_claveNew_ventanaCambiarContrasena">Nueva contraseña</string>
+    <string name="edit_claveRep_ventanaCambiarContrasena">Repetir nueva contraseña</string>
+    <!-- *********************************** VENTANA DATOS USUARIO ***********************************-->
+    <string name="txt_telefonoCaracteres_Formato_ventanaDatosUsuario">Telefono con caracteres no numericos.</string>
+    <string name="txt_telefonoTam_Formato_ventanaDatosUsuario">Telefono necesita 9 digitos.</string>
+    <string name="txt_descripcionTam_Formato_ventanaDatosUsuario">Excedido limite de 300 caracteres.</string>
+    <string name="txt_fecha_Formato_ventanaDatosUsuario">Fecha invalida.</string>
+    <string name="txt_baja_Toast_ventanaDatosUsuario">Baja realizada con exito.</string>
+    <string name="txt_actualizacion_Toast_ventanaDatosUsuario">Datos actualizados con exito.</string>
+    <string name="txt_Titulo1_ventanaDatosUsuario">Datos Personales</string>
+    <string name="txt_Titulo2_ventanaDatosUsuario">Opciones</string>
+    <string name="txt_tituloNombre_ventanaDatosUsuario">NOMBRE</string>
+    <string name="edit_nombre_ventanaDatosUsuario">Nombre</string>
+    <string name="txt_tituloApellidos_ventanaDatosUsuario">APELLIDOS</string>
+    <string name="edit_apellidos_ventanaDatosUsuario">Apellidos</string>
+    <string name="txt_tituloUsuario_ventanaDatosUsuario">USUARIO</string>
+    <string name="edit_usuario_ventanaDatosUsuario">Usuario / Correo Electronico</string>
+    <string name="txt_tituloPrefijo_ventanaDatosUsuario">PREFIJO</string>
+    <string name="edit_prefijo_ventanaDatosUsuario">+34</string>
+    <string name="txt_tituloNumero_ventanaDatosUsuario">NUMERO</string>
+    <string name="edit_numero_ventanaDatosUsuario">600600600</string>
+    <string name="txt_tituloFecha_ventanaDatosUsuario">FECHA NACIMIENTO</string>
+    <string name="edit_fecha_ventanaDatosUsuario">06 / 05 / 2020</string>
+    <string name="txt_tituloDescripcion_ventanaDatosUsuario">DESCRIPCION</string>
+    <string name="edit_descripcion_ventanaDatosUsuario">Sobre mi …</string>
+    <string name="bt_guardarCambios_ventanaDatosUsuario">Guardar cambios</string>
+    <string name="bt_cambiarContrasena_ventanaDatosUsuario">Cambiar contraseña</string>
+    <string name="bt_eliminarCuenta_ventanaDatosUsuario">Borrar cuenta</string>
+    <!-- *********************************** VENTANA AGREGAR VEHICULO ***********************************-->
+    <string name="spinner_datos_gasolina_ventanaAgregarVehiculo">Gasolina</string>
+    <string name="spinner_datos_diesel_ventanaAgregarVehiculo">Diesel</string>
+    <string name="spinner_datos_hibrido_ventanaAgregarVehiculo">Híbrido</string>
+    <string name="spinner_datos_electrico_ventanaAgregarVehiculo">Electrico</string>
+    <string name="colorPicker_preguntaTitulo_ventanaAgregarVehiculo">¿De que color es?</string>
+    <string name="txt_errorMatricula_Formato_ventanaAgregarVehiculo">Matricula no valida.</string>
+    <string name="txt_agregadoVehiculo_Toast_ventanaAgregarVehiculo">Registro realizado con exito.</string>
+    <string name="txt_cardViewTitulo_ventanaAgregarVehiculo">Agregar vehiculo</string>
+    <string name="txt_tituloMatricula_ventanaAgregarVehiculo">MATRICULA</string>
+    <string name="edit_matricula_ventanaAgregarVehiculo">Matricula</string>
+    <string name="txt_tituloMarca_ventanaAgregarVehiculo">MARCA</string>
+    <string name="edit_marca_ventanaAgregarVehiculo">Marca</string>
+    <string name="txt_tituloModelo_ventanaAgregarVehiculo">MODELO</string>
+    <string name="edit_modelo_ventanaAgregarVehiculo">Modelo</string>
+    <string name="txt_tituloTipoCombustible_ventanaAgregarVehiculo">TIPO DE COMBUSTIBLE</string>
+    <string name="txt_tituloColor_ventanaAgregarVehiculo">COLOR DEL VEHÍCULO</string>
+    <string name="bt_seleccionarColor_ventanaAgregarVehiculo">SELECCIONAR</string>
+    <!-- *********************************** VENTANA DATOS VEHICULO ***********************************-->
+    <string name="spinner_datos_gasolina_ventanaDatosVehiculo">Gasolina</string>
+    <string name="spinner_datos_diesel_ventanaDatosVehiculo">Diesel</string>
+    <string name="spinner_datos_hibrido_ventanaDatosVehiculo">Híbrido</string>
+    <string name="spinner_datos_electrico_ventanaDatosVehiculo">Electrico</string>
+    <string name="colorPicker_preguntaTitulo_ventanaDatosVehiculo">¿De que color es?</string>
+    <string name="bt_añadirVehiculo_ventanaDatosVehiculo">Añadir</string>
+    <string name="txt_borradoVehiculo_Toast_ventanaDatosVehiculo">Borrado realizado con exito.</string>
+    <string name="txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo">Actualizacion realizada con exito.</string>
+    <string name="txt_vacio_ventanaDatosVehiculo">Esto se encuentra algo vacio ...</string>
+    <string name="txt_tituloMatricula_ventanaDatosVehiculo">MATRICULA</string>
+    <string name="edit_matricula_ventanaDatosVehiculo">Matricula</string>
+    <string name="txt_tituloMarca_ventanaDatosVehiculo">MARCA</string>
+    <string name="edit_marca_ventanaDatosVehiculo">Marca</string>
+    <string name="txt_tituloModelo_ventanaDatosVehiculo">MODELO</string>
+    <string name="edit_modelo_ventanaDatosVehiculo">Modelo</string>
+    <string name="txt_tituloTipoCombustible_ventanaDatosVehiculo">TIPO DE COMBUSTIBLE</string>
+    <string name="txt_tituloColor_ventanaDatosVehiculo">COLOR DEL VEHÍCULO</string>
+    <string name="bt_seleccionarColor_ventanaDatosVehiculo">SELECCIONAR</string>
+
 
 </resources>

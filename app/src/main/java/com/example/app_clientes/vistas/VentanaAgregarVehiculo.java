@@ -1,5 +1,6 @@
+//Indicamos a que paquete pertenece esta clase:
 package com.example.app_clientes.vistas;
-
+//Importamos los siguientes paquetes:
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -17,32 +18,21 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
-import com.example.app_clientes.pojos.Usuario;
 import com.example.app_clientes.pojos.Vehiculo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import petrov.kristiyan.colorpicker.ColorPicker;
 import retrofit2.Call;
@@ -50,12 +40,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 //Clase que contiene toda la logica y conexion con la ventana de registrar vehiculo de la app:
 public class VentanaAgregarVehiculo extends AppCompatActivity implements View.OnClickListener, TextWatcher, AdapterView.OnItemSelectedListener {
     //Variables para comprobacion de formatos:
     private boolean pruebaFormatoMatricula, pruebaFormatoMarca, pruebaFormatoModelo, pruebaCombustible, pruebaColor;
-    //Atributos de la clase:
+    //Atributos XML:
     private LinearLayout linearLayoutSpinnerCombustible;
     private EditText editTextMatricula, editTextMarca, editTextModelo;
     private TextView txtErrorMatricula, txtErrorMarca, txtErrorModelo;
@@ -63,6 +52,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
     private EditText btSeleccionarColor;
     private CircleImageView imgViewCoche,imgViewColorCoche;
     private ImageView btFlechaAtras, btConfirmarRegistro;
+    //Atributos de la clase:
     private final ArrayList<String> colores = new ArrayList<>();
     private String colorSeleccionado;
     private String uriFotoCoche;
@@ -71,21 +61,22 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
     private Uri uriImagenEndispositivo;
     private String ID_USUARIO;
     private static final int GALERY_INTENT = 1;
-    //Metodo onCreate encargado de crear la actividad
+    //Metodo onCreate encargado de crear la actividad:
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Llamamos al superconstructor y conectamos el XML del login:
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_vehiculo);
-        //Inicializamos variables booleanas de prueba
+        //Inicializamos variables booleanas de prueba:
         pruebaFormatoMatricula=false;
         pruebaFormatoMarca=false;
         pruebaFormatoModelo=false;
         pruebaCombustible=true;
         pruebaColor=true;
         //Asociamos el id del usuario en sesion a la siguiente variable
-        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
         colorSeleccionado="#07a0c3";
-        //Vinculamos los atributos de la clase:
+        //Asociamos los elementos XML a los atributos:
         linearLayoutSpinnerCombustible=findViewById(R.id.linearLayoutSpinnerTipoCombustibleAgregarVehiculo);
         editTextMatricula = findViewById(R.id.editTextMatriculaAgregarVehiculo);
         editTextMarca = findViewById(R.id.editTextMarcaAgregarVehiculo);
@@ -110,42 +101,42 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
         editTextMatricula.addTextChangedListener(this);
         editTextMarca.addTextChangedListener(this);
         editTextModelo.addTextChangedListener(this);
-        //Inatancia el objeto de tipo storageReference
+        //Instancia el objeto de tipo storageReference:
         storageReference = FirebaseStorage.getInstance().getReference();
-        //Animaciones
+        //Animaciones tipo scale despues de que todoo se haya realizado:
         txtErrorModelo.post(new Runnable() {
             @Override
             public void run() {
-                //Conjuntos de animators
+                //Declaramos un animatorSet para poder luego ejecutar un conjunto de animaciones a la vez:
                 AnimatorSet animatorSetEscale = new AnimatorSet();
-                //Animacion para el linear layout spinner combustible
+                //Animacion para el linear layout spinner combustible:
                 ObjectAnimator scaleDownX_LayoutSpinnerCombustible = ObjectAnimator.ofFloat(linearLayoutSpinnerCombustible, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_LayoutSpinnerCombustible = ObjectAnimator.ofFloat(linearLayoutSpinnerCombustible, "scaleY", 0.0f, 1.0f);
-                //Animacion para el im coche
+                //Animacion para el im coche:
                 ObjectAnimator scaleDownX_ImCoche = ObjectAnimator.ofFloat(imgViewCoche, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_ImCoche = ObjectAnimator.ofFloat(imgViewCoche, "scaleY", 0.0f, 1.0f);
-                //Animacion para el im color
+                //Animacion para el im color:
                 ObjectAnimator scaleDownX_ImColor = ObjectAnimator.ofFloat(imgViewColorCoche, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_ImColor = ObjectAnimator.ofFloat(imgViewColorCoche, "scaleY", 0.0f, 1.0f);
-                //Animacion para el editext matricula
+                //Animacion para el editext matricula:
                 ObjectAnimator scaleDownX_TxtMatricula = ObjectAnimator.ofFloat(editTextMatricula, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_TxtMatricula = ObjectAnimator.ofFloat(editTextMatricula, "scaleY", 0.0f, 1.0f);
-                //Animacion para el editext marca
+                //Animacion para el editext marca:
                 ObjectAnimator scaleDownX_TxtMarca = ObjectAnimator.ofFloat(editTextMarca, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_TxtMarca = ObjectAnimator.ofFloat(editTextMarca, "scaleY", 0.0f, 1.0f);
-                //Animacion para el edittext modelo
+                //Animacion para el edittext modelo:
                 ObjectAnimator scaleDownX_TxtModelo = ObjectAnimator.ofFloat(editTextModelo, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_TxtModelo = ObjectAnimator.ofFloat(editTextModelo, "scaleY", 0.0f, 1.0f);
-                //Animacion para el spinner tipo combustible
+                //Animacion para el spinner tipo combustible:
                 ObjectAnimator scaleDownX_SpinnerCombustible = ObjectAnimator.ofFloat(spinnerTipoCombustible, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_SpinnerCombustible = ObjectAnimator.ofFloat(spinnerTipoCombustible, "scaleY", 0.0f, 1.0f);
-                //Animacion para el bt selecionar color
+                //Animacion para el bt selecionar color:
                 ObjectAnimator scaleDownX_BtSeleccionarColor = ObjectAnimator.ofFloat(btSeleccionarColor, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_BtSeleccionarColor = ObjectAnimator.ofFloat(btSeleccionarColor, "scaleY", 0.0f, 1.0f);
-                //Animacion para el bt agregar vehiculo
+                //Animacion para el bt agregar vehiculo:
                 ObjectAnimator scaleDownX_BtConfirmarRegistro = ObjectAnimator.ofFloat(btConfirmarRegistro, "scaleX", 0.0f, 0.5f);
                 ObjectAnimator scaleDownY_BtConfirmarRegistro = ObjectAnimator.ofFloat(btConfirmarRegistro, "scaleY", 0.0f, 0.5f);
-                //Configuramos los animatorsets
+                //Configuramos el animatorSet, como se tienen que reproducir las animaciones, el tiempo que duran, que clase de interpolador utilizan y la lanzamos:
                 animatorSetEscale.play(scaleDownX_ImCoche).with(scaleDownY_ImCoche)
                         .with(scaleDownX_ImColor).with(scaleDownY_ImColor)
                         .with(scaleDownX_TxtMatricula).with(scaleDownY_TxtMatricula)
@@ -155,12 +146,12 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                         .with(scaleDownX_SpinnerCombustible).with(scaleDownY_SpinnerCombustible)
                         .with(scaleDownX_BtSeleccionarColor).with(scaleDownY_BtSeleccionarColor)
                         .with(scaleDownX_BtConfirmarRegistro).with(scaleDownY_BtConfirmarRegistro);
-                animatorSetEscale.setDuration(550);
+                animatorSetEscale.setDuration(Biblioteca.tAnimacionesScaleInicial);
                 animatorSetEscale.setInterpolator(new AccelerateDecelerateInterpolator());
                 animatorSetEscale.start();
             }
         });
-        btConfirmarRegistro.setOnClickListener(new View.OnClickListener() {
+        /*btConfirmarRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uriParaElInsert = Long.toString(System.currentTimeMillis());
@@ -197,27 +188,27 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                     }
                 });
             }
-        });
+        });*/
     }
-    //Inicializa el spinner de vehiculos
+    //Inicializa el spinner de vehiculos:
     private void inicializacionSpinnerCombustible() {
-        // Inicializamos los valores que puede obtener el spinner combustible
-        String[] combustibles = new String[]{"Gasolina", "Diesel", "Híbrido", "Electrico"};
-        // Inicialimos el adapter y lo asociamos al spinner.
+        //Inicializamos los valores que puede obtener el spinner combustible:
+        String[] combustibles = new String[]{getText(R.string.spinner_datos_gasolina_ventanaAgregarVehiculo).toString(), getText(R.string.spinner_datos_diesel_ventanaAgregarVehiculo).toString(), getText(R.string.spinner_datos_hibrido_ventanaAgregarVehiculo).toString(), getText(R.string.spinner_datos_electrico_ventanaAgregarVehiculo).toString()};
+        //Inicialimos el adapter y lo asociamos al spinner:
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,R.layout.color_spinner,combustibles);
         spinnerArrayAdapter.setDropDownViewResource(R.layout.color_spinner);
         spinnerTipoCombustible.setAdapter(spinnerArrayAdapter);
     }
-    //Inicializa el ColorPiker del color del vehiculo.
+    //Inicializa el ColorPiker del color del vehiculo:
     public void colorPiker() {
         ColorPicker colorPicker = new ColorPicker(this);
-        colorPicker.setTitle("¿De que color es?");
+        colorPicker.setTitle(getText(R.string.colorPicker_preguntaTitulo_ventanaAgregarVehiculo).toString());
         colores.clear();
-        //Añadimos los colores a nuestra coleccion
+        //Añadimos los colores a nuestra coleccion:
         colores.add("#000000");colores.add("#FFFFFF");colores.add("#616161");colores.add("#C8C8C8");colores.add("#7A0000");colores.add("#E70000");colores.add("#011474");
         colores.add("#20D2F6");colores.add("#01742E");colores.add("#00BA27");colores.add("#8E6D3D");colores.add("#F5C886");colores.add("#F17C00");colores.add("#E7E300");
         colores.add("#FFA3F8");
-        //Establecemos los colores , definimos los botones redondos y en 5 columnas, y le asociamos un listener a ese color y lo mostramos
+        //Establecemos los colores , definimos los botones redondos y en 5 columnas, y le asociamos un listener a ese color y lo mostramos:
         colorPicker.setColors(colores).setColumns(5).setRoundColorButton(true).setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
             @Override
             public void onChooseColor(int position, int color) {
@@ -230,13 +221,13 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             public void onCancel() {}
         }).show();
     }
-    //Abre la galaeria de imagenes
+    //Abre la galeria de imagenes:
     public void abrirGaleria(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,GALERY_INTENT);
     }
-    //Coge la direccion de firebase
+    //Coge la direccion de firebase:
     public void cargarImagenVehiculo() {
         //Instancia el objeto de tipo storageReference
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -255,41 +246,42 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             }
         });
     }
-    //Metodo de la interfaz View.OnClickListener
+    //Metodo de la interfaz View.OnClickListener:
     @Override
     public void onClick(View v) {
-        //Segun el elemento pulsado
+        //Segun el elemento pulsado:
         if (v.equals(imgViewCoche)){abrirGaleria();}
         else if (v.equals(btSeleccionarColor)){colorPiker();}
         else if(v.equals(btFlechaAtras)){onBackPressed();}
         else if (v.equals(btConfirmarRegistro)){
-            //Variables booleanas
-            boolean matricula=true, marca=true, modelo=true, combustible=true, color=true;
+            //Variables booleanas para controlar el valor de los campos a rellenar:
+            boolean pbMatricula=true, pbMarca=true, pbModelo=true, pbCombustible=true, pbColor=true;
             //Antes de hacer la peticion al servidor realizamos las siguientes comprobaciones:
             //Control matricula:
             String auxMatricula=editTextMatricula.getText().toString();
             auxMatricula=auxMatricula.replaceAll("\\s","").toUpperCase();
+            //Si de longitus es 7 y es numerica hasta el 4 caracter y despues son letras:
             if(auxMatricula.length()==7) {
                 try {
                     Integer.parseInt(auxMatricula.substring(0, 4));
-                    for(int i = 4 ; i < auxMatricula.length() && matricula ; i++ ) {
+                    for(int i = 4 ; i < auxMatricula.length() && pbMatricula ; i++ ) {
                         if(auxMatricula.charAt(i)<'A'||auxMatricula.charAt(i)>'Z') {
-                            matricula=false;
+                            pbMatricula=false;
                         }
                     }
                 }catch (NumberFormatException n){
-                    matricula=false;
+                    pbMatricula=false;
                 }
             }else {
-                matricula=false;
+                pbMatricula=false;
             }
-            if (matricula){
+            if (pbMatricula){
                 txtErrorMatricula.setVisibility(View.GONE);
-                txtErrorMatricula.setText("Error");
+                txtErrorMatricula.setText("");
                 editTextMatricula.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
             }
             else{
-                txtErrorMatricula.setText("Matricula no valida.");
+                txtErrorMatricula.setText(getText(R.string.txt_errorMatricula_Formato_ventanaAgregarVehiculo));
                 txtErrorMatricula.setVisibility(View.VISIBLE);
                 editTextMatricula.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
             }
@@ -302,71 +294,42 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             //Control de color de momento ninguno mas:
 
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
-            if(matricula&&marca&&modelo&&color&&combustible){
-                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.56.1:8080/").addConverterFactory(GsonConverterFactory.create()).build();
-                //Vinculamos el cliente con la interfaz.
-                //En esa interfaz se definen los metodos y los verbos que usan
-                //Definimos las peticiones que va a poder hacer segun las implementadas en la interfaz que se indica
+            if(pbMatricula&&pbMarca&&pbModelo&&pbColor&&pbCombustible){
+                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                //Vinculamos el cliente con la interfaz:
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
                 //Creamos una peticion para registrar un vehiculo con el valor de los editexts y demas:
-                String modeloAux=editTextModelo.getText().toString().trim();
-                StringBuilder auxModelo= new StringBuilder();
-                for(int i=0,contEspacios=0;i<modeloAux.length();i++){
-                    if(modeloAux.charAt(i)!=' '){
-                        auxModelo.append(modeloAux.charAt(i));
-                        contEspacios=0;
-                    }else{
-                        if(contEspacios==0){
-                            auxModelo.append(modeloAux.charAt(i));
-                        }
-                        contEspacios++;
-                    }
-                }
-                modeloAux= auxModelo.toString();
-                String marcaAux=editTextMarca.getText().toString().trim();
-                StringBuilder auxMarca= new StringBuilder();
-                for(int i=0,contEspacios=0;i<marcaAux.length();i++){
-                    if(marcaAux.charAt(i)!=' '){
-                        auxMarca.append(marcaAux.charAt(i));
-                        contEspacios=0;
-                    }else{
-                        if(contEspacios==0){
-                            auxMarca.append(marcaAux.charAt(i));
-                        }
-                        contEspacios++;
-                    }
-                }
-                marcaAux= auxMarca.toString();
-                Map<String, String> infoMap = new HashMap<String, String>();
-                infoMap.put("idUsuario", VentanaLogin.usuarioSesion.getIdusuario().toString());
+                String modeloAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
+                String marcaAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                Map<String, String> infoMap = new HashMap<>();
+                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
                 infoMap.put("matricula", editTextMatricula.getText().toString().replaceAll("\\s","").toUpperCase());
-                infoMap.put("modelo", capitalizaString(modeloAux));
-                infoMap.put("marca", capitalizaString(marcaAux));
+                infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
+                infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
                 infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
                 infoMap.put("color", colorSeleccionado.toUpperCase());
                 Call<Vehiculo> call = peticiones.registrarVehiculo(infoMap);
-                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros
-                // y esperamos a la respuesta
+                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
                 call.enqueue(new Callback<Vehiculo>() {
-                    //Gestionamos la respuesta del servidor
+                    //Gestionamos la respuesta del servidor:
                     @Override
                     public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
-                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error
+                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                         if (!response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                             return;
                         }
-                        //Si el cambio ha sido exitoso volvemos a la actividad anterior
-                        Toast.makeText(getApplicationContext(), "Registro realizado con exito.", Toast.LENGTH_LONG).show();
-                        //Refrescar aqui¿? los datos locoooooooo
+                        //Si el cambio ha sido exitoso volvemos a la actividad anterior:
+                        Toast.makeText(getApplicationContext(), getText(R.string.txt_agregadoVehiculo_Toast_ventanaAgregarVehiculo), Toast.LENGTH_LONG).show();
                         //Con el metodo setResult pasamos el codigo resultado de la operacion, que en este caso es una constante de clase que
-                        //significa OK, y el Intent que contiene la informacion del resultado.
+                        //significa OK, y el Intent que contiene la informacion del resultado, para que en la actividad anterior se recarguen
+                        //los datos del recyclerview de la lista de coches:
                         setResult(RESULT_OK);
-                        //Terminamos con la propia actividad con el siguiente metodo.
+                        //Terminamos con la propia actividad con el siguiente metodo:
                         finish();
                     }
-                    //En caso de que no responda el servidor mostramos mensaje de error
+                    //En caso de que no responda el servidor mostramos mensaje de error:
                     @Override
                     public void onFailure(Call<Vehiculo> call, Throwable t) {
                         Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
@@ -375,90 +338,52 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             }
         }
     }
-    //Metodos para los editext para cuando cambia su contenido
-    //Comprobacion de que los campos no esten vacios y tengan un formato correcto antes de poder intentar iniciar sesion:
+    //Metodo afterTextChanged implementado de la interfaz TextWatcher (cuando cambie el texto se ejecutara):
     @Override
     public void afterTextChanged(Editable s) {
-        //Boolean prueba de que el estado anterior era true
+        //Boolean para comprobar que estado tiene antes de realizar pruebas:
         boolean anterior=false;
         if(pruebaFormatoMatricula&&pruebaFormatoMarca&&pruebaFormatoModelo&&pruebaCombustible&&pruebaColor){anterior=true;}
         //Si el texto de matricula ha cambiado:
         if(s==editTextMatricula.getEditableText()){
+            //Limpiamos de espacios y si la matricula no es cadena vacia y tiene longitud de 7 caracteres es valida de formato:
             String matricula=s.toString().toUpperCase().replaceAll("\\s","");
-            if(!matricula.equals("")&&matricula.length()==7){
-                pruebaFormatoMatricula=true;
-            }else{
-                pruebaFormatoMatricula=false;
-            }
+            pruebaFormatoMatricula= !matricula.equals("") && matricula.length() == 7;
         }
         //Si el texto de marca ha cambiado:
         else if (s==editTextMarca.getEditableText()){
-            //Limpiamos espacios multiples
-            String marca=s.toString().trim();
-            StringBuilder aux= new StringBuilder();
-            for(int i=0,contEspacios=0;i<marca.length();i++){
-                if(marca.charAt(i)!=' '){
-                    aux.append(marca.charAt(i));
-                    contEspacios=0;
-                }else{
-                    if(contEspacios==0){
-                        aux.append(marca.charAt(i));
-                    }
-                    contEspacios++;
-                }
-            }
-            marca= aux.toString();
-            if(!marca.equals("")&&marca.length()>=1&&marca.length()<=30){
-                pruebaFormatoMarca=true;
-            }else{
-                pruebaFormatoMarca=false;
-            }
+            //Limpiamos espacios multiples y si es distinto de cadena vacia y esta entre 1 a los 30 caracteres es valido de formato:
+            String marca=Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
+            pruebaFormatoMarca= !marca.equals("") && marca.length() >= 1 && marca.length() <= 30;
         }
         //Si el texto de modelo ha cambiado:
         else if (s==editTextModelo.getEditableText()){
-            //Limpiamos espacios multiples
-            String modelo=s.toString().trim();
-            StringBuilder aux= new StringBuilder();
-            for(int i=0,contEspacios=0;i<modelo.length();i++){
-                if(modelo.charAt(i)!=' '){
-                    aux.append(modelo.charAt(i));
-                    contEspacios=0;
-                }else{
-                    if(contEspacios==0){
-                        aux.append(modelo.charAt(i));
-                    }
-                    contEspacios++;
-                }
-            }
-            modelo= aux.toString();
-            if(!modelo.equals("")&&modelo.length()>=1&&modelo.length()<=30){
-                pruebaFormatoModelo=true;
-            }else{
-                pruebaFormatoModelo=false;
-            }
+            //Limpiamos espacios multiples y si es distinto de cadena vacia y esta entre 1 a los 30 caracteres es valido de formato:
+            String modelo=Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
+            pruebaFormatoModelo= !modelo.equals("") && modelo.length() >= 1 && modelo.length() <= 30;
         }
-        //Si las 5 pruebas de formato son correctas pasamos a liberar el boton de agregar vehiculo:
+        //Si las 5 pruebas de formato son correctas pasamos a habilitar el boton de agregar vehiculo:
         if (pruebaFormatoMatricula&&pruebaFormatoMarca&&pruebaFormatoModelo&&pruebaColor&&pruebaCombustible&&!anterior){
-            //Conjunto de animator
+            //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
-            //Animacion para el bt agregar vehiculo
+            //Animacion para el bt agregar vehiculo:
             ObjectAnimator scaleDownX_BtConfirmarRegistro = ObjectAnimator.ofFloat(btConfirmarRegistro, "scaleX", 0.5f, 1.0f);
             ObjectAnimator scaleDownY_BtConfirmarRegistro = ObjectAnimator.ofFloat(btConfirmarRegistro, "scaleY", 0.5f, 1.0f);
             animator.play(scaleDownX_BtConfirmarRegistro).with(scaleDownY_BtConfirmarRegistro);
-            animator.setDuration(200);
+            animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
             animator.start();
             //Habilitamos el boton agregar vehiculo:
             btConfirmarRegistro.setEnabled(true);
             btConfirmarRegistro.setOnClickListener(this);
             btConfirmarRegistro.setColorFilter(getResources().getColor(R.color.colorPrimary));
         }else if ((!pruebaFormatoMatricula||!pruebaFormatoMarca||!pruebaFormatoModelo||!pruebaColor||!pruebaCombustible)&&anterior){
-            //Conjunto de animator
+            //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
-            //Animacion para el bt agregar vehiculo
+            //Animacion para el bt agregar vehiculo:
             ObjectAnimator scaleDownX_BtConfirmarRegistro = ObjectAnimator.ofFloat(btConfirmarRegistro, "scaleX", 1.0f, 0.5f);
             ObjectAnimator scaleDownY_BtConfirmarRegistro = ObjectAnimator.ofFloat(btConfirmarRegistro, "scaleY", 1.0f, 0.5f);
             animator.play(scaleDownX_BtConfirmarRegistro).with(scaleDownY_BtConfirmarRegistro);
-            animator.setDuration(200);
+            animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
             animator.start();
             //Deshabilitamos el boton agregar vehiculo:
             btConfirmarRegistro.setEnabled(false);
@@ -470,14 +395,14 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {}
-    //Metodos para la interfaz de los spinners
+    //Metodos de la interfaz de los spinners:
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinnerTipoCombustible.getSelectedItem();
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
-    //Coge la direccion del dispositivo
+    //Coge la direccion del dispositivo:
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -487,17 +412,5 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             //Cambia la imagen desde el dispositivo
             Glide.with(getApplicationContext()).load(uriImagenEndispositivo).into(imgViewCoche);
         }
-    }
-    //EXTRACCION DE METODOS
-    public String capitalizaString(String txtOrigen){
-        //Dividimos el string en las palabras segun los caracteres vacios o en blanco
-        String []palabras = txtOrigen.split("\\s+");
-        StringBuilder txtFinal = new StringBuilder();
-        //Bucle para conseguir la primera letra en mayuscula
-        for(String palabra : palabras){
-            txtFinal.append(palabra.substring(0,1).toUpperCase().concat( palabra.substring(1,palabra.length()).toLowerCase()).concat(" "));
-        }
-        //Antes de devolverlo realizamos un trim por si ha metido espacios a la derecha de la ultima palabra
-        return txtFinal.toString().trim();
     }
 }

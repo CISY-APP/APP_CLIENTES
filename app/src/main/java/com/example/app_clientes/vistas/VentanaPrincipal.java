@@ -25,6 +25,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.pojos.Usuario;
 import com.example.app_clientes.R;
@@ -63,7 +64,7 @@ public class VentanaPrincipal extends AppCompatActivity{
         createNotificationChannel();
 
 
-        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
