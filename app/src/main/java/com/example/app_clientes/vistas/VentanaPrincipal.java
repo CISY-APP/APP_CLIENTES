@@ -33,9 +33,17 @@ import com.example.app_clientes.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -53,10 +61,14 @@ public class VentanaPrincipal extends AppCompatActivity{
     private static final int GALERY_INTENT = 1;
     private CircleImageView IVImagenUsuarioMenuLateral;
     private TextView nombreUsuario;
+    private TextView my_counter;
     private TextView correoUsuario;
     private String ID_USUARIO;
     private final String CHANNEL_ID = "1";
     public static Usuario usuario;
+
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference chatReference;
 
     public VentanaPrincipal() {
     }
@@ -99,6 +111,29 @@ public class VentanaPrincipal extends AppCompatActivity{
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        chatReference = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO);
+        chatReference.child("mensajesSinLeer").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                TextView myCounter = findViewById(R.id.my_counter);
+                if (myCounter != null) {
+                    myCounter.setText(dataSnapshot.getValue()+"");
+                    Toast.makeText(getApplicationContext(),myCounter.getText()+"", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        return super.onPrepareOptionsMenu(menu);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -18,6 +18,7 @@ import com.example.app_clientes.pojos.Conversacion;
 import com.example.app_clientes.R;
 import com.example.app_clientes.vistas.VentanaChatIndividual;
 
+import com.example.app_clientes.vistas.VentanaLogin;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +42,7 @@ public class MensajesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mensajes, container, false);
 
-        ID_USUARIO = cargarCredencialesIdUsuario();
+        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
 
         //Asociamos los atributos con los objeto del layoud para poder usarlos
         //INSTANCIAMOS Y ASOCIAMOS ELEMENTOS NECESARIOS PARA EL CORRECTO FUNCIONAMIENTO DEL RECYCLERVIEW
@@ -70,7 +71,7 @@ public class MensajesFragment extends Fragment {
         super.onResume();
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO); //Sala de chat (nombre)
+        databaseReference1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO) ; //Sala de chat (nombre)
         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -95,8 +96,4 @@ public class MensajesFragment extends Fragment {
         return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
     }
 
-    private String cargarCredencialesIdUsuario(){
-        SharedPreferences credenciales = getContext().getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        return credenciales.getString("idUsuario","0");
-    }
 }

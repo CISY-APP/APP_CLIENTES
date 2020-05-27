@@ -44,7 +44,7 @@ public class VentanaPublicarViaje extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_publicar_viaje);
 
-        ID_USUARIO = cargarCredencialesIdUsuario();
+        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
 
         ETOrigenViaje = findViewById(R.id.ETOrigenViaje);
         ETDestinoViaje = findViewById(R.id.ETDestinoViaje);
@@ -194,11 +194,6 @@ public class VentanaPublicarViaje extends AppCompatActivity {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,R.layout.color_spinner,numeroPlazas);
         spinnerArrayAdapter.setDropDownViewResource(R.layout.color_spinner);
         spinner_numero_plazas.setAdapter(spinnerArrayAdapter);
-    }
-
-    private String cargarCredencialesIdUsuario(){
-        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        return credenciales.getString("idUsuario","0");
     }
 
     /*@RequiresApi(api = Build.VERSION_CODES.N)

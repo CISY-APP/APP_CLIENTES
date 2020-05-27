@@ -71,7 +71,11 @@ public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.Ex
         holder.TVNombreUsuario.setText(conversacionArrayListList.get(position).getId_usuario());
         holder.TVUltimoMensaje.setText(conversacionArrayListList.get(position).getUltimoMensaje());
         holder.TVHoraUltimoMensaje.setText(conversacionArrayListList.get(position).getHoraUltimoMensaje());
-        Glide.with(c).load(conversacionArrayListList.get(position).getFotoUsuarioContrario()).into(holder.CIUsuarioCoversacion);
+        if((conversacionArrayListList.get(position).getFotoUsuarioContrario().equals(""))){
+            Glide.with(c).load(R.drawable.user).into(holder.CIUsuarioCoversacion);
+        }else{
+            Glide.with(c).load(conversacionArrayListList.get(position).getFotoUsuarioContrario()).into(holder.CIUsuarioCoversacion);
+        }
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem

@@ -23,6 +23,7 @@ import com.example.app_clientes.adapter.MiAdapterTusViajesDisfrutados;
 import com.example.app_clientes.pojos.Usuario;
 import com.example.app_clientes.pojos.Viaje;
 import com.example.app_clientes.vistas.VentanaChatIndividual;
+import com.example.app_clientes.vistas.VentanaLogin;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -60,7 +61,7 @@ public class TusViajesDisfrutadosFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tusviajesdisfrutados, container, false);
 
-        ID_USUARIO = cargarCredencialesIdUsuario();
+        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
 
         recyclerViewTusViajes = view.findViewById(R.id.RVViajesDisfrutados);
         TVDescripcionUsuarioViajeDisfrutado = view.findViewById(R.id.TVDescripcionUsuarioViajeDisfrutado);
@@ -135,7 +136,11 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                 null, null, null, null,
                 null, null, null));
         misUsuariosList.add(new Usuario("Pilar", "Garcia Romero", null, null, null,
-                null, null, utilDate, "https://www.xlsemanal.com/wp-content/uploads/sites/3/2019/12/edward-norton-no-te-puedes-fiar-de-las-personas-que-fueron-felices-cuanto-tenian-14-anso.jpg", null, "Hola me llamo Pilar",
+                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F2?alt=media&token=7f07bc9d-4892-41c9-8211-35e3bc835a48", null, "Hola me llamo Pilar",
+                null, null, null, null,
+                null, null, null));
+        misUsuariosList.add(new Usuario("Pilar", "Garcia Romero", null, null, null,
+                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F3?alt=media&token=bd212b33-cfb4-4db9-9a3a-879a41269379", null, "Hola me llamo Pilar",
                 null, null, null, null,
                 null, null, null));
     }
@@ -169,14 +174,10 @@ public class TusViajesDisfrutadosFragment extends Fragment {
         misViajesList.add(new Viaje(null,null, "Alcorcon","Fuenlabrada", null,
                 null, 3, utilDate2, utilDate2, null,
                 null));
+        misViajesList.add(new Viaje(null,null, "Alcorcon","Fuenlabrada", null,
+                null, 3, utilDate2, utilDate2, null,
+                null));
     }
-
-    private String cargarCredencialesIdUsuario(){
-        SharedPreferences credenciales = getContext().getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        return credenciales.getString("idUsuario","0");
-    }
-
-
 }
 
 

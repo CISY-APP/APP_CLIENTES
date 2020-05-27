@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.app_clientes.adapter.MiApdapterChat;
 import com.example.app_clientes.pojos.Mensaje;
 import com.example.app_clientes.R;
+import com.example.app_clientes.vistas.VentanaLogin;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -60,7 +61,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        ID_USUARIO = cargarCredencialesIdUsuario();
+        ID_USUARIO =  VentanaLogin.usuarioSesion.getIdusuario().toString();
 
         cargarImagenUsuario();
 
@@ -79,7 +80,7 @@ public class ChatFragment extends Fragment {
         });
 
         //esto debera llegar en un BUNDLE
-        TVNombreChat.setText("Usuario 1");
+        TVNombreChat.setText( VentanaLogin.usuarioSesion.getNombre());
 
         //Implementacion de firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

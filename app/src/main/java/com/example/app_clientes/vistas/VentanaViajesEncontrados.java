@@ -41,7 +41,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_viajes_encontrados);
 
-        ID_USUARIO = cargarCredencialesIdUsuario();
+        ID_USUARIO =  VentanaLogin.usuarioSesion.getIdusuario().toString();
 
         ETOrigen = findViewById(R.id.TVOrigenViajesEncontrados);
         ETDestino = findViewById(R.id.TVDestinoViajesEncontrados);
@@ -112,11 +112,6 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         String[] ids = new String[]{user1, user2};
         Arrays.sort(ids);
         return ids[0] + "-" + ids[1];
-    }
-
-    private String cargarCredencialesIdUsuario(){
-        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        return credenciales.getString("idUsuario","0");
     }
 
 }

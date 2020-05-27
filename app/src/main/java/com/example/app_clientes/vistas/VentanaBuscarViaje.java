@@ -34,7 +34,7 @@ public class VentanaBuscarViaje extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar_viaje);
 
-        ID_USUARIO = cargarCredencialesIdUsuario();
+        ID_USUARIO =  VentanaLogin.usuarioSesion.getIdusuario().toString();
 
         ETOrigenBuscarViaje = findViewById(R.id.ETOrigenBuscarViaje);
         ETDestinoBuscarViaje = findViewById(R.id.ETDestinoBuscarViaje);
@@ -118,9 +118,5 @@ public class VentanaBuscarViaje extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    private String cargarCredencialesIdUsuario(){
-        SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        return credenciales.getString("idUsuario","0");
-    }
 }
 
