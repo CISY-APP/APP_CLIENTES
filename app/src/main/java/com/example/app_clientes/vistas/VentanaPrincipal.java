@@ -34,10 +34,13 @@ import com.example.app_clientes.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -110,21 +113,50 @@ public class VentanaPrincipal extends AppCompatActivity{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-
-
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+//        firebaseDatabase = FirebaseDatabase.getInstance();
+//        chatReference = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO);
+//        chatReference.child("mensajesSinLeer").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                TextView myCounter = findViewById(R.id.my_counter);
+//                if (myCounter != null) {
+//                    myCounter.setText(dataSnapshot.getValue()+"");
+//                    Toast.makeText(getApplicationContext(),myCounter.getText()+"", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
         firebaseDatabase = FirebaseDatabase.getInstance();
-        chatReference = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO);
-        chatReference.child("mensajesSinLeer").addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO);
+
+        ref.orderByChild("mensajesSinLeer").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                TextView myCounter = findViewById(R.id.my_counter);
-                if (myCounter != null) {
-                    myCounter.setText(dataSnapshot.getValue()+"");
-                    Toast.makeText(getApplicationContext(),myCounter.getText()+"", Toast.LENGTH_SHORT).show();
-                }
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.d("Juanan","tupu");
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Log.d("Juanan","tupu");
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
@@ -132,7 +164,6 @@ public class VentanaPrincipal extends AppCompatActivity{
 
             }
         });
-
 
         return super.onPrepareOptionsMenu(menu);
     }

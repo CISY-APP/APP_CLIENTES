@@ -144,6 +144,10 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                 null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F3?alt=media&token=bd212b33-cfb4-4db9-9a3a-879a41269379", null, "Hola me llamo Pilar",
                 null, null, null, null,
                 null, null, null));
+        misUsuariosList.add(new Usuario("aaaaa", "Garcia Romero", null, null, null,
+                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F4?alt=media&token=9493e626-2f59-4ea3-86c5-f2ae43f3ce3a", null, "Hola me llamo Pilar",
+                null, null, null, null,
+                null, null, null));
     }
 
     //CARGA LOS DATOS DE LOS VIAJES QUE EL USUARIO A DISFRUTADO VIAJES
@@ -171,6 +175,9 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                 null));
         misViajesList.add(new Viaje(null,null, "Madrid","Villaverde", null,
                 null, 3, utilDate1, utilDate1, null,
+                null));
+        misViajesList.add(new Viaje(null,null, "Alcorcon","Fuenlabrada", null,
+                null, 3, utilDate2, utilDate2, null,
                 null));
         misViajesList.add(new Viaje(null,null, "Alcorcon","Fuenlabrada", null,
                 null, 3, utilDate2, utilDate2, null,

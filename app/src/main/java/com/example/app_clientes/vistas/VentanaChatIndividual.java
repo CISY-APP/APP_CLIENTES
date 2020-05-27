@@ -33,6 +33,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -94,7 +96,6 @@ public class VentanaChatIndividual extends AppCompatActivity {
         });
 
 
-
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         chatReference = firebaseDatabase.getReference(chatName); //Sala de chat (nombre)
@@ -152,22 +153,47 @@ public class VentanaChatIndividual extends AppCompatActivity {
                 hopperUpdates1.put("ultimoMensaje", ETTXTMensajeChatIndividual.getText().toString());
                 hopperRef1.updateChildren(hopperUpdates);
 
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                chatReference = firebaseDatabase.getReference(chatName); //Sala de chat (nombre)
-                chatReference.addValueEventListener(new ValueEventListener() {
+//                firebaseDatabase = FirebaseDatabase.getInstance();
+//                chatReference = firebaseDatabase.getReference(chatName); //Sala de chat (nombre)
+//                chatReference.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER); //Sala de chat (nombre)
+//                        Map<String, Object> hopperUpdates1 = new HashMap<>();
+//                        hopperUpdates1.put("mensajesSinLeer",dataSnapshot.getChildrenCount());
+//                        hopperRef1.updateChildren(hopperUpdates1);
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+
+                chatReference = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER).child(chatName).child("mensajesSinLeer");
+                chatReference.runTransaction(new Transaction.Handler() {
+
+                    @NonNull
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER); //Sala de chat (nombre)
-                        Map<String, Object> hopperUpdates1 = new HashMap<>();
-                        hopperUpdates1.put("mensajesSinLeer",dataSnapshot.getChildrenCount());
-                        hopperRef1.updateChildren(hopperUpdates1);
+                    public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                        long value = 0;
+                        if (mutableData.getValue() != null) {
+                            String mensajesSinLeer = (String) mutableData.getValue();
+                            value = Long.parseLong(mensajesSinLeer);
+                        }
+                        value++;
+
+                        String finalValue = Long.toString(value);
+                        mutableData.setValue(finalValue);
+                        return Transaction.success(mutableData);
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
 
                     }
                 });
+
 
                 ETTXTMensajeChatIndividual.setText("");
 
@@ -193,6 +219,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
             }
         });
     }
+
     //Metodo para cargar la imagen del usuario
     public void cargarMiImagen() {
         //Inatancia el objeto de tipo storageReference
@@ -210,6 +237,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
             }
         });
     }
+
     //Metodo para cargar la imagen del usuario
     public void cargarImagenContrario() {
         //Inatancia el objeto de tipo storageReference
@@ -290,9 +318,9 @@ public class VentanaChatIndividual extends AppCompatActivity {
         return ids[0] + "-" + ids[1];
     }
 
-    private String cargarCredencialesIdUsuario(){
+    private String cargarCredencialesIdUsuario() {
         SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        return credenciales.getString("idUsuario","0");
+        return credenciales.getString("idUsuario", "0");
     }
 
 }
