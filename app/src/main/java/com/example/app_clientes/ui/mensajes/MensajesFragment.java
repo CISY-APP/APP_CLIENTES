@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.adapter.MiAdapterMensajes;
 import com.example.app_clientes.pojos.Conversacion;
 import com.example.app_clientes.R;
@@ -42,7 +43,7 @@ public class MensajesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mensajes, container, false);
 
-        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
 
         //Asociamos los atributos con los objeto del layoud para poder usarlos
         //INSTANCIAMOS Y ASOCIAMOS ELEMENTOS NECESARIOS PARA EL CORRECTO FUNCIONAMIENTO DEL RECYCLERVIEW

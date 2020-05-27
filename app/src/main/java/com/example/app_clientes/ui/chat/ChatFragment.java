@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.adapter.MiApdapterChat;
 import com.example.app_clientes.pojos.Mensaje;
 import com.example.app_clientes.R;
@@ -61,7 +62,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        ID_USUARIO =  VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO =  Biblioteca.usuarioSesion.getIdusuario().toString();
 
         cargarImagenUsuario();
 
@@ -80,7 +81,7 @@ public class ChatFragment extends Fragment {
         });
 
         //esto debera llegar en un BUNDLE
-        TVNombreChat.setText( VentanaLogin.usuarioSesion.getNombre());
+        TVNombreChat.setText( Biblioteca.usuarioSesion.getNombre());
 
         //Implementacion de firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
 import com.example.app_clientes.adapter.MiAdapterTusViajesDisfrutados;
 import com.example.app_clientes.pojos.Usuario;
@@ -61,7 +62,7 @@ public class TusViajesDisfrutadosFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tusviajesdisfrutados, container, false);
 
-        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
 
         recyclerViewTusViajes = view.findViewById(R.id.RVViajesDisfrutados);
         TVDescripcionUsuarioViajeDisfrutado = view.findViewById(R.id.TVDescripcionUsuarioViajeDisfrutado);

@@ -14,6 +14,7 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.otros.CalendarioFragment;
 import com.example.app_clientes.otros.HoraFragment;
 import com.example.app_clientes.R;
@@ -34,7 +35,7 @@ public class VentanaBuscarViaje extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buscar_viaje);
 
-        ID_USUARIO =  VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO =  Biblioteca.usuarioSesion.getIdusuario().toString();
 
         ETOrigenBuscarViaje = findViewById(R.id.ETOrigenBuscarViaje);
         ETDestinoBuscarViaje = findViewById(R.id.ETDestinoBuscarViaje);

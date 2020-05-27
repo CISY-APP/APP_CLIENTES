@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.adapter.MiApdapterChat;
 import com.example.app_clientes.pojos.Conversacion;
 import com.example.app_clientes.pojos.Mensaje;
@@ -69,7 +70,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_individual);
 
-        ID_USUARIO = VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
         ID_USUARIO_CONVER = recibirIDUsuarioConver();
 
         chatName = getChatName(ID_USUARIO, ID_USUARIO_CONVER);
@@ -136,7 +137,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
         BTMenajeEnviarChatIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatReference.push().setValue(new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), VentanaLogin.usuarioSesion.getNombre(), ID_USUARIO, getHoraSistema(), uriFotoUsuario));
+                chatReference.push().setValue(new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), Biblioteca.usuarioSesion.getNombre(), ID_USUARIO, getHoraSistema(), uriFotoUsuario));
 
                 DatabaseReference hopperRef = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO).child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates = new HashMap<>();

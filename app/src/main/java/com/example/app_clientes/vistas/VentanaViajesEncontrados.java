@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.adapter.MiAdapterViajesEncontrados;
 import com.example.app_clientes.item.ItemViajesEncontrados;
 import com.example.app_clientes.R;
@@ -41,7 +42,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_viajes_encontrados);
 
-        ID_USUARIO =  VentanaLogin.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO =  Biblioteca.usuarioSesion.getIdusuario().toString();
 
         ETOrigen = findViewById(R.id.TVOrigenViajesEncontrados);
         ETDestino = findViewById(R.id.TVDestinoViajesEncontrados);

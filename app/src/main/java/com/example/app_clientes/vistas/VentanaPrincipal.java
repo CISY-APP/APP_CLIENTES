@@ -92,9 +92,9 @@ public class VentanaPrincipal extends AppCompatActivity{
         NavigationView navigationView = findViewById(R.id.nav_view);
         final View headView = navigationView.getHeaderView(0);
         nombreUsuario = headView.findViewById(R.id.nombreUsuario);
-        nombreUsuario.setText(VentanaLogin.usuarioSesion.getNombre().toString() + " " + VentanaLogin.usuarioSesion.getApellidos().toString());
+        nombreUsuario.setText(Biblioteca.usuarioSesion.getNombre().toString() + " " + Biblioteca.usuarioSesion.getApellidos().toString());
         correoUsuario = headView.findViewById(R.id.correoUsuario);
-        correoUsuario.setText(VentanaLogin.usuarioSesion.getEmail().toString());
+        correoUsuario.setText(Biblioteca.usuarioSesion.getEmail().toString());
         IVImagenUsuarioMenuLateral = headView.findViewById(R.id.IVImagenUsuarioMenuLateral);
         IVImagenUsuarioMenuLateral.setOnClickListener(new OnClickListener() {
             @Override
