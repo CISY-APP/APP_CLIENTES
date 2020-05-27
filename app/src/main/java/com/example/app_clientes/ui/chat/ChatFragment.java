@@ -25,6 +25,7 @@ import com.example.app_clientes.adapter.MiApdapterChat;
 import com.example.app_clientes.pojos.Mensaje;
 import com.example.app_clientes.R;
 import com.example.app_clientes.vistas.VentanaLogin;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -44,7 +45,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class ChatFragment extends Fragment {
 
-    private TextView   TVNombreChat;
+    private TextView TVNombreChat;
     private RecyclerView RVMensajesChat;
     private EditText ETTXTMensaje;
     private CircleImageView fotoPerfil;
@@ -59,10 +60,40 @@ public class ChatFragment extends Fragment {
     private static final int GALERY_INTENT = 1;
     private String ID_USUARIO;
 
+    private ChildEventListener messageSubscription = new ChildEventListener() {
+
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            Mensaje m = dataSnapshot.getValue(Mensaje.class);
+            adapterMensajes.addMensaje(m);
+            setScrollBar();
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        ID_USUARIO =  Biblioteca.usuarioSesion.getIdusuario().toString();
+        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
 
         cargarImagenUsuario();
 
@@ -76,54 +107,29 @@ public class ChatFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
-                startActivityForResult(intent,GALERY_INTENT);
+                startActivityForResult(intent, GALERY_INTENT);
             }
         });
 
         //esto debera llegar en un BUNDLE
-        TVNombreChat.setText( Biblioteca.usuarioSesion.getNombre());
+        TVNombreChat.setText(Biblioteca.usuarioSesion.getNombre());
 
         //Implementacion de firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("CHAT GENERAL"); //Sala de chat (nombre)
-        databaseReference.addChildEventListener(new ChildEventListener() {
 
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Mensaje m = dataSnapshot.getValue(Mensaje.class);
-                adapterMensajes.addMensaje(m);
-                setScrollBar();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        databaseReference.addChildEventListener(messageSubscription);
         adapterMensajes = new MiApdapterChat(getActivity());
         adapterMensajes.setIDUsuario(ID_USUARIO);
-        LinearLayoutManager l= new LinearLayoutManager(getContext());
+        LinearLayoutManager l = new LinearLayoutManager(getContext());
         RVMensajesChat.setLayoutManager(l);
         RVMensajesChat.setAdapter(adapterMensajes);
         BTMenajeEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.push().setValue(new Mensaje(ETTXTMensaje.getText().toString()+"", TVNombreChat.getText().toString()+"", ID_USUARIO, getHoraSistema(), uriFotoUsuario ));
+                databaseReference.push().setValue(
+                        new Mensaje(ETTXTMensaje.getText().toString() + "", TVNombreChat.getText().toString() + "", ID_USUARIO,
+                                getHoraSistema(), uriFotoUsuario));
                 ETTXTMensaje.setText("");
             }
         });
@@ -137,6 +143,13 @@ public class ChatFragment extends Fragment {
         });*/
         return view;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        databaseReference.removeEventListener(messageSubscription);
+    }
+
     //Coge la direccion del dispositivo
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -163,7 +176,8 @@ public class ChatFragment extends Fragment {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT)
+                                    .show();
                         }
                     });
                 }
@@ -173,7 +187,7 @@ public class ChatFragment extends Fragment {
     }
 
     //Metodo para cargar la imagen del usuario
-    public void cargarImagenUsuario(){
+    public void cargarImagenUsuario() {
         //Inatancia el objeto de tipo storageReference
         storageReference = FirebaseStorage.getInstance().getReference();
         //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
@@ -194,8 +208,8 @@ public class ChatFragment extends Fragment {
     }
 
     //Metodo utilizado para que el adparter se arrastre hacia abajo con cada nuevo mensaje
-    private void setScrollBar(){
-        RVMensajesChat.scrollToPosition(adapterMensajes.getItemCount()-1);
+    private void setScrollBar() {
+        RVMensajesChat.scrollToPosition(adapterMensajes.getItemCount() - 1);
     }
 
     //Obtiene la hora del sistema
@@ -205,9 +219,9 @@ public class ChatFragment extends Fragment {
         return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
     }
 
-    private String cargarCredencialesIdUsuario(){
+    private String cargarCredencialesIdUsuario() {
         SharedPreferences credenciales = getContext().getSharedPreferences("Credenciales", Context.MODE_PRIVATE);
-        return credenciales.getString("idUsuario","0");
+        return credenciales.getString("idUsuario", "0");
     }
 
 

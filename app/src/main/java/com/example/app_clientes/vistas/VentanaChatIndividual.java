@@ -67,6 +67,36 @@ public class VentanaChatIndividual extends AppCompatActivity {
     private String ID_USUARIO_CONVER;
     private String chatName;
 
+    private ChildEventListener messageSubscription = new ChildEventListener() {
+
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            Mensaje m = dataSnapshot.getValue(Mensaje.class);
+            adapterMensajes.addMensaje(m);
+            setScrollBar();
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,56 +122,13 @@ public class VentanaChatIndividual extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-                chatReference.removeEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
             }
         });
-
 
         //Implementacion de firebase
-        firebaseDatabase = FirebaseDatabase.getInstance();
         chatReference = firebaseDatabase.getReference(chatName); //Sala de chat (nombre)
-        ChildEventListener childEventListener = chatReference.addChildEventListener(new ChildEventListener() {
-
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Mensaje m = dataSnapshot.getValue(Mensaje.class);
-                adapterMensajes.addMensaje(m);
-                setScrollBar();
-
-                resetMensajeSinLeer(ID_USUARIO, chatName);
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
+        chatReference.addChildEventListener(messageSubscription);
+        resetMensajeSinLeer(ID_USUARIO, chatName);
 
         adapterMensajes = new MiApdapterChat(this);
         adapterMensajes.setIDUsuario(ID_USUARIO);
@@ -151,15 +138,19 @@ public class VentanaChatIndividual extends AppCompatActivity {
         BTMenajeEnviarChatIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatReference.push().setValue(new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), Biblioteca.usuarioSesion.getNombre(), ID_USUARIO, getHoraSistema(), uriFotoUsuario));
+                chatReference.push().setValue(
+                        new Mensaje(ETTXTMensajeChatIndividual.getText().toString(), Biblioteca.usuarioSesion.getNombre(), ID_USUARIO,
+                                getHoraSistema(), uriFotoUsuario));
 
-                DatabaseReference hopperRef = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO).child(chatName); //Sala de chat (nombre)
+                DatabaseReference hopperRef = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO)
+                        .child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates = new HashMap<>();
                 hopperUpdates.put("horaUltimoMensaje", getHoraSistema());
                 hopperUpdates.put("ultimoMensaje", ETTXTMensajeChatIndividual.getText().toString());
                 hopperRef.updateChildren(hopperUpdates);
 
-                DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER).child(chatName); //Sala de chat (nombre)
+                DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER)
+                        .child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates1 = new HashMap<>();
                 hopperUpdates1.put("idConversacion", chatName);
                 hopperUpdates1.put("id_usuario", ID_USUARIO);
@@ -174,11 +165,17 @@ public class VentanaChatIndividual extends AppCompatActivity {
 
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        chatReference.removeEventListener(messageSubscription);
     }
 
     private void resetMensajeSinLeer(String userId, String chatName) {
-        DatabaseReference mensajesSinLeerRef = firebaseDatabase.getReference("USUARIOS").child(userId).child(chatName).child("mensajesSinLeer");
+        DatabaseReference mensajesSinLeerRef = firebaseDatabase.getReference("USUARIOS").child(userId).child(chatName)
+                .child("mensajesSinLeer");
         mensajesSinLeerRef.runTransaction(new Transaction.Handler() {
 
             @NonNull
@@ -333,7 +330,8 @@ public class VentanaChatIndividual extends AppCompatActivity {
         databaseReference1.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_1).child(chatName); //Sala de chat (nombre)
-        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", uriFotoUsuarioContrario));
+        databaseReference2
+                .setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", uriFotoUsuarioContrario));
         databaseReference2.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_2).child(chatName); //Sala de chat (nombre)
