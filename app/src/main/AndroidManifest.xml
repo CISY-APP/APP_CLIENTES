@@ -28,7 +28,9 @@
             android:name=".vistas.VentanaRegistro"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".vistas.VentanaClaveOlvidada" />
-        <activity android:name=".vistas.VentanaPublicarViaje" />
+        <activity
+            android:name=".vistas.VentanaPublicarViaje"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".vistas.VentanaViajePublicado" />
         <activity android:name=".vistas.VentanaViajesEncontrados" />
         <activity android:name=".vistas.VentanaViajeReservado" />

@@ -28,7 +28,7 @@
                 android:id="@+id/textViewTituloDatosPersonalesMisDatos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Datos Personales"
+                android:text="@string/txt_Titulo1_ventanaDatosUsuario"
                 android:textColor="@color/places_ui_default_primary_dark"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -45,7 +45,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:paddingRight="10dp">
+                    android:paddingRight="10dp"
+                    android:paddingEnd="10dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/imageViewUsuarioDatosPersonales"
@@ -81,7 +82,7 @@
                         android:id="@+id/textViewTituloNombreDatosPersonales"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="NOMBRE"
+                        android:text="@string/txt_tituloNombre_ventanaDatosUsuario"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
@@ -98,7 +99,7 @@
                         android:drawableLeft="@drawable/ic_usuario"
                         android:drawablePadding="5dp"
                         android:ems="10"
-                        android:hint="Nombre"
+                        android:hint="@string/edit_nombre_ventanaDatosUsuario"
                         android:padding="8dp"
                         android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
@@ -110,7 +111,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:text="APELLIDOS"
+                        android:text="@string/txt_tituloApellidos_ventanaDatosUsuario"
                         android:textColor="@color/colorPrimary"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />
@@ -127,7 +128,7 @@
                         android:drawableLeft="@drawable/ic_usuario"
                         android:drawablePadding="5dp"
                         android:ems="10"
-                        android:hint="Apellidos"
+                        android:hint="@string/edit_apellidos_ventanaDatosUsuario"
                         android:padding="8dp"
                         android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
@@ -142,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="USUARIO"
+                android:text="@string/txt_tituloUsuario_ventanaDatosUsuario"
                 android:textColor="@color/colorPrimary"
                 android:textSize="10sp"
                 tools:ignore="SmallSp" />
@@ -159,7 +160,7 @@
                 android:drawableLeft="@drawable/ic_email"
                 android:drawablePadding="5dp"
                 android:ems="10"
-                android:hint="Usuario / Correo Electronico"
+                android:hint="@string/edit_usuario_ventanaDatosUsuario"
                 android:padding="8dp"
                 android:singleLine="true"
                 android:textColor="@color/places_ui_default_primary_dark"
@@ -178,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="PREFIJO"
+                    android:text="@string/txt_tituloPrefijo_ventanaDatosUsuario"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -189,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="NÚMERO"
+                    android:text="@string/txt_tituloNumero_ventanaDatosUsuario"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -198,7 +199,7 @@
                     android:id="@+id/textViewTituloFechaDatosPersonales"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FECHA NACIMIENTO"
+                    android:text="@string/txt_tituloFecha_ventanaDatosUsuario"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -223,7 +224,7 @@
                     android:drawableLeft="@drawable/spain"
                     android:drawablePadding="5dp"
                     android:ems="10"
-                    android:hint="+34"
+                    android:hint="@string/edit_prefijo_ventanaDatosUsuario"
                     android:padding="8dp"
                     android:singleLine="true"
                     android:textColor="@color/places_ui_default_primary_dark"
@@ -244,7 +245,7 @@
                     android:drawableLeft="@drawable/ic_telefono"
                     android:drawablePadding="5dp"
                     android:ems="10"
-                    android:hint="600600600"
+                    android:hint="@string/edit_numero_ventanaDatosUsuario"
                     android:padding="8dp"
                     android:inputType="number"
                     android:singleLine="true"
@@ -263,7 +264,7 @@
                     android:drawableLeft="@drawable/ic_calendar"
                     android:drawablePadding="5dp"
                     android:ems="10"
-                    android:hint="06 / 05 / 2020"
+                    android:hint="@string/edit_fecha_ventanaDatosUsuario"
                     android:inputType="date"
                     android:maxLines="1"
                     android:padding="8dp"
@@ -291,7 +292,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
                         android:layout_marginBottom="5dp"
-                        android:text="Error"
+                        android:text=""
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -308,7 +309,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
                         android:layout_marginBottom="5dp"
-                        android:text="Error"
+                        android:text=""
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"
                         android:textStyle="bold"
@@ -321,7 +322,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="DESCRIPCIÓN"
+                android:text="@string/txt_tituloDescripcion_ventanaDatosUsuario"
                 android:textColor="@color/colorPrimary"
                 android:textSize="10sp"
                 tools:ignore="SmallSp" />
@@ -336,7 +337,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="start|top"
-                android:hint="@string/sobre_mi"
+                android:hint="@string/edit_descripcion_ventanaDatosUsuario"
                 android:inputType="textMultiLine"
                 android:lineHeight="20dp"
                 android:isScrollContainer="true"
@@ -352,7 +353,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:layout_marginTop="5dp"
-                android:text="Error"
+                android:text=""
                 android:textColor="@color/colorAccent"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -363,7 +364,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
-                android:text="Opciones"
+                android:text="@string/txt_Titulo2_ventanaDatosUsuario"
                 android:textColor="@color/places_ui_default_primary_dark"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -377,7 +378,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:enabled="false"
-                android:text="@string/guardarCambios"
+                android:text="@string/bt_guardarCambios_ventanaDatosUsuario"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
                 android:textColor="@color/colorGris"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -390,7 +393,9 @@
                 android:background="@drawable/layout_drawable_2"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/cambiarContrasena"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:text="@string/bt_cambiarContrasena_ventanaDatosUsuario"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
@@ -404,7 +409,9 @@
                 android:background="@drawable/layout_drawable_2"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/eliminarCuenta"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:text="@string/bt_eliminarCuenta_ventanaDatosUsuario"
                 android:textColor="@android:color/holo_red_light"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -424,6 +431,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
