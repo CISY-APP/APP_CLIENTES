@@ -68,13 +68,18 @@ public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.Ex
     //El método onBindViewHolder() personaliza un elemento de tipo ViewHolder según su posicion.
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        holder.TVNombreUsuario.setText(conversacionArrayListList.get(position).getId_usuario());
-        holder.TVUltimoMensaje.setText(conversacionArrayListList.get(position).getUltimoMensaje());
-        holder.TVHoraUltimoMensaje.setText(conversacionArrayListList.get(position).getHoraUltimoMensaje());
-        if((conversacionArrayListList.get(position).getFotoUsuarioContrario().equals(""))){
+        Conversacion conv = conversacionArrayListList.get(position);
+        holder.TVNombreUsuario.setText(conv.getId_usuario());
+        holder.TVUltimoMensaje.setText(conv.getUltimoMensaje());
+        holder.TVHoraUltimoMensaje.setText(conv.getHoraUltimoMensaje());
+
+        holder.TSinLeer.setText(conv.getMensajesSinLeer().toString());
+        holder.TSinLeer.setVisibility( conv.mensajesSinLeer == 0 ? View.GONE : View.VISIBLE );
+
+        if(conv.getFotoUsuarioContrario().equals("")){
             Glide.with(c).load(R.drawable.user).into(holder.CIUsuarioCoversacion);
         }else{
-            Glide.with(c).load(conversacionArrayListList.get(position).getFotoUsuarioContrario()).into(holder.CIUsuarioCoversacion);
+            Glide.with(c).load(conv.getFotoUsuarioContrario()).into(holder.CIUsuarioCoversacion);
         }
     }
 
@@ -91,6 +96,7 @@ public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.Ex
         private final TextView TVNombreUsuario;
         private final TextView TVUltimoMensaje;
         private final TextView TVHoraUltimoMensaje;
+        private final TextView TSinLeer;
         private final ImageView CIUsuarioCoversacion;
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
@@ -102,8 +108,9 @@ public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.Ex
             TVNombreUsuario = itemView.findViewById(R.id.TVNombreUsuarioConversacion);
             TVUltimoMensaje = itemView.findViewById(R.id.TVUltimoMensajeConversacion);
             TVHoraUltimoMensaje = itemView.findViewById(R.id.TVHoraUltimoMensaje);
+            TSinLeer = itemView.findViewById(R.id.TSinLeer);
             CIUsuarioCoversacion = itemView.findViewById(R.id.CIUsuarioCoversacion);
-            CardView cardViewCoversacion = itemView.findViewById(R.id.cardViewCoversacion);
+            View cardViewCoversacion = itemView.findViewById(R.id.cardViewCoversacion);
             cardViewCoversacion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

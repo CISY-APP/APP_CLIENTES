@@ -7,6 +7,7 @@ public class Conversacion  {
     public String horaUltimoMensaje;
     public String ultimoMensaje;
     public String fotoUsuarioContrario;
+    public Long mensajesSinLeer = 0L;
 
     public Conversacion() {
     }
@@ -57,5 +58,9 @@ public class Conversacion  {
 
     public void setFotoUsuarioContrario(String fotoUsuarioContrario) {
         this.fotoUsuarioContrario = fotoUsuarioContrario;
+    }
+
+    public Long getMensajesSinLeer() {
+        return mensajesSinLeer;
     }
 }

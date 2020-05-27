@@ -187,5 +187,3 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                 null));
     }
 }
-
-

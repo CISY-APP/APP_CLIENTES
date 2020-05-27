@@ -29,6 +29,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
+import com.example.app_clientes.pojos.Conversacion;
 import com.example.app_clientes.pojos.Usuario;
 import com.example.app_clientes.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,6 +49,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -58,7 +60,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.google.android.material.navigation.NavigationView.*;
 
-public class VentanaPrincipal extends AppCompatActivity{
+public class VentanaPrincipal extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private StorageReference storageReference;
@@ -117,31 +119,22 @@ public class VentanaPrincipal extends AppCompatActivity{
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-//        firebaseDatabase = FirebaseDatabase.getInstance();
-//        chatReference = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO);
-//        chatReference.child("mensajesSinLeer").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                TextView myCounter = findViewById(R.id.my_counter);
-//                if (myCounter != null) {
-//                    myCounter.setText(dataSnapshot.getValue()+"");
-//                    Toast.makeText(getApplicationContext(),myCounter.getText()+"", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference ref = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO);
 
-        ref.orderByChild("mensajesSinLeer").addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.orderByChild("mensajesSinLeer").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("Juanan","tupu");
+                int total = 0;
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Long mensajes = child.getValue(Conversacion.class).getMensajesSinLeer();
+                    total +=(mensajes != null ? mensajes : 0L);
+                }
+                TextView myCounter = findViewById(R.id.my_counter);
+                if (myCounter != null) {
+                    myCounter.setText(Long.toString(total));
+                }
             }
 
             @Override
@@ -152,10 +145,11 @@ public class VentanaPrincipal extends AppCompatActivity{
 
         return super.onPrepareOptionsMenu(menu);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.ventana_principal, menu);
+        // getMenuInflater().inflate(R.menu.ventana_principal, menu);
         return true;
     }
 
@@ -164,7 +158,6 @@ public class VentanaPrincipal extends AppCompatActivity{
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
-
 
 
     @Override
@@ -198,10 +191,10 @@ public class VentanaPrincipal extends AppCompatActivity{
     }
 
     //Abre la galaeria de imagenes
-    public void abrirGaleria(){
+    public void abrirGaleria() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent,GALERY_INTENT);
+        startActivityForResult(intent, GALERY_INTENT);
     }
 
     public void cargarImagenUsuario(final View headView) {
@@ -219,6 +212,7 @@ public class VentanaPrincipal extends AppCompatActivity{
             }
         });
     }
+
     /*
     private String cargarCredencialesIdUsuario(){
         SharedPreferences credenciales = getSharedPreferences("Credenciales", Context.MODE_PRIVATE);

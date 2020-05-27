@@ -72,7 +72,7 @@ public class MensajesFragment extends Fragment {
         super.onResume();
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO) ; //Sala de chat (nombre)
+        databaseReference1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO); //Sala de chat (nombre)
         databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -81,6 +81,7 @@ public class MensajesFragment extends Fragment {
                     Conversacion c = dsp.getValue(Conversacion.class);
                     conversacionArrayList.add(c);
                     miAdapterMensajes.setConversaciones(conversacionArrayList);
+
                 }
             }
 

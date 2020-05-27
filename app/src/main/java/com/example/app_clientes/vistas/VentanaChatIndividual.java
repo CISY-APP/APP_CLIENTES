@@ -92,6 +92,17 @@ public class VentanaChatIndividual extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+                chatReference.removeEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
@@ -99,13 +110,15 @@ public class VentanaChatIndividual extends AppCompatActivity {
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         chatReference = firebaseDatabase.getReference(chatName); //Sala de chat (nombre)
-        chatReference.addChildEventListener(new ChildEventListener() {
+        ChildEventListener childEventListener = chatReference.addChildEventListener(new ChildEventListener() {
 
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Mensaje m = dataSnapshot.getValue(Mensaje.class);
                 adapterMensajes.addMensaje(m);
                 setScrollBar();
+
+                resetMensajeSinLeer(ID_USUARIO, chatName);
             }
 
             @Override
@@ -148,58 +161,76 @@ public class VentanaChatIndividual extends AppCompatActivity {
 
                 DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER).child(chatName); //Sala de chat (nombre)
                 Map<String, Object> hopperUpdates1 = new HashMap<>();
-                hopperUpdates.put("fotoUsuarioContrario", uriFotoUsuario);
+                hopperUpdates1.put("idConversacion", chatName);
+                hopperUpdates1.put("id_usuario", ID_USUARIO);
+                hopperUpdates1.put("fotoUsuarioContrario", uriFotoUsuario);
                 hopperUpdates1.put("horaUltimoMensaje", getHoraSistema());
                 hopperUpdates1.put("ultimoMensaje", ETTXTMensajeChatIndividual.getText().toString());
-                hopperRef1.updateChildren(hopperUpdates);
+                hopperRef1.updateChildren(hopperUpdates1);
 
-//                firebaseDatabase = FirebaseDatabase.getInstance();
-//                chatReference = firebaseDatabase.getReference(chatName); //Sala de chat (nombre)
-//                chatReference.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER); //Sala de chat (nombre)
-//                        Map<String, Object> hopperUpdates1 = new HashMap<>();
-//                        hopperUpdates1.put("mensajesSinLeer",dataSnapshot.getChildrenCount());
-//                        hopperRef1.updateChildren(hopperUpdates1);
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
-
-                chatReference = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER).child(chatName).child("mensajesSinLeer");
-                chatReference.runTransaction(new Transaction.Handler() {
-
-                    @NonNull
-                    @Override
-                    public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                        long value = 0;
-                        if (mutableData.getValue() != null) {
-                            String mensajesSinLeer = (String) mutableData.getValue();
-                            value = Long.parseLong(mensajesSinLeer);
-                        }
-                        value++;
-
-                        String finalValue = Long.toString(value);
-                        mutableData.setValue(finalValue);
-                        return Transaction.success(mutableData);
-                    }
-
-                    @Override
-                    public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
-
-                    }
-                });
-
+                incrementMensajesSinLeer(ID_USUARIO_CONVER, chatName);
 
                 ETTXTMensajeChatIndividual.setText("");
 
             }
         });
 
+    }
+
+    private void resetMensajeSinLeer(String userId, String chatName) {
+        DatabaseReference mensajesSinLeerRef = firebaseDatabase.getReference("USUARIOS").child(userId).child(chatName).child("mensajesSinLeer");
+        mensajesSinLeerRef.runTransaction(new Transaction.Handler() {
+
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                mutableData.setValue(0L);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
+
+            }
+        });
+    }
+
+    private void incrementMensajesSinLeer(String userId, String chatName) {
+        final DatabaseReference ref = firebaseDatabase.getReference("USUARIOS").child(userId).child(chatName);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Conversacion c = dataSnapshot.getValue(Conversacion.class);
+                c.mensajesSinLeer++;
+                ref.setValue(c);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        /*DatabaseReference mensajesSinLeerRef = firebaseDatabase.getReference("USUARIOS").child(userId).child(chatName);
+        mensajesSinLeerRef.runTransaction(new Transaction.Handler() {
+
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
+                if (mutableData.getValue() != null) {
+                    Conversacion c = mutableData.getValue(Conversacion.class);
+                    c.mensajesSinLeer++;
+                    mutableData.setValue(c);
+                    return Transaction.success(mutableData);
+                } else {
+                    return Transaction.abort();
+                }
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, boolean b, @Nullable DataSnapshot dataSnapshot) {
+
+            }
+        });*/
     }
 
     //Metodo para cargar la imagen del usuario
