@@ -1,5 +1,6 @@
 package com.example.app_clientes.ui.mensajes;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MensajesFragment extends Fragment {
+public class MensajesFragment extends Fragment{
 
     private RecyclerView.LayoutManager layoutManager;
     private MiAdapterMensajes miAdapterMensajes;
@@ -39,6 +41,23 @@ public class MensajesFragment extends Fragment {
     private final ArrayList<Conversacion> conversacionArrayList = new ArrayList<>();
 
     private String ID_USUARIO;
+
+    private ValueEventListener listener = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            ArrayList<Conversacion> conversacionArrayList = new ArrayList<>();
+            for (DataSnapshot dsp : dataSnapshot.getChildren()) {
+                Conversacion c = dsp.getValue(Conversacion.class);
+                conversacionArrayList.add(c);
+                miAdapterMensajes.setConversaciones(conversacionArrayList);
+            }
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mensajes, container, false);
@@ -51,7 +70,7 @@ public class MensajesFragment extends Fragment {
         recyclerView.setHasFixedSize(
                 true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento)
         layoutManager = new LinearLayoutManager(getContext());//Creamos el layoutManager de tipo GridLayaout que vamos a utilizar
-        miAdapterMensajes = new MiAdapterMensajes(getActivity(),conversacionArrayList);
+        miAdapterMensajes = new MiAdapterMensajes(getActivity(), conversacionArrayList);
         recyclerView.setLayoutManager(layoutManager);//Asociamos al recyclerView el layoutManager que creamos en el paso anterior
         recyclerView.setAdapter(miAdapterMensajes);//Vinculamos el adapter al recyclerView
         miAdapterMensajes.setOnClickListener(new MiAdapterMensajes.OnItemClickListener() {
@@ -64,8 +83,34 @@ public class MensajesFragment extends Fragment {
                 startActivity(VentanaChatIndividual);
             }
         });
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
         return view;
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new   ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ){
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int position = viewHolder.getAdapterPosition();
+
+            switch (direction){
+                case ItemTouchHelper.LEFT:
+                    conversacionArrayList.remove(position);
+                    recyclerView.notifyAll();
+                    break;
+                case  ItemTouchHelper.RIGHT:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onResume() {
@@ -73,29 +118,22 @@ public class MensajesFragment extends Fragment {
         //Implementacion de firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO); //Sala de chat (nombre)
-        databaseReference1.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Conversacion> conversacionArrayList = new ArrayList<>();
-                for (DataSnapshot dsp : dataSnapshot.getChildren()) {
-                    Conversacion c = dsp.getValue(Conversacion.class);
-                    conversacionArrayList.add(c);
-                    miAdapterMensajes.setConversaciones(conversacionArrayList);
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        databaseReference1.addValueEventListener(listener);
     }
+
     //Obtiene la hora del sistema
     private String getHoraSistema() {
         Calendar c1 = Calendar.getInstance();
         String time;
         return time = String.format("%02d:%02d", c1.get(Calendar.HOUR_OF_DAY), c1.get(Calendar.MINUTE));
+    }
+
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        databaseReference1.removeEventListener(listener);
     }
 
 }

@@ -123,6 +123,18 @@ public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.Ex
                     }
                 }
             });
+            cardViewCoversacion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {//Si el listener que recibimos en el constructor es valido
+                        //El adapter es el que sabe la posición absoluta dentro de la vista,
+                        int position = getAdapterPosition();//Almacenamos la posicion del elemento que ha activado el evento
+                        if (position != RecyclerView.NO_POSITION) {//Si la posición recibida es una posición valida dentro del RecyclerView
+                            listener.OnAbreChatClick(position);//Asignamos un listener al Item de la posición que hemos comprobado
+                        }
+                    }
+                }
+            });
         }
     }
 

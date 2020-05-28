@@ -16,6 +16,7 @@ import com.example.app_clientes.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,7 +51,7 @@ public class MiApdapterChat extends RecyclerView.Adapter<MiApdapterChat.ExampleV
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             case OWN_MESSAGE_TYPE: {
-                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_enviados, parent,false);
+                View v = LayoutInflater.from(c).inflate(R.layout.item_mensajes_enviados, parent, false);
                 return new OwnViewHolder(v);
             }
 
@@ -137,9 +138,9 @@ public class MiApdapterChat extends RecyclerView.Adapter<MiApdapterChat.ExampleV
         @Override
         public void bindMessage(Mensaje message) {
             super.bindMessage(message);
-            if(message.getDireccionFotoUsuario().equals("")){
+            if (message.getDireccionFotoUsuario().equals("")) {
                 Glide.with(c).load(R.drawable.user).into(IVImagenUsuario);
-            }else{
+            } else {
                 Glide.with(c).load(message.getDireccionFotoUsuario()).into(IVImagenUsuario);
             }
         }
