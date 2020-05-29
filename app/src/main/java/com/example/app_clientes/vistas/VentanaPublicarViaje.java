@@ -4,6 +4,7 @@ package com.example.app_clientes.vistas;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.*;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,11 +18,14 @@ import com.example.app_clientes.otros.CalendarioFragment;
 import com.example.app_clientes.otros.HoraFragment;
 import com.example.app_clientes.R;
 import com.example.app_clientes.pojos.Vehiculo;
+import com.example.app_clientes.pojos.Viaje;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -277,53 +281,46 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                 txtErrorPrecio.setVisibility(View.GONE);
                 txtErrorPrecio.setText("");
                 precioSeekBar.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
-            }/*
+            }
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(pbOrigen&&pbDestino&&pbVehiculo&&pbNumPlazas&&pbHora&&pbFecha&&pbPrecio){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz:
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para actualizar un vehiculo con el valor de los editexts y demas:
-                String modeloAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
-                String marcaAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                //Creamos una peticion para crear un viaje:
+                String origen=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextOrigen.getText().toString());
+                String destino=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextDestino.getText().toString());
                 Map<String, String> infoMap = new HashMap<String, String>();
-                infoMap.put("matricula", editTextMatricula.getText().toString());
-                if(!modeloAux.equals("")){
-                    infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
-                }else{
-                    infoMap.put("modelo", vSesion.getModelo());
-                }
-                if(!marcaAux.equals("")){
-                    infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
-                }else {
-                    infoMap.put("marca", vSesion.getMarca());
-                }
-                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
-                infoMap.put("color", colorSeleccionado.toUpperCase());
-                Call<Vehiculo> call = peticiones.actualizarVehiculoPorMatricula(infoMap);
+                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
+                infoMap.put("origen", origen);
+                infoMap.put("destino", destino);
+                infoMap.put("matricula", spinnerVehiculo.getSelectedItem().toString().substring(0,7));
+                infoMap.put("numPlazas", spinnerNumPlazas.getSelectedItem().toString());
+                infoMap.put("fecha", fechaElegida);
+                infoMap.put("precio", precioSeekBar.getText().toString().substring(0,precioSeekBar.getText().toString().length()-2));
+                Call<Viaje> call = peticiones.registrarViaje(infoMap);
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                call.enqueue(new Callback<Vehiculo>() {
+                call.enqueue(new Callback<Viaje>() {
                     //Gestionamos la respuesta del servidor:
                     @Override
-                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
+                    public void onResponse(Call<Viaje> call, Response<Viaje> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                         if (!response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                             return;
                         }
-                        //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
-                        vSesion=response.body();
-                        agregarCoches();
-                        Toast.makeText(getContext(), getText(R.string.txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo), Toast.LENGTH_LONG).show();
+                        //Si la respuesta es satisfactoria, lo indicamos llevando a la ventana siguiente:
+                        Intent intentOK = new Intent(getApplicationContext(), VentanaViajePublicado.class);
+                        startActivity(intentOK);
                     }
                     //En caso de que no responda el servidor mostramos mensaje de error:
                     @Override
-                    public void onFailure(Call<Vehiculo> call, Throwable t) {
-                        Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    public void onFailure(Call<Viaje> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }*/
+            }
         }
     }
     //Metodo afterTextChanged implementado de la interfaz TextWatcher (cuando cambie el texto se ejecutara):

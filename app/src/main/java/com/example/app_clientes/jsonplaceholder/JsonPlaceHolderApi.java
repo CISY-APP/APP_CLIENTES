@@ -55,4 +55,8 @@ public interface JsonPlaceHolderApi {
     //Actualizamos un vehiculo asociado al usuario
     @PUT("actualizarVehiculo")
     Call<Vehiculo> actualizarVehiculoPorMatricula(@Body Map<String, String> param);
+    //METODOS PARA VIAJE********************************************************************************************
+    //Registrar un viaje
+    @POST("registrarViaje")
+    Call<Viaje> registrarViaje(@Body Map<String, String> param);
 }

@@ -36,7 +36,7 @@
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>
     <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
-    <string name="viaje_publicado">!Tu viaje ha sido publido¡ Gracias por reducir los niveles de contaminación.</string>
+    <string name="viaje_publicado">!Tu viaje ha sido publicado¡ Gracias por reducir los niveles de contaminación.</string>
     <string name="viaje_no_encontrado">!Vaya¡ Parece que no hay ningún viaje con esos criterios de búsqueda.</string>
     <string name="viaje_reservado">Has reservado una plaza, si necesitas algo no dudes en contactar con el conductor.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
