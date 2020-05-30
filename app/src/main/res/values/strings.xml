@@ -31,12 +31,11 @@
     <!--BOTONES-->
     <string name="publicar">Publicar</string>
     <string name="buscar">Buscar</string>
-    <string name="listo">Listo</string>
     <string name="cancelar">Cancelar</string>
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>
+    <string name="listo">Listo</string>
     <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
-    <string name="viaje_publicado">!Tu viaje ha sido publicado¡ Gracias por reducir los niveles de contaminación.</string>
     <string name="viaje_no_encontrado">!Vaya¡ Parece que no hay ningún viaje con esos criterios de búsqueda.</string>
     <string name="viaje_reservado">Has reservado una plaza, si necesitas algo no dudes en contactar con el conductor.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
@@ -155,6 +154,31 @@
     <string name="txt_tituloTipoCombustible_ventanaDatosVehiculo">TIPO DE COMBUSTIBLE</string>
     <string name="txt_tituloColor_ventanaDatosVehiculo">COLOR DEL VEHÍCULO</string>
     <string name="bt_seleccionarColor_ventanaDatosVehiculo">SELECCIONAR</string>
-
+    <!-- *********************************** VENTANA VIAJE PUBLICADO ***********************************-->
+    <string name="bt_listo_ventanaViajePublicado">Listo</string>
+    <string name="txt_informativo_ventanaViajePublicado">¡Felicidades!\nTu viaje se ha publicado de manera exitosa.</string>
+    <!-- *********************************** VENTANA PUBLICAR VIAJE ***********************************-->
+    <string name="txt_cardViewTitulo_ventanaPublicarViaje">Publicar Viaje</string>
+    <string name="txt_informativo_ventanaPublicarViaje">Informacion sobre el viaje</string>
+    <string name="txt_tituloLocalidadOrigen_ventanaPublicarViaje">LOCALIDAD DE ORIGEN</string>
+    <string name="txt_titulolugarSalida_ventanaPublicarViaje">LUGAR DE SALIDA</string>
+    <string name="edit_localidadOrigen_ventanaPublicarViaje">Getafe</string>
+    <string name="edit_lugarSalida_ventanaPublicarViaje">Estacion Central</string>
+    <string name="txt_tituloLocalidadDestino_ventanaPublicarViaje">LOCALIDAD DE DESTINO</string>
+    <string name="txt_tituloLugarDestino_ventanaPublicarViaje">LUGAR DE DESTINO</string>
+    <string name="edit_localidadDestino_ventanaPublicarViaje">Madrid</string>
+    <string name="edit_lugarDestino_ventanaPublicarViaje">C/ Dulce Chacon Nº 4</string>
+    <string name="txt_tituloVehiculo_ventanaPublicarViaje">VEHICULO</string>
+    <string name="txt_tituloNumPlazas_ventanaPublicarViaje">Nº DE PLAZAS</string>
+    <string name="txt_tituloHora_ventanaPublicarViaje">HORA</string>
+    <string name="txt_tituloFecha_ventanaPublicarViaje">FECHA</string>
+    <string name="edit_hora_ventanaPublicarViaje">12:00</string>
+    <string name="edit_fecha_ventanaPublicarViaje">06 / 05 / 2020</string>
+    <string name="txt_tituloPrecio_ventanaPublicarViaje">PRECIO POR PLAZA</string>
+    <string name="edit_precio_ventanaPublicarViaje">0.00 €</string>
+    <string name="txt_errorFecha_Menor_ventanaPublicarViaje">Fecha invalida debido a que es anterior a la actual.</string>
+    <string name="txt_errorfecha_Formato_ventanaPublicarViaje">Fecha invalida.</string>
+    <string name="txt_errorPrecio_Menor_ventanaPublicarViaje">Precio no mayor a 0 €.</string>
+    <string name="txt_errorPrecio_Formato_ventanaPublicarViaje">Precio con valor no numerico.</string>
 
 </resources>
