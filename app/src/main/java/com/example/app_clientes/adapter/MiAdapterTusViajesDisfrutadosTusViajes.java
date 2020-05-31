@@ -63,7 +63,7 @@ public class MiAdapterTusViajesDisfrutadosTusViajes extends RecyclerView.Adapter
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         Usuario nuevoUsuario= misUsuariosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
-        Glide.with(c).load(misUsuariosList.get(position).getFotousuario()).into(holder.mImageUsuarioPeque);
+        Glide.with(c).load(misUsuariosList.get(position).getFotousuario()).error(R.drawable.user).into(holder.mImageUsuarioPeque);
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem

@@ -83,10 +83,10 @@ public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapter
             holder.imageView1.setBackgroundColor(Color.parseColor("#76FF32"));
             holder.imagenEliminarViaje.setVisibility(View.VISIBLE);
         }
-        holder.ETOrigenViajePublicado.setText(nuevoViaje.getOrigen());
-        holder.ETDestinoViajePublicado.setText(nuevoViaje.getDestino());
+        holder.ETOrigenViajePublicado.setText(nuevoViaje.getLugarSalida());
+        holder.ETDestinoViajePublicado.setText(nuevoViaje.getLugarLlegada());
         //holder.editTextFechaViajesPublicados.setText(nuevoViaje.getFechasalida().toString());
-        holder.editTextHoraViajesPublicados.setText(nuevoViaje.getHorasalida().toString());
+        holder.editTextHoraViajesPublicados.setText(nuevoViaje.getFechasalida().toString());
 
 
         //Asociamos los atributos con los objeto del layout para poder usarlos

@@ -27,13 +27,6 @@
             android:focusable="true"
             app:srcCompat="@mipmap/ic_launcher_round" />
 
-        <ImageView
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_marginTop="50dp"
-            android:tint="@color/colorBlanco"
-            app:srcCompat="@drawable/lapiz"
-            android:contentDescription="TODO" />
 
     </LinearLayout>
 

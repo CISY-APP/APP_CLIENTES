@@ -140,7 +140,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
         BTMenajeEnviarChatIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ETTXTMensajeChatIndividual.getText().toString().equals("") ){
+                if(!ETTXTMensajeChatIndividual.getText().toString().equals("") ){
                     final String currentText = ETTXTMensajeChatIndividual.getText().toString();
                     ETTXTMensajeChatIndividual.setText("");
                     operateOverChat(ID_USUARIO_CONVER, chatName, new ChatOperator() {
@@ -230,7 +230,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
         storageReference.child("Fotos").child(ID_USUARIO_CONVER).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(getApplicationContext()).load(uri).into(IVfotoUsuarioChatIndividual);
+                Glide.with(getApplicationContext()).load(uri).error(R.drawable.user).into(IVfotoUsuarioChatIndividual);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

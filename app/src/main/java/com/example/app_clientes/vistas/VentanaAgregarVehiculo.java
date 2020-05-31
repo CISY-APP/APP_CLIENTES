@@ -236,7 +236,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             @Override
             public void onSuccess(Uri uri) {
                 //Si la carga es optima la coloca en IMGUsuarioDatos
-                Glide.with(getApplication()).load(uri).into(imgViewCoche);
+                Glide.with(getApplication()).load(uri).error(R.drawable.coche).into(imgViewCoche);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -410,7 +410,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             //Coge la Uri del dispositivo
             uriImagenEndispositivo = data.getData();
             //Cambia la imagen desde el dispositivo
-            Glide.with(getApplicationContext()).load(uriImagenEndispositivo).into(imgViewCoche);
+            Glide.with(getApplicationContext()).load(uriImagenEndispositivo).error(R.drawable.coche).into(imgViewCoche);
         }
     }
 }

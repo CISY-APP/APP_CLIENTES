@@ -12,14 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
 import com.example.app_clientes.adapter.MiAdapterTusViajesDisfrutados;
 import com.example.app_clientes.adapter.MiAdapterTusViajesPublicados;
 import com.example.app_clientes.pojos.Usuario;
+import com.example.app_clientes.pojos.Vehiculo;
 import com.example.app_clientes.pojos.Viaje;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class TusViajesPublicadosFragment extends Fragment {
@@ -72,14 +75,11 @@ public class TusViajesPublicadosFragment extends Fragment {
         java.sql.Date sqlDate2 = new java.sql.Date(lnMilisegundos);
         java.sql.Time sqlTime2 = new java.sql.Time(lnMilisegundos);
         java.sql.Timestamp sqlTimestamp2 = new java.sql.Timestamp(lnMilisegundos);
-        misViajesList.add(new Viaje(null,null, "Leganes","Getafe", null,
-                null, 3, utilDate, utilDate, null,
-                null));
-        misViajesList.add(new Viaje(null,null, "Madrid","Villaverde", null,
-                null, 3, utilDate1, utilDate1, null,
-                null));
-        misViajesList.add(new Viaje(null,null, "Alcorcon","Fuenlabrada", null,
-                null, 3, utilDate2, utilDate2, null,
-                null));
+        misViajesList.add(new Viaje(Biblioteca.usuarioSesion, new Vehiculo(Biblioteca.usuarioSesion, "1234aaa", utilDate2), "Getafe", "Getafe",
+                "Madrid", "Madrid", 3, utilDate2));
+        misViajesList.add(new Viaje(Biblioteca.usuarioSesion, new Vehiculo(Biblioteca.usuarioSesion, "1234aaa", utilDate1), "Getafe", "Getafe",
+                "Madrid", "Madrid", 3, utilDate1));
+        misViajesList.add(new Viaje(Biblioteca.usuarioSesion, new Vehiculo(Biblioteca.usuarioSesion, "1234aaa", utilDate), "Getafe", "Getafe",
+                "Madrid", "Madrid", 3, utilDate));
     }
 }

@@ -22,6 +22,7 @@ import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
 import com.example.app_clientes.adapter.MiAdapterTusViajesDisfrutados;
 import com.example.app_clientes.pojos.Usuario;
+import com.example.app_clientes.pojos.Vehiculo;
 import com.example.app_clientes.pojos.Viaje;
 import com.example.app_clientes.vistas.VentanaChatIndividual;
 import com.example.app_clientes.vistas.VentanaLogin;
@@ -107,13 +108,13 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                 TVNombreUsuarioViajeDisfrutado.setText(misUsuariosList.get(position).getNombre());
                 TVDescripcionUsuarioViajeDisfrutado.setText(misUsuariosList.get(position).getDescripcion());
                 ID_USUARIO_CONVER = position+""; //Meter el ID que devuelva la consulta de retrofit
-                Glide.with(getContext()).load(misUsuariosList.get(position).getFotousuario()).into(IMGConductorViajeDisfrutado);
+                Glide.with(getContext()).load(misUsuariosList.get(position).getFotousuario()).error(R.drawable.user).into(IMGConductorViajeDisfrutado);
 
                 //Viaje
-                ETOrigenViajeDisfrutado.setText(misViajesList.get(position).getOrigen());
-                ETDestinoViajeDisfrutado.setText(misViajesList.get(position).getDestino());
+                ETOrigenViajeDisfrutado.setText(misViajesList.get(position).getLugarSalida());
+                ETDestinoViajeDisfrutado.setText(misViajesList.get(position).getLugarLlegada());
                 editTextFechaViajesDisfrutados.setText(misViajesList.get(position).getFechasalida().toString());
-                editTextHoraViajesDisfrutados.setText(misViajesList.get(position).getHorasalida().toString());
+                editTextHoraViajesDisfrutados.setText(misViajesList.get(position).getFechasalida().toString());
             }
         });
 
@@ -122,68 +123,26 @@ public class TusViajesDisfrutadosFragment extends Fragment {
 
     //CARGA LOS DATOS DE LOS USUARIO CON LOS QUE EL USUARIO A CONTRATADO VIAJES
     private void cargarUsuariosViajesDisfrutados() {
-        java.util.Date utilDate = new java.util.Date(); //fecha actual
-        long lnMilisegundos = utilDate.getTime();
-        java.sql.Date sqlDate = new java.sql.Date(lnMilisegundos);
-        java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
-        java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);
-        //CARGAR EN EL ARRAYLIST LOS USUARIOS CON LOS QUE HAYAMOS CONTRATADO VIAJES DESDE RETROFIT
-        misUsuariosList.add(new Usuario("Javier", "Gómez Fernández", null, null, null,
-                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F1?alt=media&token=f59bccd3-4c6e-4872-ab50-14b39743685d", null, "Hola me llamo Javier",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("Roberto", "Castaño Romero", null, null, null,
-                null, null, utilDate, "https://assets.entrepreneur.com/content/3x2/2000/20181012160100-atractiva.jpeg?width=700&crop=2:1", null, "Hola me llamo Roberto",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("Pilar", "Garcia Romero", null, null, null,
-                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F2?alt=media&token=7f07bc9d-4892-41c9-8211-35e3bc835a48", null, "Hola me llamo Pilar",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("Pilar", "Garcia Romero", null, null, null,
-                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F3?alt=media&token=bd212b33-cfb4-4db9-9a3a-879a41269379", null, "Hola me llamo Pilar",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("aaaaa", "Garcia Romero", null, null, null,
-                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F4?alt=media&token=9493e626-2f59-4ea3-86c5-f2ae43f3ce3a", null, "Hola me llamo Pilar",
-                null, null, null, null,
+        Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+        misUsuariosList.add(Biblioteca.usuarioSesion);
+        misUsuariosList.add(new Usuario("bb", "bb", true, null, 123456789,
+                "bb@bb.com","123456aA", fechaActual, null, null, "String descripcion",
+                null, fechaActual, fechaActual, null,
+               null, null, null));
+        misUsuariosList.add(new Usuario("cc", "cc", true, null, 123456788,
+                "cc@cc.com","123456aA", fechaActual, null, null, "String descripcion",
+                null, fechaActual, fechaActual, null,
                 null, null, null));
     }
 
     //CARGA LOS DATOS DE LOS VIAJES QUE EL USUARIO A DISFRUTADO VIAJES
     private void cargarViajesViajesDisfrutados() {
-        java.util.Date utilDate = new java.util.Date(2019-1900,1,21); //fecha actual
-        long lnMilisegundos = utilDate.getTime();
-        java.sql.Date sqlDate = new java.sql.Date(lnMilisegundos);
-        java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
-        java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);
-
-        java.util.Date utilDate1 = new java.util.Date(2021-1900,1,21); //fecha actual
-        long lnMilisegundos1 = utilDate.getTime();
-        java.sql.Date sqlDate1 = new java.sql.Date(lnMilisegundos);
-        java.sql.Time sqlTime1 = new java.sql.Time(lnMilisegundos);
-        java.sql.Timestamp sqlTimestamp1 = new java.sql.Timestamp(lnMilisegundos);
-
-        java.util.Date utilDate2 = new java.util.Date(2019-1900,1,21); //fecha actual
-        long lnMilisegundos2 = utilDate.getTime();
-        java.sql.Date sqlDate2 = new java.sql.Date(lnMilisegundos);
-        java.sql.Time sqlTime2 = new java.sql.Time(lnMilisegundos);
-        java.sql.Timestamp sqlTimestamp2 = new java.sql.Timestamp(lnMilisegundos);
-
-        misViajesList.add(new Viaje(null,null, "Leganes","Getafe", null,
-                null, 3, utilDate, utilDate, null,
-                null));
-        misViajesList.add(new Viaje(null,null, "Madrid","Villaverde", null,
-                null, 3, utilDate1, utilDate1, null,
-                null));
-        misViajesList.add(new Viaje(null,null, "Alcorcon","Fuenlabrada", null,
-                null, 3, utilDate2, utilDate2, null,
-                null));
-        misViajesList.add(new Viaje(null,null, "Alcorcon","Fuenlabrada", null,
-                null, 3, utilDate2, utilDate2, null,
-                null));
-        misViajesList.add(new Viaje(null,null, "Alcorcon","Fuenlabrada", null,
-                null, 3, utilDate2, utilDate2, null,
-                null));
+        Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+        misViajesList.add(new Viaje(Biblioteca.usuarioSesion, new Vehiculo(Biblioteca.usuarioSesion, "1234aaa", fechaActual), "Getafe", "Getafe",
+                "Madrid", "Madrid", 3, fechaActual));
+        misViajesList.add(new Viaje(Biblioteca.usuarioSesion, new Vehiculo(Biblioteca.usuarioSesion, "1234aaa", fechaActual), "Getafe", "Getafe",
+                "Madrid", "Madrid", 3, fechaActual));
+        misViajesList.add(new Viaje(Biblioteca.usuarioSesion, new Vehiculo(Biblioteca.usuarioSesion, "1234aaa", fechaActual), "Getafe", "Getafe",
+                "Madrid", "Madrid", 3, fechaActual));
     }
 }

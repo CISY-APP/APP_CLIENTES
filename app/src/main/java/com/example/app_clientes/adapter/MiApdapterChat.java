@@ -139,9 +139,9 @@ public class MiApdapterChat extends RecyclerView.Adapter<MiApdapterChat.ExampleV
         public void bindMessage(Mensaje message) {
             super.bindMessage(message);
             if (message.getDireccionFotoUsuario().equals("")) {
-                Glide.with(c).load(R.drawable.user).into(IVImagenUsuario);
+                Glide.with(c).load(R.drawable.user).error(R.drawable.user).into(IVImagenUsuario);
             } else {
-                Glide.with(c).load(message.getDireccionFotoUsuario()).into(IVImagenUsuario);
+                Glide.with(c).load(message.getDireccionFotoUsuario()).error(R.drawable.user).into(IVImagenUsuario);
             }
         }
     }

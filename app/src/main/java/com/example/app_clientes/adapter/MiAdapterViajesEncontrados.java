@@ -67,7 +67,7 @@ public class MiAdapterViajesEncontrados extends RecyclerView.Adapter<MiAdapterVi
         holder.TVAsientosLibres.setText("Asientos disponibles: "+viajesEncontradosList.get(position).getAsientosLibres());
         holder.TVPrecio.setText(viajesEncontradosList.get(position).getPrecio() +"€");
         holder.mImageValoracion.setImageResource(nuevoViajeEncontrado.getValoracion());
-        Glide.with(c).load(viajesEncontradosList.get(position).getUriImagenUsuario()).into(holder.mImageUsuario);
+        Glide.with(c).load(viajesEncontradosList.get(position).getUriImagenUsuario()).error(R.drawable.user).into(holder.mImageUsuario);
 
 
     }

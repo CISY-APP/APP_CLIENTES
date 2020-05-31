@@ -77,9 +77,9 @@ public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.Ex
         holder.TSinLeer.setVisibility( conv.mensajesSinLeer == 0 ? View.GONE : View.VISIBLE );
 
         if(conv.getFotoUsuarioContrario().equals("")){
-            Glide.with(c).load(R.drawable.user).into(holder.CIUsuarioCoversacion);
+            Glide.with(c).load(R.drawable.user).error(R.drawable.user).into(holder.CIUsuarioCoversacion);
         }else{
-            Glide.with(c).load(conv.getFotoUsuarioContrario()).into(holder.CIUsuarioCoversacion);
+            Glide.with(c).load(conv.getFotoUsuarioContrario()).error(R.drawable.user).into(holder.CIUsuarioCoversacion);
         }
     }
 

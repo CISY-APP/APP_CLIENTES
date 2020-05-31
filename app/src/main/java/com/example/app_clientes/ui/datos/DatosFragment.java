@@ -164,7 +164,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             @Override
             public void onSuccess(Uri uri) {
                 //Si la carga es optima la coloca en IMGUsuarioDatos
-                Glide.with(getActivity()).load(uri).into(imgUsuario);
+                Glide.with(getActivity()).load(uri).error(R.drawable.user).into(imgUsuario);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -451,7 +451,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             //Coge la Uri del dispositivo
             Uri uri = data.getData();
             //Cambia la imagen desde el dispositivo
-            Glide.with(getContext()).load(uri).into(imgUsuario);
+            Glide.with(getContext()).load(uri).error(R.drawable.user).into(imgUsuario);
             //Crea una direccion para poder subir la imagen a firebase
             StorageReference filePath = storageReference.child("Fotos").child(ID_USUARIO);
             //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada

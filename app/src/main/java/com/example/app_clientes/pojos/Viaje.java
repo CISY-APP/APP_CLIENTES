@@ -44,7 +44,7 @@ public class Viaje implements Serializable {
     }
 
     public Viaje(Usuario usuario, Vehiculo vehiculo, String localidadorigen, String lugarsalida,
-                          String localidaddestino, String lugarllegada, int numplazasdisponibles, Date fechacreacionviaje) {
+                          String localidaddestino, String lugarllegada, int numplazasdisponibles, Date fechasalida) {
         this.usuario = usuario;
         this.vehiculo = vehiculo;
         this.localidadorigen = localidadorigen;
@@ -52,7 +52,7 @@ public class Viaje implements Serializable {
         this.localidaddestino = localidaddestino;
         this.lugarllegada = lugarllegada;
         this.numplazasdisponibles = numplazasdisponibles;
-        this.fechacreacionviaje = fechacreacionviaje;
+        this.fechasalida = fechasalida;
     }
 
     public Viaje(Usuario usuario, Vehiculo vehiculo, String localidadorigen, String lugarsalida,

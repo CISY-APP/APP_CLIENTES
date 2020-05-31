@@ -101,12 +101,7 @@ public class VentanaPrincipal extends AppCompatActivity {
         correoUsuario = headView.findViewById(R.id.correoUsuario);
         correoUsuario.setText(Biblioteca.usuarioSesion.getEmail().toString());
         IVImagenUsuarioMenuLateral = headView.findViewById(R.id.IVImagenUsuarioMenuLateral);
-        IVImagenUsuarioMenuLateral.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirGaleria();
-            }
-        });
+
 
         cargarImagenUsuario(headView);
         // Passing each menu ID as a set of Ids because each
@@ -159,50 +154,12 @@ public class VentanaPrincipal extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
-            Uri uri = data.getData();
-            Glide.with(this).load(uri).into(IVImagenUsuarioMenuLateral);
-            StorageReference filePath = storageReference.child("Fotos").child(ID_USUARIO);
-            Toast.makeText(this, "Imagen cambiada", Toast.LENGTH_SHORT).show();
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    storageReference = FirebaseStorage.getInstance().getReference();
-                    storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            //Cojemos la URI para hacer el inserta ala base de datos con la URI
-                            //uri --> https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F1?alt=media&token=f59bccd3-4c6e-4872-ab50-14b39743685d
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getApplicationContext(), "No tiene imaganes para cargar", Toast.LENGTH_SHORT).show();
-                            IVImagenUsuarioMenuLateral.setImageResource(R.drawable.user);
-                        }
-                    });
-                }
-            });
-        }
-    }
-
-    //Abre la galaeria de imagenes
-    public void abrirGaleria() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, GALERY_INTENT);
-    }
-
     public void cargarImagenUsuario(final View headView) {
         storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(headView.getContext()).load(uri).into(IVImagenUsuarioMenuLateral);
+                Glide.with(headView.getContext()).load(uri).error(R.drawable.user).into(IVImagenUsuarioMenuLateral);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

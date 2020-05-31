@@ -158,7 +158,7 @@ public class ChatFragment extends Fragment {
             //Coge la Uri del dispositivo
             Uri uri = data.getData();
             //Cambia la imagen desde el dispositivo
-            Glide.with(getContext()).load(uri).into(fotoPerfil);
+            Glide.with(getContext()).load(uri).error(R.drawable.user).into(fotoPerfil);
             //Crea una direccion para poder subir la imagen a firebase
             StorageReference filePath = storageReference.child("Fotos").child(ID_USUARIO);
             //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
@@ -196,7 +196,7 @@ public class ChatFragment extends Fragment {
             public void onSuccess(Uri uri) {
                 //Si la carga es optima la coloca en fotoPerfil
                 uriFotoUsuario = uri.toString();
-                Glide.with(getActivity()).load(uri).into(fotoPerfil);
+                Glide.with(getActivity()).load(uri).error(R.drawable.user).into(fotoPerfil);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
