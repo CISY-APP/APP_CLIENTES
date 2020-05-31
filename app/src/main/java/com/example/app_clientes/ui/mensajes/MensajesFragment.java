@@ -84,33 +84,9 @@ public class MensajesFragment extends Fragment{
             }
         });
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         return view;
     }
-
-    ItemTouchHelper.SimpleCallback simpleCallback = new   ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ){
-
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-            int position = viewHolder.getAdapterPosition();
-
-            switch (direction){
-                case ItemTouchHelper.LEFT:
-                    conversacionArrayList.remove(position);
-                    recyclerView.notifyAll();
-                    break;
-                case  ItemTouchHelper.RIGHT:
-                    break;
-            }
-        }
-    };
 
     @Override
     public void onResume() {

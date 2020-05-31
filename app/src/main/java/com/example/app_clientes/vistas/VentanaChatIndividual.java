@@ -140,41 +140,38 @@ public class VentanaChatIndividual extends AppCompatActivity {
         BTMenajeEnviarChatIndividual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ETTXTMensajeChatIndividual.getText().toString().equals("") ){
+                    final String currentText = ETTXTMensajeChatIndividual.getText().toString();
+                    ETTXTMensajeChatIndividual.setText("");
+                    operateOverChat(ID_USUARIO_CONVER, chatName, new ChatOperator() {
+                        @Override
+                        public void execute(Conversacion conv) {
 
+                            //chat current user
+                            DatabaseReference hopperRef = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO)
+                                    .child(chatName); //Sala de chat (nombre)
+                            Map<String, Object> hopperUpdates = new HashMap<>();
+                            hopperUpdates.put("horaUltimoMensaje", getHoraSistema());
+                            hopperUpdates.put("ultimoMensaje", currentText);
+                            hopperRef.updateChildren(hopperUpdates);
 
-                final String currentText = ETTXTMensajeChatIndividual.getText().toString();
-                ETTXTMensajeChatIndividual.setText("");
-
-                operateOverChat(ID_USUARIO_CONVER, chatName, new ChatOperator() {
-                    @Override
-                    public void execute(Conversacion conv) {
-
-                        //chat current user
-                        DatabaseReference hopperRef = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO)
-                                .child(chatName); //Sala de chat (nombre)
-                        Map<String, Object> hopperUpdates = new HashMap<>();
-                        hopperUpdates.put("horaUltimoMensaje", getHoraSistema());
-                        hopperUpdates.put("ultimoMensaje", currentText);
-                        hopperRef.updateChildren(hopperUpdates);
-
-                        //chat remote user
-                        DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER).child(chatName); //Sala de chat (nombre)
-                        Map<String, Object> hopperUpdates1 = new HashMap<>();
-                        hopperUpdates1.put("idConversacion", chatName);
-                        hopperUpdates1.put("id_usuario", ID_USUARIO);
-                        hopperUpdates1.put("fotoUsuarioContrario", uriFotoUsuario);
-                        hopperUpdates1.put("horaUltimoMensaje", getHoraSistema());
-                        hopperUpdates1.put("ultimoMensaje", currentText);
-                        hopperUpdates1.put("mensajesSinLeer", conv.mensajesSinLeer + 1);
-                        hopperRef1.updateChildren(hopperUpdates1);
-
-                        //message in shared chat
-                        chatReference.push().setValue(
-                                new Mensaje(currentText, Biblioteca.usuarioSesion.getNombre(), ID_USUARIO,
-                                        getHoraSistema(), uriFotoUsuario));
-                    }
-                });
-
+                            //chat remote user
+                            DatabaseReference hopperRef1 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_CONVER).child(chatName); //Sala de chat (nombre)
+                            Map<String, Object> hopperUpdates1 = new HashMap<>();
+                            hopperUpdates1.put("idConversacion", chatName);
+                            hopperUpdates1.put("id_usuario", ID_USUARIO);
+                            hopperUpdates1.put("fotoUsuarioContrario", uriFotoUsuario);
+                            hopperUpdates1.put("horaUltimoMensaje", getHoraSistema());
+                            hopperUpdates1.put("ultimoMensaje", currentText);
+                            hopperUpdates1.put("mensajesSinLeer", conv.mensajesSinLeer + 1);
+                            hopperRef1.updateChildren(hopperUpdates1);
+                            //message in shared chat
+                            chatReference.push().setValue(
+                                    new Mensaje(currentText, Biblioteca.usuarioSesion.getNombre(), ID_USUARIO,
+                                            getHoraSistema(), uriFotoUsuario));
+                        }
+                    });
+                }
             }
         });
     }
