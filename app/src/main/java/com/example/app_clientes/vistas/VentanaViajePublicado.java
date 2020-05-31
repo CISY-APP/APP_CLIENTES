@@ -49,9 +49,8 @@ public class VentanaViajePublicado extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         if(v.equals(btOK)){
-            //Si la respuesta es satisfactoria, lo indicamos llevando a la ventana siguiente:
-            Intent intentOK = new Intent(this, VentanaPrincipal.class);
-            startActivity(intentOK);
+            //Si la respuesta es satisfactoria, lo indicamos llevando a la ventana inicial:
+            onBackPressed();
             finish();
         }
     }

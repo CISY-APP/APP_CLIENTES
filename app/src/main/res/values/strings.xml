@@ -35,7 +35,6 @@
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>
     <string name="listo">Listo</string>
-    <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
     <string name="viaje_no_encontrado">!Vaya¡ Parece que no hay ningún viaje con esos criterios de búsqueda.</string>
     <string name="viaje_reservado">Has reservado una plaza, si necesitas algo no dudes en contactar con el conductor.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
@@ -180,5 +179,10 @@
     <string name="txt_errorfecha_Formato_ventanaPublicarViaje">Fecha invalida.</string>
     <string name="txt_errorPrecio_Menor_ventanaPublicarViaje">Precio no mayor a 0 €.</string>
     <string name="txt_errorPrecio_Formato_ventanaPublicarViaje">Precio con valor no numerico.</string>
+    <!-- *********************************** VENTANA HOME FRAGMENT ***********************************-->
+    <string name="txt_informativo_ventanaHomeFragment">¿Estas buscando un viaje para ir al trabajo?</string>
+    <string name="bt_publicar_ventanaHomeFragment">PUBLICAR</string>
+    <string name="bt_buscar_ventanaHomeFragment">BUSCAR</string>
+    <string name="txt_mensajeNoVehiculo_Toast_ventanaHomeFragment">Antes de publicar un viaje agregue un vehiculo por favor.</string>
 
 </resources>
