@@ -9,68 +9,64 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Viaje implements Serializable {
-
     @SerializedName("idviaje")
     private Integer idviaje;
-
     @SerializedName("usuario")
     private Usuario usuario;
-
     @SerializedName("vehiculo")
     private Vehiculo vehiculo;
-
-    @SerializedName("origen")
-    private String origen;
-
-    @SerializedName("destino")
-    private String destino;
-
-    @SerializedName("codigoverificacion")
-    private Integer codigoverificacion;
-
+    @SerializedName("localidadorigen")
+    private String localidadorigen;
+    @SerializedName("lugarsalida")
+    private String lugarsalida;
+    @SerializedName("localidaddestino")
+    private String localidaddestino;
+    @SerializedName("lugarllegada")
+    private String lugarllegada;
     @SerializedName("precio")
     private BigDecimal precio;
-
     @SerializedName("numplazasdisponibles")
     private int numplazasdisponibles;
-
     @SerializedName("fechasalida")
     private Date fechasalida;
-
-    @SerializedName("horasalida")
-    private Date horasalida;
-
     @SerializedName("fechacreacionviaje")
     private Date fechacreacionviaje;
-
+    @SerializedName("matriculaError")
+    private String matriculaError;
+    @SerializedName("usuarioError")
+    private String usuarioError;
+    @SerializedName("vehiculoError")
+    private String vehiculoError;
     @SerializedName("reservas")
     private Set<Reserva> reservas = new HashSet<Reserva>(0);
 
     public Viaje() {
     }
 
-    public Viaje(Usuario usuario, Vehiculo vehiculo, String origen, String destino, int numplazasdisponibles,
-                 Date fechacreacionviaje) {
+    public Viaje(Usuario usuario, Vehiculo vehiculo, String localidadorigen, String lugarsalida,
+                          String localidaddestino, String lugarllegada, int numplazasdisponibles, Date fechacreacionviaje) {
         this.usuario = usuario;
         this.vehiculo = vehiculo;
-        this.origen = origen;
-        this.destino = destino;
+        this.localidadorigen = localidadorigen;
+        this.lugarsalida = lugarsalida;
+        this.localidaddestino = localidaddestino;
+        this.lugarllegada = lugarllegada;
         this.numplazasdisponibles = numplazasdisponibles;
         this.fechacreacionviaje = fechacreacionviaje;
     }
 
-    public Viaje(Usuario usuario, Vehiculo vehiculo, String origen, String destino, Integer codigoverificacion,
-                 BigDecimal precio, int numplazasdisponibles, Date fechasalida, Date horasalida, Date fechacreacionviaje,
-                 Set<Reserva> reservas) {
+    public Viaje(Usuario usuario, Vehiculo vehiculo, String localidadorigen, String lugarsalida,
+                          String localidaddestino, String lugarllegada, BigDecimal precio, int numplazasdisponibles, Date fechasalida,
+                          Date fechacreacionviaje, Set<Reserva> reservas) {
         this.usuario = usuario;
         this.vehiculo = vehiculo;
-        this.origen = origen;
-        this.destino = destino;
-        this.codigoverificacion = codigoverificacion;
+        this.localidadorigen = localidadorigen;
+        this.lugarsalida = lugarsalida;
+        this.localidaddestino = localidaddestino;
+        this.lugarllegada = lugarllegada;
         this.precio = precio;
         this.numplazasdisponibles = numplazasdisponibles;
         this.fechasalida = fechasalida;
-        this.horasalida = horasalida;
         this.fechacreacionviaje = fechacreacionviaje;
         this.reservas = reservas;
     }
@@ -99,28 +95,36 @@ public class Viaje implements Serializable {
         this.vehiculo = vehiculo;
     }
 
-    public String getOrigen() {
-        return this.origen;
+    public String getLocalidadOrigen() {
+        return this.localidadorigen;
     }
 
-    public void setOrigen(String origen) {
-        this.origen = origen;
+    public void setLocalidadOrigen(String localidadorigen) {
+        this.localidadorigen = localidadorigen;
     }
 
-    public String getDestino() {
-        return this.destino;
+    public String getLugarSalida() {
+        return this.lugarsalida;
     }
 
-    public void setDestino(String destino) {
-        this.destino = destino;
+    public void setLugarSalida(String lugarsalida) {
+        this.lugarsalida = lugarsalida;
     }
 
-    public Integer getCodigoverificacion() {
-        return this.codigoverificacion;
+    public String getLocalidadDestino() {
+        return this.localidaddestino;
     }
 
-    public void setCodigoverificacion(Integer codigoverificacion) {
-        this.codigoverificacion = codigoverificacion;
+    public void setLocalidadDestino(String localidaddestino) {
+        this.localidaddestino = localidaddestino;
+    }
+
+    public String getLugarLlegada() {
+        return this.lugarllegada;
+    }
+
+    public void setLugarLlegada(String lugarllegada) {
+        this.lugarllegada = lugarllegada;
     }
 
     public BigDecimal getPrecio() {
@@ -147,14 +151,6 @@ public class Viaje implements Serializable {
         this.fechasalida = fechasalida;
     }
 
-    public Date getHorasalida() {
-        return this.horasalida;
-    }
-
-    public void setHorasalida(Date horasalida) {
-        this.horasalida = horasalida;
-    }
-
     public Date getFechacreacionviaje() {
         return this.fechacreacionviaje;
     }
@@ -169,6 +165,30 @@ public class Viaje implements Serializable {
 
     public void setReservas(Set<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public String getMatriculaError() {
+        return matriculaError;
+    }
+
+    public void setMatriculaError(String matriculaError) {
+        this.matriculaError = matriculaError;
+    }
+
+    public String getUsuarioError() {
+        return usuarioError;
+    }
+
+    public void setUsuarioError(String usuarioError) {
+        this.usuarioError = usuarioError;
+    }
+
+    public String getVehiculoError() {
+        return vehiculoError;
+    }
+
+    public void setVehiculoError(String vehiculoError) {
+        this.vehiculoError = vehiculoError;
     }
 
 }

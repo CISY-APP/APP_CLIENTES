@@ -45,7 +45,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="5"
-                android:text="Publicar Viaje"
+                android:text="@string/txt_cardViewTitulo_ventanaPublicarViaje"
                 android:textColor="@color/places_ui_default_primary_dark"
                 android:textSize="24sp" />
 
@@ -62,7 +62,7 @@
     </androidx.cardview.widget.CardView>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animation_example_lottie_view"
+        android:id="@+id/animacionPublicarViaje"
         android:layout_width="match_parent"
         android:layout_height="157dp"
         android:layout_marginTop="52dp"
@@ -96,98 +96,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Información sobre el viaje"
+                android:text="@string/txt_informativo_ventanaPublicarViaje"
                 android:textColor="@color/places_ui_default_primary_dark"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/textViewTituloOrigenPublicarViaje"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="ORIGEN"
-                android:textColor="@color/colorPrimary"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
-
-            <EditText
-                android:id="@+id/editTexOrigenPublicarViaje"
-                style="@android:style/Widget.Holo.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/layout_drawable_2"
-                android:clickable="true"
-                android:drawableStart="@drawable/ic_localizacion"
-                android:drawableLeft="@drawable/ic_localizacion"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:focusable="true"
-                android:hint="Calle Fuencarral Numero 2"
-                android:inputType="textPersonName"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textColor="@color/places_ui_default_primary_dark"
-                android:textColorHint="@color/colorGrisLight"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/textViewErrorOrigenPublicarViaje"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginTop="5dp"
-                android:text=""
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/textViewTituloDestinoPublicarViaje"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="DESTINO"
-                android:textColor="@color/colorPrimary"
-                android:textSize="10sp"
-                tools:ignore="SmallSp" />
-
-            <EditText
-                android:id="@+id/editTexDestinoPublicarViaje"
-                style="@android:style/Widget.Holo.EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/layout_drawable_2"
-                android:clickable="true"
-                android:drawableStart="@drawable/ic_localizacion"
-                android:drawableLeft="@drawable/ic_localizacion"
-                android:drawablePadding="5dp"
-                android:ems="10"
-                android:focusable="true"
-                android:hint="Calle Restituto Numero 1"
-                android:inputType="textPersonName"
-                android:padding="8dp"
-                android:singleLine="true"
-                android:textColor="@color/places_ui_default_primary_dark"
-                android:textColorHint="@color/colorGrisLight"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/textViewErrorDestinoPublicarViaje"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginTop="5dp"
-                android:text=""
-                android:textColor="@color/colorAccent"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -196,12 +108,252 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/textViewTituloLocalidadOrigenPublicarViaje"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/txt_tituloLocalidadOrigen_ventanaPublicarViaje"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:id="@+id/textViewTituloLugarOrigenPublicarViaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_titulolugarSalida_ventanaPublicarViaje"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTexLocalidadOrigenPublicarViaje"
+                    style="@android:style/Widget.Holo.EditText"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/layout_drawable_2"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_localizacion"
+                    android:drawableLeft="@drawable/ic_localizacion"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:focusable="true"
+                    android:hint="@string/edit_localidadOrigen_ventanaPublicarViaje"
+                    android:inputType="textPersonName"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/editTexLugarOrigenPublicarViaje"
+                    style="@android:style/Widget.Holo.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/layout_drawable_2"
+                    android:clickable="true"
+                    android:ems="10"
+                    android:focusable="true"
+                    android:hint="@string/edit_lugarSalida_ventanaPublicarViaje"
+                    android:inputType="textPersonName"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <TextView
+                        android:id="@+id/textViewErrorLocalidadOrigenPublicarViaje"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="5dp"
+                        android:text=""
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textViewErrorLugarOrigenPublicarViaje"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="5dp"
+                        android:text=""
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewTituloLocalidadDestinoPublicarViaje"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/txt_tituloLocalidadDestino_ventanaPublicarViaje"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+                <TextView
+                    android:id="@+id/textViewTituloLugarDestinoPublicarViaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_tituloLugarDestino_ventanaPublicarViaje"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTexLocalidadDestinoPublicarViaje"
+                    style="@android:style/Widget.Holo.EditText"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/layout_drawable_2"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_localizacion"
+                    android:drawableLeft="@drawable/ic_localizacion"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:focusable="true"
+                    android:hint="@string/edit_localidadDestino_ventanaPublicarViaje"
+                    android:inputType="textPersonName"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/editTexLugarDestinoPublicarViaje"
+                    style="@android:style/Widget.Holo.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/layout_drawable_2"
+                    android:clickable="true"
+                    android:ems="10"
+                    android:focusable="true"
+                    android:hint="@string/edit_lugarDestino_ventanaPublicarViaje"
+                    android:inputType="textPersonName"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <TextView
+                        android:id="@+id/textViewErrorLocalidadDestinoPublicarViaje"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="5dp"
+                        android:text=""
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textViewErrorLugarDestinoPublicarViaje"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="5dp"
+                        android:text=""
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
                     android:id="@+id/textViewTituloVehiculoPublicarViaje"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="VEHICULO"
+                    android:text="@string/txt_tituloVehiculo_ventanaPublicarViaje"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -210,7 +362,7 @@
                     android:id="@+id/textViewTituloNumPlazasPublicarViaje"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nº DE PLAZAS"
+                    android:text="@string/txt_tituloNumPlazas_ventanaPublicarViaje"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -304,11 +456,11 @@
 
                 <TextView
                     android:id="@+id/textViewTituloHoraPublicarViaje"
-                    android:layout_width="120dp"
+                    android:layout_width="135dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:text="HORA"
+                    android:text="@string/txt_tituloHora_ventanaPublicarViaje"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -317,7 +469,7 @@
                     android:id="@+id/textViewTituloFechaPublicarViaje"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="FECHA"
+                    android:text="@string/txt_tituloFecha_ventanaPublicarViaje"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -332,7 +484,7 @@
 
                 <EditText
                     android:id="@+id/editTextHoraPublicarViaje"
-                    android:layout_width="120dp"
+                    android:layout_width="135dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
@@ -343,7 +495,7 @@
                     android:ems="10"
                     android:focusable="false"
                     android:gravity="center"
-                    android:hint="12:00"
+                    android:hint="@string/edit_hora_ventanaPublicarViaje"
                     android:inputType="date"
                     android:maxLines="1"
                     android:padding="8dp"
@@ -362,7 +514,7 @@
                     android:ems="10"
                     android:focusable="false"
                     android:gravity="center"
-                    android:hint="@string/edit_fecha_ventanaDatosUsuario"
+                    android:hint="@string/edit_fecha_ventanaPublicarViaje"
                     android:inputType="date"
                     android:maxLines="1"
                     android:padding="8dp"
@@ -389,13 +541,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="5">
 
                 <TextView
                     android:id="@+id/textViewTituloPrecioPublicarViaje"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PRECIO POR PLAZA"
+                    android:layout_weight="5"
+                    android:text="@string/txt_tituloPrecio_ventanaPublicarViaje"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"
                     tools:ignore="SmallSp" />
@@ -404,13 +558,11 @@
                     android:id="@+id/textViewPrecioPublicarViaje"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0"
                     android:layout_gravity="end"
-                    android:layout_marginStart="260dp"
-                    android:layout_marginLeft="260dp"
-                    android:text="0.00 €"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="10sp"
-                    tools:ignore="SmallSp" />
+                    android:text="@string/edit_precio_ventanaPublicarViaje"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <SeekBar
