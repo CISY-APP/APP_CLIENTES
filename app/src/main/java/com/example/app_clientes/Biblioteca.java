@@ -2,7 +2,6 @@
 package com.example.app_clientes;
 //Importamos los siguientes paquetes:
 import com.example.app_clientes.pojos.Usuario;
-import java.sql.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 //Clase donde se crearan distintos metodos utilizados por otras clases.

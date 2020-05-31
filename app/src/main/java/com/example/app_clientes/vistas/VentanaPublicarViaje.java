@@ -4,6 +4,7 @@ package com.example.app_clientes.vistas;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.*;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,11 +18,14 @@ import com.example.app_clientes.otros.CalendarioFragment;
 import com.example.app_clientes.otros.HoraFragment;
 import com.example.app_clientes.R;
 import com.example.app_clientes.pojos.Vehiculo;
+import com.example.app_clientes.pojos.Viaje;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,15 +34,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 //Clase que contiene toda la logica y conexion con la ventana de publicar viaje de la app:
 public class VentanaPublicarViaje extends AppCompatActivity implements View.OnClickListener, TextWatcher, AdapterView.OnItemSelectedListener, SeekBar.OnSeekBarChangeListener{
     //Variables para comprobacion de formatos:
-    private boolean pruebaFormatoOrigen, pruebaFormatoDestino, pruebaFormatoHora, pruebaFormatoFecha, pruebaFormatoVehiculo, pruebaFormatoNumPlazas, pruebaFormatoPrecio;
+    private boolean pruebaFormatoLocalidadOrigen, pruebaFormatoLugarOrigen, pruebaFormatoLocalidadDestino, pruebaFormatoLugarDestino, pruebaFormatoHora, pruebaFormatoFecha, pruebaFormatoVehiculo, pruebaFormatoNumPlazas, pruebaFormatoPrecio;
     //Atributos XML:
     private Spinner spinnerNumPlazas, spinnerVehiculo;
     private LinearLayout linearLayoutSpinnerVehiculo, linearLayoutSpinnerNumPlazas;
-    private EditText editTextOrigen, editTextDestino, editTextHora, editTextFecha;
+    private EditText editTextLocalidadOrigen, editTextLugarOrigen, editTextLocalidadDestino, editTextLugarDestino, editTextHora, editTextFecha;
     private SeekBar seekBarPrecio;
     private ImageView btCrearViaje, btVolver;
     private TextView precioSeekBar;
-    private TextView txtErrorOrigen, txtErrorDestino, txtErrorFecha, txtErrorNumPlazas, txtErrorVehiculos, txtErrorPrecio;
+    private TextView txtErrorLocalidadOrigen, txtErrorLugarOrigen, txtErrorLocalidadDestino, txtErrorLugarDestino, txtErrorFecha, txtErrorNumPlazas, txtErrorVehiculos, txtErrorPrecio;
     //Atributos de la clase:
     private String numPlazas, matricula;
     private String ID_USUARIO;
@@ -49,8 +53,10 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_publicar_viaje);
         //Inicializamos variables booleanas de prueba:
-        pruebaFormatoOrigen=false;
-        pruebaFormatoDestino=false;
+        pruebaFormatoLocalidadOrigen=false;
+        pruebaFormatoLugarOrigen=false;
+        pruebaFormatoLocalidadDestino=false;
+        pruebaFormatoLugarDestino=false;
         pruebaFormatoHora=false;
         pruebaFormatoFecha=false;
         pruebaFormatoVehiculo=true;
@@ -63,16 +69,20 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
         spinnerVehiculo = findViewById(R.id.spinnerVehiculoPublicarViaje);
         linearLayoutSpinnerVehiculo = findViewById(R.id.linearLayoutSpinnerVehiculoPublicarViaje);
         linearLayoutSpinnerNumPlazas = findViewById(R.id.linearLayoutSpinnerNumPlazasPublicarViaje);
-        editTextOrigen = findViewById(R.id.editTexOrigenPublicarViaje);
-        editTextDestino = findViewById(R.id.editTexDestinoPublicarViaje);
+        editTextLocalidadOrigen = findViewById(R.id.editTexLocalidadOrigenPublicarViaje);
+        editTextLugarOrigen = findViewById(R.id.editTexLugarOrigenPublicarViaje);
+        editTextLocalidadDestino = findViewById(R.id.editTexLocalidadDestinoPublicarViaje);
+        editTextLugarDestino = findViewById(R.id.editTexLugarDestinoPublicarViaje);
         editTextHora = findViewById(R.id.editTextHoraPublicarViaje);
         editTextFecha = findViewById(R.id.editTextFechaPublicarViaje);
         seekBarPrecio = findViewById(R.id.seekBarPrecioPublicarViaje);
         precioSeekBar = findViewById(R.id.textViewPrecioPublicarViaje);
         btCrearViaje = findViewById(R.id.btAceptarCambiosPublicarViaje);
         btVolver = findViewById(R.id.btFlechaAtrasPublicarViaje);
-        txtErrorOrigen = findViewById(R.id.textViewErrorOrigenPublicarViaje);
-        txtErrorDestino = findViewById(R.id.textViewErrorDestinoPublicarViaje);
+        txtErrorLocalidadOrigen = findViewById(R.id.textViewErrorLocalidadOrigenPublicarViaje);
+        txtErrorLugarOrigen = findViewById(R.id.textViewErrorLugarOrigenPublicarViaje);
+        txtErrorLocalidadDestino = findViewById(R.id.textViewErrorLocalidadDestinoPublicarViaje);
+        txtErrorLugarDestino = findViewById(R.id.textViewErrorLugarDestinoPublicarViaje);
         txtErrorFecha = findViewById(R.id.textViewErrorFechaPublicarViaje);
         txtErrorNumPlazas = findViewById(R.id.textViewErrorNumPlazasPublicarViaje);
         txtErrorVehiculos = findViewById(R.id.textViewErrorVehiculoPublicarViaje);
@@ -87,8 +97,10 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
         spinnerVehiculo.setOnItemSelectedListener(this);
         spinnerNumPlazas.setOnItemSelectedListener(this);
         //Vinculamos los edittext a su listener para el metodo afterTextChanged, que esta implementado en esta clase:
-        editTextOrigen.addTextChangedListener(this);
-        editTextDestino.addTextChangedListener(this);
+        editTextLocalidadOrigen.addTextChangedListener(this);
+        editTextLugarOrigen.addTextChangedListener(this);
+        editTextLocalidadDestino.addTextChangedListener(this);
+        editTextLugarDestino.addTextChangedListener(this);
         editTextHora.addTextChangedListener(this);
         editTextFecha.addTextChangedListener(this);
         //Vinculamos el seekbar a su listener:
@@ -106,12 +118,18 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                 //Animacion para el spinner de numero de plazas:
                 ObjectAnimator scaleDownX_spinnerNumPlazas = ObjectAnimator.ofFloat(linearLayoutSpinnerNumPlazas, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_spinnerNumPlazas = ObjectAnimator.ofFloat(linearLayoutSpinnerNumPlazas, "scaleY", 0.0f, 1.0f);
-                //Animacion para el edittext Origen:
-                ObjectAnimator scaleDownX_TxtOrigen = ObjectAnimator.ofFloat(editTextOrigen, "scaleX", 0.0f, 1.0f);
-                ObjectAnimator scaleDownY_TxtOrigen = ObjectAnimator.ofFloat(editTextOrigen, "scaleY", 0.0f, 1.0f);
-                //Animacion para el edittext Destino:
-                ObjectAnimator scaleDownX_TxtDestino = ObjectAnimator.ofFloat(editTextDestino, "scaleX", 0.0f, 1.0f);
-                ObjectAnimator scaleDownY_TxtDestino = ObjectAnimator.ofFloat(editTextDestino, "scaleY", 0.0f, 1.0f);
+                //Animacion para el edittext Localidad Origen:
+                ObjectAnimator scaleDownX_TxtLocalidadOrigen = ObjectAnimator.ofFloat(editTextLocalidadOrigen, "scaleX", 0.0f, 1.0f);
+                ObjectAnimator scaleDownY_TxtLocalidadOrigen = ObjectAnimator.ofFloat(editTextLocalidadOrigen, "scaleY", 0.0f, 1.0f);
+                //Animacion para el edittext Lugar Origen:
+                ObjectAnimator scaleDownX_TxtLugarOrigen = ObjectAnimator.ofFloat(editTextLugarOrigen, "scaleX", 0.0f, 1.0f);
+                ObjectAnimator scaleDownY_TxtLugarOrigen = ObjectAnimator.ofFloat(editTextLugarOrigen, "scaleY", 0.0f, 1.0f);
+                //Animacion para el edittext Localidad Destino:
+                ObjectAnimator scaleDownX_TxtLocalidadDestino = ObjectAnimator.ofFloat(editTextLocalidadDestino, "scaleX", 0.0f, 1.0f);
+                ObjectAnimator scaleDownY_TxtLocalidadDestino = ObjectAnimator.ofFloat(editTextLocalidadDestino, "scaleY", 0.0f, 1.0f);
+                //Animacion para el edittext Lugar Destino:
+                ObjectAnimator scaleDownX_TxtLugarDestino = ObjectAnimator.ofFloat(editTextLugarDestino, "scaleX", 0.0f, 1.0f);
+                ObjectAnimator scaleDownY_TxtLugarDestino = ObjectAnimator.ofFloat(editTextLugarDestino, "scaleY", 0.0f, 1.0f);
                 //Animacion para el edittext Hora:
                 ObjectAnimator scaleDownX_TxtHora = ObjectAnimator.ofFloat(editTextHora, "scaleX", 0.0f, 1.0f);
                 ObjectAnimator scaleDownY_TxtHora = ObjectAnimator.ofFloat(editTextHora, "scaleY", 0.0f, 1.0f);
@@ -127,8 +145,10 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                 //Configuramos el animatorSet, como se tienen que reproducir las animaciones, el tiempo que duran, que clase de interpolador utilizan y la lanzamos:
                 animatorSetEscale.play(scaleDownX_spinnerVehiculo).with(scaleDownY_spinnerVehiculo)
                         .with(scaleDownX_spinnerNumPlazas).with(scaleDownY_spinnerNumPlazas)
-                        .with(scaleDownX_TxtOrigen).with(scaleDownY_TxtOrigen)
-                        .with(scaleDownX_TxtDestino).with(scaleDownY_TxtDestino)
+                        .with(scaleDownX_TxtLocalidadOrigen).with(scaleDownY_TxtLocalidadOrigen)
+                        .with(scaleDownX_TxtLugarOrigen).with(scaleDownY_TxtLugarOrigen)
+                        .with(scaleDownX_TxtLocalidadDestino).with(scaleDownY_TxtLocalidadDestino)
+                        .with(scaleDownX_TxtLugarDestino).with(scaleDownY_TxtLugarDestino)
                         .with(scaleDownX_TxtHora).with(scaleDownY_TxtHora)
                         .with(scaleDownX_TxtFecha).with(scaleDownY_TxtFecha)
                         .with(scaleDownX_SeekbarPrecio).with(scaleDownY_SeekbarPrecio)
@@ -218,11 +238,15 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
         else if(v.equals(editTextHora)){showTimePickerDialog();}
         else if (v.equals(btCrearViaje)){
             //Variables booleanas:
-            boolean pbOrigen=true, pbDestino=true, pbVehiculo=true, pbNumPlazas=true, pbHora=true, pbFecha=true, pbPrecio=true;
+            boolean pbLocalidadOrigen=true, pbLugarOrigen=true, pbLocalidadDestino=true, pbLugarDestino=true, pbVehiculo=true, pbNumPlazas=true, pbHora=true, pbFecha=true, pbPrecio=true;
             //Antes de hacer la peticion al servidor realizamos las siguientes comprobaciones:
-            //Control de origen, de momento ninguno mas:
+            //Control de localidad origen, de momento ninguno mas:
 
-            //Control de destino de momento ninguno mas:
+            //Control de lugar origen, de momento ninguno mas:
+
+            //Control de localidad destino, de momento ninguno mas:
+
+            //Control de lugar destino de momento ninguno mas:
 
             //Control de vehiculo de momento ninguno mas:
 
@@ -240,7 +264,7 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                         pbFecha=false;
                         pbHora=false;
                         txtErrorFecha.setVisibility(View.VISIBLE);
-                        txtErrorFecha.setText("Fecha invalida");
+                        txtErrorFecha.setText(getText(R.string.txt_errorFecha_Menor_ventanaPublicarViaje));
                         editTextFecha.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                         editTextHora.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                     }
@@ -248,7 +272,7 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                     pbFecha=false;
                     pbHora=false;
                     txtErrorFecha.setVisibility(View.VISIBLE);
-                    txtErrorFecha.setText("Fecha invalida");
+                    txtErrorFecha.setText(getText(R.string.txt_errorfecha_Formato_ventanaPublicarViaje));
                     editTextFecha.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                     editTextHora.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                 }
@@ -262,13 +286,13 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
             //Control de precio:
             try {
                 if (Double.parseDouble(precioSeekBar.getText().toString().substring(0,precioSeekBar.getText().toString().length()-2))<=0){
-                    txtErrorPrecio.setText("Precio no mayor a 0 €");
+                    txtErrorPrecio.setText(getText(R.string.txt_errorPrecio_Menor_ventanaPublicarViaje));
                     txtErrorPrecio.setVisibility(View.VISIBLE);
                     precioSeekBar.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                     pbPrecio=false;
                 }
             }catch (NumberFormatException n){
-                txtErrorPrecio.setText("Precio con valor no numerico.");
+                txtErrorPrecio.setText(getText(R.string.txt_errorPrecio_Formato_ventanaPublicarViaje));
                 txtErrorPrecio.setVisibility(View.VISIBLE);
                 precioSeekBar.setTextColor(getResources().getColor(R.color.colorErrorsitoEditText));
                 pbPrecio=false;
@@ -277,53 +301,51 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                 txtErrorPrecio.setVisibility(View.GONE);
                 txtErrorPrecio.setText("");
                 precioSeekBar.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
-            }/*
+            }
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
-            if(pbOrigen&&pbDestino&&pbVehiculo&&pbNumPlazas&&pbHora&&pbFecha&&pbPrecio){
+            if(pbLocalidadOrigen&&pbLugarOrigen&&pbLocalidadDestino&&pbLugarDestino&&pbVehiculo&&pbNumPlazas&&pbHora&&pbFecha&&pbPrecio){
                 //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
                 //Vinculamos el cliente con la interfaz:
                 JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para actualizar un vehiculo con el valor de los editexts y demas:
-                String modeloAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
-                String marcaAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                //Creamos una peticion para crear un viaje y preparamos la informacion a enviar:
+                String localidadOrigen=Biblioteca.capitalizaString(Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextLocalidadOrigen.getText().toString()));
+                String lugarOrigen=Biblioteca.capitalizaString(Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextLugarOrigen.getText().toString()));
+                String localidadDestino=Biblioteca.capitalizaString(Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextLocalidadDestino.getText().toString()));
+                String lugarDestino=Biblioteca.capitalizaString(Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextLugarDestino.getText().toString()));
                 Map<String, String> infoMap = new HashMap<String, String>();
-                infoMap.put("matricula", editTextMatricula.getText().toString());
-                if(!modeloAux.equals("")){
-                    infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
-                }else{
-                    infoMap.put("modelo", vSesion.getModelo());
-                }
-                if(!marcaAux.equals("")){
-                    infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
-                }else {
-                    infoMap.put("marca", vSesion.getMarca());
-                }
-                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
-                infoMap.put("color", colorSeleccionado.toUpperCase());
-                Call<Vehiculo> call = peticiones.actualizarVehiculoPorMatricula(infoMap);
+                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
+                infoMap.put("localidadOrigen", localidadOrigen);
+                infoMap.put("lugarSalida", lugarOrigen);
+                infoMap.put("localidadDestino", localidadDestino);
+                infoMap.put("lugarLlegada", lugarDestino);
+                infoMap.put("matricula", spinnerVehiculo.getSelectedItem().toString().substring(0,7));
+                infoMap.put("numPlazas", spinnerNumPlazas.getSelectedItem().toString());
+                infoMap.put("fecha", fechaElegida);
+                infoMap.put("precio", precioSeekBar.getText().toString().substring(0,precioSeekBar.getText().toString().length()-2));
+                Call<Viaje> call = peticiones.registrarViaje(infoMap);
                 //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                call.enqueue(new Callback<Vehiculo>() {
+                call.enqueue(new Callback<Viaje>() {
                     //Gestionamos la respuesta del servidor:
                     @Override
-                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
+                    public void onResponse(Call<Viaje> call, Response<Viaje> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                         if (!response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
                             return;
                         }
-                        //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
-                        vSesion=response.body();
-                        agregarCoches();
-                        Toast.makeText(getContext(), getText(R.string.txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo), Toast.LENGTH_LONG).show();
+                        //Si la respuesta es satisfactoria, lo indicamos llevando a la ventana siguiente:
+                        Intent intentOK = new Intent(getApplicationContext(), VentanaViajePublicado.class);
+                        startActivity(intentOK);
+                        finish();
                     }
                     //En caso de que no responda el servidor mostramos mensaje de error:
                     @Override
-                    public void onFailure(Call<Vehiculo> call, Throwable t) {
-                        Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    public void onFailure(Call<Viaje> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
-            }*/
+            }
         }
     }
     //Metodo afterTextChanged implementado de la interfaz TextWatcher (cuando cambie el texto se ejecutara):
@@ -331,20 +353,32 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
     public void afterTextChanged(Editable s) {
         //Boolean para comprobar que estado tiene antes de realizar pruebas:
         boolean anterior = false;
-        if (pruebaFormatoOrigen && pruebaFormatoDestino && pruebaFormatoFecha && pruebaFormatoHora && pruebaFormatoNumPlazas && pruebaFormatoVehiculo && pruebaFormatoPrecio) {
+        if (pruebaFormatoLocalidadOrigen && pruebaFormatoLugarOrigen && pruebaFormatoLocalidadDestino && pruebaFormatoLugarDestino && pruebaFormatoFecha && pruebaFormatoHora && pruebaFormatoNumPlazas && pruebaFormatoVehiculo && pruebaFormatoPrecio) {
             anterior = true;
         }
-        //Si el texto de origen ha cambiado:
-        if (s == editTextOrigen.getEditableText()) {
+        //Si el texto localidad de origen ha cambiado:
+        if (s == editTextLocalidadOrigen.getEditableText()) {
             //Limpiamos espacios multiples y si no es cadena vacia y esta en el rango de longitud de 1 a 30:
-            String origen = Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
-            pruebaFormatoOrigen = !origen.equals("") && origen.length() >= 1 && origen.length() <= 30;
+            String localidadOrigen = Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
+            pruebaFormatoLocalidadOrigen = !localidadOrigen.equals("") && localidadOrigen.length() >= 1 && localidadOrigen.length() <= 30;
         }
-        //Si el texto de destino ha cambiado:
-        else if (s == editTextDestino.getEditableText()) {
+        //Si el texto lugar de origen ha cambiado:
+        else if (s == editTextLugarOrigen.getEditableText()) {
             //Limpiamos espacios multiples y si no es cadena vacia y esta en el rango de longitud de 1 a 30:
-            String destino = Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
-            pruebaFormatoDestino = !destino.equals("") && destino.length() >= 1 && destino.length() <= 30;
+            String lugarOrigen = Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
+            pruebaFormatoLugarOrigen = !lugarOrigen.equals("") && lugarOrigen.length() >= 1 && lugarOrigen.length() <= 30;
+        }
+        //Si el texto localidad de destino ha cambiado:
+        else if (s == editTextLocalidadDestino.getEditableText()) {
+            //Limpiamos espacios multiples y si no es cadena vacia y esta en el rango de longitud de 1 a 30:
+            String localidadDestino = Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
+            pruebaFormatoLocalidadDestino = !localidadDestino.equals("") && localidadDestino.length() >= 1 && localidadDestino.length() <= 30;
+        }
+        //Si el texto de lugar de destino ha cambiado:
+        else if (s == editTextLugarDestino.getEditableText()) {
+            //Limpiamos espacios multiples y si no es cadena vacia y esta en el rango de longitud de 1 a 30:
+            String lugarDestino = Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
+            pruebaFormatoLugarDestino = !lugarDestino.equals("") && lugarDestino.length() >= 1 && lugarDestino.length() <= 30;
         }
         //Si el texto de hora ha cambiado:
         else if (s == editTextHora.getEditableText()) {
@@ -357,7 +391,7 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
             pruebaFormatoFecha = !s.toString().equals("");
         }
         //Si las 7 pruebas de formato son correctas pasamos a liberar el boton de publicar viaje:
-        if (pruebaFormatoOrigen && pruebaFormatoDestino && pruebaFormatoFecha && pruebaFormatoHora && pruebaFormatoNumPlazas && pruebaFormatoVehiculo && pruebaFormatoPrecio && !anterior) {
+        if (pruebaFormatoLocalidadOrigen && pruebaFormatoLugarOrigen && pruebaFormatoLocalidadDestino && pruebaFormatoLugarDestino && pruebaFormatoFecha && pruebaFormatoHora && pruebaFormatoNumPlazas && pruebaFormatoVehiculo && pruebaFormatoPrecio && !anterior) {
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
             //Animacion para el bt publicar viaje:
@@ -372,7 +406,7 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
             btCrearViaje.setColorFilter(getResources().getColor(R.color.colorPrimary));
         }
         //Si alguna prueba no es verdadera se desactiva el boton publicar viaje:
-        else if ((!pruebaFormatoOrigen || !pruebaFormatoDestino || !pruebaFormatoFecha || !pruebaFormatoHora || !pruebaFormatoNumPlazas || !pruebaFormatoVehiculo || !pruebaFormatoPrecio) && anterior) {
+        else if ((!pruebaFormatoLocalidadOrigen || !pruebaFormatoLugarOrigen || !pruebaFormatoLocalidadDestino || !pruebaFormatoLugarDestino || !pruebaFormatoFecha || !pruebaFormatoHora || !pruebaFormatoNumPlazas || !pruebaFormatoVehiculo || !pruebaFormatoPrecio) && anterior) {
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
             //Animacion para el bt publicar viaje:

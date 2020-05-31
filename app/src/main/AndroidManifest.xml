@@ -39,7 +39,9 @@
         <activity
             android:name=".vistas.VentanaAgregarVehiculo"
             android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".vistas.VentanaBuscarViaje" />
+        <activity
+            android:name=".vistas.VentanaBuscarViaje"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".vistas.VentanaViajeNoEncontrado" />
         <activity android:name=".vistas.VentanaChatIndividual" />
     </application>

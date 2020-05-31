@@ -29,14 +29,10 @@
     <string name="TV_Precio_minimo">0,00 €</string>
 
     <!--BOTONES-->
-    <string name="publicar">Publicar</string>
-    <string name="buscar">Buscar</string>
-    <string name="listo">Listo</string>
     <string name="cancelar">Cancelar</string>
     <string name="home_second">Home Second</string>
     <string name="home_third">Home Third</string>
-    <string name="necesitas_coche">¿Necesitas un coche para ir al trabajo?</string>
-    <string name="viaje_publicado">!Tu viaje ha sido publido¡ Gracias por reducir los niveles de contaminación.</string>
+    <string name="listo">Listo</string>
     <string name="viaje_no_encontrado">!Vaya¡ Parece que no hay ningún viaje con esos criterios de búsqueda.</string>
     <string name="viaje_reservado">Has reservado una plaza, si necesitas algo no dudes en contactar con el conductor.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
@@ -44,7 +40,7 @@
     <string name="marca">MARCA</string>
 
 
-    <!-- *********************************** VENTANA LOGIN ***********************************-->
+    <!-- ********************************************* VENTANA LOGIN *********************************************-->
     <string name="bt_login_ventanaLogin">Iniciar Sesion</string>
     <string name="bt_registrar_ventanaLogin">Registrarse</string>
     <string name="txt_emailError_Formato_ventanaLogin">Email con formato no valido.</string>
@@ -56,7 +52,7 @@
     <string name="txt_bienvenida_Toast_ventanaLogin">Bienvenido</string>
     <string name="edit_email_ventanaLogin">Usuario / Correo Electronico</string>
     <string name="edit_clave_ventanaLogin">Clave</string>
-    <!-- *********************************** VENTANA REGISTRAR ***********************************-->
+    <!-- ********************************************* VENTANA REGISTRAR *********************************************-->
     <string name="bt_registrar_ventanaRegistro">Registrarse</string>
     <string name="txt_emailError_Formato_ventanaRegistro">Email con formato no valido.</string>
     <string name="txt_claveErrorMayuscula_Formato_ventanaRegistro">Introduzca una letra mayuscula como minimo.</string>
@@ -75,7 +71,7 @@
     <string name="edit_apellidos_ventanaRegistro">Apellidos</string>
     <string name="edit_email_ventanaRegistro">Usuario / Correo Electronico</string>
     <string name="edit_clave_ventanaRegistro">Clave</string>
-    <!-- *********************************** VENTANA CAMBIAR CONTRASENA ***********************************-->
+    <!-- ********************************************* VENTANA CAMBIAR CONTRASENA *********************************************-->
     <string name="txt_claveActualError_Formato_ventanaCambiarContrasena">Clave con caracteres no alfanumericos.</string>
     <string name="txt_claveNewErrorIgualActual_ventanaCambiarContrasena">La contraseña nueva es igual a la actual.</string>
     <string name="txt_claveNewError_Formato_ventanaCambiarContrasena">Contraseña con caracteres no alfanumericos.</string>
@@ -92,7 +88,7 @@
     <string name="edit_claveActual_ventanaCambiarContrasena">Contraseña actual</string>
     <string name="edit_claveNew_ventanaCambiarContrasena">Nueva contraseña</string>
     <string name="edit_claveRep_ventanaCambiarContrasena">Repetir nueva contraseña</string>
-    <!-- *********************************** VENTANA DATOS USUARIO ***********************************-->
+    <!-- ********************************************* VENTANA DATOS USUARIO *********************************************-->
     <string name="txt_telefonoCaracteres_Formato_ventanaDatosUsuario">Telefono con caracteres no numericos.</string>
     <string name="txt_telefonoTam_Formato_ventanaDatosUsuario">Telefono necesita 9 digitos.</string>
     <string name="txt_descripcionTam_Formato_ventanaDatosUsuario">Excedido limite de 300 caracteres.</string>
@@ -118,7 +114,7 @@
     <string name="bt_guardarCambios_ventanaDatosUsuario">Guardar cambios</string>
     <string name="bt_cambiarContrasena_ventanaDatosUsuario">Cambiar contraseña</string>
     <string name="bt_eliminarCuenta_ventanaDatosUsuario">Borrar cuenta</string>
-    <!-- *********************************** VENTANA AGREGAR VEHICULO ***********************************-->
+    <!-- ********************************************* VENTANA AGREGAR VEHICULO *********************************************-->
     <string name="spinner_datos_gasolina_ventanaAgregarVehiculo">Gasolina</string>
     <string name="spinner_datos_diesel_ventanaAgregarVehiculo">Diesel</string>
     <string name="spinner_datos_hibrido_ventanaAgregarVehiculo">Híbrido</string>
@@ -136,7 +132,7 @@
     <string name="txt_tituloTipoCombustible_ventanaAgregarVehiculo">TIPO DE COMBUSTIBLE</string>
     <string name="txt_tituloColor_ventanaAgregarVehiculo">COLOR DEL VEHÍCULO</string>
     <string name="bt_seleccionarColor_ventanaAgregarVehiculo">SELECCIONAR</string>
-    <!-- *********************************** VENTANA DATOS VEHICULO ***********************************-->
+    <!-- ********************************************* VENTANA DATOS VEHICULO *********************************************-->
     <string name="spinner_datos_gasolina_ventanaDatosVehiculo">Gasolina</string>
     <string name="spinner_datos_diesel_ventanaDatosVehiculo">Diesel</string>
     <string name="spinner_datos_hibrido_ventanaDatosVehiculo">Híbrido</string>
@@ -155,6 +151,57 @@
     <string name="txt_tituloTipoCombustible_ventanaDatosVehiculo">TIPO DE COMBUSTIBLE</string>
     <string name="txt_tituloColor_ventanaDatosVehiculo">COLOR DEL VEHÍCULO</string>
     <string name="bt_seleccionarColor_ventanaDatosVehiculo">SELECCIONAR</string>
-
+    <!-- ********************************************* VENTANA VIAJE PUBLICADO *********************************************-->
+    <string name="bt_listo_ventanaViajePublicado">Listo</string>
+    <string name="txt_informativo_ventanaViajePublicado">¡Felicidades!\nTu viaje se ha publicado de manera exitosa.</string>
+    <!-- ********************************************* VENTANA PUBLICAR VIAJE *********************************************-->
+    <string name="txt_cardViewTitulo_ventanaPublicarViaje">Publicar Viaje</string>
+    <string name="txt_informativo_ventanaPublicarViaje">Informacion sobre el viaje a crear</string>
+    <string name="txt_tituloLocalidadOrigen_ventanaPublicarViaje">LOCALIDAD DE ORIGEN</string>
+    <string name="txt_titulolugarSalida_ventanaPublicarViaje">LUGAR DE SALIDA</string>
+    <string name="edit_localidadOrigen_ventanaPublicarViaje">Getafe</string>
+    <string name="edit_lugarSalida_ventanaPublicarViaje">Estacion Central</string>
+    <string name="txt_tituloLocalidadDestino_ventanaPublicarViaje">LOCALIDAD DE DESTINO</string>
+    <string name="txt_tituloLugarDestino_ventanaPublicarViaje">LUGAR DE DESTINO</string>
+    <string name="edit_localidadDestino_ventanaPublicarViaje">Madrid</string>
+    <string name="edit_lugarDestino_ventanaPublicarViaje">C/ Dulce Chacon Nº 4</string>
+    <string name="txt_tituloVehiculo_ventanaPublicarViaje">VEHICULO</string>
+    <string name="txt_tituloNumPlazas_ventanaPublicarViaje">Nº DE PLAZAS</string>
+    <string name="txt_tituloHora_ventanaPublicarViaje">HORA</string>
+    <string name="txt_tituloFecha_ventanaPublicarViaje">FECHA</string>
+    <string name="edit_hora_ventanaPublicarViaje">12:00</string>
+    <string name="edit_fecha_ventanaPublicarViaje">06 / 05 / 2020</string>
+    <string name="txt_tituloPrecio_ventanaPublicarViaje">PRECIO POR PLAZA</string>
+    <string name="edit_precio_ventanaPublicarViaje">0.00 €</string>
+    <string name="txt_errorFecha_Menor_ventanaPublicarViaje">Fecha invalida debido a que es anterior a la actual.</string>
+    <string name="txt_errorfecha_Formato_ventanaPublicarViaje">Fecha invalida.</string>
+    <string name="txt_errorPrecio_Menor_ventanaPublicarViaje">Precio no mayor a 0 €.</string>
+    <string name="txt_errorPrecio_Formato_ventanaPublicarViaje">Precio con valor no numerico.</string>
+    <!-- ********************************************* VENTANA HOME FRAGMENT *********************************************-->
+    <string name="txt_informativo_ventanaHomeFragment">¿Estas buscando un viaje para ir al trabajo?</string>
+    <string name="bt_publicar_ventanaHomeFragment">PUBLICAR</string>
+    <string name="bt_buscar_ventanaHomeFragment">BUSCAR</string>
+    <string name="txt_mensajeNoVehiculo_Toast_ventanaHomeFragment">Antes de publicar un viaje agregue un vehiculo por favor.</string>
+    <!-- ********************************************* VENTANA BUSCAR VIAJE *********************************************-->
+    <string name="txt_cardViewTitulo_ventanaBuscarViaje">Buscar Viaje</string>
+    <string name="txt_informativo_ventanaBuscarViaje">Informacion sobre el viaje a buscar</string>
+    <string name="txt_tituloLocalidadOrigen_ventanaBuscarViaje">LOCALIDAD DE ORIGEN</string>
+    <string name="txt_titulolugarSalida_ventanaBuscarViaje">LUGAR DE SALIDA</string>
+    <string name="edit_localidadOrigen_ventanaBuscarViaje">Alcorcon</string>
+    <string name="edit_lugarSalida_ventanaBuscarViaje">Estacion Central</string>
+    <string name="txt_tituloLocalidadDestino_ventanaBuscarViaje">LOCALIDAD DE DESTINO</string>
+    <string name="txt_tituloLugarDestino_ventanaBuscarViaje">LUGAR DE DESTINO</string>
+    <string name="edit_localidadDestino_ventanaBuscarViaje">Getafe</string>
+    <string name="edit_lugarDestino_ventanaBuscarViaje">Estacion de Metro El Bercial</string>
+    <string name="txt_tituloHora_ventanaBuscarViaje">HORA</string>
+    <string name="txt_tituloFecha_ventanaBuscarViaje">FECHA</string>
+    <string name="edit_hora_ventanaBuscarViaje">08:00</string>
+    <string name="edit_fecha_ventanaBuscarViaje">01 / 12 / 2020</string>
+    <string name="txt_tituloPrecio_ventanaBuscarViaje">PRECIO MAXIMO A PAGAR POR VIAJE</string>
+    <string name="edit_precio_ventanaBuscarViaje">0.00 €</string>
+    <string name="txt_errorFecha_Menor_ventanaBuscarViaje">Fecha invalida debido a que es anterior a la actual.</string>
+    <string name="txt_errorfecha_Formato_ventanaBuscarViaje">Fecha invalida.</string>
+    <string name="txt_errorPrecio_Menor_ventanaBuscarViaje">Precio no mayor a 0 €.</string>
+    <string name="txt_errorPrecio_Formato_ventanaBuscarViaje">Precio con valor no numerico.</string>
 
 </resources>
