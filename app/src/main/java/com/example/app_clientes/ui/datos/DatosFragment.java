@@ -29,6 +29,7 @@ import com.example.app_clientes.R;
 import com.example.app_clientes.pojos.Usuario;
 import com.example.app_clientes.vistas.VentanaCambiarContrasena;
 import com.example.app_clientes.vistas.VentanaLogin;
+import com.example.app_clientes.vistas.VentanaPrincipal;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -56,10 +57,12 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
     private Button btCambiarContrasena, btActualizarDatos, btBorrarCuenta;
     private TextView txtErrorTelefono, txtErrorFecha, txtErrorDescripcion;
     //Atributos clase:
-    private StorageReference storageReference;
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();;
     private String uriFotoUsuario = "";
     private static final int GALERY_INTENT = 1;
     private String ID_USUARIO;
+    private String fechaElegida="";
+    private Uri uriImagenEndispositivo;
     //Metodo que se ejecuta al crearse la vista:
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Inicializamos variables booleanas de prueba:
@@ -85,7 +88,6 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         txtErrorFecha = view.findViewById(R.id.textViewErrorFechaDatosPersonales);
         txtErrorDescripcion = view.findViewById(R.id.textViewErrorDescripcionRegistroUsuario);
         //Carga la imagen y datos personales del usuario al abrir la ventana:
-        cargarImagenUsuario();
         cargarDatosPersonalesUsuario();
         //Vinculamos los botones al listener del metodo onclick, que esta implementado en esta clase:
         imgUsuario.setOnClickListener(this);
@@ -155,25 +157,6 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         });
         return view;
     }
-    //Metodo para cargar la imagen del usuario:
-    public void cargarImagenUsuario(){
-        //Inatancia el objeto de tipo storageReference
-        storageReference = FirebaseStorage.getInstance().getReference();
-        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
-        storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //Si la carga es optima la coloca en IMGUsuarioDatos
-                Glide.with(getActivity()).load(uri).error(R.drawable.user).into(imgUsuario);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                //Si la carga no es optima es decir que no existe la direccion proporcinada carga una imagen por defecto
-                imgUsuario.setImageResource(R.drawable.user);
-            }
-        });
-    }
     //Metodo que carga los datos personales del usuario:
     private void cargarDatosPersonalesUsuario(){
         //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
@@ -201,6 +184,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 editTextNombre.setText(u.getNombre());
                 editTextApellidos.setText(u.getApellidos());
                 editTextUsuario.setText(u.getEmail());
+                Glide.with(getContext()).load(u.getFotousuario()).error(R.drawable.user).into(imgUsuario);
                 if(u.getTelefono()!=null){
                     editTextTelefono.setText(u.getTelefono().toString());}
                 if(u.getFechanacimiento()!=null){
@@ -317,7 +301,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 editTextDescripcion.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
             }
             //Control de fecha validamos que si hay fecha sea menor que hoy, obtenemos los valores por separado con el siguiente algoritmo:
-            String fechaElegida="";
+
             if(!editTextFecha.getText().toString().equals("")){
                 fechaElegida = Biblioteca.obtieneFechaDataPicker(editTextFecha.getText().toString());
                 Date fechaFinal = Date.valueOf(fechaElegida);
@@ -335,48 +319,73 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 editTextFecha.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
             }
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
-            if(pbTelefono&&pbFecha&&pbDescripcion){
-                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
-                //Vinculamos el cliente con la interfaz:
-                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para actualizar los datos personales de un usuario, que creamos con los valores de los editext:
-                Map<String, String> infoMap = new HashMap<String, String>();
-                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
-                if(!editTextTelefono.getText().toString().equals("")){
-                    infoMap.put("telefono", editTextTelefono.getText().toString());
-                }else {
-                    infoMap.put("telefono", "");
-                }
-                if(!fechaElegida.equals("")){
-                    infoMap.put("fechaNac", fechaElegida);
-                }else {
-                    infoMap.put("fechaNac", "");
-                }
-                if(!editTextDescripcion.getText().toString().equals("")){
-                    infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
-                }else {
-                    infoMap.put("descripcion", "");
-                }
-                Call<Usuario> call = peticiones.actualizarDatosPersonalesUsuario(infoMap);
-                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                call.enqueue(new Callback<Usuario>() {
-                    //Gestionamos la respuesta del servidor:
+            if(pbTelefono&&pbFecha&&pbDescripcion) {
+                StorageReference filePath = storageReference.child("Fotos").child(Biblioteca.usuarioSesion.getIdusuario().toString());
+                //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
+                filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
-                        if (!response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        //Si el cambio ha sido exitoso cargamos los datos:
-                        Toast.makeText(getContext(), getText(R.string.txt_actualizacion_Toast_ventanaDatosUsuario), Toast.LENGTH_LONG).show();
-                        cargarDatosPersonalesUsuario();
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
+                        storageReference.child("Fotos").child(Biblioteca.usuarioSesion.getIdusuario().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                                //Vinculamos el cliente con la interfaz:
+                                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                                //Creamos una peticion para actualizar los datos personales de un usuario, que creamos con los valores de los editext:
+                                Map<String, String> infoMap = new HashMap<String, String>();
+                                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
+                                if (!editTextTelefono.getText().toString().equals("")) {
+                                    infoMap.put("telefono", editTextTelefono.getText().toString());
+                                } else {
+                                    infoMap.put("telefono", "");
+                                }
+                                if (!fechaElegida.equals("")) {
+                                    infoMap.put("fechaNac", fechaElegida);
+                                } else {
+                                    infoMap.put("fechaNac", "");
+                                }
+                                if (!editTextDescripcion.getText().toString().equals("")) {
+                                    infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
+                                } else {
+                                    infoMap.put("descripcion", "");
+                                }
+                                infoMap.put("fotousuario", uri.toString());
+                                Call<Usuario> call = peticiones.actualizarDatosPersonalesUsuario(infoMap);
+                                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                                call.enqueue(new Callback<Usuario>() {
+                                    //Gestionamos la respuesta del servidor:
+                                    @Override
+                                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                        if (!response.isSuccessful()) {
+                                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+                                        //Si el cambio ha sido exitoso cargamos los datos:
+                                        Toast.makeText(getContext(), getText(R.string.txt_actualizacion_Toast_ventanaDatosUsuario), Toast.LENGTH_LONG).show();
+                                        cargarDatosPersonalesUsuario();
+                                    }
+
+                                    //En caso de que no responda el servidor mostramos mensaje de error:
+                                    @Override
+                                    public void onFailure(Call<Usuario> call, Throwable t) {
+                                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                    //En caso de que no responda el servidor mostramos mensaje de error:
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(Call<Usuario> call, Throwable t) {
-                        Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    public void onFailure(@NonNull Exception exception) {
+
                     }
                 });
             }
@@ -449,32 +458,21 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
             //Coge la Uri del dispositivo
-            Uri uri = data.getData();
+            uriImagenEndispositivo = data.getData();
             //Cambia la imagen desde el dispositivo
-            Glide.with(getContext()).load(uri).error(R.drawable.user).into(imgUsuario);
-            //Crea una direccion para poder subir la imagen a firebase
-            StorageReference filePath = storageReference.child("Fotos").child(ID_USUARIO);
-            //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getContext(), "Imagen cambiada", Toast.LENGTH_SHORT).show();
-                    //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                    storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            //Meter la URI en un String para posteriormente hacer el update o el insert en la base de datos
-                            uriFotoUsuario = uri.toString();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
-
+            Glide.with(getActivity()).load(uriImagenEndispositivo).error(R.drawable.user).into(imgUsuario);
+            Glide.with(getActivity()).load(uriImagenEndispositivo).error(R.drawable.user).into(VentanaPrincipal.IVImagenUsuarioMenuLateral);
+            //Conjunto de animator:
+            AnimatorSet animator = new AnimatorSet();
+            //Animacion para el bt actualizar cambios:
+            ObjectAnimator scaleDownX_BtActualizarCambios = ObjectAnimator.ofFloat(btActualizarDatos, "scaleX", 0.85f, 1.0f);
+            ObjectAnimator scaleDownY_BtActualizarCambios = ObjectAnimator.ofFloat(btActualizarDatos, "scaleY", 0.85f, 1.0f);
+            animator.play(scaleDownX_BtActualizarCambios).with(scaleDownY_BtActualizarCambios);
+            animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
+            animator.start();
+            //Habilitamos el boton actualizar cambios:
+            btActualizarDatos.setEnabled(true);
+            btActualizarDatos.setTextColor(getResources().getColor(R.color.colorVerdesito));
         }
     }
     //Hacer si nos queda tiempo cambiar pais de origen

@@ -1,6 +1,7 @@
 package com.example.app_clientes.adapter;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.item.ItemVehiculo;
 import com.example.app_clientes.R;
 
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehiculos.ExampleViewHolder> {
 
+    private final Context c;
     private ArrayList<ItemVehiculo> misVehiculosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 
@@ -31,7 +34,8 @@ public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehi
         mListener = listener;
     }
 
-    public MiAdapterMisVehiculos(ArrayList<ItemVehiculo> misVehiculosList) {
+    public MiAdapterMisVehiculos(Context c,ArrayList<ItemVehiculo> misVehiculosList) {
+        this.c = c;
         this.misVehiculosList = misVehiculosList;
     }
 
@@ -59,7 +63,11 @@ public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehi
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         ItemVehiculo nuevoVehiculo=misVehiculosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
-        holder.mImageVehiculo.setImageResource(nuevoVehiculo.getmImageVehiculo());
+        if(position<misVehiculosList.size()-1) {
+            Glide.with(c).load(misVehiculosList.get(position).getmImageVehiculo()).error(R.drawable.coche).into(holder.mImageVehiculo);
+        }else{
+            Glide.with(c).load(misVehiculosList.get(position).getmImageVehiculo()).error(R.drawable.anadir).into(holder.mImageVehiculo);
+        }
         holder.TVMatriculaItem.setText(misVehiculosList.get(position).getMarcaYmodelo());
     }
 

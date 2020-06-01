@@ -30,6 +30,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -295,46 +297,72 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
 
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(pbMatricula&&pbMarca&&pbModelo&&pbColor&&pbCombustible){
-                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
-                //Vinculamos el cliente con la interfaz:
-                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para registrar un vehiculo con el valor de los editexts y demas:
-                String modeloAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
-                String marcaAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
-                Map<String, String> infoMap = new HashMap<>();
-                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
-                infoMap.put("matricula", editTextMatricula.getText().toString().replaceAll("\\s","").toUpperCase());
-                infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
-                infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
-                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
-                infoMap.put("color", colorSeleccionado.toUpperCase());
-                Call<Vehiculo> call = peticiones.registrarVehiculo(infoMap);
-                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                call.enqueue(new Callback<Vehiculo>() {
-                    //Gestionamos la respuesta del servidor:
+                uriParaElInsert = Long.toString(System.currentTimeMillis());
+                StorageReference filePath = storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert);
+                //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
+                filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
-                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
-                        if (!response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        //Si el cambio ha sido exitoso volvemos a la actividad anterior:
-                        Toast.makeText(getApplicationContext(), getText(R.string.txt_agregadoVehiculo_Toast_ventanaAgregarVehiculo), Toast.LENGTH_LONG).show();
-                        //Con el metodo setResult pasamos el codigo resultado de la operacion, que en este caso es una constante de clase que
-                        //significa OK, y el Intent que contiene la informacion del resultado, para que en la actividad anterior se recarguen
-                        //los datos del recyclerview de la lista de coches:
-                        setResult(RESULT_OK);
-                        //Terminamos con la propia actividad con el siguiente metodo:
-                        finish();
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
+                        storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                                //Vinculamos el cliente con la interfaz:
+                                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                                //Creamos una peticion para registrar un vehiculo con el valor de los editexts y demas:
+                                String modeloAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
+                                String marcaAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                                Map<String, String> infoMap = new HashMap<>();
+                                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
+                                infoMap.put("matricula", editTextMatricula.getText().toString().replaceAll("\\s","").toUpperCase());
+                                infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
+                                infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
+                                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
+                                infoMap.put("color", colorSeleccionado.toUpperCase());
+                                infoMap.put("fotovehiculo", uri.toString());
+                                Call<Vehiculo> call = peticiones.registrarVehiculo(infoMap);
+                                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                                call.enqueue(new Callback<Vehiculo>() {
+                                    //Gestionamos la respuesta del servidor:
+                                    @Override
+                                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
+                                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                        if (!response.isSuccessful()) {
+                                            Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+                                        //Si el cambio ha sido exitoso volvemos a la actividad anterior:
+                                        Toast.makeText(getApplicationContext(), getText(R.string.txt_agregadoVehiculo_Toast_ventanaAgregarVehiculo), Toast.LENGTH_LONG).show();
+                                        //Con el metodo setResult pasamos el codigo resultado de la operacion, que en este caso es una constante de clase que
+                                        //significa OK, y el Intent que contiene la informacion del resultado, para que en la actividad anterior se recarguen
+                                        //los datos del recyclerview de la lista de coches:
+                                        setResult(RESULT_OK);
+                                        //Terminamos con la propia actividad con el siguiente metodo:
+                                        finish();
+                                    }
+                                    //En caso de que no responda el servidor mostramos mensaje de error:
+                                    @Override
+                                    public void onFailure(Call<Vehiculo> call, Throwable t) {
+                                        Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(getApplicationContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                    //En caso de que no responda el servidor mostramos mensaje de error:
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(Call<Vehiculo> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    public void onFailure(@NonNull Exception exception) {
+
                     }
                 });
+
             }
         }
     }

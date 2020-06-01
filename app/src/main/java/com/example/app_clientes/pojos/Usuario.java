@@ -1,29 +1,49 @@
 package com.example.app_clientes.pojos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Usuario implements java.io.Serializable {
-
+    @SerializedName("idusuario")
     private Integer idusuario;
+    @SerializedName("nombre")
     private String nombre;
+    @SerializedName("apellidos")
     private String apellidos;
+    @SerializedName("espasajero")
     private Boolean espasajero;
+    @SerializedName("esconductor")
     private Boolean esconductor;
+    @SerializedName("telefono")
     private Integer telefono;
+    @SerializedName("email")
     private String email;
+    @SerializedName("clave")
     private String clave;
+    @SerializedName("fechanacimiento")
     private Date fechanacimiento;
+    @SerializedName("fotousuario")
     private String fotousuario;
+    @SerializedName("fotokyc")
     private String fotokyc;
+    @SerializedName("descripcion")
     private String descripcion;
+    @SerializedName("valoracion")
     private Integer valoracion;
+    @SerializedName("fecharegistro")
     private Date fecharegistro;
+    @SerializedName("fechadesconexion")
     private Date fechadesconexion;
+    @SerializedName("sesioniniciada")
     private Boolean sesioniniciada;
+    @SerializedName("telefonoverificado")
     private Boolean telefonoverificado;
+    @SerializedName("emailverificado")
     private Boolean emailverificado;
+    @SerializedName("doblefactoractivado")
     private Boolean doblefactoractivado;
 
 

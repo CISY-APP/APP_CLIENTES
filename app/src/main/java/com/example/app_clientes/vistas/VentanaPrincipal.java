@@ -65,7 +65,7 @@ public class VentanaPrincipal extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private StorageReference storageReference;
     private static final int GALERY_INTENT = 1;
-    private CircleImageView IVImagenUsuarioMenuLateral;
+    public static CircleImageView IVImagenUsuarioMenuLateral;
     private TextView nombreUsuario;
     private TextView my_counter;
     private TextView correoUsuario;
@@ -159,7 +159,7 @@ public class VentanaPrincipal extends AppCompatActivity {
         storageReference.child("Fotos").child(ID_USUARIO).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(headView.getContext()).load(uri).error(R.drawable.user).into(IVImagenUsuarioMenuLateral);
+                Glide.with(headView.getContext()).load(Biblioteca.usuarioSesion.getFotousuario()).error(R.drawable.user).into(IVImagenUsuarioMenuLateral);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

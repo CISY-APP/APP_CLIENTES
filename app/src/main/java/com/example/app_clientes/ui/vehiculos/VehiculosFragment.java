@@ -22,10 +22,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
 import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.adapter.MiAdapterMisVehiculos;
 import com.example.app_clientes.item.ItemVehiculo;
@@ -33,8 +35,12 @@ import com.example.app_clientes.R;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.pojos.Vehiculo;
 import com.example.app_clientes.vistas.VentanaAgregarVehiculo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +80,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
     private Uri uriImagenEndispositivo;
     private static final int GALERY_INTENT = 1;
     private String ID_USUARIO;
+    private String uriParaElInsert;
     //Metodo que se ejecuta al crearse la vista:
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Conectamos el xml:
@@ -146,11 +153,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                     return;
                 }
                 //Si la respuesta es correcta pasamos a cargar el vehiculo:
-                if(misVehiculosList.get(pos).getmImageVehiculo()!=-1){
-                    imgViewCoche.setImageResource(misVehiculosList.get(pos).getmImageVehiculo());
-                }else{
-                    imgViewCoche.setImageResource(R.drawable.coche);
-                }
+                Glide.with(getActivity()).load(misVehiculosList.get(pos).getmImageVehiculo()).error(R.drawable.coche).into(imgViewCoche);
                 //Reinicio de variables booleanas:
                 pruebaFormatoMarca =false;
                 pruebaFormatoModelo=false;
@@ -230,13 +233,13 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                 //Recogemos la lista y la guardamos para el modelo del recycler view
                 List<Vehiculo> listObtenida = response.body();
                 for (Vehiculo vl : listObtenida) {
-                    misVehiculosList.add(new ItemVehiculo(vl.getMarca()+" - "+vl.getModelo(), vl.getMatricula(), R.drawable.seatmio));
+                    misVehiculosList.add(new ItemVehiculo(vl.getMarca()+" - "+vl.getModelo(), vl.getMatricula(), vl.getFotovehiculo()));
                 }
                 misVehiculosList.add(new ItemVehiculo(getText(R.string.bt_añadirVehiculo_ventanaDatosVehiculo).toString(), "botonAñadir", R.drawable.anadir));
                 //INSTANCIAMOS Y ASOCIAMOS ELEMENTOS NECESARIOS PARA EL CORRECTO FUNCIONAMIENTO DEL RECYCLERVIEW:
                 recyclerViewMisVehiculos.setHasFixedSize(true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento).
                 recyclerViewMisVehiculos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                miAdapterMisVehiculos = new MiAdapterMisVehiculos(misVehiculosList);//Instanciamos un objeto de tipo Example_Adapter.
+                miAdapterMisVehiculos = new MiAdapterMisVehiculos(getActivity(), misVehiculosList);//Instanciamos un objeto de tipo Example_Adapter.
                 recyclerViewMisVehiculos.setAdapter(miAdapterMisVehiculos);//Vinculamos el adapter al recyclerView.
                 miAdapterMisVehiculos.setOnClickListener(new MiAdapterMisVehiculos.OnItemClickListener() {
                     @Override
@@ -269,6 +272,17 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         if ((requestCode==1997) && (resultCode==RESULT_OK)){
             agregarCoches();
         }
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
+            //Coge la Uri del dispositivo
+            uriImagenEndispositivo = data.getData();
+            //Cambia la imagen desde el dispositivo
+            Glide.with(getActivity()).load(uriImagenEndispositivo).error(R.drawable.coche).into(imgViewCoche);
+            //Habilitamos el boton modificar vehiculo:
+            btActualizarDatos.setEnabled(true);
+            btActualizarDatos.setOnClickListener(this);
+            btActualizarDatos.setColorFilter(getResources().getColor(R.color.colorPrimary));
+        }
     }
     //Metodo de la interfaz View.OnClickListener:
     @Override
@@ -299,6 +313,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                     editTextMatricula.setText("");
                     editTextMarca.setText("");
                     editTextModelo.setText("");
+                    Glide.with(getActivity()).load(R.drawable.coche).error(R.drawable.coche).into(imgViewCoche);
                     spinnerTipoCombustible.setSelection(0);
                     imgViewColorCoche.setBackgroundColor(Color.parseColor("#07a0c3"));
                     vSesion=null;
@@ -323,51 +338,78 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
             //Control de color de momento ninguno mas:
 
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
-            if(pbMarca&&pbModelo&&pbColor&&pbCombustible){
-                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
-                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
-                //Vinculamos el cliente con la interfaz:
-                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                //Creamos una peticion para actualizar un vehiculo con el valor de los editexts y demas:
-                String modeloAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
-                String marcaAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
-                Map<String, String> infoMap = new HashMap<String, String>();
-                infoMap.put("matricula", editTextMatricula.getText().toString());
-                if(!modeloAux.equals("")){
-                    infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
-                }else{
-                    infoMap.put("modelo", vSesion.getModelo());
-                }
-                if(!marcaAux.equals("")){
-                    infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
-                }else {
-                    infoMap.put("marca", vSesion.getMarca());
-                }
-                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
-                infoMap.put("color", colorSeleccionado.toUpperCase());
-                Call<Vehiculo> call = peticiones.actualizarVehiculoPorMatricula(infoMap);
-                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                call.enqueue(new Callback<Vehiculo>() {
-                    //Gestionamos la respuesta del servidor:
+            if(pbMarca&&pbModelo&&pbColor&&pbCombustible) {
+                uriParaElInsert = Long.toString(System.currentTimeMillis());
+                StorageReference filePath = storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert);
+                //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
+                filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
-                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
-                        if (!response.isSuccessful()) {
-                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-                            return;
-                        }
-                        //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
-                        vSesion=response.body();
-                        agregarCoches();
-                        Toast.makeText(getContext(), getText(R.string.txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo), Toast.LENGTH_LONG).show();
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
+                        storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                                //Vinculamos el cliente con la interfaz:
+                                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                                //Creamos una peticion para actualizar un vehiculo con el valor de los editexts y demas:
+                                String modeloAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
+                                String marcaAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                                Map<String, String> infoMap = new HashMap<String, String>();
+                                infoMap.put("matricula", editTextMatricula.getText().toString());
+                                if (!modeloAux.equals("")) {
+                                    infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
+                                } else {
+                                    infoMap.put("modelo", vSesion.getModelo());
+                                }
+                                if (!marcaAux.equals("")) {
+                                    infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
+                                } else {
+                                    infoMap.put("marca", vSesion.getMarca());
+                                }
+                                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
+                                infoMap.put("color", colorSeleccionado.toUpperCase());
+                                infoMap.put("fotovehiculo", uri.toString());
+                                Call<Vehiculo> call = peticiones.actualizarVehiculoPorMatricula(infoMap);
+                                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                                call.enqueue(new Callback<Vehiculo>() {
+                                    //Gestionamos la respuesta del servidor:
+                                    @Override
+                                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
+                                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                        if (!response.isSuccessful()) {
+                                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+                                        //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
+                                        vSesion = response.body();
+                                        agregarCoches();
+                                        Toast.makeText(getContext(), getText(R.string.txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo), Toast.LENGTH_LONG).show();
+                                    }
+
+                                    //En caso de que no responda el servidor mostramos mensaje de error:
+                                    @Override
+                                    public void onFailure(Call<Vehiculo> call, Throwable t) {
+                                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                    //En caso de que no responda el servidor mostramos mensaje de error:
+                }).addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(Call<Vehiculo> call, Throwable t) {
-                        Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    public void onFailure(@NonNull Exception exception) {
+
                     }
                 });
             }
+
         }
     }
     //Metodo afterTextChanged implementado de la interfaz TextWatcher (cuando cambie el texto se ejecutara):

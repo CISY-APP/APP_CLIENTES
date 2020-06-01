@@ -1,21 +1,33 @@
 package com.example.app_clientes.pojos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Vehiculo implements java.io.Serializable {
-
+    @SerializedName("idvehiculo")
     private Integer idvehiculo;
+    @SerializedName("usuario")
     private Usuario usuario;
+    @SerializedName("matricula")
     private String matricula;
+    @SerializedName("modelo")
     private String modelo;
+    @SerializedName("color")
     private String color;
+    @SerializedName("combustible")
     private String combustible;
+    @SerializedName("plazas")
     private Integer plazas;
+    @SerializedName("marca")
     private String marca;
+    @SerializedName("fotovehiculo")
     private String fotovehiculo;
+    @SerializedName("fechadealta")
     private Date fechadealta;
+    @SerializedName("viajes")
     private Set<Viaje> viajes = new HashSet<Viaje>(0);
 
     public Vehiculo() {
