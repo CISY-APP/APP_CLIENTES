@@ -89,15 +89,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
-                            <de.hdodenhof.circleimageview.CircleImageView
+                            <com.makeramen.roundedimageview.RoundedImageView
                                 android:id="@+id/imageViewCocheAgregarVehiculo"
-                                android:layout_width="132dp"
-                                android:layout_height="132dp"
-                                android:src="@drawable/coche"
-                                app:civ_circle_background_color="#eceff1"
+                                android:layout_width="260dp"
+                                android:layout_height="170dp"
+                                android:backgroundTint="#eceff1"
+                                android:scaleType="fitCenter"
+                                android:visibility="visible"
                                 app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:riv_border_color="#FFFFFF"
+                                app:riv_border_width="2dip"
+                                app:riv_corner_radius="10dip"
+                                app:riv_mutate_background="true"
+                                app:riv_oval="false"
+                                app:riv_tile_mode="clamp" />
 
                             <ImageView
                                 android:layout_width="40dp"

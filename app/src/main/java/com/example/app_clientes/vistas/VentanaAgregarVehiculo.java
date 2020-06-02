@@ -4,6 +4,7 @@ package com.example.app_clientes.vistas;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,6 +32,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,14 +47,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 //Clase que contiene toda la logica y conexion con la ventana de registrar vehiculo de la app:
 public class VentanaAgregarVehiculo extends AppCompatActivity implements View.OnClickListener, TextWatcher, AdapterView.OnItemSelectedListener {
     //Variables para comprobacion de formatos:
-    private boolean pruebaFormatoMatricula, pruebaFormatoMarca, pruebaFormatoModelo, pruebaCombustible, pruebaColor;
+    private boolean pruebaFormatoMatricula, pruebaFormatoMarca, pruebaFormatoModelo, pruebaFormatoCombustible, pruebaFormatoColor;
     //Atributos XML:
     private LinearLayout linearLayoutSpinnerCombustible;
     private EditText editTextMatricula, editTextMarca, editTextModelo;
     private TextView txtErrorMatricula, txtErrorMarca, txtErrorModelo;
     private Spinner spinnerTipoCombustible;
     private EditText btSeleccionarColor;
-    private CircleImageView imgViewCoche,imgViewColorCoche;
+    private CircleImageView imgViewColorCoche;
+    private RoundedImageView imgViewCoche;
     private ImageView btFlechaAtras, btConfirmarRegistro;
     //Atributos de la clase:
     private final ArrayList<String> colores = new ArrayList<>();
@@ -73,8 +76,8 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
         pruebaFormatoMatricula=false;
         pruebaFormatoMarca=false;
         pruebaFormatoModelo=false;
-        pruebaCombustible=true;
-        pruebaColor=true;
+        pruebaFormatoCombustible =true;
+        pruebaFormatoColor =true;
         //Asociamos el id del usuario en sesion a la siguiente variable
         ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
         colorSeleccionado="#07a0c3";
@@ -153,44 +156,11 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                 animatorSetEscale.start();
             }
         });
-        /*btConfirmarRegistro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                uriParaElInsert = Long.toString(System.currentTimeMillis());
-                StorageReference filePath = storageReference.child(ID_USUARIO).child(uriParaElInsert);
-                //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
-                filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                        storageReference.child(ID_USUARIO).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                //Meter la URI en un String para posteriormente hacer el update o el insert en la base de datos
-                                //INSERTA A LA BASE DE DATOS
-
-                                //Faltan el resto de datos del vehiculo solo es obligatorio
-                                // - Numero de plazas
-                                // - Matrícula
-                                // - Se inserta la uri de la imagen del coche --> uriFotoCoche LINEA 218
-                                uri.toString(); //Meterla en la base de datos
-                                Toast.makeText(getApplicationContext(), "Vehículo agregado", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(getApplicationContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-
-                    }
-                });
-            }
-        });*/
+        cargaImagen();
+    }
+    //Metodo que carga imagen por defecto en el imageview redondeado:
+    private void cargaImagen(){
+        Glide.with(getApplicationContext()).load((Drawable) null).error(R.drawable.coche).into(imgViewCoche);
     }
     //Inicializa el spinner de vehiculos:
     private void inicializacionSpinnerCombustible() {
@@ -228,25 +198,6 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,GALERY_INTENT);
-    }
-    //Coge la direccion de firebase:
-    public void cargarImagenVehiculo() {
-        //Instancia el objeto de tipo storageReference
-        storageReference = FirebaseStorage.getInstance().getReference();
-        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
-        storageReference.child("Fotos"+"EMAILUSUARIO").child(editTextMatricula.getText().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //Si la carga es optima la coloca en IMGUsuarioDatos
-                Glide.with(getApplication()).load(uri).error(R.drawable.coche).into(imgViewCoche);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                //Si la carga no es optima es decir que no existe la direccion proporcinada carga una imagen por defecto
-                imgViewCoche.setImageResource(R.drawable.coche);
-            }
-        });
     }
     //Metodo de la interfaz View.OnClickListener:
     @Override
@@ -297,72 +248,118 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
 
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(pbMatricula&&pbMarca&&pbModelo&&pbColor&&pbCombustible){
-                uriParaElInsert = Long.toString(System.currentTimeMillis());
-                StorageReference filePath = storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert);
-                //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
-                filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                        storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
-                                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
-                                //Vinculamos el cliente con la interfaz:
-                                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                                //Creamos una peticion para registrar un vehiculo con el valor de los editexts y demas:
-                                String modeloAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
-                                String marcaAux=Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
-                                Map<String, String> infoMap = new HashMap<>();
-                                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
-                                infoMap.put("matricula", editTextMatricula.getText().toString().replaceAll("\\s","").toUpperCase());
-                                infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
-                                infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
-                                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
-                                infoMap.put("color", colorSeleccionado.toUpperCase());
-                                infoMap.put("fotovehiculo", uri.toString());
-                                Call<Vehiculo> call = peticiones.registrarVehiculo(infoMap);
-                                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                                call.enqueue(new Callback<Vehiculo>() {
-                                    //Gestionamos la respuesta del servidor:
-                                    @Override
-                                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
-                                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
-                                        if (!response.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-                                            return;
+                //Si la uri no esta vacia realizamos lo siguiente:
+                if(uriImagenEndispositivo!=null) {
+                    uriParaElInsert = Long.toString(System.currentTimeMillis());
+                    StorageReference filePath = storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert);
+                    //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
+                    filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
+                            storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                                    //Vinculamos el cliente con la interfaz:
+                                    JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                                    //Creamos una peticion para registrar un vehiculo con el valor de los editexts y demas:
+                                    String modeloAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
+                                    String marcaAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                                    Map<String, String> infoMap = new HashMap<>();
+                                    infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
+                                    infoMap.put("matricula", editTextMatricula.getText().toString().replaceAll("\\s", "").toUpperCase());
+                                    infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
+                                    infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
+                                    infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
+                                    infoMap.put("color", colorSeleccionado.toUpperCase());
+                                    infoMap.put("fotovehiculo", uri.toString());
+                                    Call<Vehiculo> call = peticiones.registrarVehiculo(infoMap);
+                                    //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                                    call.enqueue(new Callback<Vehiculo>() {
+                                        //Gestionamos la respuesta del servidor:
+                                        @Override
+                                        public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
+                                            //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                            if (!response.isSuccessful()) {
+                                                Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                                return;
+                                            }
+                                            //Si el cambio ha sido exitoso volvemos a la actividad anterior:
+                                            Toast.makeText(getApplicationContext(), getText(R.string.txt_agregadoVehiculo_Toast_ventanaAgregarVehiculo), Toast.LENGTH_LONG).show();
+                                            //Con el metodo setResult pasamos el codigo resultado de la operacion, que en este caso es una constante de clase que
+                                            //significa OK, y el Intent que contiene la informacion del resultado, para que en la actividad anterior se recarguen
+                                            //los datos del recyclerview de la lista de coches:
+                                            setResult(RESULT_OK);
+                                            //Terminamos con la propia actividad con el siguiente metodo:
+                                            finish();
                                         }
-                                        //Si el cambio ha sido exitoso volvemos a la actividad anterior:
-                                        Toast.makeText(getApplicationContext(), getText(R.string.txt_agregadoVehiculo_Toast_ventanaAgregarVehiculo), Toast.LENGTH_LONG).show();
-                                        //Con el metodo setResult pasamos el codigo resultado de la operacion, que en este caso es una constante de clase que
-                                        //significa OK, y el Intent que contiene la informacion del resultado, para que en la actividad anterior se recarguen
-                                        //los datos del recyclerview de la lista de coches:
-                                        setResult(RESULT_OK);
-                                        //Terminamos con la propia actividad con el siguiente metodo:
-                                        finish();
-                                    }
-                                    //En caso de que no responda el servidor mostramos mensaje de error:
-                                    @Override
-                                    public void onFailure(Call<Vehiculo> call, Throwable t) {
-                                        Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(getApplicationContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
 
-                    }
-                });
+                                        //En caso de que no responda el servidor mostramos mensaje de error:
+                                        @Override
+                                        public void onFailure(Call<Vehiculo> call, Throwable t) {
+                                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    Toast.makeText(getApplicationContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
 
+                        }
+                    });
+                }else{
+                    //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                    //Vinculamos el cliente con la interfaz:
+                    JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                    //Creamos una peticion para registrar un vehiculo con el valor de los editexts y demas:
+                    String modeloAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
+                    String marcaAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                    Map<String, String> infoMap = new HashMap<>();
+                    infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
+                    infoMap.put("matricula", editTextMatricula.getText().toString().replaceAll("\\s", "").toUpperCase());
+                    infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
+                    infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
+                    infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
+                    infoMap.put("color", colorSeleccionado.toUpperCase());
+                    infoMap.put("fotovehiculo", "");
+                    Call<Vehiculo> call = peticiones.registrarVehiculo(infoMap);
+                    //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                    call.enqueue(new Callback<Vehiculo>() {
+                        //Gestionamos la respuesta del servidor:
+                        @Override
+                        public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
+                            //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                            if (!response.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            //Si el cambio ha sido exitoso volvemos a la actividad anterior:
+                            Toast.makeText(getApplicationContext(), getText(R.string.txt_agregadoVehiculo_Toast_ventanaAgregarVehiculo), Toast.LENGTH_LONG).show();
+                            //Con el metodo setResult pasamos el codigo resultado de la operacion, que en este caso es una constante de clase que
+                            //significa OK, y el Intent que contiene la informacion del resultado, para que en la actividad anterior se recarguen
+                            //los datos del recyclerview de la lista de coches:
+                            setResult(RESULT_OK);
+                            //Terminamos con la propia actividad con el siguiente metodo:
+                            finish();
+                        }
+
+                        //En caso de que no responda el servidor mostramos mensaje de error:
+                        @Override
+                        public void onFailure(Call<Vehiculo> call, Throwable t) {
+                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
         }
     }
@@ -371,7 +368,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
     public void afterTextChanged(Editable s) {
         //Boolean para comprobar que estado tiene antes de realizar pruebas:
         boolean anterior=false;
-        if(pruebaFormatoMatricula&&pruebaFormatoMarca&&pruebaFormatoModelo&&pruebaCombustible&&pruebaColor){anterior=true;}
+        if(pruebaFormatoMatricula&&pruebaFormatoMarca&&pruebaFormatoModelo&& pruebaFormatoCombustible && pruebaFormatoColor){anterior=true;}
         //Si el texto de matricula ha cambiado:
         if(s==editTextMatricula.getEditableText()){
             //Limpiamos de espacios y si la matricula no es cadena vacia y tiene longitud de 7 caracteres es valida de formato:
@@ -391,7 +388,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             pruebaFormatoModelo= !modelo.equals("") && modelo.length() >= 1 && modelo.length() <= 30;
         }
         //Si las 5 pruebas de formato son correctas pasamos a habilitar el boton de agregar vehiculo:
-        if (pruebaFormatoMatricula&&pruebaFormatoMarca&&pruebaFormatoModelo&&pruebaColor&&pruebaCombustible&&!anterior){
+        if (pruebaFormatoMatricula&&pruebaFormatoMarca&&pruebaFormatoModelo&& pruebaFormatoColor && pruebaFormatoCombustible &&!anterior){
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
             //Animacion para el bt agregar vehiculo:
@@ -404,7 +401,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
             btConfirmarRegistro.setEnabled(true);
             btConfirmarRegistro.setOnClickListener(this);
             btConfirmarRegistro.setColorFilter(getResources().getColor(R.color.colorPrimary));
-        }else if ((!pruebaFormatoMatricula||!pruebaFormatoMarca||!pruebaFormatoModelo||!pruebaColor||!pruebaCombustible)&&anterior){
+        }else if ((!pruebaFormatoMatricula||!pruebaFormatoMarca||!pruebaFormatoModelo||!pruebaFormatoColor ||!pruebaFormatoCombustible)&&anterior){
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
             //Animacion para el bt agregar vehiculo:
