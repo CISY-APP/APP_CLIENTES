@@ -66,7 +66,7 @@
                     app:lottie_loop="true" />
 
                 <TextView
-                    android:id="@+id/textViewTituloAnimacionMisVehiculos"
+                    android:id="@+id/textViewTituloAnimacionVacioMisVehiculos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -77,22 +77,55 @@
                     android:textStyle="normal"
                     android:textSize="24sp" />
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_elige_algo_wey_vehiculos"
+                    android:layout_width="200dp"
+                    android:layout_height="158dp"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="false"
+                    app:lottie_fileName="elige_algo_wey.json"
+                    app:lottie_imageAssetsFolder="assets"
+                    app:lottie_loop="true" />
+
+                <TextView
+                    android:id="@+id/textViewTituloAnimacionEligeMisVehiculos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/txt_elige_ventanaDatosVehiculo"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textStyle="normal"
+                    android:textSize="24sp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="7dp">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/imageViewCocheMisVehiculos"
+                        android:layout_width="260dp"
+                        android:layout_height="170dp"
+                        android:backgroundTint="#eceff1"
+                        android:scaleType="fitCenter"
                         android:visibility="gone"
-                        android:layout_width="132dp"
-                        android:layout_height="132dp"
-                        app:civ_circle_background_color="#eceff1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:riv_border_color="#FFFFFF"
+                        app:riv_border_width="2dip"
+                        app:riv_corner_radius="10dip"
+                        app:riv_mutate_background="true"
+                        app:riv_oval="false"
+                        app:riv_tile_mode="clamp" />
 
                     <ImageView
                         android:id="@+id/btAceptarCambiosMisVehiculos"

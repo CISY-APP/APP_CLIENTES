@@ -428,6 +428,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                             //Si el cambio ha sido exitoso cargamos los datos:
                             Toast.makeText(getContext(), getText(R.string.txt_actualizacion_Toast_ventanaDatosUsuario), Toast.LENGTH_LONG).show();
                             cargarDatosPersonalesUsuario();
+                            uriImagenEndispositivo=null;
                         }
 
                         //En caso de que no responda el servidor mostramos mensaje de error:

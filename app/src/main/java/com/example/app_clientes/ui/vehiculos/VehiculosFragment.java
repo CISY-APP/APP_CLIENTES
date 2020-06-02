@@ -22,7 +22,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,19 +56,20 @@ import static android.app.Activity.RESULT_OK;
 //Clase que contiene toda la logica y conexion con la ventana de mostrar, eliminar, modificar un vehiculo de la app:
 public class VehiculosFragment extends Fragment implements View.OnClickListener, TextWatcher, AdapterView.OnItemSelectedListener, ColorPicker.OnChooseColorListener{
     //Variables para comprobacion de formatos:
-    private boolean pruebaFormatoMarca, pruebaFormatoModelo, pruebaCombustible, pruebaColor;
+    private boolean pruebaFormatoMarca, pruebaFormatoModelo, pruebaFormatoCombustible, pruebaFormatoColor, pruebaFormatoFoto;
     //Coche sesion para cuando se pulsa en un elemento del recycler view:
     Vehiculo vSesion ;
     //Atributos XML:
-    private LottieAnimationView me_siento_vasio;
-    private TextView textViewMe_siento_vasio;
+    private LottieAnimationView me_siento_vasio, elige_vehiculo_wey;
+    private TextView textViewMe_siento_vasio, textViewElige_vehiculo_wey;
     private LinearLayout linearLayoutSpinnerCombustible;
     private EditText editTextMatricula, editTextMarca, editTextModelo;
     private TextView txtErrorMatricula, txtErrorMarca, txtErrorModelo;
     private TextView tituloMatricula, tituloMarca, tituloModelo, tituloCombustible, tipoColor;
     private Spinner spinnerTipoCombustible;
     private EditText btSeleccionarColor;
-    private CircleImageView imgViewCoche,imgViewColorCoche;
+    private CircleImageView imgViewColorCoche;
+    private RoundedImageView imgViewCoche;
     private ImageView btBorrarVehiculo, btActualizarDatos, imageViewEditar;
     //Atributos de la clase:
     private MiAdapterMisVehiculos miAdapterMisVehiculos;
@@ -77,7 +78,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
     private final ArrayList<String> colores = new ArrayList<>();
     private String colorSeleccionado;
     private StorageReference storageReference;
-    private Uri uriImagenEndispositivo;
+    private Uri uriImagenEndispositivo=null;
     private static final int GALERY_INTENT = 1;
     private String ID_USUARIO;
     private String uriParaElInsert;
@@ -88,13 +89,16 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         //Inicializamos variables booleanas de prueba:
         pruebaFormatoMarca=false;
         pruebaFormatoModelo=false;
-        pruebaCombustible=true;
-        pruebaColor=true;
+        pruebaFormatoCombustible=true;
+        pruebaFormatoColor=true;
+        pruebaFormatoFoto=false;
         //Asociamos el id del usuario en sesion a la siguiente variable:
         ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
         colorSeleccionado="#07a0c3";
         //Vinculamos los atributos de la clase:
-        textViewMe_siento_vasio =view.findViewById(R.id.textViewTituloAnimacionMisVehiculos);
+        textViewElige_vehiculo_wey=view.findViewById(R.id.textViewTituloAnimacionEligeMisVehiculos);
+        elige_vehiculo_wey=view.findViewById(R.id.animation_elige_algo_wey_vehiculos);
+        textViewMe_siento_vasio =view.findViewById(R.id.textViewTituloAnimacionVacioMisVehiculos);
         me_siento_vasio = view.findViewById(R.id.animation_vacio_vehiculos);
         tituloMatricula = view.findViewById(R.id.textViewTituloMatriculaMisVehiculos);
         tituloMarca = view.findViewById(R.id.textViewTituloMarcaMisVehiculos);
@@ -157,8 +161,10 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                 //Reinicio de variables booleanas:
                 pruebaFormatoMarca =false;
                 pruebaFormatoModelo=false;
-                pruebaCombustible=false;
-                pruebaColor=false;
+                pruebaFormatoCombustible =false;
+                pruebaFormatoColor =false;
+                pruebaFormatoFoto=false;
+                uriImagenEndispositivo=null;
                 //Lo guardamos en vehiculosesion y cargamos los datos en la interfaz:
                 vSesion=response.body();
                 editTextMatricula.setText(vSesion.getMatricula());
@@ -268,7 +274,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
     //Metodo que se encarga de recibir un resultado de la otra actividad lanzada, recibe el codigo de solicitud puesto por nosotros,
     //el codigo del resultado de la operacion especificado en la clase de la segunda actividad, y un Intent con los datos del resultado:
     public void onActivityResult(int requestCode, int resultCode, Intent data){
-        //Si el codigo de solicitud es 1997 y el de respuesta es correcto pasamos a recoger la informacion y a mostrarla en el textView del chat:
+        //Si el codigo de solicitud es 1997 y el de respuesta es correcto pasamos a recoger la informacion y a mostrarla:
         if ((requestCode==1997) && (resultCode==RESULT_OK)){
             agregarCoches();
         }
@@ -278,10 +284,46 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
             uriImagenEndispositivo = data.getData();
             //Cambia la imagen desde el dispositivo
             Glide.with(getActivity()).load(uriImagenEndispositivo).error(R.drawable.coche).into(imgViewCoche);
-            //Habilitamos el boton modificar vehiculo:
-            btActualizarDatos.setEnabled(true);
-            btActualizarDatos.setOnClickListener(this);
-            btActualizarDatos.setColorFilter(getResources().getColor(R.color.colorPrimary));
+            //Si el vehiculo sesion se ha terminado de cargar:
+            if(vSesion!=null) {
+                //Boolean para comprobar que estado tiene antes de realizar pruebas:
+                boolean anterior = false;
+                if (pruebaFormatoMarca || pruebaFormatoModelo || pruebaFormatoCombustible || pruebaFormatoColor || pruebaFormatoFoto) {
+                    anterior = true;
+                }
+                //Depende de si la foto es null o no se obtiene un valor u otro:
+                pruebaFormatoFoto=uriImagenEndispositivo!=null;
+                //Si alguna de las 5 pruebas de formato son correctas pasamos a liberar el boton de modificar vehiculo:
+                if ((pruebaFormatoMarca || pruebaFormatoModelo || pruebaFormatoColor || pruebaFormatoCombustible ||pruebaFormatoFoto) && !anterior) {
+                    //Conjunto de animator:
+                    AnimatorSet animator = new AnimatorSet();
+                    //Animacion para el bt modificar vehiculo:
+                    ObjectAnimator scaleDownX_BtConfirmarRegistro = ObjectAnimator.ofFloat(btActualizarDatos, "scaleX", 0.5f, 1.0f);
+                    ObjectAnimator scaleDownY_BtConfirmarRegistro = ObjectAnimator.ofFloat(btActualizarDatos, "scaleY", 0.5f, 1.0f);
+                    animator.play(scaleDownX_BtConfirmarRegistro).with(scaleDownY_BtConfirmarRegistro);
+                    animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
+                    animator.start();
+                    //Habilitamos el boton modificar vehiculo:
+                    btActualizarDatos.setEnabled(true);
+                    btActualizarDatos.setOnClickListener(this);
+                    btActualizarDatos.setColorFilter(getResources().getColor(R.color.colorPrimary));
+                }
+                //Si ninguna prueba es verdadera, es decir ningun campo ha cambiado, y el boton estaba activado pues se desactiva:
+                else if (!pruebaFormatoMarca && !pruebaFormatoModelo && !pruebaFormatoColor && !pruebaFormatoCombustible && !pruebaFormatoFoto && anterior) {
+                    //Conjunto de animator:
+                    AnimatorSet animator = new AnimatorSet();
+                    //Animacion para el bt agregar vehiculo:
+                    ObjectAnimator scaleDownX_BtConfirmarRegistro = ObjectAnimator.ofFloat(btActualizarDatos, "scaleX", 1.0f, 0.5f);
+                    ObjectAnimator scaleDownY_BtConfirmarRegistro = ObjectAnimator.ofFloat(btActualizarDatos, "scaleY", 1.0f, 0.5f);
+                    animator.play(scaleDownX_BtConfirmarRegistro).with(scaleDownY_BtConfirmarRegistro);
+                    animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
+                    animator.start();
+                    //Deshabilitamos el boton modificar vehiculo:
+                    btActualizarDatos.setEnabled(false);
+                    btActualizarDatos.setOnClickListener(null);
+                    btActualizarDatos.setColorFilter(getResources().getColor(R.color.colorGris));
+                }
+            }
         }
     }
     //Metodo de la interfaz View.OnClickListener:
@@ -339,75 +381,126 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
 
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(pbMarca&&pbModelo&&pbColor&&pbCombustible) {
-                uriParaElInsert = Long.toString(System.currentTimeMillis());
-                StorageReference filePath = storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert);
-                //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
-                filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                        storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
-                                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
-                                //Vinculamos el cliente con la interfaz:
-                                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                                //Creamos una peticion para actualizar un vehiculo con el valor de los editexts y demas:
-                                String modeloAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
-                                String marcaAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
-                                Map<String, String> infoMap = new HashMap<String, String>();
-                                infoMap.put("matricula", editTextMatricula.getText().toString());
-                                if (!modeloAux.equals("")) {
-                                    infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
-                                } else {
-                                    infoMap.put("modelo", vSesion.getModelo());
-                                }
-                                if (!marcaAux.equals("")) {
-                                    infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
-                                } else {
-                                    infoMap.put("marca", vSesion.getMarca());
-                                }
-                                infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
-                                infoMap.put("color", colorSeleccionado.toUpperCase());
-                                infoMap.put("fotovehiculo", uri.toString());
-                                Call<Vehiculo> call = peticiones.actualizarVehiculoPorMatricula(infoMap);
-                                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                                call.enqueue(new Callback<Vehiculo>() {
-                                    //Gestionamos la respuesta del servidor:
-                                    @Override
-                                    public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
-                                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
-                                        if (!response.isSuccessful()) {
-                                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-                                            return;
+                //Si la uri no esta vacia realizamos lo siguiente:
+                if(uriImagenEndispositivo!=null) {
+                    uriParaElInsert = Long.toString(System.currentTimeMillis());
+                    StorageReference filePath = storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert);
+                    //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
+                    filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
+                            storageReference.child(Biblioteca.usuarioSesion.getIdusuario().toString()).child(uriParaElInsert).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                                    //Vinculamos el cliente con la interfaz:
+                                    JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                                    //Creamos una peticion para actualizar un vehiculo con el valor de los editexts y demas:
+                                    String modeloAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
+                                    String marcaAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                                    Map<String, String> infoMap = new HashMap<String, String>();
+                                    infoMap.put("matricula", editTextMatricula.getText().toString());
+                                    if (!modeloAux.equals("")) {
+                                        infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
+                                    } else {
+                                        infoMap.put("modelo", vSesion.getModelo());
+                                    }
+                                    if (!marcaAux.equals("")) {
+                                        infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
+                                    } else {
+                                        infoMap.put("marca", vSesion.getMarca());
+                                    }
+                                    infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
+                                    infoMap.put("color", colorSeleccionado.toUpperCase());
+                                    infoMap.put("fotovehiculo", uri.toString());
+                                    Call<Vehiculo> call = peticiones.actualizarVehiculoPorMatricula(infoMap);
+                                    //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                                    call.enqueue(new Callback<Vehiculo>() {
+                                        //Gestionamos la respuesta del servidor:
+                                        @Override
+                                        public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
+                                            //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                            if (!response.isSuccessful()) {
+                                                Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                                return;
+                                            }
+                                            //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
+                                            vSesion = response.body();
+                                            agregarCoches();
+                                            uriImagenEndispositivo=null;
+                                            Toast.makeText(getContext(), getText(R.string.txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo), Toast.LENGTH_LONG).show();
                                         }
-                                        //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
-                                        vSesion = response.body();
-                                        agregarCoches();
-                                        Toast.makeText(getContext(), getText(R.string.txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo), Toast.LENGTH_LONG).show();
-                                    }
 
-                                    //En caso de que no responda el servidor mostramos mensaje de error:
-                                    @Override
-                                    public void onFailure(Call<Vehiculo> call, Throwable t) {
-                                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
+                                        //En caso de que no responda el servidor mostramos mensaje de error:
+                                        @Override
+                                        public void onFailure(Call<Vehiculo> call, Throwable t) {
+                                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
 
+                        }
+                    });
+                }else{
+                    //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                    //Vinculamos el cliente con la interfaz:
+                    JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                    //Creamos una peticion para actualizar un vehiculo con el valor de los editexts y demas:
+                    String modeloAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextModelo.getText().toString());
+                    String marcaAux = Biblioteca.quitaEspaciosRepetidosEntrePalabras(editTextMarca.getText().toString());
+                    Map<String, String> infoMap = new HashMap<String, String>();
+                    infoMap.put("matricula", editTextMatricula.getText().toString());
+                    if (!modeloAux.equals("")) {
+                        infoMap.put("modelo", Biblioteca.capitalizaString(modeloAux));
+                    } else {
+                        infoMap.put("modelo", vSesion.getModelo());
                     }
-                });
+                    if (!marcaAux.equals("")) {
+                        infoMap.put("marca", Biblioteca.capitalizaString(marcaAux));
+                    } else {
+                        infoMap.put("marca", vSesion.getMarca());
+                    }
+                    infoMap.put("combustible", spinnerTipoCombustible.getSelectedItem().toString());
+                    infoMap.put("color", colorSeleccionado.toUpperCase());
+                    infoMap.put("fotovehiculo", "");
+                    Call<Vehiculo> call = peticiones.actualizarVehiculoPorMatricula(infoMap);
+                    //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                    call.enqueue(new Callback<Vehiculo>() {
+                        //Gestionamos la respuesta del servidor:
+                        @Override
+                        public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
+                            //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                            if (!response.isSuccessful()) {
+                                Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
+                            vSesion = response.body();
+                            agregarCoches();
+                            uriImagenEndispositivo=null;
+                            Toast.makeText(getContext(), getText(R.string.txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo), Toast.LENGTH_LONG).show();
+                        }
+
+                        //En caso de que no responda el servidor mostramos mensaje de error:
+                        @Override
+                        public void onFailure(Call<Vehiculo> call, Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
 
         }
@@ -419,9 +512,11 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         if(vSesion!=null) {
             //Boolean para comprobar que estado tiene antes de realizar pruebas:
             boolean anterior = false;
-            if (pruebaFormatoMarca || pruebaFormatoModelo || pruebaCombustible || pruebaColor) {
+            if (pruebaFormatoMarca || pruebaFormatoModelo || pruebaFormatoCombustible || pruebaFormatoColor || pruebaFormatoFoto) {
                 anterior = true;
             }
+            //Depende de si la foto es null o no se obtiene un valor u otro:
+            pruebaFormatoFoto=uriImagenEndispositivo!=null;
             //Si el texto de marca ha cambiado:
             if (s == editTextMarca.getEditableText()) {
                 //Limpiamos espacios multiples y si no es cadena vacia, y no es igual al valor anterior, y esta en el rango de longitud de 1 a 30:
@@ -434,8 +529,8 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                 String modelo = Biblioteca.quitaEspaciosRepetidosEntrePalabras(s.toString());
                 pruebaFormatoModelo = !modelo.equals("") && modelo.length() >= 1 && modelo.length() <= 30 && !modelo.equalsIgnoreCase(vSesion.getModelo());
             }
-            //Si alguna de las 4 pruebas de formato son correctas pasamos a liberar el boton de modificar vehiculo:
-            if ((pruebaFormatoMarca || pruebaFormatoModelo || pruebaColor || pruebaCombustible) && !anterior) {
+            //Si alguna de las 5 pruebas de formato son correctas pasamos a liberar el boton de modificar vehiculo:
+            if ((pruebaFormatoMarca || pruebaFormatoModelo || pruebaFormatoColor || pruebaFormatoCombustible || pruebaFormatoFoto) && !anterior) {
                 //Conjunto de animator:
                 AnimatorSet animator = new AnimatorSet();
                 //Animacion para el bt modificar vehiculo:
@@ -450,7 +545,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                 btActualizarDatos.setColorFilter(getResources().getColor(R.color.colorPrimary));
             }
             //Si ninguna prueba es verdadera, es decir ningun campo ha cambiado, y el boton estaba activado pues se desactiva:
-            else if (!pruebaFormatoMarca && !pruebaFormatoModelo && !pruebaColor && !pruebaCombustible && anterior) {
+            else if (!pruebaFormatoMarca && !pruebaFormatoModelo && !pruebaFormatoColor && !pruebaFormatoCombustible && !pruebaFormatoFoto && anterior) {
                 //Conjunto de animator:
                 AnimatorSet animator = new AnimatorSet();
                 //Animacion para el bt agregar vehiculo:
@@ -477,17 +572,19 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         if(vSesion!=null) {
             //Boolean para comprobar que estado tiene antes de realizar pruebas:
             boolean anterior = false;
-            if (pruebaFormatoMarca || pruebaFormatoModelo || pruebaCombustible || pruebaColor) {
+            if (pruebaFormatoMarca || pruebaFormatoModelo || pruebaFormatoCombustible || pruebaFormatoColor || pruebaFormatoFoto) {
                 anterior = true;
             }
+            //Depende de si la foto es null o no se obtiene un valor u otro:
+            pruebaFormatoFoto=uriImagenEndispositivo!=null;
             //Si el spinner ha cambiado y no tiene valor nulo:
             if (!spinnerTipoCombustible.getSelectedItem().toString().equals("") && !spinnerTipoCombustible.getSelectedItem().toString().equalsIgnoreCase(vSesion.getCombustible())) {
-                pruebaCombustible = true;
+                pruebaFormatoCombustible = true;
             } else {
-                pruebaCombustible = false;
+                pruebaFormatoCombustible = false;
             }
-            //Si las 4 pruebas de formato son correctas pasamos a liberar el boton de modificar vehiculo:
-            if ((pruebaFormatoMarca || pruebaFormatoModelo || pruebaColor || pruebaCombustible) && !anterior) {
+            //Si las 5 pruebas de formato son correctas pasamos a liberar el boton de modificar vehiculo:
+            if ((pruebaFormatoMarca || pruebaFormatoModelo || pruebaFormatoColor || pruebaFormatoCombustible || pruebaFormatoFoto) && !anterior) {
                 //Conjunto de animator:
                 AnimatorSet animator = new AnimatorSet();
                 //Animacion para el bt modificar vehiculo:
@@ -502,7 +599,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                 btActualizarDatos.setColorFilter(getResources().getColor(R.color.colorPrimary));
             }
             //Si ninguna prueba es verdadera, es decir ningun campo ha cambiado, y el boton estaba activado pues se desactiva:
-            else if (!pruebaFormatoMarca && !pruebaFormatoModelo && !pruebaColor && !pruebaCombustible && anterior) {
+            else if (!pruebaFormatoMarca && !pruebaFormatoModelo && !pruebaFormatoColor && !pruebaFormatoCombustible && !pruebaFormatoFoto && anterior) {
                 //Conjunto de animator:
                 AnimatorSet animator = new AnimatorSet();
                 //Animacion para el bt agregar vehiculo:
@@ -520,17 +617,6 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
-    //Coge la direccion del dispositivo
-    /*@Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALERY_INTENT && resultCode == RESULT_OK) {
-            //Coge la Uri del dispositivo
-            uriImagenEndispositivo = data.getData();
-            //Cambia la imagen desde el dispositivo
-            Glide.with(getContext()).load(uriImagenEndispositivo).into(imgViewCoche);
-        }
-    }*/
     //Metodo que vuelve visible o gone los atributos en funcion de lo que se le pase:
     public void visibilidadVista(int tipo){
         tituloMatricula .setVisibility(tipo);
@@ -555,15 +641,23 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         if(tipo==View.VISIBLE){
             me_siento_vasio.setVisibility(View.GONE);
             textViewMe_siento_vasio.setVisibility(View.GONE);
+            elige_vehiculo_wey.setVisibility(View.GONE);
+            textViewElige_vehiculo_wey.setVisibility(View.GONE);
         }else {
             if(misVehiculosList.size()==1){
                 me_siento_vasio.setVisibility(View.VISIBLE);
                 me_siento_vasio.playAnimation();
                 me_siento_vasio.setRepeatCount(ValueAnimator.INFINITE);
                 textViewMe_siento_vasio.setVisibility(View.VISIBLE);
+                elige_vehiculo_wey.setVisibility(View.GONE);
+                textViewElige_vehiculo_wey.setVisibility(View.GONE);
             }else{
                 me_siento_vasio.setVisibility(View.GONE);
                 textViewMe_siento_vasio.setVisibility(View.GONE);
+                elige_vehiculo_wey.setVisibility(View.VISIBLE);
+                elige_vehiculo_wey.playAnimation();
+                elige_vehiculo_wey.setRepeatCount(ValueAnimator.INFINITE);
+                textViewElige_vehiculo_wey.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -576,19 +670,21 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
             if (position != -1) {
                 //Boolean para comprobar que estado tiene antes de realizar pruebas:
                 boolean anterior = false;
-                if (pruebaFormatoMarca || pruebaFormatoModelo || pruebaCombustible || pruebaColor) {
+                if (pruebaFormatoMarca || pruebaFormatoModelo || pruebaFormatoCombustible || pruebaFormatoColor || pruebaFormatoFoto) {
                     anterior = true;
                 }
+                //Depende de si la foto es null o no se obtiene un valor u otro:
+                pruebaFormatoFoto=uriImagenEndispositivo!=null;
                 imgViewColorCoche.setBackgroundColor(color);
                 colorSeleccionado = colores.get(position);
                 //Si el color ha cambiado y no es nulo:
                 if (!colorSeleccionado.equals("") && !colorSeleccionado.equalsIgnoreCase(vSesion.getColor())) {
-                    pruebaColor = true;
+                    pruebaFormatoColor = true;
                 } else {
-                    pruebaColor = false;
+                    pruebaFormatoColor = false;
                 }
-                //Si las 4 pruebas de formato son correctas pasamos a liberar el boton de modificar vehiculo:
-                if ((pruebaFormatoMarca || pruebaFormatoModelo || pruebaColor || pruebaCombustible) && !anterior) {
+                //Si las 5 pruebas de formato son correctas pasamos a liberar el boton de modificar vehiculo:
+                if ((pruebaFormatoMarca || pruebaFormatoModelo || pruebaFormatoColor || pruebaFormatoCombustible || pruebaFormatoFoto) && !anterior) {
                     //Conjunto de animator:
                     AnimatorSet animator = new AnimatorSet();
                     //Animacion para el bt modificar vehiculo:
@@ -603,7 +699,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                     btActualizarDatos.setColorFilter(getResources().getColor(R.color.colorPrimary));
                 }
                 //Si ninguna prueba es verdadera, es decir ningun campo ha cambiado, y el boton estaba activado pues se desactiva:
-                else if (!pruebaFormatoMarca && !pruebaFormatoModelo && !pruebaColor && !pruebaCombustible && anterior) {
+                else if (!pruebaFormatoMarca && !pruebaFormatoModelo && !pruebaFormatoColor && !pruebaFormatoCombustible && !pruebaFormatoFoto && anterior) {
                     //Conjunto de animator:
                     AnimatorSet animator = new AnimatorSet();
                     //Animacion para el bt agregar vehiculo:

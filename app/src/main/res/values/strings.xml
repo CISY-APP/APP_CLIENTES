@@ -142,6 +142,7 @@
     <string name="txt_borradoVehiculo_Toast_ventanaDatosVehiculo">Borrado realizado con exito.</string>
     <string name="txt_actualizdoVehiculo_Toast_ventanaDatosVehiculo">Actualizacion realizada con exito.</string>
     <string name="txt_vacio_ventanaDatosVehiculo">Esto se encuentra algo vacio ...</string>
+    <string name="txt_elige_ventanaDatosVehiculo">¡Haga click para cargar su vehiculo!</string>
     <string name="txt_tituloMatricula_ventanaDatosVehiculo">MATRICULA</string>
     <string name="edit_matricula_ventanaDatosVehiculo">Matricula</string>
     <string name="txt_tituloMarca_ventanaDatosVehiculo">MARCA</string>
