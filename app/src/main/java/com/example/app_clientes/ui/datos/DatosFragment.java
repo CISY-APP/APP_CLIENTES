@@ -4,10 +4,12 @@ package com.example.app_clientes.ui.datos;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +57,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
     private CircleImageView imgUsuario;
     private EditText editTextNombre, editTextApellidos, editTextUsuario, editTextPrefijo, editTextTelefono, editTextFecha, editTextDescripcion;
     private Button btCambiarContrasena, btActualizarDatos, btBorrarCuenta;
-    private TextView txtErrorTelefono, txtErrorFecha, txtErrorDescripcion;
+    private TextView txtErrorTelefono, txtErrorFecha, txtErrorDescripcion, btIncidenciaButton;
     //Atributos clase:
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private static final int GALERY_INTENT = 1;
@@ -76,6 +78,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         editTextApellidos = view.findViewById(R.id.editTextApellidosDatosPersonales);editTextApellidos.setKeyListener(null);
         editTextUsuario = view.findViewById(R.id.editTextUsuarioDatosPersonales);editTextUsuario.setKeyListener(null);
         editTextPrefijo = view.findViewById(R.id.editTextPrefijoDatosPersonales);editTextPrefijo.setKeyListener(null);
+        btIncidenciaButton = view.findViewById(R.id.btIncidenciaButton);
         editTextTelefono = view.findViewById(R.id.editTextNumeroDatosPersonales);
         editTextFecha = view.findViewById(R.id.editTextFechaDatosPersonales);
         editTextDescripcion = view.findViewById(R.id.editTextDescripcionDatosPersonales);
@@ -94,6 +97,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         btCambiarContrasena.setOnClickListener(this);
         btBorrarCuenta.setOnClickListener(this);
         editTextFecha.setOnClickListener(this);
+        btIncidenciaButton.setOnClickListener(this);
         //Vinculamos los edittext a su listener para el metodo afterTextChanged, que esta implementado en esta clase:
         editTextTelefono.addTextChangedListener(this);
         editTextDescripcion.addTextChangedListener(this);
@@ -438,6 +442,13 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                         }
                     });
                 }
+            }
+        }else if(v.equals(btIncidenciaButton)){
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:" +"cisyincidencias@gmail.com"));
+            try {
+                startActivity(emailIntent);
+            } catch (ActivityNotFoundException anfe) {
             }
         }
     }
