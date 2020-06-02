@@ -59,4 +59,7 @@ public interface JsonPlaceHolderApi {
     //Registrar un viaje
     @POST("registrarViaje")
     Call<Viaje> registrarViaje(@Body Map<String, String> param);
+    //Buscar viajes
+    @POST("consultaViajesReservar")
+    Call <List<Viaje>> getListViajesFiltrados(@Body Map<String, String> param);
 }

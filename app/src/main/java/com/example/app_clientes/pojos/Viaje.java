@@ -15,13 +15,13 @@ public class Viaje implements Serializable {
     private Usuario usuario;
     @SerializedName("vehiculo")
     private Vehiculo vehiculo;
-    @SerializedName("localidadorigen")
+    @SerializedName("localidadOrigen")
     private String localidadorigen;
-    @SerializedName("lugarsalida")
+    @SerializedName("lugarSalida")
     private String lugarsalida;
-    @SerializedName("localidaddestino")
+    @SerializedName("localidadDestino")
     private String localidaddestino;
-    @SerializedName("lugarllegada")
+    @SerializedName("lugarLlegada")
     private String lugarllegada;
     @SerializedName("precio")
     private BigDecimal precio;

@@ -5,166 +5,344 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@drawable/layout_drawable_7"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/IVUsuario"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                app:srcCompat="@android:mipmap/sym_def_app_icon" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/layout_drawable_6"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="5dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/TVdatosViaje"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Nombre"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/TVApellidos"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="Apellidos"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/TVEdad"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Edad:"
-                        android:textColor="@color/places_ui_default_primary_dark"
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/TVAsientosDisponibles"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Asientos disponibles:"
-                        android:textColor="@color/places_ui_default_primary_dark"
-                        android:textSize="14dp" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/TVValoracion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Valoración: "
-                            android:textColor="@color/places_ui_default_primary_dark"
-                            android:textSize="14dp" />
-
-                        <ImageView
-                            android:id="@+id/IMGValoracion"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="left"
-                            app:srcCompat="@android:drawable/star_big_on"
-                            android:contentDescription="TODO" />
-
-                    </LinearLayout>
-
-
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/TVPrecio"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:text="@string/TV_Precio_minimo"
-                        android:textColor="@color/places_ui_default_primary_dark"
-                        android:textSize="12dp" />
-
-                    <Button
-                        android:id="@+id/BTReservar"
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/layout_drawable_2"
-                        android:text="Reservar"
-                        android:textColor="@color/colorPrimary" />
-
-                    <Button
-                        android:id="@+id/BTMensaje"
-                        android:layout_width="match_parent"
-                        android:layout_height="28dp"
-                        android:layout_marginLeft="1dp"
-                        android:layout_marginRight="1dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/layout_drawable_2"
-                        android:text="Mensaje"
-                        android:textColor="@color/colorPrimary" />
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
-
-
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewUsuarioItemViajeEncontrado"
+                android:layout_width="78dp"
+                android:layout_height="78dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                app:srcCompat="@android:mipmap/sym_def_app_icon" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewNombreApellidosItemViajeEncontrado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Raul Ramos Serrano"
+                    android:singleLine="true"
+                    android:textColor="#3C3C3C"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edad: "
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="#3C3C3C"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/textViewEdadItemViajeEncontrado"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:text="22 años"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Movil: "
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="#3C3C3C"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/textViewTelefonoItemViajeEncontrado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="622409106"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14sp" />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/buttonMensajeItemViajeEncontrado"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="3.5dp"
+                    android:layout_marginLeft="3.5dp"
+                    android:background="@drawable/layout_drawable_2"
+                    android:text="ENVIAR MENSAJE PRIVADO"
+                    android:textSize="13sp"
+                    android:textColor="@color/colorPrimary" />
+            </LinearLayout>
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGris" />
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="2dp"
+                android:layout_gravity="center"
+                android:tint="@color/colorPrimary"
+                android:src="@drawable/puntoapunto" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="53dp"
+                        android:layout_height="wrap_content"
+                        android:text="Origen:"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="#3C3C3C"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/textViewOrigenItemViajeEncontrado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Getafe - Estacion de Metro el Bercial"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="53dp"
+                        android:layout_height="wrap_content"
+                        android:text="Destino:"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="#3C3C3C"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/textViewDestinoItemViajeEncontrado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Getafe - Estacion de Metro el Bercial"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha:"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:singleLine="true"
+                android:textColor="#3C3C3C"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/textViewFechaItemViajeEncontrado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20 / 06 / 2020 a las 08 : 20"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:singleLine="true"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio:"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:singleLine="true"
+                android:textColor="#3C3C3C"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/textViewPrecioItemViajeEncontrado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4.9€"
+                android:singleLine="true"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorGris" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imageViewCocheItemViajeEncontrado"
+                android:layout_width="120dp"
+                android:layout_height="67dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:backgroundTint="#eceff1"
+                android:scaleType="fitCenter"
+                app:riv_corner_radius="10dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="false"
+                app:riv_tile_mode="clamp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Matricula: "
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="#3C3C3C"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/textViewMatriculaItemViajeEncontrado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="7645PWK"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14sp" />
 
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Marca: "
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="#3C3C3C"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/textViewMarcaYmodeloItemViajeEncontrado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mercedes Benz - CLA 1800D"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Color: "
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="#3C3C3C"
+                        android:textSize="14sp" />
+                    <ImageView
+                        android:id="@+id/imgColorItemViajeEncontrado"
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="bottom"
+                        android:visibility="visible"
+                        android:background="@color/colorPrimary"
+                        android:clickable="false"
+                        android:focusable="false" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Combustible: "
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="#3C3C3C"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/textViewCombustibleItemViajeEncontrado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Diesel"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <Button
+            android:id="@+id/buttonReservaItemViajeEncontrado"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="3.5dp"
+            android:layout_marginLeft="3.5dp"
+            android:background="@drawable/layout_drawable_2"
+            android:text="RESERVAR VIAJE"
+            android:textSize="13sp"
+            android:textColor="@color/colorPrimary" />
     </LinearLayout>
-
 </FrameLayout>

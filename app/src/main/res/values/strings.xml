@@ -204,5 +204,6 @@
     <string name="txt_errorfecha_Formato_ventanaBuscarViaje">Fecha invalida.</string>
     <string name="txt_errorPrecio_Menor_ventanaBuscarViaje">Precio no mayor a 0 €.</string>
     <string name="txt_errorPrecio_Formato_ventanaBuscarViaje">Precio con valor no numerico.</string>
-
+    <!-- ********************************************* VENTANA VIAJES ENCONTRADOS *********************************************-->
+    <string name="txt_cardViewTitulo_ventanaViajesEncontrados">Viajes encontrados</string>
 </resources>
