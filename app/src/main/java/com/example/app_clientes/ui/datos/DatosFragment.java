@@ -50,15 +50,14 @@ import static android.app.Activity.RESULT_OK;
 //Clase que contiene toda la logica y conexion con la ventana de mi cuenta de la app:
 public class DatosFragment extends Fragment implements View.OnClickListener, TextWatcher {
     //Variables para comprobacion de formatos:
-    private boolean pruebaFormatoNumero, pruebaFormatoFecha, pruebaFormatoDescripcion;
+    private boolean pruebaFormatoNumero, pruebaFormatoFecha, pruebaFormatoDescripcion, pruebaFormatoFoto;
     //Atributos XML:
     private CircleImageView imgUsuario;
     private EditText editTextNombre, editTextApellidos, editTextUsuario, editTextPrefijo, editTextTelefono, editTextFecha, editTextDescripcion;
     private Button btCambiarContrasena, btActualizarDatos, btBorrarCuenta;
     private TextView txtErrorTelefono, txtErrorFecha, txtErrorDescripcion;
     //Atributos clase:
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();;
-    private String uriFotoUsuario = "";
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private static final int GALERY_INTENT = 1;
     private String ID_USUARIO;
     private String fechaElegida="";
@@ -301,7 +300,6 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 editTextDescripcion.setTextColor(getResources().getColor(R.color.places_ui_default_primary_dark));
             }
             //Control de fecha validamos que si hay fecha sea menor que hoy, obtenemos los valores por separado con el siguiente algoritmo:
-
             if(!editTextFecha.getText().toString().equals("")){
                 fechaElegida = Biblioteca.obtieneFechaDataPicker(editTextFecha.getText().toString());
                 Date fechaFinal = Date.valueOf(fechaElegida);
@@ -320,74 +318,125 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             }
             //Si todas las comprobaciones del front son correctas pasamos a lanzar la solicitud al servidor:
             if(pbTelefono&&pbFecha&&pbDescripcion) {
-                StorageReference filePath = storageReference.child("Fotos").child(Biblioteca.usuarioSesion.getIdusuario().toString());
-                //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
-                filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
-                        storageReference.child("Fotos").child(Biblioteca.usuarioSesion.getIdusuario().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
-                                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
-                                //Vinculamos el cliente con la interfaz:
-                                JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                                //Creamos una peticion para actualizar los datos personales de un usuario, que creamos con los valores de los editext:
-                                Map<String, String> infoMap = new HashMap<String, String>();
-                                infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
-                                if (!editTextTelefono.getText().toString().equals("")) {
-                                    infoMap.put("telefono", editTextTelefono.getText().toString());
-                                } else {
-                                    infoMap.put("telefono", "");
-                                }
-                                if (!fechaElegida.equals("")) {
-                                    infoMap.put("fechaNac", fechaElegida);
-                                } else {
-                                    infoMap.put("fechaNac", "");
-                                }
-                                if (!editTextDescripcion.getText().toString().equals("")) {
-                                    infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
-                                } else {
-                                    infoMap.put("descripcion", "");
-                                }
-                                infoMap.put("fotousuario", uri.toString());
-                                Call<Usuario> call = peticiones.actualizarDatosPersonalesUsuario(infoMap);
-                                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                                call.enqueue(new Callback<Usuario>() {
-                                    //Gestionamos la respuesta del servidor:
-                                    @Override
-                                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
-                                        if (!response.isSuccessful()) {
-                                            Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-                                            return;
+                //Si la uri no esta vacia realizamos lo siguiente:
+                if(uriImagenEndispositivo!=null) {
+                    StorageReference filePath = storageReference.child("Fotos").child(Biblioteca.usuarioSesion.getIdusuario().toString());
+                    //Utiliza la direccion para coger la imagen del dispositivo, sube la imagen a firebase y escucha si se ha realizado de manera adecuada
+                    filePath.putFile(uriImagenEndispositivo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos de firebase
+                            storageReference.child("Fotos").child(Biblioteca.usuarioSesion.getIdusuario().toString()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                                    //Vinculamos el cliente con la interfaz:
+                                    JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                                    //Creamos una peticion para actualizar los datos personales de un usuario, que creamos con los valores de los editext:
+                                    Map<String, String> infoMap = new HashMap<String, String>();
+                                    infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
+                                    if (!editTextTelefono.getText().toString().equals("")) {
+                                        infoMap.put("telefono", editTextTelefono.getText().toString());
+                                    } else {
+                                        infoMap.put("telefono", "");
+                                    }
+                                    if (!fechaElegida.equals("")) {
+                                        infoMap.put("fechaNac", fechaElegida);
+                                    } else {
+                                        infoMap.put("fechaNac", "");
+                                    }
+                                    if (!editTextDescripcion.getText().toString().equals("")) {
+                                        infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
+                                    } else {
+                                        infoMap.put("descripcion", "");
+                                    }
+                                    infoMap.put("fotousuario", uri.toString());
+                                    Call<Usuario> call = peticiones.actualizarDatosPersonalesUsuario(infoMap);
+                                    //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                                    call.enqueue(new Callback<Usuario>() {
+                                        //Gestionamos la respuesta del servidor:
+                                        @Override
+                                        public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                            //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                            if (!response.isSuccessful()) {
+                                                Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                                return;
+                                            }
+                                            //Si el cambio ha sido exitoso cargamos los datos:
+                                            Toast.makeText(getContext(), getText(R.string.txt_actualizacion_Toast_ventanaDatosUsuario), Toast.LENGTH_LONG).show();
+                                            cargarDatosPersonalesUsuario();
+                                            uriImagenEndispositivo=null;
                                         }
-                                        //Si el cambio ha sido exitoso cargamos los datos:
-                                        Toast.makeText(getContext(), getText(R.string.txt_actualizacion_Toast_ventanaDatosUsuario), Toast.LENGTH_LONG).show();
-                                        cargarDatosPersonalesUsuario();
-                                    }
 
-                                    //En caso de que no responda el servidor mostramos mensaje de error:
-                                    @Override
-                                    public void onFailure(Call<Usuario> call, Throwable t) {
-                                        Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception exception) {
-                                Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
+                                        //En caso de que no responda el servidor mostramos mensaje de error:
+                                        @Override
+                                        public void onFailure(Call<Usuario> call, Throwable t) {
+                                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    Toast.makeText(getContext(), "No se ha podido realizar el insert en la base de datos", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
 
+                        }
+                    });
+                }
+                else{
+                    //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                    Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                    //Vinculamos el cliente con la interfaz:
+                    JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                    //Creamos una peticion para actualizar los datos personales de un usuario, que creamos con los valores de los editext:
+                    Map<String, String> infoMap = new HashMap<String, String>();
+                    infoMap.put("idUsuario", Biblioteca.usuarioSesion.getIdusuario().toString());
+                    if (!editTextTelefono.getText().toString().equals("")) {
+                        infoMap.put("telefono", editTextTelefono.getText().toString());
+                    } else {
+                        infoMap.put("telefono", "");
                     }
-                });
+                    if (!fechaElegida.equals("")) {
+                        infoMap.put("fechaNac", fechaElegida);
+                    } else {
+                        infoMap.put("fechaNac", "");
+                    }
+                    if (!editTextDescripcion.getText().toString().equals("")) {
+                        infoMap.put("descripcion", editTextDescripcion.getText().toString().trim());
+                    } else {
+                        infoMap.put("descripcion", "");
+                    }
+                    infoMap.put("fotousuario", "");
+                    Call<Usuario> call = peticiones.actualizarDatosPersonalesUsuario(infoMap);
+                    //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                    call.enqueue(new Callback<Usuario>() {
+                        //Gestionamos la respuesta del servidor:
+                        @Override
+                        public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                            //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                            if (!response.isSuccessful()) {
+                                Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                return;
+                            }
+                            //Si el cambio ha sido exitoso cargamos los datos:
+                            Toast.makeText(getContext(), getText(R.string.txt_actualizacion_Toast_ventanaDatosUsuario), Toast.LENGTH_LONG).show();
+                            cargarDatosPersonalesUsuario();
+                        }
+
+                        //En caso de que no responda el servidor mostramos mensaje de error:
+                        @Override
+                        public void onFailure(Call<Usuario> call, Throwable t) {
+                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
         }
     }
@@ -396,7 +445,9 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
     public void afterTextChanged(Editable s) {
         //Boolean para comprobar que estado tiene antes de realizar pruebas:
         boolean anterior=false;
-        if(pruebaFormatoNumero||pruebaFormatoFecha||pruebaFormatoDescripcion){anterior=true;}
+        if(pruebaFormatoNumero||pruebaFormatoFecha||pruebaFormatoDescripcion||pruebaFormatoFoto){anterior=true;}
+        //Depende de si la foto es null o no se obtiene un valor u otro:
+        pruebaFormatoFoto=uriImagenEndispositivo!=null;
         //Si el texto de telefono ha cambiado:
         if(s==editTextTelefono.getEditableText()){
             //Si no esta vacio y es distinto del anterior valor:
@@ -420,7 +471,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         }
         //Si una de las 3 pruebas es verdadera, es decir al menos un campo ha cambiado y no estaba liberado el boton pasamos a habilitar el boton de registrar usuario:
         //Y ninguno es cadena vacia:
-        if ((pruebaFormatoNumero||pruebaFormatoFecha||pruebaFormatoDescripcion)&&!anterior){
+        if ((pruebaFormatoNumero||pruebaFormatoFecha||pruebaFormatoDescripcion||pruebaFormatoFoto)&&!anterior){
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
             //Animacion para el bt actualizar cambios:
@@ -434,7 +485,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             btActualizarDatos.setTextColor(getResources().getColor(R.color.colorVerdesito));
         }
         //Sino ninguna prueba es verdadera, es decir ningun campo ha cambiado, y el boton estaba activado pues se desactiva:
-        else if (!pruebaFormatoNumero&&!pruebaFormatoFecha&&!pruebaFormatoDescripcion&&anterior){
+        else if (!pruebaFormatoNumero&&!pruebaFormatoFecha&&!pruebaFormatoDescripcion&&!pruebaFormatoFoto&&anterior){
             //Conjunto de animator:
             AnimatorSet animator = new AnimatorSet();
             //Animacion para el bt actualizar cambios:
@@ -462,40 +513,40 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
             //Cambia la imagen desde el dispositivo
             Glide.with(getActivity()).load(uriImagenEndispositivo).error(R.drawable.user).into(imgUsuario);
             Glide.with(getActivity()).load(uriImagenEndispositivo).error(R.drawable.user).into(VentanaPrincipal.IVImagenUsuarioMenuLateral);
-            //Conjunto de animator:
-            AnimatorSet animator = new AnimatorSet();
-            //Animacion para el bt actualizar cambios:
-            ObjectAnimator scaleDownX_BtActualizarCambios = ObjectAnimator.ofFloat(btActualizarDatos, "scaleX", 0.85f, 1.0f);
-            ObjectAnimator scaleDownY_BtActualizarCambios = ObjectAnimator.ofFloat(btActualizarDatos, "scaleY", 0.85f, 1.0f);
-            animator.play(scaleDownX_BtActualizarCambios).with(scaleDownY_BtActualizarCambios);
-            animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
-            animator.start();
-            //Habilitamos el boton actualizar cambios:
-            btActualizarDatos.setEnabled(true);
-            btActualizarDatos.setTextColor(getResources().getColor(R.color.colorVerdesito));
-        }
-    }
-    //Hacer si nos queda tiempo cambiar pais de origen
-    /*private void showRadioButtonDialog() {
-        // custom dialog
-        final Dialog dialog = new Dialog(getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_paises);
-
-        List<String> stringList=new ArrayList<>();  // here is list
-        for(int i=0;i<2;i++) {
-            if (i==0){
-                stringList.add("Number Mode");
-            }else {
-                stringList.add("Character Mode");
+            //Boolean para comprobar que estado tiene antes de realizar pruebas:
+            boolean anterior=false;
+            if(pruebaFormatoNumero||pruebaFormatoFecha||pruebaFormatoDescripcion||pruebaFormatoFoto){anterior=true;}
+            //Depende de si la foto es null o no se obtiene un valor u otro:
+            pruebaFormatoFoto=uriImagenEndispositivo!=null;
+            //Si una de las 3 pruebas es verdadera, es decir al menos un campo ha cambiado y no estaba liberado el boton pasamos a habilitar el boton de registrar usuario:
+            //Y ninguno es cadena vacia:
+            if ((pruebaFormatoNumero||pruebaFormatoFecha||pruebaFormatoDescripcion||pruebaFormatoFoto)&&!anterior){
+                //Conjunto de animator:
+                AnimatorSet animator = new AnimatorSet();
+                //Animacion para el bt actualizar cambios:
+                ObjectAnimator scaleDownX_BtActualizarCambios = ObjectAnimator.ofFloat(btActualizarDatos, "scaleX", 0.85f, 1.0f);
+                ObjectAnimator scaleDownY_BtActualizarCambios = ObjectAnimator.ofFloat(btActualizarDatos, "scaleY", 0.85f, 1.0f);
+                animator.play(scaleDownX_BtActualizarCambios).with(scaleDownY_BtActualizarCambios);
+                animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
+                animator.start();
+                //Habilitamos el boton actualizar cambios:
+                btActualizarDatos.setEnabled(true);
+                btActualizarDatos.setTextColor(getResources().getColor(R.color.colorVerdesito));
+            }
+            //Sino ninguna prueba es verdadera, es decir ningun campo ha cambiado, y el boton estaba activado pues se desactiva:
+            else if (!pruebaFormatoNumero&&!pruebaFormatoFecha&&!pruebaFormatoDescripcion&&!pruebaFormatoFoto&&anterior){
+                //Conjunto de animator:
+                AnimatorSet animator = new AnimatorSet();
+                //Animacion para el bt actualizar cambios:
+                ObjectAnimator scaleDownX_BtActualizarCambios = ObjectAnimator.ofFloat(btActualizarDatos, "scaleX", 1.0f, 0.85f);
+                ObjectAnimator scaleDownY_BtActualizarCambios = ObjectAnimator.ofFloat(btActualizarDatos, "scaleY", 1.0f, 0.85f);
+                animator.play(scaleDownX_BtActualizarCambios).with(scaleDownY_BtActualizarCambios);
+                animator.setDuration(Biblioteca.tAnimacionesScaleBotones);
+                animator.start();
+                //Deshabilitamos el boton actualizar cambios:
+                btActualizarDatos.setEnabled(false);
+                btActualizarDatos.setTextColor(getResources().getColor(R.color.colorGris));
             }
         }
-        RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radio_group);
-        for(int i=0;i<stringList.size();i++){
-            RadioButton rb=new RadioButton(getContext()); // dynamically creating RadioButton and adding to RadioGroup.
-            rb.setText(stringList.get(i));
-            rg.addView(rb);
-        }
-        dialog.show();
-    }*/
+    }
 }
