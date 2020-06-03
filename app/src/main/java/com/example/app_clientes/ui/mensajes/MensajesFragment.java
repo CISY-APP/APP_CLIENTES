@@ -76,10 +76,11 @@ public class MensajesFragment extends Fragment{
         miAdapterMensajes.setOnClickListener(new MiAdapterMensajes.OnItemClickListener() {
             @Override
             public void OnAbreChatClick(int position) {
-                VentanaChatIndividual ventanaChatIndividual = new VentanaChatIndividual();
-                Intent VentanaChatIndividual = new Intent(getContext(), ventanaChatIndividual.getClass());
-                VentanaChatIndividual.putExtra("ID_USUARIO", ID_USUARIO);
+                Intent VentanaChatIndividual = new Intent(getContext(), VentanaChatIndividual.class);
+                VentanaChatIndividual.putExtra("ID_USUARIO", Biblioteca.usuarioSesion.getIdusuario());
                 VentanaChatIndividual.putExtra("ID_USUARIO_CONVER", miAdapterMensajes.getConversacion(position).getId_usuario());
+                VentanaChatIndividual.putExtra("NOMBRE_USUARIO_CONVER", miAdapterMensajes.getConversacion(position).getNombreUsuario());
+                VentanaChatIndividual.putExtra("FOTO_USUARIO_CONVER", miAdapterMensajes.getConversacion(position).getFotoUsuarioContrario());
                 startActivity(VentanaChatIndividual);
             }
         });
