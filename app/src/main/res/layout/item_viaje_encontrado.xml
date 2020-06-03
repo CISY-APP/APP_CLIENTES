@@ -7,7 +7,7 @@
     android:layout_marginBottom="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:background="@drawable/layout_drawable_7"
+    android:background="@drawable/cell_background1"
     android:orientation="vertical">
 
     <LinearLayout

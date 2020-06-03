@@ -1,32 +1,35 @@
 package com.example.app_clientes.pojos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
-public class Reserva implements java.io.Serializable {
 
-    private Integer id;
+public class Reserva implements java.io.Serializable {
+    @SerializedName("id")
+    private ReservaId id;
+    @SerializedName("usuario")
     private Usuario usuario;
+    @SerializedName("viaje")
     private Viaje viaje;
+    @SerializedName("fechareserva")
     private Date fechareserva;
-    private Date horafichaje;
 
     public Reserva() {
     }
 
-    public Reserva(Integer id, Usuario usuario, Viaje viaje, Date fechareserva, Date horafichaje) {
+    public Reserva(ReservaId id, Usuario usuario, Viaje viaje, Date fechareserva) {
         this.id = id;
         this.usuario = usuario;
         this.viaje = viaje;
         this.fechareserva = fechareserva;
-        this.horafichaje = horafichaje;
     }
 
-
-    public Integer getId() {
+    public ReservaId getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ReservaId id) {
         this.id = id;
     }
 
@@ -53,13 +56,4 @@ public class Reserva implements java.io.Serializable {
     public void setFechareserva(Date fechareserva) {
         this.fechareserva = fechareserva;
     }
-
-    public Date getHorafichaje() {
-        return this.horafichaje;
-    }
-
-    public void setHorafichaje(Date horafichaje) {
-        this.horafichaje = horafichaje;
-    }
-
 }

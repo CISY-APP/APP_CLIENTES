@@ -3,6 +3,7 @@ package com.example.app_clientes.jsonplaceholder;
 
 import androidx.annotation.NonNull;
 
+import com.example.app_clientes.pojos.Reserva;
 import com.example.app_clientes.pojos.Usuario;
 import com.example.app_clientes.pojos.Vehiculo;
 import com.example.app_clientes.pojos.Viaje;
@@ -62,4 +63,8 @@ public interface JsonPlaceHolderApi {
     //Buscar viajes
     @POST("consultaViajesReservar")
     Call <List<Viaje>> getListViajesFiltrados(@Body Map<String, String> param);
+    //METODOS PARA RESERVA********************************************************************************************
+    //Registrar una reserva de viaje
+    @POST("registrarReserva")
+    Call<Reserva> registraReserva(@Body Map<String, String> param);
 }

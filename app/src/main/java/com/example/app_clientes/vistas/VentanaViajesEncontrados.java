@@ -1,27 +1,28 @@
 //Indicamos a que paquete pertenece esta clase:
 package com.example.app_clientes.vistas;
 //Importamos los siguientes paquetes:
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.adapter.MiAdapterViajesEncontrados;
 import com.example.app_clientes.item.ItemViajesEncontrados;
 import com.example.app_clientes.R;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
+import com.example.app_clientes.pojos.Reserva;
 import com.example.app_clientes.pojos.Viaje;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,8 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
     private String localidadOrigen, lugarOrigen, localidadDestino, lugarDestino, precio, fechaElegida;
     private List<Viaje> listViajes = new ArrayList<Viaje>();
     //Atributos XML:
+    private LottieAnimationView person_tristesito;
+    private TextView textViewPersonTristesito;
     private ImageView btVolver;
     //Metodo que se ejecuta al crearse la vista:
     @Override
@@ -50,6 +53,8 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         //Asociamos el id del usuario en sesion a la siguiente variable:
         ID_USUARIO =  Biblioteca.usuarioSesion.getIdusuario().toString();
         //Vinculamos los atributos de la clase:
+        person_tristesito =findViewById(R.id.animation_vacio_viajes_encontrados);
+        textViewPersonTristesito =findViewById(R.id.textViewTituloAnimacionVacioViajesEncontrados);
         btVolver = findViewById(R.id.btFlechaAtrasViajesEncontrados);
         recyclerViewViajesEncontrados = findViewById(R.id.RVViajesEncontrados);
         //Obtenemos los datos enviados desde la ventana anterior, para asi poder hacer la consulta al servidor:
@@ -81,6 +86,7 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
         JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
         //Creamos una peticion para obtener una lista de viajes filtrados con los datos pasados por el body:
         Map<String, String> infoMap = new HashMap<String, String>();
+        infoMap.put("idUsuario",Biblioteca.usuarioSesion.getIdusuario().toString());
         infoMap.put("localidadOrigen", localidadOrigen);
         infoMap.put("lugarSalida", lugarOrigen);
         infoMap.put("localidadDestino", localidadDestino);
@@ -101,35 +107,33 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
                 }
                 //Si la respuesta del servidor es existosa obtenemos la lista, eso si, antes limpiamos la lista actual:
                 listViajes.clear();
-                //Recogemos la lista y la guardamos para el modelo del recycler view
+                //Recogemos la lista y la guardamos para el modelo del recycler view:
                 listViajes = response.body();
-                if (listViajes!=null) {
+                if (listViajes!=null&&!listViajes.isEmpty()) {
+                    //Reiniciamos vision de componentes:
+                    recyclerViewViajesEncontrados.setVisibility(View.VISIBLE);
+                    person_tristesito.setVisibility(View.GONE);
+                    textViewPersonTristesito.setVisibility(View.GONE);
+                    //Bucle for para ir rellenando la lista de items de viajes, con la lista de viajes obtenida:
                     for (Viaje vl : listViajes) {
+                        //Si la foto de usuario esta null, le damos estado de cadena vacia:
                         if(vl.getUsuario().getFotousuario()==null){vl.getUsuario().setFotousuario("");}
-                        String fechaNacRv="";
+                        //Calculamos los años de la persona utilizando el siguiente metodo, siempre y cuando no este a null la fecha de nacimiento:
                         String aniosRv="0";
-                        if(vl.getUsuario().getFechanacimiento()==null){fechaNacRv="";aniosRv="";}
-                        else{
-                            Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
-                            SimpleDateFormat form = new SimpleDateFormat("yyyy");
-                            fechaNacRv=form.format(vl.getUsuario().getFechanacimiento());
-                            String fechaActRv=form.format(fechaActual);
-                            int a = Integer.parseInt(fechaNacRv);
-                            int b = Integer.parseInt(fechaActRv);
-                            b=b-a;
-                            aniosRv=b+"";
-                        }
+                        if(vl.getUsuario().getFechanacimiento()==null){aniosRv="";}
+                        else{aniosRv=Biblioteca.obtieneEdad(vl.getUsuario().getFechanacimiento());}
+                        //Si el telefono es null, le damos valor de cadena vacia y sino cogemos el telefono:
                         String telefonoRv="";
                         if(vl.getUsuario().getTelefono()==null){telefonoRv="";}
                         else{telefonoRv=vl.getUsuario().getTelefono()+"";}
+                        //Si la foto del vehiculo esta null, le damos el valor de cadena vacia:
                         if(vl.getVehiculo().getFotovehiculo()==null){vl.getVehiculo().setFotovehiculo("");}
-                        SimpleDateFormat form = new SimpleDateFormat("dd / MM / yyyy HH:mm");
-                        String fechaSalidaRv=form.format(vl.getFechasalida());
-                        fechaSalidaRv=fechaSalidaRv.substring(0,13)+ "a las "+fechaSalidaRv.substring(15);
-
+                        //Obtenemos la fecha de salida del viaje en el formato que nos interesa, y le sumamos dos horas para contrarestar el problema de que en el emulador se cogen dos horas menos:
+                        String fechaSalidaRv=Biblioteca.obtieneHoraViajesEncontrados(vl.getFechasalida());
+                        //Añadimos items de viajes a la lista requerida para el recycler view:
                         viajesEncontradosList.add(
                                 new ItemViajesEncontrados(vl.getUsuario().getIdusuario().toString(), vl.getUsuario().getFotousuario(),
-                                        vl.getUsuario().getNombre() + " " + vl.getUsuario().getApellidos(), aniosRv,
+                                        vl.getUsuario().getNombre() + " " + vl.getUsuario().getApellidos(), aniosRv +" años",
                                         telefonoRv, vl.getIdviaje().toString(), vl.getLocalidadOrigen() + " - " + vl.getLugarSalida(),
                                         vl.getLocalidadDestino() + " - " + vl.getLugarLlegada(), fechaSalidaRv, vl.getPrecio() + "€",
                                         vl.getVehiculo().getIdvehiculo().toString(), vl.getVehiculo().getFotovehiculo(), vl.getVehiculo().getMatricula(),
@@ -150,15 +154,46 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
 
                         @Override
                         public void OnReservaClick(int position) {
-                            //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
-                            Intent VentanaPublicarViaje = new Intent(getApplicationContext(), VentanaViajeReservado.class);
-                            //VentanaPublicarViaje.putExtra("usuario",ETUsuario.getText().toString());
-                            //VentanaPublicarViaje.putExtra("control",ETControl.getText().toString());
-                            startActivity(VentanaPublicarViaje);
+                            //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                            Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                            //Vinculamos el cliente con la interfaz:
+                            JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                            //Creamos una peticion para registrar una reserva por el body:
+                            Map<String, String> infoMap = new HashMap<String, String>();
+                            infoMap.put("idUsuario",Biblioteca.usuarioSesion.getIdusuario().toString());
+                            infoMap.put("idViaje",viajesEncontradosList.get(position).getCod_viaje());
+                            Call<Reserva> call = peticiones.registraReserva(infoMap);
+                            //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                            call.enqueue(new Callback<Reserva>() {
+                                //Gestionamos la respuesta del servidor:
+                                @Override
+                                public void onResponse(Call<Reserva> call, Response<Reserva> response) {
+                                    //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                    if (!response.isSuccessful()) {
+                                        Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                        return;
+                                    }
+                                    //Si la respuesta del servidor es existosa obtenemos la lista, eso si, antes limpiamos la lista actual:
+                                    //AQUI DENTRO SE DEBE DE HACER LA LLAMADA CON RETROFIT
+                                    Intent VentanaPublicarViaje = new Intent(getApplicationContext(), VentanaViajeReservado.class);
+                                    startActivity(VentanaPublicarViaje);
+                                    finish();
+                                }
+                                //En caso de que no responda el servidor mostramos mensaje de error:
+                                @Override
+                                public void onFailure(Call<Reserva> call, Throwable t) {
+                                    Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                     });
                 }else{
-
+                    //Reiniciamos vision de componentes:
+                    recyclerViewViajesEncontrados.setVisibility(View.GONE);
+                    person_tristesito.playAnimation();
+                    person_tristesito.setRepeatCount(ValueAnimator.INFINITE);
+                    person_tristesito.setVisibility(View.VISIBLE);
+                    textViewPersonTristesito.setVisibility(View.VISIBLE);
                 }
             }
             //En caso de que no responda el servidor mostramos mensaje de error:
