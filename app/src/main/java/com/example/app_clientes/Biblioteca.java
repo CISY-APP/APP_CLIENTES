@@ -2,6 +2,11 @@
 package com.example.app_clientes;
 //Importamos los siguientes paquetes:
 import com.example.app_clientes.pojos.Usuario;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 //Clase donde se crearan distintos metodos utilizados por otras clases.
@@ -10,7 +15,7 @@ public class Biblioteca {
     //Variables u objetos publicos estaticos:
     public static long tAnimacionesScaleInicial = 500;          //Tiempo para las animaciones de scale al entrar a la ventana.
     public static long tAnimacionesScaleBotones = 200;          //Tiempo para las animaciones de scale al des/habilitar un boton.
-    public static String ip = "http://192.168.56.1:8080/";     //Ip a la que conectarse desde el cliente Retrofit.
+    public static String ip = "http://192.168.0.103:8080/";     //Ip a la que conectarse desde el cliente Retrofit.
     public static Usuario usuarioSesion;                        //Sera nuestro usuario de sesion una vez inicie sesion.
     //Metodos publicos y estaticos:
     //Metodo que comprueba si un email es valido recibido como String, y nos devuelve un booleano indicando el resultado:
@@ -100,5 +105,64 @@ public class Biblioteca {
         }
         fechaElegida=anoI+"-"+mesI+"-"+diaI;
         return fechaElegida;
+    }
+    //Metodo que calcula tu edad respecto a tu fecha de nacimiento y te la devuelve:
+    public static String obtieneEdad(Date fechaNac_Date){
+        //Declaramos distintos formateadores de fechas para obtener anio, y anio-mes-dia:
+        SimpleDateFormat formatAnio = new SimpleDateFormat("yyyy");
+        SimpleDateFormat formatMes = new SimpleDateFormat("MM");
+        SimpleDateFormat formatDia = new SimpleDateFormat("dd");
+        SimpleDateFormat formatFecha = new SimpleDateFormat("yyyy-MM-dd");
+        //Obtenemos la fecha actual:
+        Date fechaAct_date = new Date(Calendar.getInstance().getTime().getTime());
+        //Obtenmos los anios, mes y dia de los date anteriores:
+        String anioNacRv_string=formatAnio.format(fechaNac_Date);
+        String anioActRv_string=formatAnio.format(fechaAct_date);
+        String mesNacRv_string=formatMes.format(fechaNac_Date);
+        String diaNacRv_string=formatDia.format(fechaNac_Date);
+        //Esos anios los parseamos a enteros, para poder restar y sacar el numero de anios:
+        int a = Integer.parseInt(anioNacRv_string);
+        int b = Integer.parseInt(anioActRv_string);
+        int anios=b-a;
+        //Una vez ya tenemos los años que cumpliria el usuario en ese año, veamos si ya cumplio o no:
+        //Para eso comparamos los dates, pero primero los parseamos a string en el formato fecha:
+        String fechaNac_string=anioActRv_string+"-"+mesNacRv_string+"-"+diaNacRv_string;
+        String fechaAct_string=formatFecha.format(fechaAct_date);
+        //Y ahora los obtenemos en date:
+        try {
+            fechaNac_Date=formatFecha.parse(fechaNac_string);
+            fechaAct_date=formatFecha.parse(fechaAct_string);
+            //Y ahora hacemos la comparacion entre ellas, si la fecha de nacimiento con el anio de la actual es mayor que la actual, significa que todavia no ha cumplido anios, y se le resta uno:
+            if(fechaNac_Date.compareTo(fechaAct_date)>0&&anios>0){
+                anios--;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //Devolvemos los anios contados.
+        return anios+"";
+    }
+    //Metodo que calcula nos devuelve la fecha con hora para viajes encontrados, y le suma 2 horas mas por error en emulador, ademas el String viene formateado:
+    public static String obtieneHoraViajesEncontrados(Date fecha){
+        //Declaramos distintos formateadores de fechas para obtener anio, y anio-mes-dia:
+        SimpleDateFormat formatAnio = new SimpleDateFormat("yyyy");
+        SimpleDateFormat formatMes = new SimpleDateFormat("MM");
+        SimpleDateFormat formatDia = new SimpleDateFormat("dd");
+        SimpleDateFormat formatHora = new SimpleDateFormat("HH");
+        SimpleDateFormat formatMinuto = new SimpleDateFormat("mm");
+        //Obtenemos el anio, mes, dia , hora, minuto:
+        String anio_string = formatAnio.format(fecha);
+        String mes_string = formatMes.format(fecha);
+        String dia_string = formatDia.format(fecha);
+        String hora_string = formatHora.format(fecha);
+        String minuto_string = formatMinuto.format(fecha);
+        //Parseamos la hora a numero para sumarle 2 y se la volvemos a asignar a la cadena hora:
+        int hora = Integer.parseInt(hora_string);
+        hora += 2;
+        hora_string = hora+"";
+        //Ahora que tenemos la hora pasamos a reconstruir la fecha, pero en formato string:
+        String fechaSalida_string = dia_string+" / "+mes_string+" / "+anio_string+" a las "+hora_string+" : "+minuto_string;
+        //Devolvemos el string con el formato de fecha que necesitabamos:
+        return fechaSalida_string;
     }
 }

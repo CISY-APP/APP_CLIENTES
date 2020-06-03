@@ -34,7 +34,6 @@
     <string name="home_third">Home Third</string>
     <string name="listo">Listo</string>
     <string name="viaje_no_encontrado">!Vaya¡ Parece que no hay ningún viaje con esos criterios de búsqueda.</string>
-    <string name="viaje_reservado">Has reservado una plaza, si necesitas algo no dudes en contactar con el conductor.</string>
     <string name="viajes_encontrado">Viajes encontrados</string>
     <string name="quieres_publicar">¿Quieres publicar un viaje?</string>
     <string name="marca">MARCA</string>
@@ -206,4 +205,8 @@
     <string name="txt_errorPrecio_Formato_ventanaBuscarViaje">Precio con valor no numerico.</string>
     <!-- ********************************************* VENTANA VIAJES ENCONTRADOS *********************************************-->
     <string name="txt_cardViewTitulo_ventanaViajesEncontrados">Viajes encontrados</string>
+    <string name="txt_vacio_ventanaViajesEncontrados">Vaya ... parece que no hay viajes</string>
+    <!-- ********************************************* VENTANA VIAJE RESERVADO *********************************************-->
+    <string name="bt_listo_ventanaViajeReservado">Listo</string>
+    <string name="txt_informativo_ventanaViajeReservado">¡Has reservado una plaza!\nSi necesitas algo no dudes en contactar con el conductor.</string>
 </resources>

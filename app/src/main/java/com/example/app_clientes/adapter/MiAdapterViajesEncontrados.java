@@ -15,11 +15,8 @@ import com.bumptech.glide.Glide;
 import com.example.app_clientes.item.ItemViajesEncontrados;
 import com.example.app_clientes.R;
 import com.makeramen.roundedimageview.RoundedImageView;
-
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-
 //Clase adapter de viajes encontrados:
 public class MiAdapterViajesEncontrados extends RecyclerView.Adapter<MiAdapterViajesEncontrados.ExampleViewHolder> {
     //Atributos:
