@@ -106,7 +106,7 @@ public class VentanaPrincipal extends AppCompatActivity {
         cargarImagenUsuario(headView);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_viajes, R.id.nav_cartera, R.id.nav_mensajes, R.id.nav_incidencias, R.id.nav_datos, R.id.nav_vehiculos, R.id.nav_configuracion, R.id.nav_cerrarSesion, R.id.nav_chat).setDrawerLayout(drawer).build();
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_viajes, R.id.nav_mensajes, R.id.nav_datos, R.id.nav_vehiculos, R.id.nav_cerrarSesion, R.id.nav_chat).setDrawerLayout(drawer).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);

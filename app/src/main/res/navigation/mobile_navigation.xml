@@ -17,22 +17,10 @@
         tools:layout="@layout/fragment_tusviajesdisfrutados" />
 
     <fragment
-        android:id="@+id/nav_cartera"
-        android:name="com.example.app_clientes.ui.cartera.CarteraFragment"
-        android:label="@string/menu_cartera"
-        tools:layout="@layout/fragment_cartera"/>
-
-    <fragment
         android:id="@+id/nav_mensajes"
         android:name="com.example.app_clientes.ui.mensajes.MensajesFragment"
         android:label="@string/menu_mensajes"
         tools:layout="@layout/fragment_mensajes"/>
-
-    <!--<fragment
-        android:id="@+id/nav_incidencias"
-        android:name="com.example.app_clientes.ui.incidencias.IncidenciasFragment"
-        android:label="@string/menu_incidencias"
-        tools:layout="@layout/fragment_incidencias"/>-->
 
     <fragment
         android:id="@+id/nav_datos"
@@ -45,12 +33,6 @@
         android:name="com.example.app_clientes.ui.vehiculos.VehiculosFragment"
         android:label="@string/menu_vehiculos"
         tools:layout="@layout/fragment_datos"/>
-
-    <!--<fragment
-        android:id="@+id/nav_configuracion"
-        android:name="com.example.app_clientes.ui.configuracion.ConfiguracionFragment"
-        android:label="@string/menu_configuracion"
-        tools:layout="@layout/fragment_configuracion"/>-->
 
     <fragment
         android:id="@+id/nav_cerrarSesion"
