@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="activity_main">
-
     <group
         android:checkableBehavior="single"
         android:enabled="true"
@@ -16,10 +15,6 @@
             android:id="@+id/nav_viajes"
             android:icon="@drawable/viajes"
             android:title="@string/menu_tusViajes" />
-        <item
-            android:id="@+id/nav_cartera"
-            android:icon="@drawable/billetera"
-            android:title="@string/menu_cartera" />
         <item
             android:id="@+id/nav_mensajes"
             android:icon="@drawable/correo"
@@ -41,14 +36,6 @@
             android:id="@+id/navigation_subheader"
             android:title="@string/menu_otras">
             <menu>
-                <item
-                    android:id="@+id/nav_incidencias"
-                    android:icon="@drawable/riesgo"
-                    android:title="@string/menu_incidencias" />
-                <item
-                    android:id="@+id/nav_configuracion"
-                    android:icon="@drawable/configuracion"
-                    android:title="@string/menu_configuracion" />
                 <item
                     android:id="@+id/nav_cerrarSesion"
                     android:icon="@drawable/apagar"
