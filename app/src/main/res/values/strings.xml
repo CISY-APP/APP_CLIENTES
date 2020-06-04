@@ -209,4 +209,22 @@
     <!-- ********************************************* VENTANA VIAJE RESERVADO *********************************************-->
     <string name="bt_listo_ventanaViajeReservado">Listo</string>
     <string name="txt_informativo_ventanaViajeReservado">¡Has reservado una plaza!\nSi necesitas algo no dudes en contactar con el conductor.</string>
+    <!-- ********************************************* VENTANA DATOS VEHICULO *********************************************-->
+    <string name="txt_vacio_ventanaViajesDisfrutados">Esto se encuentra algo vacio ...</string>
+    <string name="txt_elige_ventanaViajesDisfrutados">¡Haga click para cargar su viaje!</string>
+    <string name="txt_Nombre_ventanaViajesDisfrutados">Javier Gómez Fernández</string>
+    <string name="txt_Edad_ventanaViajesDisfrutados">28 años</string>
+    <string name="txt_Descripcion_ventanaViajesDisfrutados">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="txt_tituloOrigen_ventanaViajesDisfrutados">ORIGEN</string>
+    <string name="edit_localidadOrigen_ventanaViajesDisfrutados">Origen</string>
+    <string name="txt_tituloDestino_ventanaViajesDisfrutados">DESTINO</string>
+    <string name="edit_localidadDestino_ventanaViajesDisfrutados">Destino</string>
+    <string name="txt_tituloFecha_ventanaViajesDisfrutados">FECHA</string>
+    <string name="txt_tituloPrecio_ventanaViajesDisfrutados">PRECIO</string>
+    <string name="edit_fecha_ventanaViajesDisfrutados">06 / 05 / 2020 a las 7 : 20</string>
+    <string name="edit_precio_ventanaViajesDisfrutados">2.2 €</string>
+    <string name="txt_tituloMatricula_ventanaViajesDisfrutados">MATRICULA</string>
+    <string name="edit_matricula_ventanaViajesDisfrutados">Matricula</string>
+    <string name="txt_tituloMarcaModelo_ventanaViajesDisfrutados">MARCA Y MODELO</string>
+    <string name="edit_marcaModelo_ventanaViajesDisfrutados">Marca y modelo</string>
 </resources>

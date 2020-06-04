@@ -156,13 +156,126 @@ public class Biblioteca {
         String dia_string = formatDia.format(fecha);
         String hora_string = formatHora.format(fecha);
         String minuto_string = formatMinuto.format(fecha);
-        //Parseamos la hora a numero para sumarle 2 y se la volvemos a asignar a la cadena hora:
-        int hora = Integer.parseInt(hora_string);
-        hora += 2;
-        hora_string = hora+"";
+        //Parseamos los valores a numero para poder sumarle 2 horas a la fecha, y si sobrepasa los limites de horas, haga cadena y actualize todoo y se la volvemos a asignar a la cadena hora:
+        /*int anio=Integer.parseInt(anio_string);int mes=Integer.parseInt(mes_string);int dia=Integer.parseInt(dia_string);int hora = Integer.parseInt(hora_string);
+        //Obtenemos los dias que tiene el mes pasado:
+        int diasMes=31;
+        if(mes==1) {diasMes=31;}
+        else if(mes==2) {	//En el mes de febrero calculamos si el anio es bisiesto para poder asignarle bien los dias:
+            boolean pruebaBisiesto=false;
+            if(anio%4==0) {
+                if(anio%100!=0) {
+                    pruebaBisiesto=true;
+                }else if(anio%400==0){
+                    pruebaBisiesto=true;
+                }
+            }
+            if(pruebaBisiesto) {	//Si es anio bisiesto:
+                diasMes=29;
+            }else {	//Si no es bisiesto:
+                diasMes=28;
+            }
+        }
+        else if(mes==3) {diasMes=31;}else if(mes==4) {diasMes=30;}
+        else if(mes==5) {diasMes=31;}else if(mes==6) {diasMes=30;}
+        else if(mes==7) {diasMes=31;}else if(mes==8) {diasMes=31;}
+        else if(mes==9) {diasMes=30;}else if(mes==10) {diasMes=31;}
+        else if(mes==11) {diasMes=30;}else if(mes==12) {diasMes=31;}
+        //Ahora con un bucle for le aumentamos las horas que necesitemos de una en una para que siga el siguiente algoritmo y si se desborda la hora, se reinicie y haga cadena consecutivamente:
+        for (int i = 0; i < 2; i++) {
+            hora+=1;
+            if(hora==24) {
+                hora=0;
+                dia++;
+                if(dia>diasMes) {
+                    dia=1;
+                    mes++;
+                    if(mes>12) {
+                        mes=1;
+                        anio++;
+                    }
+                }
+            }
+        }
+        anio_string = anio+"";
+        mes_string = mes+"";
+        dia_string = dia+"";
+        hora_string = hora+"";*/
         //Ahora que tenemos la hora pasamos a reconstruir la fecha, pero en formato string:
-        String fechaSalida_string = dia_string+" / "+mes_string+" / "+anio_string+" a las "+hora_string+" : "+minuto_string;
+        String fechaSalida_string = dia_string+" / "+mes_string+" / "+anio_string+" a las "+hora_string+":"+minuto_string;
         //Devolvemos el string con el formato de fecha que necesitabamos:
         return fechaSalida_string;
     }
+    //Metodo que calcula nos devuelve la fecha con hora para viajes encontrados, y le suma 2 horas mas por error en emulador, ademas el String viene formateado:
+    /*public static Date obtieneHoraMas2(Date fecha){
+        //Declaramos distintos formateadores de fechas para obtener anio, y anio-mes-dia:
+        SimpleDateFormat formatAnio = new SimpleDateFormat("yyyy");
+        SimpleDateFormat formatMes = new SimpleDateFormat("MM");
+        SimpleDateFormat formatDia = new SimpleDateFormat("dd");
+        SimpleDateFormat formatHora = new SimpleDateFormat("HH");
+        SimpleDateFormat formatMinuto = new SimpleDateFormat("mm");
+        SimpleDateFormat formatFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //Obtenemos el anio, mes, dia , hora, minuto:
+        String anio_string = formatAnio.format(fecha);
+        String mes_string = formatMes.format(fecha);
+        String dia_string = formatDia.format(fecha);
+        String hora_string = formatHora.format(fecha);
+        String minuto_string = formatMinuto.format(fecha);
+        //Parseamos los valores a numero para poder sumarle 2 horas a la fecha, y si sobrepasa los limites de horas, haga cadena y actualize todoo y se la volvemos a asignar a la cadena hora:
+        int anio=Integer.parseInt(anio_string);int mes=Integer.parseInt(mes_string);int dia=Integer.parseInt(dia_string);int hora = Integer.parseInt(hora_string);
+        //Obtenemos los dias que tiene el mes pasado:
+        int diasMes=31;
+        if(mes==1) {diasMes=31;}
+        else if(mes==2) {	//En el mes de febrero calculamos si el anio es bisiesto para poder asignarle bien los dias:
+            boolean pruebaBisiesto=false;
+            if(anio%4==0) {
+                if(anio%100!=0) {
+                    pruebaBisiesto=true;
+                }else if(anio%400==0){
+                    pruebaBisiesto=true;
+                }
+            }
+            if(pruebaBisiesto) {	//Si es anio bisiesto:
+                diasMes=29;
+            }else {	//Si no es bisiesto:
+                diasMes=28;
+            }
+        }
+        else if(mes==3) {diasMes=31;}else if(mes==4) {diasMes=30;}
+        else if(mes==5) {diasMes=31;}else if(mes==6) {diasMes=30;}
+        else if(mes==7) {diasMes=31;}else if(mes==8) {diasMes=31;}
+        else if(mes==9) {diasMes=30;}else if(mes==10) {diasMes=31;}
+        else if(mes==11) {diasMes=30;}else if(mes==12) {diasMes=31;}
+        //Ahora con un bucle for le aumentamos las horas que necesitemos de una en una para que siga el siguiente algoritmo y si se desborda la hora, se reinicie y haga cadena consecutivamente:
+        for (int i = 0; i < 2; i++) {
+            hora+=1;
+            if(hora==24) {
+                hora=0;
+                dia++;
+                if(dia>diasMes) {
+                    dia=1;
+                    mes++;
+                    if(mes>12) {
+                        mes=1;
+                        anio++;
+                    }
+                }
+            }
+        }
+        anio_string = anio+"";
+        mes_string = mes+"";
+        dia_string = dia+"";
+        hora_string = hora+"";
+        //Ahora que tenemos la hora pasamos a reconstruir la fecha, pero en formato string:
+        String fechaSalida_string = anio_string+"-"+mes_string+"-"+dia_string+" "+hora_string+":"+minuto_string+":00";
+        Date fechaFinal = null;
+        try {
+            fechaFinal = formatFecha.parse(fechaSalida_string);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //Devolvemos el Date con el formato de fecha que necesitabamos y las dos horas sumadas de manera correcta:
+        return fechaFinal;
+    }*/
 }

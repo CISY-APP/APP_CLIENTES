@@ -16,11 +16,12 @@ import com.example.app_clientes.R;
 import com.example.app_clientes.pojos.Usuario;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class MiAdapterTusViajesDisfrutados extends RecyclerView.Adapter<MiAdapterTusViajesDisfrutados.ExampleViewHolder> {
 
-    private ArrayList<Usuario> misUsuariosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
+    private List<Usuario> misUsuariosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private MiAdapterTusViajesDisfrutados.OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
     private final Context c;
 
@@ -34,12 +35,12 @@ public class MiAdapterTusViajesDisfrutados extends RecyclerView.Adapter<MiAdapte
         mListener = listener;
     }
 
-    public MiAdapterTusViajesDisfrutados(Context c, ArrayList<Usuario> misUsuariosList) {
+    public MiAdapterTusViajesDisfrutados(Context c, List<Usuario> misUsuariosList) {
         this.c = c;
         this.misUsuariosList = misUsuariosList;
     }
 
-    public void setMisUsuariosList(ArrayList<Usuario> misUsuariosList){
+    public void setMisUsuariosList(List<Usuario> misUsuariosList){
         this.misUsuariosList = misUsuariosList;
     }
 

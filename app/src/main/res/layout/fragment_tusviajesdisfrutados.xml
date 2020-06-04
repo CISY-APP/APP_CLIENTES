@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,19 +8,14 @@
     android:background="@drawable/cell_background"
     android:layout_height="match_parent"
     tools:context=".ui.viajes.TusViajesFragment">
-
-
-
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/linearLayoutRecyclerViajesDisfrutados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVViajesDisfrutados"
             android:layout_width="match_parent"
@@ -27,69 +23,125 @@
             android:scrollbars="none" />
 
         <View
-            android:id="@+id/view4"
+            android:id="@+id/lineaSeparadoraViajesDisfrutados"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
             android:background="@color/colorGrisLight" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/IMGConductorViajeDisfrutado"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:padding="5dp"
-                android:src="@drawable/yo"
-                android:layout_gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageView
-                android:id="@+id/imageViewChatViajesDisfrutados"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginRight="20dp"
-                android:tint="@color/places_ui_default_primary_dark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.984"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/chat" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="109dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRecyclerViajesDisfrutados">
         <LinearLayout
+            android:id="@+id/linearLayoutPrincipalViajesDisfrutados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:orientation="vertical"
+            android:paddingStart="15dp"
+            android:paddingLeft="15dp"
+            android:paddingEnd="15dp"
+            android:paddingRight="15dp" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:gravity="center">
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_vacio_ViajesDisfrutados"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="false"
+                    app:lottie_fileName="me_siento_vasio.json"
+                    app:lottie_imageAssetsFolder="assets"
+                    app:lottie_loop="true" />
 
+                <TextView
+                    android:id="@+id/textViewTituloAnimacionVacioViajesDisfrutados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/txt_vacio_ventanaViajesDisfrutados"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textStyle="normal"
+                    android:textSize="24sp" />
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_elige_algo_wey_ViajesDisfrutados"
+                    android:layout_width="200dp"
+                    android:layout_height="158dp"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="25dp"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="false"
+                    app:lottie_fileName="elige_algo_wey.json"
+                    app:lottie_imageAssetsFolder="assets"
+                    app:lottie_loop="true" />
+                <TextView
+                    android:id="@+id/textViewTituloAnimacionEligeViajesDisfrutados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/txt_elige_ventanaViajesDisfrutados"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textStyle="normal"
+                    android:textSize="24sp" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp">
+
+                    <ImageView
+                        android:id="@+id/imageViewEstadoViajesDisfrutados"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/IMGConductorViajesDisfrutados"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:padding="5dp"
+                        android:visibility="gone"
+                        android:src="@drawable/yo"
+                        android:layout_gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.498"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+                    <ImageView
+                        android:id="@+id/imageViewChatViajesDisfrutados"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:visibility="gone"
+                        android:tint="@color/places_ui_default_primary_dark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/chat" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -100,202 +152,269 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
-
                     <TextView
-                        android:id="@+id/TVNombreUsuarioViajeDisfrutado"
+                        android:id="@+id/textViewNombreUsuarioViajesDisfrutados"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Javier"
+                        android:visibility="gone"
+                        android:text="@string/txt_Nombre_ventanaViajesDisfrutados"
                         android:textStyle="bold"
                         android:textColor="@color/places_ui_default_primary_dark"/>
                     <TextView
-                        android:id="@+id/TVApellidosUsuarioViajeDisfrutado"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:textStyle="bold"
-                        android:text="Gómez Fernández"
-                        android:textColor="@color/places_ui_default_primary_dark" />
-                    <TextView
-                        android:id="@+id/TVEdadUsuarioViajeDisfrutado"
+                        android:id="@+id/textViewEdadUsuarioViajesDisfrutados"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:paddingRight="5dp"
+                        android:visibility="gone"
                         android:textStyle="bold"
-                        android:gravity="right"
-                        android:text="28 años"
+                        android:gravity="end"
+                        android:text="@string/txt_Edad_ventanaViajesDisfrutados"
                         android:textColor="@color/places_ui_default_primary_dark" />
-
                 </LinearLayout>
-
                 <EditText
-                    android:id="@+id/TVDescripcionUsuarioViajeDisfrutado"
+                    android:id="@+id/textViewDescripcionUsuarioViajesDisfrutados"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:padding="5dp"
-                    android:clickable="true"
+                    android:padding="4dp"
+                    android:clickable="false"
                     android:focusable="false"
-                    android:textSize="13dp"
-                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat "
+                    android:visibility="gone"
+                    android:textSize="14sp"
+                    android:text="@string/txt_Descripcion_ventanaViajesDisfrutados"
+                    android:lineHeight="20dp"
                     android:scrollbars="vertical"
+                    android:gravity="start|top"
+                    android:isScrollContainer="true"
                     android:background="@drawable/layout_drawable_2"
-                    android:textColor="@color/places_ui_default_primary_dark"/>
-
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal"/>
             </LinearLayout>
-
-
-        </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/ETOrigenViajePublicado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:text="ORIGEN"
-            android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
-
-        <EditText
-            android:id="@+id/ETOrigenViajeDisfrutado"
-            style="@android:style/Widget.Holo.EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/layout_drawable_2"
-            android:clickable="false"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="ORIGEN"
-            android:inputType="textPersonName"
-            android:padding="8dp"
-            android:textColor="@color/places_ui_default_primary_dark"
-            android:textColorHint="@color/colorGrisLight"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/ETDestinoViajePublicado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:text="DESTINO"
-            android:textColor="@color/colorPrimary"
-            android:textSize="10sp" />
-
-
-        <EditText
-            android:id="@+id/ETDestinoViajeDisfrutado"
-            style="@android:style/Widget.Holo.EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/layout_drawable_2"
-            android:clickable="false"
-            android:ems="10"
-            android:focusable="false"
-            android:hint="DESTINO"
-            android:inputType="textPersonName"
-            android:padding="8dp"
-            android:textColor="@color/places_ui_default_primary_dark"
-            android:textColorHint="@color/colorGrisLight"
-            android:textStyle="normal" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:orientation="horizontal">
-
             <TextView
-                android:id="@+id/TVFechaViajeDisfrutado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FECHA"
-                android:textColor="@color/colorPrimary"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/TVHoraViajeDisfrutado"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="150dp"
-                android:text="HORA"
-                android:textColor="@color/colorPrimary"
-                android:textSize="10sp" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="20dp"
-            android:orientation="horizontal">
-
-            <EditText
-
-                android:id="@+id/editTextFechaViajesDisfrutados"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/layout_drawable_2"
-                android:clickable="true"
-                android:drawableStart="@drawable/ic_calendar"
-                android:drawableLeft="@drawable/ic_calendar"
-                android:drawablePadding="5dp"
-                android:focusable="false"
-                android:hint="06 / 05 / 2020"
-                android:inputType="date"
-                android:maxLines="1"
-                android:padding="8dp"
-                android:textColor="@color/places_autocomplete_prediction_primary_text_highlight"
-                android:textColorHint="@color/colorGrisLight"
-                android:textStyle="normal" />
-
-            <EditText
-
-                android:id="@+id/editTextHoraViajesDisfrutados"
+                android:id="@+id/textViewTituloOrigenViajesDisfrutados"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:text="@string/txt_tituloOrigen_ventanaViajesDisfrutados"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+            <EditText
+                android:id="@+id/editTextOrigenViajesDisfrutados"
+                style="@android:style/Widget.Holo.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/layout_drawable_2"
-                android:clickable="true"
-                android:layout_marginLeft="20dp"
-                android:drawableStart="@drawable/ic_calendar"
-                android:drawableLeft="@drawable/ic_calendar"
+                android:drawableStart="@drawable/ic_localizacion"
+                android:drawableLeft="@drawable/ic_localizacion"
                 android:drawablePadding="5dp"
+                android:clickable="false"
+                android:ems="10"
+                android:singleLine="true"
                 android:focusable="false"
-                android:hint="13:00"
-                android:inputType="date"
-                android:maxLines="1"
+                android:hint="@string/edit_localidadOrigen_ventanaViajesDisfrutados"
+                android:inputType="textPersonName"
                 android:padding="8dp"
-                android:textColor="@color/places_autocomplete_prediction_primary_text_highlight"
+                android:textColor="@color/places_ui_default_primary_dark"
                 android:textColorHint="@color/colorGrisLight"
                 android:textStyle="normal" />
-
-
+            <TextView
+                android:id="@+id/textViewTituloDestinoViajesDisfrutados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:text="@string/txt_tituloDestino_ventanaViajesDisfrutados"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+            <EditText
+                android:id="@+id/editTextDestinoViajesDisfrutados"
+                style="@android:style/Widget.Holo.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/layout_drawable_2"
+                android:drawableStart="@drawable/ic_localizacion"
+                android:drawableLeft="@drawable/ic_localizacion"
+                android:drawablePadding="5dp"
+                android:clickable="false"
+                android:ems="10"
+                android:singleLine="true"
+                android:focusable="false"
+                android:hint="@string/edit_localidadDestino_ventanaViajesDisfrutados"
+                android:inputType="textPersonName"
+                android:padding="8dp"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textColorHint="@color/colorGrisLight"
+                android:textStyle="normal" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textViewTituloFechaViajesDisfrutados"
+                    android:layout_width="258dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="@string/txt_tituloFecha_ventanaViajesDisfrutados"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+                <TextView
+                    android:id="@+id/textViewTituloPrecioViajesDisfrutados"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/txt_tituloPrecio_ventanaViajesDisfrutados"
+                    android:gravity="start"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"
+                    android:layout_marginStart="10dp"
+                    tools:ignore="SmallSp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/editTextFechaViajesDisfrutados"
+                    style="@android:style/Widget.Holo.EditText"
+                    android:layout_width="258dp"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/layout_drawable_2"
+                    android:drawableStart="@drawable/ic_calendar"
+                    android:drawableLeft="@drawable/ic_calendar"
+                    android:drawablePadding="5dp"
+                    android:clickable="false"
+                    android:ems="10"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:hint="@string/edit_fecha_ventanaViajesDisfrutados"
+                    android:inputType="textPersonName"
+                    android:padding="8dp"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal" />
+                <EditText
+                    android:id="@+id/editTextPrecioViajesDisfrutados"
+                    style="@android:style/Widget.Holo.EditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/layout_drawable_2"
+                    android:drawableStart="@drawable/ic_moneda"
+                    android:drawableLeft="@drawable/ic_moneda"
+                    android:drawablePadding="5dp"
+                    android:clickable="false"
+                    android:ems="10"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:hint="@string/edit_precio_ventanaViajesDisfrutados"
+                    android:inputType="textPersonName"
+                    android:padding="8dp"
+                    android:textColor="@color/places_ui_default_primary_dark"
+                    android:textColorHint="@color/colorGrisLight"
+                    android:textStyle="normal"
+                    android:layout_marginStart="10dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageViewCocheViajesPublicados"
+                    android:layout_width="119dp"
+                    android:layout_height="59dp"
+                    android:visibility="gone"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:backgroundTint="#eceff1"
+                    android:scaleType="fitStart"
+                    app:riv_corner_radius="10dip"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="false"
+                    app:riv_tile_mode="clamp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textViewTituloMatriculaViajesDisfrutados"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:text="@string/txt_tituloMatricula_ventanaViajesDisfrutados"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+                    <EditText
+                        android:id="@+id/editTextMatriculaViajesDisfrutados"
+                        style="@android:style/Widget.Holo.EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/layout_drawable_2"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:drawableStart="@drawable/ic_matricula"
+                        android:drawableLeft="@drawable/ic_matricula"
+                        android:drawablePadding="5dp"
+                        android:ems="10"
+                        android:hint="@string/edit_matricula_ventanaViajesDisfrutados"
+                        android:padding="8dp"
+                        android:singleLine="true"
+                        android:textColor="@color/places_ui_default_primary_dark"
+                        android:textColorHint="@color/colorGrisLight"
+                        android:textStyle="normal" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/textViewTituloMarcaYmodeloViajesDisfrutados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:text="@string/txt_tituloMarcaModelo_ventanaViajesDisfrutados"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+            <EditText
+                android:id="@+id/editTextMarcaYmodeloViajesDisfrutados"
+                style="@android:style/Widget.Holo.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                android:layout_marginBottom="70dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="3"
+                android:background="@drawable/layout_drawable_2"
+                android:clickable="false"
+                android:focusable="false"
+                android:drawableStart="@drawable/ic_marca"
+                android:drawableLeft="@drawable/ic_marca"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:hint="@string/edit_marcaModelo_ventanaViajesDisfrutados"
+                android:padding="8dp"
+                android:singleLine="true"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textColorHint="@color/colorGrisLight"
+                android:textStyle="normal" />
         </LinearLayout>
-
-
-    </LinearLayout>
-
-
-
-
-
-
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
