@@ -54,6 +54,7 @@
     <!-- ********************************************* VENTANA REGISTRAR *********************************************-->
     <string name="bt_registrar_ventanaRegistro">Registrarse</string>
     <string name="txt_emailError_Formato_ventanaRegistro">Email con formato no valido.</string>
+    <string name="txt_emailError_YaExiste_ventanaRegistro">Usuario ya existente.</string>
     <string name="txt_claveErrorMayuscula_Formato_ventanaRegistro">Introduzca una letra mayuscula como minimo.</string>
     <string name="txt_claveErrorMinuscula_Formato_ventanaRegistro">Introduzca una letra minuscula como minimo.</string>
     <string name="txt_claveErrorNumero_Formato_ventanaRegistro">Introduzca un numero como minimo.</string>
@@ -231,4 +232,7 @@
     <string name="txt_vacio_ventanaViajesPublicados">No has publicado ningun viaje</string>
     <!-- ********************************************* SPLASH SCREEN *********************************************-->
     <string name="txt_informativoNombre_splashScreen">MoveCar</string>
+    <!-- ********************************************* VENTANA REGISTRO REALIZADO *********************************************-->
+    <string name="bt_listo_ventanaRegistroRealizado">Listo</string>
+    <string name="txt_informativo_ventanaRegistroRealizado">¡Registro realizado con exito!</string>
 </resources>

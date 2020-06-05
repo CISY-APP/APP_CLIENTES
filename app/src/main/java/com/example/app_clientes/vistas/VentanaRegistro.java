@@ -2,10 +2,12 @@
 package com.example.app_clientes.vistas;
 //Importamos los siguientes paquetes:
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,7 +22,6 @@ import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.pojos.Usuario;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,6 +66,51 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
         editTextClave.addTextChangedListener(this);
         editTextNombre.addTextChangedListener(this);
         editTextApellidos.addTextChangedListener(this);
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextUsuario.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextUsuario.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextUsuario.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextClave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextClave.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextClave.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextNombre.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextNombre.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextNombre.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextApellidos.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextApellidos.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextApellidos.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
         //Animaciones tipo scale despues de que todoo se haya realizado:
         txtErrorApellidos.post(new Runnable() {
             @Override
@@ -198,15 +244,17 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
                     public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                         if (!response.isSuccessful()) {
-                            //500 si ya existe
-                            //400 si da error
-                            Toast.makeText(getApplication(),"Code: "+ response.code(), Toast.LENGTH_LONG).show();
+                            //500 si ya existe el usuario con mismo email:
+                            if(response.code()==500){
+                                Toast.makeText(getApplication(), getText(R.string.txt_emailError_YaExiste_ventanaRegistro), Toast.LENGTH_LONG).show();
+                            }else {
+                                //Otro codigo lo imprimimos
+                                Toast.makeText(getApplication(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
+                            }
                             return;
                         }
-                        //Mostramos un Toast de registro realizado con exito:
-                        Toast.makeText(getApplication(),getText(R.string.txt_registro_Toast_ventanaRegistro), Toast.LENGTH_SHORT).show();
-                        //Instanciamos nuestro objeto Intent explicito para pasar a la ventana del login:
-                        Intent intentRegistro = new Intent(getApplication(), VentanaLogin.class);
+                        //Instanciamos nuestro objeto Intent explicito para pasar a la ventana donde se muestra mensaje de registro realizado con exito:
+                        Intent intentRegistro = new Intent(getApplication(), VentanaRegistroRealizado.class);
                         //Iniciamos la nueva actividad y finalizamos la otra:
                         startActivity(intentRegistro);
                         finish();
@@ -214,7 +262,7 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
                     //En caso de que no responda el servidor mostramos mensaje de error:
                     @Override
                     public void onFailure(Call<Usuario> call, Throwable t) {
-                        Toast.makeText(getApplication(),t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplication(),"El servidor esta caido.", Toast.LENGTH_LONG).show();
                     }
                 });
             }

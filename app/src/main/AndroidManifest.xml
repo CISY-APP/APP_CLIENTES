@@ -27,12 +27,16 @@
         <activity android:name=".vistas.VentanaPrincipal" />
         <activity
             android:name=".vistas.VentanaRegistro"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".vistas.VentanaClaveOlvidada" />
         <activity
             android:name=".vistas.VentanaPublicarViaje"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".vistas.VentanaViajePublicado" />
+        <activity
+            android:name=".vistas.VentanaRegistroRealizado"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".vistas.VentanaViajesEncontrados" />
         <activity android:name=".vistas.VentanaViajeReservado" />
         <activity
