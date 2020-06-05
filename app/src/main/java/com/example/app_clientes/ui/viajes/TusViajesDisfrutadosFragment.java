@@ -54,14 +54,13 @@ public class TusViajesDisfrutadosFragment extends Fragment {
     private List<Usuario> misUsuariosList = new ArrayList<>();
     private RecyclerView recyclerViewTusViajes;
     private MiAdapterTusViajesDisfrutados miAdapterTusViajes;
-    private String ID_USUARIO;
     private String ID_USUARIO_CONVER;
+    private String NOMBRE_USUARIO_CONVER;
+    private String FOTO_USUARIO_CONVER;
     //Metodo que se ejecuta al crearse la vista:
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Conectamos el xml:
         View view = inflater.inflate(R.layout.fragment_tusviajesdisfrutados, container, false);
-        //Asociamos el id del usuario en sesion a la siguiente variable:
-        ID_USUARIO = Biblioteca.usuarioSesion.getIdusuario().toString();
         //Vinculamos los atributos de la clase:
         imageViewEstado = view.findViewById(R.id.imageViewEstadoViajesDisfrutados);
         me_siento_vasio = view.findViewById(R.id.animation_vacio_ViajesDisfrutados);
@@ -91,10 +90,10 @@ public class TusViajesDisfrutadosFragment extends Fragment {
         imageViewChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VentanaChatIndividual ventanaChatIndividual = new VentanaChatIndividual();
-                Intent VentanaChatIndividual = new Intent(getContext(), ventanaChatIndividual.getClass());
-                VentanaChatIndividual.putExtra("ID_USUARIO", ID_USUARIO);
-                VentanaChatIndividual.putExtra("ID_USUARIO_CONVER", ID_USUARIO_CONVER);
+                Intent VentanaChatIndividual = new Intent(getContext(), VentanaChatIndividual.class);
+                VentanaChatIndividual.putExtra("ID_USUARIO_CONVER",ID_USUARIO_CONVER);
+                VentanaChatIndividual.putExtra("NOMBRE_USUARIO_CONVER",NOMBRE_USUARIO_CONVER);
+                VentanaChatIndividual.putExtra("FOTO_USUARIO_CONVER", FOTO_USUARIO_CONVER);
                 startActivity(VentanaChatIndividual);
             }
         });
@@ -152,6 +151,8 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                             textViewEdadUsuario.setText(Biblioteca.obtieneEdad(misUsuariosList.get(position).getFechanacimiento()) + " años");
                             editTextDescripcionUsuario.setText(misUsuariosList.get(position).getDescripcion());
                             ID_USUARIO_CONVER = misUsuariosList.get(position).getIdusuario().toString();
+                            NOMBRE_USUARIO_CONVER = misUsuariosList.get(position).getNombre()+" "+misUsuariosList.get(position).getApellidos();
+                            FOTO_USUARIO_CONVER = misUsuariosList.get(position).getFotousuario();
                             //Viaje
                             editTextOrigen.setText(misViajesList.get(position).getLocalidadOrigen() + " - " + misViajesList.get(position).getLugarSalida());
                             editTextDestino.setText(misViajesList.get(position).getLocalidadDestino() + " - " + misViajesList.get(position).getLugarLlegada());
