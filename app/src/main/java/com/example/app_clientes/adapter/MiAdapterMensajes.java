@@ -18,6 +18,8 @@ import com.example.app_clientes.R;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 //RECYCLERVIEW DE LA VENTANA PRODUCTOS
 public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.ExampleViewHolder> {
 
@@ -69,18 +71,15 @@ public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.Ex
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
         Conversacion conv = conversacionArrayListList.get(position);
-        holder.TVNombreUsuario.setText(conv.getId_usuario());
+        holder.TVNombreUsuario.setText(conv.getNombreUsuario());
         holder.TVUltimoMensaje.setText(conv.getUltimoMensaje());
         holder.TVHoraUltimoMensaje.setText(conv.getHoraUltimoMensaje());
 
         holder.TSinLeer.setText(conv.getMensajesSinLeer().toString());
         holder.TSinLeer.setVisibility( conv.mensajesSinLeer == 0 ? View.GONE : View.VISIBLE );
 
-        if(conv.getFotoUsuarioContrario().equals("")){
-            Glide.with(c).load(R.drawable.user).error(R.drawable.user).into(holder.CIUsuarioCoversacion);
-        }else{
-            Glide.with(c).load(conv.getFotoUsuarioContrario()).error(R.drawable.user).into(holder.CIUsuarioCoversacion);
-        }
+        Glide.with(c).load(conv.getFotoUsuarioContrario()).error(R.drawable.user).into(holder.CIUsuarioCoversacion);
+
     }
 
     //Sobreescribimos el metodo getItemCount que nos devuelve el tamaño de la lista de objetos ExampleItem
@@ -97,7 +96,7 @@ public class MiAdapterMensajes extends RecyclerView.Adapter<MiAdapterMensajes.Ex
         private final TextView TVUltimoMensaje;
         private final TextView TVHoraUltimoMensaje;
         private final TextView TSinLeer;
-        private final ImageView CIUsuarioCoversacion;
+        private final CircleImageView CIUsuarioCoversacion;
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
         //al ser una clase estatica de no pasarselo no podria acceder a el listener

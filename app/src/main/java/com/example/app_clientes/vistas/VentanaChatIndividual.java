@@ -110,12 +110,12 @@ public class VentanaChatIndividual extends AppCompatActivity {
 
         chatName = getChatName(ID_USUARIO, ID_USUARIO_CONVER);
 
-        cargarImagenUsuario();
-        cargarMiImagen();
-        cargarImagenContrario();
+
+
 
         crearSalaSiEsNecesario(ID_USUARIO, ID_USUARIO_CONVER);
         TVNombreUsuarioChatIndividual = findViewById(R.id.TVNombreUsuarioChatIndividual);
+        TVNombreUsuarioChatIndividual.setText(recibirNombreUsuarioConver());
         RVMensajesChat = findViewById(R.id.RVMensajesChat);
         ETTXTMensajeChatIndividual = findViewById(R.id.ETTXTMensajeChatIndividual);
         BTMenajeEnviarChatIndividual = findViewById(R.id.BTMenajeEnviarChatIndividual);
@@ -127,7 +127,9 @@ public class VentanaChatIndividual extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
+        cargarImagenUsuario();
+        cargarMiImagen();
+        cargarImagenContrario();
         //Implementacion de firebase
         chatReference = firebaseDatabase.getReference(chatName); //Sala de chat (nombre)
         chatReference.addChildEventListener(messageSubscription);
@@ -166,9 +168,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
                             hopperUpdates1.put("mensajesSinLeer", conv.mensajesSinLeer + 1);
                             hopperRef1.updateChildren(hopperUpdates1);
                             //message in shared chat
-                            chatReference.push().setValue(
-                                    new Mensaje(currentText, Biblioteca.usuarioSesion.getNombre(), ID_USUARIO,
-                                            getHoraSistema(), uriFotoUsuario));
+                            chatReference.push().setValue(new Mensaje(currentText, Biblioteca.usuarioSesion.getNombre(), ID_USUARIO, getHoraSistema(), uriFotoUsuario));
                         }
                     });
                 }
@@ -224,20 +224,7 @@ public class VentanaChatIndividual extends AppCompatActivity {
 
     //Metodo para cargar la imagen del usuario
     public void cargarImagenUsuario() {
-        //Inatancia el objeto de tipo storageReference
-        storageReference = FirebaseStorage.getInstance().getReference();
-        //Coje la URL de la imagen de la carpeta que le indiquemos con el nombre que le indiquemos
-        storageReference.child("Fotos").child(ID_USUARIO_CONVER).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Glide.with(getApplicationContext()).load(uri).error(R.drawable.user).into(IVfotoUsuarioChatIndividual);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-
-            }
-        });
+        Glide.with(getApplicationContext()).load(recibirFotoUsuarioConver()).error(R.drawable.user).into(IVfotoUsuarioChatIndividual);
     }
 
     //Metodo para cargar la imagen del usuario
@@ -285,6 +272,14 @@ public class VentanaChatIndividual extends AppCompatActivity {
         Bundle datosIN = getIntent().getExtras();
         return datosIN.getString("ID_USUARIO_CONVER");
     }
+    private String recibirNombreUsuarioConver() {
+        Bundle datosIN = getIntent().getExtras();
+        return datosIN.getString("NOMBRE_USUARIO_CONVER");
+    }
+    private String recibirFotoUsuarioConver() {
+        Bundle datosIN = getIntent().getExtras();
+        return datosIN.getString("FOTO_USUARIO_CONVER");
+    }
 
     //Obtiene la hora del sistema
     private String getHoraSistema() {
@@ -322,12 +317,11 @@ public class VentanaChatIndividual extends AppCompatActivity {
         databaseReference1.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_1).child(chatName); //Sala de chat (nombre)
-        databaseReference2
-                .setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), "", "", uriFotoUsuarioContrario));
+        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_2.toString(), recibirNombreUsuarioConver(),  "", "", recibirFotoUsuarioConver()));
         databaseReference2.push();
 
         databaseReference2 = firebaseDatabase.getReference("USUARIOS").child(ID_USUARIO_2).child(chatName); //Sala de chat (nombre)
-        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_1.toString(), "", "", uriFotoUsuario));
+        databaseReference2.setValue(new Conversacion(databaseReference1.getKey(), ID_USUARIO_1.toString(), Biblioteca.usuarioSesion.getNombre()+" "+Biblioteca.usuarioSesion.getApellidos(), "", "", Biblioteca.usuarioSesion.getFotousuario()));
         databaseReference2.push();
     }
 

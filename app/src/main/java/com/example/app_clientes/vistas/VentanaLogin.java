@@ -3,7 +3,9 @@ package com.example.app_clientes.vistas;
 //Importamos los siguientes paquetes:
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -55,6 +57,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         txtErrorClave=findViewById(R.id.textViewErrorClaveInicioSesion);
         txtBtClaveOlvidada=findViewById(R.id.textViewOlvidasteTuClaveInicioSesion);
         //Vinculamos los botones al listener del metodo onclick, que esta implementado en esta clase:
+        txtBtClaveOlvidada.setOnClickListener(this);
         btIniciarSesion.setOnClickListener(this);
         btRegistrar.setOnClickListener(this);
         //Vinculamos los edittext a su listener para el metodo afterTextChanged, que esta implementado en esta clase:
@@ -200,10 +203,12 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
             //Iniciamos la nueva actividad:
             startActivity(intentRegistro);
         }else if(v.equals(txtBtClaveOlvidada)){
-            //Instanciamos nuestro objeto Intent explicito para pasar a la ventana ClaveOlvidada.
-            Intent intentClaveOlvidada = new Intent(this, VentanaClaveOlvidada.class);
-            //Iniciamos la nueva actividad:
-            startActivity(intentClaveOlvidada);
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:" +"cisyincidencias@gmail.com"));
+            try {
+                startActivity(emailIntent);
+            } catch (ActivityNotFoundException anfe) {
+            }
         }
     }
     //Metodo afterTextChanged implementado de la interfaz TextWatcher (cuando cambie el texto se ejecutara):
