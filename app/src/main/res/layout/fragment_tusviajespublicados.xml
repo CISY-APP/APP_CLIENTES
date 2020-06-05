@@ -28,7 +28,7 @@
                 android:layout_height="12dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="#76FF32" />
+                android:background="#48cd72" />
 
             <TextView
                 android:id="@+id/textView"
@@ -46,7 +46,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="95dp"
                 android:layout_weight="1"
-                android:background="#FF6432" />
+                android:background="#ec1c24" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -56,10 +56,40 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:text="VIAJES REALIZADOS" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayoutPrincipalAnimacionViajesPublicados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginTop="84dp">
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation_vacio_ViajesPublicados"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="false"
+                app:lottie_fileName="me_siento_vasio.json"
+                app:lottie_imageAssetsFolder="assets"
+                app:lottie_loop="true" />
+
+            <TextView
+                android:id="@+id/textViewTituloAnimacionVacioViajesPublicados"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/txt_vacio_ventanaViajesPublicados"
+                android:textColor="@color/places_ui_default_primary_dark"
+                android:textStyle="normal"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/RVViajesPublicados"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="45dp"

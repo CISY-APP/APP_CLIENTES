@@ -51,7 +51,6 @@ public class MiAdapterTusViajesDisfrutadosTusViajes extends RecyclerView.Adapter
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_usuariopeque,parent,false);    //Usamos el método inflate() para crear una vista a partir del layout XML definido en layout_listitem.
         ExampleViewHolder exampleViewHolder=new ExampleViewHolder(v,mListener);
-
         return exampleViewHolder;
     }
 

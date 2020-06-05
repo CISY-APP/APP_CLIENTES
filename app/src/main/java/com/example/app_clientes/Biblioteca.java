@@ -15,7 +15,7 @@ public class Biblioteca {
     //Variables u objetos publicos estaticos:
     public static long tAnimacionesScaleInicial = 500;          //Tiempo para las animaciones de scale al entrar a la ventana.
     public static long tAnimacionesScaleBotones = 200;          //Tiempo para las animaciones de scale al des/habilitar un boton.
-    public static String ip = "http://192.168.0.103:8080/";     //Ip a la que conectarse desde el cliente Retrofit.
+    public static String ip = "http://192.168.0.103:8080";     //Ip a la que conectarse desde el cliente Retrofit.
     public static Usuario usuarioSesion;                        //Sera nuestro usuario de sesion una vez inicie sesion.
     //Metodos publicos y estaticos:
     //Metodo que comprueba si un email es valido recibido como String, y nos devuelve un booleano indicando el resultado:

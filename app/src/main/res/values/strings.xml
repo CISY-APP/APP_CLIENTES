@@ -209,8 +209,8 @@
     <!-- ********************************************* VENTANA VIAJE RESERVADO *********************************************-->
     <string name="bt_listo_ventanaViajeReservado">Listo</string>
     <string name="txt_informativo_ventanaViajeReservado">¡Has reservado una plaza!\nSi necesitas algo no dudes en contactar con el conductor.</string>
-    <!-- ********************************************* VENTANA DATOS VEHICULO *********************************************-->
-    <string name="txt_vacio_ventanaViajesDisfrutados">Esto se encuentra algo vacio ...</string>
+    <!-- ********************************************* VENTANA VIAJES DISFRUTADOS *********************************************-->
+    <string name="txt_vacio_ventanaViajesDisfrutados">No has reservado ningun viaje</string>
     <string name="txt_elige_ventanaViajesDisfrutados">¡Haga click para cargar su viaje!</string>
     <string name="txt_Nombre_ventanaViajesDisfrutados">Javier Gómez Fernández</string>
     <string name="txt_Edad_ventanaViajesDisfrutados">28 años</string>
@@ -227,4 +227,6 @@
     <string name="edit_matricula_ventanaViajesDisfrutados">Matricula</string>
     <string name="txt_tituloMarcaModelo_ventanaViajesDisfrutados">MARCA Y MODELO</string>
     <string name="edit_marcaModelo_ventanaViajesDisfrutados">Marca y modelo</string>
+    <!-- ********************************************* VENTANA VIAJES PUBLICADOS *********************************************-->
+    <string name="txt_vacio_ventanaViajesPublicados">No has publicado ningun viaje</string>
 </resources>

@@ -1,3 +1,4 @@
+
 package com.example.app_clientes.adapter;
 
 import android.content.Context;
@@ -5,6 +6,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,22 +15,24 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
 import com.example.app_clientes.pojos.Usuario;
+import com.example.app_clientes.pojos.UsuarioPublicado;
 import com.example.app_clientes.pojos.Viaje;
+import com.example.app_clientes.pojos.ViajePublicado;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapterTusViajesPublicados.ExampleViewHolder> {
 
-    private ArrayList<Viaje> misViajesPublicadosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
+    private List<ViajePublicado> misViajesPublicadosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private final Context c;
     private MiAdapterTusViajesPublicados.OnItemClickListener mListener;
-    private RecyclerView RVPersonasViaje;
-    private ArrayList<Usuario> misUsuariosList = new ArrayList<>();
-    private MiAdapterTusViajesDisfrutadosTusViajes miAdapterTusViajesDisfrutadosTusViajes;
 
-    public MiAdapterTusViajesPublicados(Context c, ArrayList<Viaje> misViajesPublicadosList) {
+
+    public MiAdapterTusViajesPublicados(Context c, List<ViajePublicado> misViajesPublicadosList) {
         this.c = c;
         this.misViajesPublicadosList = misViajesPublicadosList;
     }
@@ -43,7 +47,7 @@ public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapter
         mListener = listener;
     }
 
-    public void setMisViajesPublicadosList(ArrayList<Viaje> misViajesPublicadosList){
+    public void setMisViajesPublicadosList(List<ViajePublicado> misViajesPublicadosList){
         this.misViajesPublicadosList = misViajesPublicadosList;
     }
 
@@ -55,7 +59,6 @@ public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapter
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_viajepublicado,parent,false);    //Usamos el método inflate() para crear una vista a partir del layout XML definido en layout_listitem.
         ExampleViewHolder exampleViewHolder=new ExampleViewHolder(v, mListener);
-        misUsuariosList.clear();
         return exampleViewHolder;
     }
 
@@ -66,9 +69,7 @@ public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapter
     //El método onBindViewHolder() personaliza un elemento de tipo ViewHolder según su posicion.
     @Override
     public void onBindViewHolder(@NonNull ExampleViewHolder holder, int position) {
-        Viaje nuevoViaje= misViajesPublicadosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
-
-        cargarUsuariosViajesDisfrutados();
+        ViajePublicado nuevoViaje= misViajesPublicadosList.get(position); //Crea un objeto ExampleItem igual que el objeto que devuelve el metodo mExampleList.get() en su posicion
 
         java.util.Date utilDate = new java.util.Date(); //fecha actual
         long lnMilisegundos = utilDate.getTime();
@@ -77,17 +78,29 @@ public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapter
         java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);
 
         if (nuevoViaje.getFechasalida().compareTo(sqlDate)<0) {
-            holder.imageView1.setBackgroundColor(Color.parseColor("#FF6432"));
-            holder.imagenEliminarViaje.setVisibility(View.INVISIBLE);
+            holder.imageView1.setBackgroundColor(Color.parseColor("#ec1c24"));
+            holder.imagenEliminarViaje.setVisibility(View.GONE);
         } else {
-            holder.imageView1.setBackgroundColor(Color.parseColor("#76FF32"));
+            holder.imageView1.setBackgroundColor(Color.parseColor("#48cd72"));
             holder.imagenEliminarViaje.setVisibility(View.VISIBLE);
         }
-        holder.ETOrigenViajePublicado.setText(nuevoViaje.getLugarSalida());
-        holder.ETDestinoViajePublicado.setText(nuevoViaje.getLugarLlegada());
-        //holder.editTextFechaViajesPublicados.setText(nuevoViaje.getFechasalida().toString());
-        holder.editTextHoraViajesPublicados.setText(nuevoViaje.getFechasalida().toString());
+        holder.ETOrigenViajePublicado.setText(nuevoViaje.getLocalidadorigen()+" - "+nuevoViaje.getLugarsalida());
+        holder.ETDestinoViajePublicado.setText(nuevoViaje.getLocalidaddestino()+" - "+nuevoViaje.getLugarllegada());
+        holder.editTextHoraViajesPublicados.setText(Biblioteca.obtieneHoraViajesEncontrados(nuevoViaje.getFechasalida()));
 
+
+        RecyclerView RVPersonasViaje;
+        ArrayList<Usuario> misUsuariosList = new ArrayList<>();
+        MiAdapterTusViajesDisfrutadosTusViajes miAdapterTusViajesDisfrutadosTusViajes;
+        misUsuariosList.clear();
+        for (UsuarioPublicado u: misViajesPublicadosList.get(position).getListUsuariosPublicados()) {
+            Usuario aux = new Usuario(u.getNombre(), u.getApellidos(), null, null, u.getTelefono(),
+                    u.getEmail(), null, u.getFechanacimiento(), u.getFotousuario(), null, u.getDescripcion(),
+                    null, null, null, null,
+                    null, null, null);
+            aux.setIdusuario(u.getIdusuario());
+            misUsuariosList.add(aux);
+        }
 
         //Asociamos los atributos con los objeto del layout para poder usarlos
         //INSTANCIAMOS Y ASOCIAMOS ELEMENTOS NECESARIOS PARA EL CORRECTO FUNCIONAMIENTO DEL RECYCLERVIEW
@@ -95,6 +108,7 @@ public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapter
         holder.RVPersonasViaje.setLayoutManager(new LinearLayoutManager(c, LinearLayoutManager.HORIZONTAL, false));
         miAdapterTusViajesDisfrutadosTusViajes = new MiAdapterTusViajesDisfrutadosTusViajes(c,misUsuariosList);//Instanciamos un objeto de tipo Example_Adapter
         holder.RVPersonasViaje.setAdapter(miAdapterTusViajesDisfrutadosTusViajes);//Vinculamos el adapter al recyclerView
+        //Añadir listener al rv de imagenes
 
     }
 
@@ -114,7 +128,7 @@ public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapter
         private CardView itemviaje_publicado;
         private RecyclerView RVPersonasViaje;
         private ImageView imageView1;
-        private ImageView imagenEliminarViaje;
+        private ImageButton imagenEliminarViaje;
 
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
         //al ser una clase estatica de no pasarselo no podria acceder a el listener
@@ -141,40 +155,6 @@ public class MiAdapterTusViajesPublicados extends RecyclerView.Adapter<MiAdapter
             });
 
         }
-    }
-
-    //CARGA LOS DATOS DE LOS USUARIO QUE HAN VIAJADO EN TUS VIAJES
-    private void cargarUsuariosViajesDisfrutados() {
-        java.util.Date utilDate = new java.util.Date(); //fecha actual
-        long lnMilisegundos = utilDate.getTime();
-        java.sql.Date sqlDate = new java.sql.Date(lnMilisegundos);
-        java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
-        java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(lnMilisegundos);
-        //CARGAR EN EL ARRAYLIST LOS USUARIOS CON LOS QUE HAYAMOS CONTRATADO VIAJES DESDE RETROFIT
-        misUsuariosList.add(new Usuario("Javier", "Gómez Fernández", null, null, null,
-                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F1?alt=media&token=f59bccd3-4c6e-4872-ab50-14b39743685d", null, "Hola me llamo Javier",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("Roberto", "Castaño Romero", null, null, null,
-                null, null, utilDate, "https://assets.entrepreneur.com/content/3x2/2000/20181012160100-atractiva.jpeg?width=700&crop=2:1", null, "Hola me llamo Roberto",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("Pilar", "Garcia Romero", null, null, null,
-                null, null, utilDate, "https://www.xlsemanal.com/wp-content/uploads/sites/3/2019/12/edward-norton-no-te-puedes-fiar-de-las-personas-que-fueron-felices-cuanto-tenian-14-anso.jpg", null, "Hola me llamo Pilar",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("Javier", "Gómez Fernández", null, null, null,
-                null, null, utilDate, "https://firebasestorage.googleapis.com/v0/b/appclientes-a0e43.appspot.com/o/Fotos%2F1?alt=media&token=f59bccd3-4c6e-4872-ab50-14b39743685d", null, "Hola me llamo Javier",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("Roberto", "Castaño Romero", null, null, null,
-                null, null, utilDate, "https://assets.entrepreneur.com/content/3x2/2000/20181012160100-atractiva.jpeg?width=700&crop=2:1", null, "Hola me llamo Roberto",
-                null, null, null, null,
-                null, null, null));
-        misUsuariosList.add(new Usuario("Pilar", "Garcia Romero", null, null, null,
-                null, null, utilDate, "https://www.xlsemanal.com/wp-content/uploads/sites/3/2019/12/edward-norton-no-te-puedes-fiar-de-las-personas-que-fueron-felices-cuanto-tenian-14-anso.jpg", null, "Hola me llamo Pilar",
-                null, null, null, null,
-                null, null, null));
     }
 
 }

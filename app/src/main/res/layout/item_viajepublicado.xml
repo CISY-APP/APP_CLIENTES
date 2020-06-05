@@ -34,7 +34,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp" />
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/imagenEliminarViaje"
                     android:layout_width="20dp"
                     android:layout_height="20dp"

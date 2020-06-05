@@ -7,6 +7,7 @@ import com.example.app_clientes.pojos.Reserva;
 import com.example.app_clientes.pojos.Usuario;
 import com.example.app_clientes.pojos.Vehiculo;
 import com.example.app_clientes.pojos.Viaje;
+import com.example.app_clientes.pojos.ViajePublicado;
 
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,11 @@ public interface JsonPlaceHolderApi {
     Call <List<Viaje>> getListViajesFiltrados(@Body Map<String, String> param);
     @GET("consultarViajesReservadosPorIdUsuario/{idUsuario}")
     Call <List<Viaje>> getListViajesReservados(@NonNull @Path("idUsuario") Integer idUsuario);
+    @GET("consultarViajesPublicadosPorIdUsuario/{idUsuario}")
+    Call <List<ViajePublicado>> getListViajesPublicados(@NonNull @Path("idUsuario") Integer idUsuario);
+    //Dar de baja al viaje por id
+    @DELETE("eliminarViaje/{id}")
+    Call<Void> eliminarViajeById(@NonNull @Path("id") Integer id);
     //METODOS PARA RESERVA********************************************************************************************
     //Registrar una reserva de viaje
     @POST("registrarReserva")
