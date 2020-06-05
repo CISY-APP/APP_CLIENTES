@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.app_clientes.Biblioteca;
@@ -63,6 +65,29 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
         //Vinculamos los edittext a su listener para el metodo afterTextChanged, que esta implementado en esta clase:
         editTextUsuario.addTextChangedListener(this);
         editTextClave.addTextChangedListener(this);
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextUsuario.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextUsuario.setBackground(getDrawable(R.drawable.edittextseleccionadologin));
+                } else {
+                    editTextUsuario.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextClave.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextClave.setBackground(getDrawable(R.drawable.edittextseleccionadologin));
+                } else {
+                    editTextClave.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
         //Animaciones tipo scale despues de que todoo se haya realizado:
         txtBtClaveOlvidada.post(new Runnable() {
             @Override
@@ -193,7 +218,7 @@ public class VentanaLogin extends AppCompatActivity implements View.OnClickListe
                     //En caso de que no responda el servidor mostramos mensaje de error:
                     @Override
                     public void onFailure(Call<Usuario> call, Throwable t) {
-                        Toast.makeText(getApplication(),t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplication(),"El servidor esta caido.", Toast.LENGTH_LONG).show();
                     }
                 });
             }
