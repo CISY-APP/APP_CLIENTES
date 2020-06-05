@@ -4,6 +4,7 @@ public class Conversacion  {
 
     public String idConversacion;
     public String id_usuario;
+    public String nombreUsuario;
     public String horaUltimoMensaje;
     public String ultimoMensaje;
     public String fotoUsuarioContrario;
@@ -12,12 +13,13 @@ public class Conversacion  {
     public Conversacion() {
     }
 
-    public Conversacion(String idConversacion, String id_usuario, String horaUltimoMensaje, String ultimoMensaje, String fotoUsuarioContrario) {
+    public Conversacion(String idConversacion, String id_usuario, String nombreUsuario, String horaUltimoMensaje, String ultimoMensaje, String fotoUsuarioContrario) {
         this.idConversacion = idConversacion;
         this.id_usuario = id_usuario;
         this.horaUltimoMensaje = horaUltimoMensaje;
         this.ultimoMensaje = ultimoMensaje;
         this.fotoUsuarioContrario = fotoUsuarioContrario;
+        this.nombreUsuario = nombreUsuario;
     }
 
     public String getIdConversacion() {
@@ -62,5 +64,13 @@ public class Conversacion  {
 
     public Long getMensajesSinLeer() {
         return mensajesSinLeer;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }

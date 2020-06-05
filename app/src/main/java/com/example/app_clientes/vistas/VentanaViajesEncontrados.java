@@ -149,6 +149,8 @@ public class VentanaViajesEncontrados  extends AppCompatActivity {
                         public void OnMensajeClick(int position) {
                             Intent VentanaChatIndividual = new Intent(getApplicationContext(), VentanaChatIndividual.class);
                             VentanaChatIndividual.putExtra("ID_USUARIO_CONVER", viajesEncontradosList.get(position).getCod_usuario());
+                            VentanaChatIndividual.putExtra("NOMBRE_USUARIO_CONVER", viajesEncontradosList.get(position).getNombreApellidos());
+                            VentanaChatIndividual.putExtra("FOTO_USUARIO_CONVER", viajesEncontradosList.get(position).getUriImagenUsuario());
                             startActivity(VentanaChatIndividual);
                         }
 
