@@ -25,7 +25,8 @@
             android:name=".vistas.VentanaLogin"
             android:windowSoftInputMode="stateHidden"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".vistas.VentanaPrincipal" />
+        <activity android:name=".vistas.VentanaPrincipal"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity
             android:name=".vistas.VentanaRegistro"
             android:windowSoftInputMode="stateHidden"

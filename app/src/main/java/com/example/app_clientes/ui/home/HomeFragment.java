@@ -4,6 +4,7 @@ package com.example.app_clientes.ui.home;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -95,7 +96,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 public void onResponse(Call<List<Vehiculo>> call, Response<List<Vehiculo>> response) {
                     //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                     if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                         return;
                     }
                     List<Vehiculo> lista = response.body();
@@ -114,7 +115,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 //En caso de que no responda el servidor mostramos mensaje de error:
                 @Override
                 public void onFailure(Call<List<Vehiculo>> call, Throwable t) {
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
                 }
             });
         }
