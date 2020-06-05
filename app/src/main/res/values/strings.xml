@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cisy</string>
+    <string name="app_name">MoveCar</string>
     <string name="title_activity_ventana_principal">VentanaPrincipal</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -229,4 +229,6 @@
     <string name="edit_marcaModelo_ventanaViajesDisfrutados">Marca y modelo</string>
     <!-- ********************************************* VENTANA VIAJES PUBLICADOS *********************************************-->
     <string name="txt_vacio_ventanaViajesPublicados">No has publicado ningun viaje</string>
+    <!-- ********************************************* SPLASH SCREEN *********************************************-->
+    <string name="txt_informativoNombre_splashScreen">MoveCar</string>
 </resources>
