@@ -5,7 +5,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -158,6 +161,17 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 animatorSetEscale.start();
             }
         });
+        //Recibidor de broadcast para cerrar sesion:
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("cierre_de_sesion")) {
+                    requireActivity().finish();
+                }
+            }
+        };
+        requireActivity().registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
         return view;
     }
     //Metodo que carga los datos personales del usuario:

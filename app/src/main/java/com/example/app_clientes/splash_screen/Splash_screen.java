@@ -3,7 +3,10 @@ package com.example.app_clientes.splash_screen;
 //Importamos los siguientes paquetes:
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +26,8 @@ public class Splash_screen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //Llamamos al superconstructor y conectamos el XML del login:
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_screen);
         //Asociamos el elemento XML a el atributo:
         textViewNombre = findViewById(R.id.textViewNombreSplashScreen);
@@ -53,5 +58,16 @@ public class Splash_screen extends AppCompatActivity {
                 animatorSetEscale.start();
             }
         });
+        //Recibidor de broadcast para cerrar sesion:
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("cierre_de_sesion")) {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
     }
 }

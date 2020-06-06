@@ -221,12 +221,14 @@ public class VentanaBuscarViaje extends AppCompatActivity implements View.OnClic
                 animatorSetEscale.start();
             }
         });
-        //Recibidor de broadcast para que cuando 'c' se cierre se cierra 'a' tambien, y solo quede home:
+        //Recibidor de broadcast para que cuando 'c' se cierre se cierra 'a' tambien, y solo quede home, tambien para cerrar sesion:
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent intent) {
                 String action = intent.getAction();
                 if (action.equals("matar_buscarViaje_actividad")) {
+                    finish();
+                }else if (action.equals("cierre_de_sesion")){
                     finish();
                 }
             }

@@ -6,7 +6,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -144,6 +147,17 @@ public class VentanaRegistro extends AppCompatActivity implements View.OnClickLi
                 animatorSetEscale.start();
             }
         });
+        //Recibidor de broadcast para cerrar sesion:
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("cierre_de_sesion")) {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
     }
     //Metodo onClick implementado de la interfaz View.OnClickListener.
     @Override

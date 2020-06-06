@@ -2,7 +2,10 @@
 package com.example.app_clientes.ui.viajes;
 //Importamos los siguientes paquetes:
 import android.animation.ValueAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,6 +102,17 @@ public class TusViajesDisfrutadosFragment extends Fragment {
         });
         //Cargamos los datos:
         cargarUsuariosViajesDisfrutados();
+        //Recibidor de broadcast para cerrar sesion:
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("cierre_de_sesion")) {
+                    requireActivity().finish();
+                }
+            }
+        };
+        requireActivity().registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
         return view;
     }
     //CARGA LOS DATOS DE LOS USUARIO CON LOS QUE EL USUARIO A CONTRATADO VIAJES
