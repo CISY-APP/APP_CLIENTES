@@ -5,12 +5,15 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.*;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.*;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
@@ -103,6 +106,73 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
         editTextLugarDestino.addTextChangedListener(this);
         editTextHora.addTextChangedListener(this);
         editTextFecha.addTextChangedListener(this);
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextLocalidadOrigen.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextLocalidadOrigen.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextLocalidadOrigen.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextLugarOrigen.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextLugarOrigen.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextLugarOrigen.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextLocalidadDestino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextLocalidadDestino.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextLocalidadDestino.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextLugarDestino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextLugarDestino.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextLugarDestino.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextHora.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextHora.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextHora.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextFecha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextFecha.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextFecha.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
         //Vinculamos el seekbar a su listener:
         seekBarPrecio.setOnSeekBarChangeListener(this);
         //Animaciones tipo scale despues de que todoo se haya realizado:
@@ -174,7 +244,7 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
             public void onResponse(Call<List<Vehiculo>> call, Response<List<Vehiculo>> response) {
                 //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
                 //Cargamos los datos de la lista en el spinner:
@@ -193,7 +263,7 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
             //En caso de que no responda el servidor mostramos mensaje de error:
             @Override
             public void onFailure(Call<List<Vehiculo>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -331,7 +401,7 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                     public void onResponse(Call<Viaje> call, Response<Viaje> response) {
                         //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                         if (!response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                             return;
                         }
                         //Si la respuesta es satisfactoria, lo indicamos llevando a la ventana siguiente:
@@ -342,7 +412,7 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                     //En caso de que no responda el servidor mostramos mensaje de error:
                     @Override
                     public void onFailure(Call<Viaje> call, Throwable t) {
-                        Toast.makeText(getApplicationContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"El servidor esta caido.", Toast.LENGTH_LONG).show();
                     }
                 });
             }
