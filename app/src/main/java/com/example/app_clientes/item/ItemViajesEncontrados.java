@@ -1,5 +1,7 @@
 //Indicamos a que paquete pertenece esta clase:
 package com.example.app_clientes.item;
+//Importamos los siguientes paquetes:
+import java.util.Date;
 //Clase que representa un item de viaje encontrado para el recyclerview correspondiente:
 public class ItemViajesEncontrados {
     //Atributos:
@@ -19,8 +21,9 @@ public class ItemViajesEncontrados {
     private String marcaModelo;
     private String color;
     private String combustible;
+    private Date fechaFormato;
     //Constructor:
-    public ItemViajesEncontrados(String cod_usuario, String uriImagenUsuario, String nombreApellidos, String edad, String telefono, String cod_viaje, String origen, String destino, String fecha, String precio, String cod_vehiculo, String uriImagenCoche, String matricula, String marcaModelo, String color, String combustible) {
+    public ItemViajesEncontrados(String cod_usuario, String uriImagenUsuario, String nombreApellidos, String edad, String telefono, String cod_viaje, String origen, String destino, String fecha, String precio, String cod_vehiculo, String uriImagenCoche, String matricula, String marcaModelo, String color, String combustible, Date fechaFormato) {
         this.cod_usuario = cod_usuario;
         this.uriImagenUsuario = uriImagenUsuario;
         this.nombreApellidos=nombreApellidos;
@@ -37,6 +40,7 @@ public class ItemViajesEncontrados {
         this.marcaModelo = marcaModelo;
         this.color = color;
         this.combustible = combustible;
+        this.fechaFormato = fechaFormato;
     }
     //Metodos get y set:
     public String getCod_usuario() {
@@ -165,5 +169,13 @@ public class ItemViajesEncontrados {
 
     public void setCombustible(String combustible) {
         this.combustible = combustible;
+    }
+
+    public Date getFechaFormato() {
+        return fechaFormato;
+    }
+
+    public void setFechaFormato(Date fechaFormato) {
+        this.fechaFormato = fechaFormato;
     }
 }

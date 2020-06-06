@@ -78,14 +78,17 @@
             android:textColor="@color/places_ui_default_primary_dark"
             android:textStyle="normal"
             android:textSize="24sp" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RVViajesEncontrados"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayoutViajesEncontrados"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible"
-            android:background="@color/colorBlanco"
-            android:clipToPadding="false">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RVViajesEncontrados"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:clipToPadding="false">
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

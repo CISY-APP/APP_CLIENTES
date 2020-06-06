@@ -1,17 +1,21 @@
 //Indicamos a que paquete pertenece esta clase:
 package com.example.app_clientes.adapter;
 //Importamos los siguientes paquetes:
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.item.ItemViajesEncontrados;
 import com.example.app_clientes.R;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -75,6 +79,32 @@ public class MiAdapterViajesEncontrados extends RecyclerView.Adapter<MiAdapterVi
     public int getItemCount() {
         return viajesEncontradosList.size();
     }
+    //Metodo que pinta una animacion en el holder view:
+    protected void setAnimation(ExampleViewHolder holder) {
+        //Declaramos un animatorSet para poder luego ejecutar un conjunto de animaciones a la vez:
+        AnimatorSet animatorSetEscale = new AnimatorSet();
+        //Instanciamos el conjunto de animaciones:
+        //Animacion para el edittext Localidad Origen:
+        ObjectAnimator scaleDownX_holderViajes = ObjectAnimator.ofFloat(holder.itemView, "scaleX", 0.0f, 1.0f);
+        ObjectAnimator scaleDownY_holderViajes = ObjectAnimator.ofFloat(holder.itemView, "scaleY", 0.0f, 1.0f);
+        //Configuramos el animatorSet, como se tienen que reproducir las animaciones, el tiempo que duran, que clase de interpolador utilizan y la lanzamos:
+        animatorSetEscale.play(scaleDownX_holderViajes).with(scaleDownY_holderViajes);
+        animatorSetEscale.setDuration(Biblioteca.tAnimacionesScaleInicial);
+        animatorSetEscale.setInterpolator(new AccelerateDecelerateInterpolator());
+        animatorSetEscale.start();
+    }
+    //Metodo que cancela la animacion de ese holder si ya esta fuera de la pantalla:
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ExampleViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
+    //Metodo que pinta la animacion de ese holder si esta ya dentro de la pantalla:
+    @Override
+    public void onViewAttachedToWindow(@NonNull ExampleViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        setAnimation(holder);
+    }
     //CLASE INTERNA ESTATICA
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
         //Atributos:
@@ -89,7 +119,7 @@ public class MiAdapterViajesEncontrados extends RecyclerView.Adapter<MiAdapterVi
         private final RoundedImageView mImageVehiculo;
         private TextView matricula;
         private TextView marcaModelo;
-        private final ImageView color;
+        private final RoundedImageView color;
         private TextView combustible;
         //METODO CONSTRUCTOR de la clase interna ExampleViewHolder que recibe como parametro una instancia de la clase View y un listener ya que
         //al ser una clase estatica de no pasarselo no podria acceder a el listener

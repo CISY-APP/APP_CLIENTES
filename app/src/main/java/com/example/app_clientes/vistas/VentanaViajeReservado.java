@@ -3,6 +3,7 @@ package com.example.app_clientes.vistas;
 //Importamos los siguientes paquetes:
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -49,6 +50,9 @@ public class VentanaViajeReservado extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         if(v.equals(btOK)){
+            //Lanzamos un broadcast a la actividad 'a' para que finalice y luego finalizamos esta, y asi solo queda el home:
+            Intent intent = new Intent("matar_buscarViaje_actividad");
+            sendBroadcast(intent);
             //Si la respuesta es satisfactoria, lo indicamos llevando a la ventana inicial:
             onBackPressed();
             finish();

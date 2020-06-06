@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginBottom="7dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
     android:background="@drawable/cell_background1"
     android:orientation="vertical">
 
@@ -14,13 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="5dp"
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
@@ -41,12 +41,16 @@
                     android:layout_height="wrap_content"
                     android:text="Raul Ramos Serrano"
                     android:singleLine="true"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"
                     android:textColor="#3C3C3C"
                     android:textSize="18sp"
                     android:textStyle="bold" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
                     <TextView
@@ -92,17 +96,18 @@
                     android:layout_height="25dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginRight="3.5dp"
-                    android:layout_marginLeft="3.5dp"
-                    android:background="@drawable/layout_drawable_2"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:background="@drawable/cell_background_2"
                     android:text="ENVIAR MENSAJE PRIVADO"
                     android:textSize="13sp"
                     android:textColor="@color/colorPrimary" />
             </LinearLayout>
         </LinearLayout>
         <View
+            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.75dp"
             android:background="@color/colorGris" />
         <LinearLayout
             android:layout_marginTop="5dp"
@@ -117,9 +122,11 @@
                 android:tint="@color/colorPrimary"
                 android:src="@drawable/puntoapunto" />
             <LinearLayout
+                android:layout_marginRight="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginEnd="4dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -171,6 +178,8 @@
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
@@ -211,13 +220,14 @@
         </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="0.75dp"
+            android:layout_marginTop="6dp"
             android:background="@color/colorGris" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="4dp"
             android:orientation="horizontal">
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageViewCocheItemViajeEncontrado"
@@ -234,7 +244,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginRight="4dp"
+                android:orientation="vertical"
+                android:layout_marginEnd="4dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -253,8 +265,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="7645PWK"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
                         android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
                         android:textSize="14sp" />
@@ -279,8 +289,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Mercedes Benz - CLA 1800D"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
                         android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
                         android:textSize="14sp" />
@@ -299,17 +307,23 @@
                         android:singleLine="true"
                         android:textColor="#3C3C3C"
                         android:textSize="14sp" />
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/imgColorItemViajeEncontrado"
-                        android:layout_width="19dp"
-                        android:layout_height="19dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_marginRight="7.5dp"
+                        android:layout_marginEnd="7.5dp"
+                        android:layout_marginBottom="1.25dp"
                         android:layout_gravity="bottom"
                         android:visibility="visible"
-                        android:background="@color/colorPrimary"
                         android:clickable="false"
-                        android:focusable="false" />
+                        android:focusable="false"
+                        android:background="@color/colorPrimary"
+                        android:scaleType="fitCenter"
+                        app:riv_corner_radius="10dip"
+                        app:riv_mutate_background="true"
+                        app:riv_oval="false"
+                        app:riv_tile_mode="clamp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -324,8 +338,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Diesel"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
                         android:singleLine="true"
                         android:textColor="@color/places_ui_default_primary_dark"
                         android:textSize="14sp" />
@@ -337,10 +349,10 @@
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="3.5dp"
-            android:layout_marginLeft="3.5dp"
-            android:background="@drawable/layout_drawable_2"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/cell_background_2"
             android:text="RESERVAR VIAJE"
             android:textSize="13sp"
             android:textColor="@color/colorPrimary" />

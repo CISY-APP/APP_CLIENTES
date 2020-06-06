@@ -24,9 +24,9 @@
         <activity
             android:name=".vistas.VentanaLogin"
             android:windowSoftInputMode="stateHidden"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity android:name=".vistas.VentanaPrincipal"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".vistas.VentanaRegistro"
             android:windowSoftInputMode="stateHidden"
@@ -35,24 +35,29 @@
         <activity
             android:name=".vistas.VentanaPublicarViaje"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".vistas.VentanaViajePublicado"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".vistas.VentanaRegistroRealizado"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".vistas.VentanaViajesEncontrados" />
-        <activity android:name=".vistas.VentanaViajeReservado" />
+        <activity
+            android:name=".vistas.VentanaViajesEncontrados"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity
+            android:name=".vistas.VentanaViajeReservado"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".vistas.VentanaCambiarContrasena"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".vistas.VentanaAgregarVehiculo"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".vistas.VentanaBuscarViaje"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".vistas.VentanaChatIndividual" />
     </application>
 </manifest>

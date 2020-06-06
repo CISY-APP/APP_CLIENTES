@@ -5,7 +5,11 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +24,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
@@ -96,6 +102,78 @@ public class VentanaBuscarViaje extends AppCompatActivity implements View.OnClic
         editTextLugarDestino.addTextChangedListener(this);
         editTextHora.addTextChangedListener(this);
         editTextFecha.addTextChangedListener(this);
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextLocalidadOrigen.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextLocalidadOrigen.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextLocalidadOrigen.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextLugarOrigen.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextLugarOrigen.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextLugarOrigen.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextLocalidadDestino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextLocalidadDestino.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextLocalidadDestino.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextLugarDestino.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextLugarDestino.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextLugarDestino.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextHora.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextHora.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextHora.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextFecha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextFecha.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextFecha.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
         //Vinculamos el seekbar a su listener:
         seekBarPrecio.setOnSeekBarChangeListener(this);
         //Animaciones tipo scale despues de que todoo se haya realizado:
@@ -143,6 +221,17 @@ public class VentanaBuscarViaje extends AppCompatActivity implements View.OnClic
                 animatorSetEscale.start();
             }
         });
+        //Recibidor de broadcast para que cuando 'c' se cierre se cierra 'a' tambien, y solo quede home:
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("matar_buscarViaje_actividad")) {
+                    finish();
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter("matar_buscarViaje_actividad"));
     }
     //Muestra un cuadro de dialogo con un calendario al pulsar sobre el EditextFecha:
     private void showDatePickerDialog() {
