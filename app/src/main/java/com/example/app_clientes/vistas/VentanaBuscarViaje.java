@@ -228,8 +228,6 @@ public class VentanaBuscarViaje extends AppCompatActivity implements View.OnClic
                 String action = intent.getAction();
                 if (action.equals("matar_buscarViaje_actividad")) {
                     finish();
-                }else if (action.equals("cierre_de_sesion")){
-                    finish();
                 }
             }
         };

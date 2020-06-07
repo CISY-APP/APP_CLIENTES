@@ -17,17 +17,6 @@ public class VentanaClaveOlvidada extends AppCompatActivity implements View.OnCl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_clave_olvidada);
-        //Recibidor de broadcast para cerrar sesion:
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context arg0, Intent intent) {
-                String action = intent.getAction();
-                if (action.equals("cierre_de_sesion")) {
-                    finish();
-                }
-            }
-        };
-        registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
     }
     @Override
     public void onClick(View v) {

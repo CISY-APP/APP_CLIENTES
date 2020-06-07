@@ -26,13 +26,15 @@ public class ViajePublicado {
     private Date fechasalida;
     @SerializedName("fechacreacionviaje")
     private Date fechacreacionviaje;
+    @SerializedName("vehiculo")
+    private String vehiculo;
     //Atributos UsuarioPublicado:
     @SerializedName("listUsuariosPublicados")
     private List<UsuarioPublicado> listUsuariosPublicados;
     //Constructor:
     public ViajePublicado(Integer idviaje, String localidadorigen, String lugarsalida, String localidaddestino,
                           String lugarllegada, BigDecimal precio, int numplazasdisponibles, Date fechasalida, Date fechacreacionviaje,
-                          List<UsuarioPublicado> listUsuariosPublicados) {
+                          List<UsuarioPublicado> listUsuariosPublicados, String vehiculo) {
         this.idviaje = idviaje;
         this.localidadorigen = localidadorigen;
         this.lugarsalida = lugarsalida;
@@ -42,6 +44,7 @@ public class ViajePublicado {
         this.numplazasdisponibles = numplazasdisponibles;
         this.fechasalida = fechasalida;
         this.fechacreacionviaje = fechacreacionviaje;
+        this.vehiculo = vehiculo;
         this.listUsuariosPublicados = listUsuariosPublicados;
     }
     //Metodos Getter y Setters:
@@ -125,4 +128,11 @@ public class ViajePublicado {
         this.listUsuariosPublicados = listUsuariosPublicados;
     }
 
+    public String getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(String vehiculo){
+        this.vehiculo=vehiculo;
+    }
 }

@@ -231,17 +231,6 @@ public class VentanaPublicarViaje extends AppCompatActivity implements View.OnCl
                 animatorSetEscale.start();
             }
         });
-        //Recibidor de broadcast para cerrar sesion:
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context arg0, Intent intent) {
-                String action = intent.getAction();
-                if (action.equals("cierre_de_sesion")) {
-                    finish();
-                }
-            }
-        };
-        registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
     }
     //Este método carga los datos en el Spinner de los vehiculos que tiene el usuario:
     private void inicializacionSpinnerVehiculos(){

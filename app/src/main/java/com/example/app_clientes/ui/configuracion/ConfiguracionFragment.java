@@ -19,17 +19,6 @@ public class ConfiguracionFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_configuracion, container, false);
-        //Recibidor de broadcast para cerrar sesion:
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context arg0, Intent intent) {
-                String action = intent.getAction();
-                if (action.equals("cierre_de_sesion")) {
-                    requireActivity().finish();
-                }
-            }
-        };
-        requireActivity().registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
         return view;
     }
 }

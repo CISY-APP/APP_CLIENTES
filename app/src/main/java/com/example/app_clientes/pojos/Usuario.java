@@ -7,6 +7,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Usuario implements java.io.Serializable {
+    //OJO solo se usa este atributo para cierto caso. no optimo, no confundir con idviaje, solo es para en el adapter hijo de viajesdisfrutados, tener la posicion del adapter padre
+    private Integer idViaje;
+    public Integer getIdViaje() {
+        return idViaje;
+    }
+    public void setIdViaje(Integer idViaje) {
+        this.idViaje = idViaje;
+    }
+    //Atributos REALES
     @SerializedName("idusuario")
     private Integer idusuario;
     @SerializedName("nombre")

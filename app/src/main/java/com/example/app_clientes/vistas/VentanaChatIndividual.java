@@ -177,17 +177,6 @@ public class VentanaChatIndividual extends AppCompatActivity {
                 }
             }
         });
-        //Recibidor de broadcast para cerrar sesion:
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context arg0, Intent intent) {
-                String action = intent.getAction();
-                if (action.equals("cierre_de_sesion")) {
-                    finish();
-                }
-            }
-        };
-        registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
     }
 
     @Override

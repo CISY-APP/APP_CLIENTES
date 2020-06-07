@@ -21,17 +21,13 @@ public class CerrarSesionFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cerrarsesion, container, false);
         //Vamos a cerrar la sesion:
-        //Cerramos todas las actividades mandando esta señal que estan preparadas para filtrar, no funciona bien si android cerro esa actividad por falta de memoria:
-        Intent intent = new Intent("cierre_de_sesion");
-        requireActivity().sendBroadcast(intent);
         //Ponemos en estado null el objeto de sesion:
         Biblioteca.usuarioSesion=null;
         //Lanzamos un intent a login:
         VentanaLogin ventanaLogin = new VentanaLogin();
         Intent VentanaLogin = new Intent(getContext(), ventanaLogin.getClass());
         startActivity(VentanaLogin);
-        //Cerramos actividades con el siguiente metodo:
-        requireActivity().finishAffinity();
+        requireActivity().finish();
         return view;
     }
 }

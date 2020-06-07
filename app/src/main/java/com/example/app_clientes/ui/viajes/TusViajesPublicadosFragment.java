@@ -23,7 +23,11 @@ import com.example.app_clientes.adapter.MiAdapterTusViajesPublicados;
 import com.example.app_clientes.jsonplaceholder.JsonPlaceHolderApi;
 import com.example.app_clientes.pojos.ViajePublicado;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,22 +55,22 @@ public class TusViajesPublicadosFragment extends Fragment {
         linearLayoutAnimacion = view.findViewById(R.id.linearLayoutPrincipalAnimacionViajesPublicados);
         //Cargamos los viajes:
         cargarViajesViajesDisfrutados();
-        //Recibidor de broadcast para cerrar sesion:
+        //Recibidor de broadcast para que cuando 'c' se cierre se cierra 'a' tambien, y solo quede home, tambien para cerrar sesion:
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent intent) {
                 String action = intent.getAction();
-                if (action.equals("cierre_de_sesion")) {
-                    requireActivity().finish();
+                if (action.equals("reiniciate_fragment_viajes_publicados")) {
+                    cargarViajesViajesDisfrutados();
                 }
             }
         };
-        requireActivity().registerReceiver(broadcastReceiver, new IntentFilter("cierre_de_sesion"));
+        requireContext().registerReceiver(broadcastReceiver, new IntentFilter("reiniciate_fragment_viajes_publicados"));
         return view;
     }
 
     //CARGA LOS DATOS DE LOS VIAJES QUE EL USUARIO A DISFRUTADO VIAJES
-    private void cargarViajesViajesDisfrutados() {
+    private  void cargarViajesViajesDisfrutados() {
         //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
         //Vinculamos el cliente con la interfaz:
@@ -87,10 +91,11 @@ public class TusViajesPublicadosFragment extends Fragment {
                         me_siento_vasio.playAnimation();
                         me_siento_vasio.setRepeatCount(ValueAnimator.INFINITE);
                     }else {
-                        Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                     }
                     return;
                 }
+                misViajesList.clear();
                 //Si la respuesta es correcta pasamos a rellenar el modelo que utliza el recycler view:
                 misViajesList=response.body();
                 if (misViajesList!=null&&!misViajesList.isEmpty()) {
@@ -102,32 +107,40 @@ public class TusViajesPublicadosFragment extends Fragment {
                     miAdapterTusViajes.setOnClickListener(new MiAdapterTusViajesPublicados.OnItemClickListener() {
                         @Override
                         public void OnEliminarViajePublicadoClick(int position) {
-                            //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
-                            Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
-                            //Vinculamos el cliente con la interfaz:
-                            final JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
-                            //Creamos una peticion para cancelar un viaje:
-                            Call<Void> call = peticiones.eliminarViajeById(misViajesList.get(position).getIdviaje());
-                            //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
-                            call.enqueue(new Callback<Void>() {
-                                //Gestionamos la respuesta del servidor:
-                                @Override
-                                public void onResponse(Call <Void> call, Response<Void> response) {
-                                    //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
-                                    if (!response.isSuccessful()) {
-                                        Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
-                                        return;
+                            //Comprobamos que el viaje no este caducado para poder borrar al usuario de su reserva:
+                            Date fechaViaje = misViajesList.get(position).getFechasalida();
+                            Date fechaActual = new Date(Calendar.getInstance().getTime().getTime());
+                            if (fechaViaje.compareTo(fechaActual) > 0) {
+                                //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                                Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                                //Vinculamos el cliente con la interfaz:
+                                final JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                                //Creamos una peticion para cancelar un viaje:
+                                Call<Void> call = peticiones.eliminarViajeById(misViajesList.get(position).getIdviaje());
+                                //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                                call.enqueue(new Callback<Void>() {
+                                    //Gestionamos la respuesta del servidor:
+                                    @Override
+                                    public void onResponse(Call <Void> call, Response<Void> response) {
+                                        //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                        if (!response.isSuccessful()) {
+                                            Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
+                                            return;
+                                        }
+                                        //Si la respuesta es correcta pasamos a rellenar el modelo que utliza el recycler view:
+                                        Toast.makeText(getContext(), "Viaje cancelado con exito.", Toast.LENGTH_LONG).show();
+                                        cargarViajesViajesDisfrutados();
                                     }
-                                    //Si la respuesta es correcta pasamos a rellenar el modelo que utliza el recycler view:
-                                    Toast.makeText(getContext(), "Viaje cancelado con exito.", Toast.LENGTH_LONG).show();
-                                    cargarViajesViajesDisfrutados();
-                                }
-                                //En caso de que no responda el servidor mostramos mensaje de error:
-                                @Override
-                                public void onFailure(Call <Void> call, Throwable t) {
-                                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
+                                    //En caso de que no responda el servidor mostramos mensaje de error:
+                                    @Override
+                                    public void onFailure(Call <Void> call, Throwable t) {
+                                        Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }else{
+                                Toast.makeText(getContext(), "Viaje caducado, no se pudo eliminar.", Toast.LENGTH_LONG).show();
+                                cargarViajesViajesDisfrutados();
+                            }
                         }
                     });
                     recyclerViewTusViajes.setVisibility(View.VISIBLE);
@@ -142,7 +155,7 @@ public class TusViajesPublicadosFragment extends Fragment {
             //En caso de que no responda el servidor mostramos mensaje de error:
             @Override
             public void onFailure(Call <List<ViajePublicado>> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
             }
         });
     }
