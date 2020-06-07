@@ -75,4 +75,7 @@ public interface JsonPlaceHolderApi {
     //Registrar una reserva de viaje
     @POST("registrarReserva")
     Call<Reserva> registraReserva(@Body Map<String, String> param);
+    //Eliminar una reserva de viaje por idviaje e idusuario
+    @DELETE("eliminarReservaIdViajeIdPasajero/{idViaje}/{idPasajero}")
+    Call<Void> cancelarReservaViajeReservado(@NonNull @Path("idViaje") Integer idViaje, @NonNull @Path("idPasajero") Integer idPasajero);
 }

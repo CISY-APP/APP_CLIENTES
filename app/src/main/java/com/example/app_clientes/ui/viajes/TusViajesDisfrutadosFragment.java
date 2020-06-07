@@ -1,6 +1,8 @@
 //Indicamos a que paquete pertenece esta clase:
 package com.example.app_clientes.ui.viajes;
 //Importamos los siguientes paquetes:
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -140,10 +143,13 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                         me_siento_vasio.setRepeatCount(ValueAnimator.INFINITE);
                         textViewMe_siento_vasio.setVisibility(View.VISIBLE);
                     }else {
-                        Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Codigo de error", Toast.LENGTH_LONG).show();
                     }
                     return;
                 }
+                //Limpiamos listas:
+                misViajesList.clear();
+                misUsuariosList.clear();
                 //Si la respuesta es correcta pasamos a rellenar el modelo que utliza el recycler view:
                 misViajesList=response.body();
                 if (misViajesList!=null&&!misViajesList.isEmpty()) {
@@ -155,6 +161,7 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                     recyclerViewTusViajes.setHasFixedSize(true);// RecyclerView sabe de antemano que su tamaño no depende del contenido del adaptador, entonces omitirá la comprobación de si su tamaño debería cambiar cada vez que se agregue o elimine un elemento del adaptador.(mejora el rendimiento)
                     recyclerViewTusViajes.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
                     miAdapterTusViajes = new MiAdapterTusViajesDisfrutados(getContext(), misUsuariosList);//Instanciamos un objeto de tipo Example_Adapter
+                    miAdapterTusViajes.setMisViajesList(misViajesList);
                     recyclerViewTusViajes.setAdapter(miAdapterTusViajes);//Vinculamos el adapter al recyclerView
                     miAdapterTusViajes.setOnClickListener(new MiAdapterTusViajesDisfrutados.OnItemClickListener() {
                         @Override
@@ -190,6 +197,105 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                             me_siento_vasio.setVisibility(View.GONE);
                             textViewMe_siento_vasio.setVisibility(View.GONE);
                             visibilidadVista(View.VISIBLE);
+                            //Declaramos un animatorSet para poder luego ejecutar un conjunto de animaciones a la vez:
+                            AnimatorSet animatorSetEscale = new AnimatorSet();
+                            //Instanciamos el conjunto de animaciones:
+                            //Animacion para el imageview estado viaje:
+                            ObjectAnimator scaleDownX_imageViewEstado = ObjectAnimator.ofFloat(imageViewEstado, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_imageViewEstado = ObjectAnimator.ofFloat(imageViewEstado, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el edittext Descripcion:
+                            ObjectAnimator scaleDownX_editTextDescripcionUsuario = ObjectAnimator.ofFloat(editTextDescripcionUsuario, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_editTextDescripcionUsuario = ObjectAnimator.ofFloat(editTextDescripcionUsuario, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el edittext Origen.
+                            ObjectAnimator scaleDownX_editTextOrigen = ObjectAnimator.ofFloat(editTextOrigen, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_editTextOrigen = ObjectAnimator.ofFloat(editTextOrigen, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el edittext Destino:
+                            ObjectAnimator scaleDownX_editTextDestino = ObjectAnimator.ofFloat(editTextDestino, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_editTextDestino = ObjectAnimator.ofFloat(editTextDestino, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el edittext fecha:
+                            ObjectAnimator scaleDownX_editTextFecha = ObjectAnimator.ofFloat(editTextFecha, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_editTextFecha = ObjectAnimator.ofFloat(editTextFecha, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el edittext precio:
+                            ObjectAnimator scaleDownX_editTextPrecio = ObjectAnimator.ofFloat(editTextPrecio, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_editTextPrecio = ObjectAnimator.ofFloat(editTextPrecio, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el edittext matricula:
+                            ObjectAnimator scaleDownX_editTextMatricula = ObjectAnimator.ofFloat(editTextMatricula, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_editTextMatricula = ObjectAnimator.ofFloat(editTextMatricula, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el edittext buscar marca modelo:
+                            ObjectAnimator scaleDownX_editTextMarcModelo = ObjectAnimator.ofFloat(editTextMarcModelo, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_editTextMarcModelo = ObjectAnimator.ofFloat(editTextMarcModelo, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el textview nombre:
+                            ObjectAnimator scaleDownX_textViewNombreUsuario = ObjectAnimator.ofFloat(textViewNombreUsuario, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_textViewNombreUsuario = ObjectAnimator.ofFloat(textViewNombreUsuario, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el textview edad:
+                            ObjectAnimator scaleDownX_textViewEdadUsuario = ObjectAnimator.ofFloat(textViewEdadUsuario, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_textViewEdadUsuario = ObjectAnimator.ofFloat(textViewEdadUsuario, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el imageview chat:
+                            ObjectAnimator scaleDownX_imageViewChat = ObjectAnimator.ofFloat(imageViewChat, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_imageViewChat = ObjectAnimator.ofFloat(imageViewChat, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el imageview conductor:
+                            ObjectAnimator scaleDownX_imageViewConductor = ObjectAnimator.ofFloat(imageViewConductor, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_imageViewConductor = ObjectAnimator.ofFloat(imageViewConductor, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el imageview coche:
+                            ObjectAnimator scaleDownX_imgViewCoche = ObjectAnimator.ofFloat(imgViewCoche, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_imgViewCoche = ObjectAnimator.ofFloat(imgViewCoche, "scaleY", 0.0f, 1.0f);
+                            //Configuramos el animatorSet, como se tienen que reproducir las animaciones, el tiempo que duran, que clase de interpolador utilizan y la lanzamos:
+                            animatorSetEscale.play(scaleDownX_imageViewEstado).with(scaleDownY_imageViewEstado)
+                                    .with(scaleDownX_editTextDescripcionUsuario).with(scaleDownY_editTextDescripcionUsuario)
+                                    .with(scaleDownX_editTextOrigen).with(scaleDownY_editTextOrigen)
+                                    .with(scaleDownX_editTextDestino).with(scaleDownY_editTextDestino)
+                                    .with(scaleDownX_editTextFecha).with(scaleDownY_editTextFecha)
+                                    .with(scaleDownX_editTextPrecio).with(scaleDownY_editTextPrecio)
+                                    .with(scaleDownX_editTextMatricula).with(scaleDownY_editTextMatricula)
+                                    .with(scaleDownX_editTextMarcModelo).with(scaleDownY_editTextMarcModelo)
+                                    .with(scaleDownX_textViewNombreUsuario).with(scaleDownY_textViewNombreUsuario)
+                                    .with(scaleDownX_textViewEdadUsuario).with(scaleDownY_textViewEdadUsuario)
+                                    .with(scaleDownX_imageViewChat).with(scaleDownY_imageViewChat)
+                                    .with(scaleDownX_imageViewConductor).with(scaleDownY_imageViewConductor)
+                                    .with(scaleDownX_imgViewCoche).with(scaleDownY_imgViewCoche);
+                            animatorSetEscale.setDuration(Biblioteca.tAnimacionesScaleInicial);
+                            animatorSetEscale.setInterpolator(new AccelerateDecelerateInterpolator());
+                            animatorSetEscale.start();
+                        }
+                        @Override
+                        public void OnUsuarioLongClick(int position) {
+                        }
+                        @Override
+                        public void OnBorrarClick(int position) {
+                            //Cancelamos el viaje siempre y cuando ya no se haya caducado:
+                            //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
+                            Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
+                            //Vinculamos el cliente con la interfaz:
+                            final JsonPlaceHolderApi peticiones = retrofit.create(JsonPlaceHolderApi.class);
+                            //Creamos una peticion para obtener los viajes que ha reservado:
+                            Call <Void> call = peticiones.cancelarReservaViajeReservado(misViajesList.get(position).getIdviaje(),Biblioteca.usuarioSesion.getIdusuario());
+                            //Ejecutamos la petición en un hilo en segundo plano, retrofit lo hace por nosotros y esperamos a la respuesta:
+                            call.enqueue(new Callback <Void>() {
+                                //Gestionamos la respuesta del servidor:
+                                @Override
+                                public void onResponse(Call <Void> call, Response <Void> response) {
+                                    //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
+                                    if (!response.isSuccessful()) {
+                                        if(response.code()==404){
+                                            Toast.makeText(getContext(), "Reserva caducada, no se ha podido cancelar.", Toast.LENGTH_LONG).show();
+                                            //Cargamos los datos de nuevo:
+                                            cargarUsuariosViajesDisfrutados();
+                                        }else {
+                                            Toast.makeText(getContext(), "Codigo de error: ", Toast.LENGTH_LONG).show();
+                                        }
+                                        return;
+                                    }
+                                    //Si la respuesta es correcta pasamos a rellenar el modelo que utliza el recycler view:
+                                    Toast.makeText(getContext(), "Reserva cancelada correctamente.", Toast.LENGTH_LONG).show();
+                                    //Cargamos los datos de nuevo:
+                                    cargarUsuariosViajesDisfrutados();
+                                }
+                                //En caso de que no responda el servidor mostramos mensaje de error:
+                                @Override
+                                public void onFailure(Call <Void> call, Throwable t) {
+                                    Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                     });
                     //Cambiamos la visibilidad
@@ -214,7 +320,7 @@ public class TusViajesDisfrutadosFragment extends Fragment {
             //En caso de que no responda el servidor mostramos mensaje de error:
             @Override
             public void onFailure(Call <List<Viaje>> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
             }
         });
     }

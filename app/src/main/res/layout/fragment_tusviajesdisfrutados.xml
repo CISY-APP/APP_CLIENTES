@@ -20,19 +20,19 @@
             android:id="@+id/RVViajesDisfrutados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorBlanco"
             android:scrollbars="none" />
 
         <View
             android:id="@+id/lineaSeparadoraViajesDisfrutados"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="5dp"
             android:background="@color/colorGrisLight" />
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="109dp"
+        android:layout_marginTop="114dp"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutRecyclerViajesDisfrutados">
         <LinearLayout
             android:id="@+id/linearLayoutPrincipalViajesDisfrutados"

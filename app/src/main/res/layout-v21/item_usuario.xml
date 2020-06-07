@@ -4,15 +4,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_marginLeft="10dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginStart="10dp">
+    android:layout_marginStart="10dp"
+    android:orientation="vertical">
 
     <LinearLayout
-
+        android:id="@+id/linearLayoutPrincipalItemViajesDisfrutados"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +21,7 @@
             android:layout_height="83dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/mImageUsuarioPeque"
+                android:id="@+id/mImageUsuarioPequeViajesDisfrutados"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/yo"
@@ -30,8 +31,23 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.43" />
 
+            <ImageView
+                android:id="@+id/mImageBorrarViajesDisfrutados"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:visibility="gone"
+                android:alpha="1"
+                android:background="#04FFFFFF"
+                app:layout_constraintBottom_toBottomOf="@+id/animation_example_lottie_viewItemViajesDisfrutados"
+                app:layout_constraintEnd_toEndOf="@+id/animation_example_lottie_viewItemViajesDisfrutados"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/animation_example_lottie_viewItemViajesDisfrutados"
+                app:layout_constraintTop_toTopOf="@+id/animation_example_lottie_viewItemViajesDisfrutados"
+                app:layout_constraintVertical_bias="0.0"
+                app:srcCompat="@drawable/eliminar" />
+
             <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/animation_example_lottie_view"
+                android:id="@+id/animation_example_lottie_viewItemViajesDisfrutados"
                 android:layout_width="83dp"
                 android:layout_height="83dp"
                 app:layout_constraintBottom_toTopOf="@+id/mImageVehiculoPeque"
@@ -48,11 +64,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/TVNombreItem"
+            android:id="@+id/TVNombreItemViajesDisfrutados"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="NOMBRE"
+            android:layout_marginBottom="5dp"
             android:textColor="@color/black_de"
             android:textSize="11sp" />
 
