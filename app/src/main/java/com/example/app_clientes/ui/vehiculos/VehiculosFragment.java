@@ -10,12 +10,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -134,6 +137,39 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
         editTextMatricula.addTextChangedListener(this);
         editTextMarca.addTextChangedListener(this);
         editTextModelo.addTextChangedListener(this);
+        editTextMatricula.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextMatricula.setBackground(getActivity().getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextMatricula.setBackground(getActivity().getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextMarca.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextMarca.setBackground(getActivity().getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextMarca.setBackground(getActivity().getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextModelo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextModelo.setBackground(getActivity().getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextModelo.setBackground(getActivity().getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
         //Instancia el objeto de tipo storageReference
         storageReference = FirebaseStorage.getInstance().getReference();
         //RECYCLERRRRRRRR V I E W instanciado en el metodo agregar coches:
@@ -156,7 +192,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
             public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
                 //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
                 //Si la respuesta es correcta pasamos a cargar el vehiculo:
@@ -184,7 +220,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
             //En caso de que no responda el servidor mostramos mensaje de error:
             @Override
             public void onFailure(Call<Vehiculo> call, Throwable t) {
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -234,7 +270,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
             public void onResponse(Call<List<Vehiculo>> call, Response<List<Vehiculo>> response) {
                 //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                 if (!response.isSuccessful()) {
-                    Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                     return;
                 }
                 //Si la respuesta del servidor es existosa limpiamos la lista actual y cargamos la nueva y reiniciamos el recyclerview con ella:
@@ -261,6 +297,44 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                             startActivityForResult(VentanaAgregarVehiculo,1997);
                         }else{
                             cargarDatosCoche(position);
+                            //Declaramos un animatorSet para poder luego ejecutar un conjunto de animaciones a la vez:
+                            AnimatorSet animatorSetEscale = new AnimatorSet();
+                            //Animacion para el linear layout spinner combustible:
+                            ObjectAnimator scaleDownX_LayoutSpinnerCombustible = ObjectAnimator.ofFloat(linearLayoutSpinnerCombustible, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_LayoutSpinnerCombustible = ObjectAnimator.ofFloat(linearLayoutSpinnerCombustible, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el im coche:
+                            ObjectAnimator scaleDownX_ImCoche = ObjectAnimator.ofFloat(imgViewCoche, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_ImCoche = ObjectAnimator.ofFloat(imgViewCoche, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el im color:
+                            ObjectAnimator scaleDownX_ImColor = ObjectAnimator.ofFloat(imgViewColorCoche, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_ImColor = ObjectAnimator.ofFloat(imgViewColorCoche, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el editext matricula:
+                            ObjectAnimator scaleDownX_TxtMatricula = ObjectAnimator.ofFloat(editTextMatricula, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_TxtMatricula = ObjectAnimator.ofFloat(editTextMatricula, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el editext marca:
+                            ObjectAnimator scaleDownX_TxtMarca = ObjectAnimator.ofFloat(editTextMarca, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_TxtMarca = ObjectAnimator.ofFloat(editTextMarca, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el edittext modelo:
+                            ObjectAnimator scaleDownX_TxtModelo = ObjectAnimator.ofFloat(editTextModelo, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_TxtModelo = ObjectAnimator.ofFloat(editTextModelo, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el spinner tipo combustible:
+                            ObjectAnimator scaleDownX_SpinnerCombustible = ObjectAnimator.ofFloat(spinnerTipoCombustible, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_SpinnerCombustible = ObjectAnimator.ofFloat(spinnerTipoCombustible, "scaleY", 0.0f, 1.0f);
+                            //Animacion para el bt selecionar color:
+                            ObjectAnimator scaleDownX_BtSeleccionarColor = ObjectAnimator.ofFloat(btSeleccionarColor, "scaleX", 0.0f, 1.0f);
+                            ObjectAnimator scaleDownY_BtSeleccionarColor = ObjectAnimator.ofFloat(btSeleccionarColor, "scaleY", 0.0f, 1.0f);
+                            //Configuramos el animatorSet, como se tienen que reproducir las animaciones, el tiempo que duran, que clase de interpolador utilizan y la lanzamos:
+                            animatorSetEscale.play(scaleDownX_ImCoche).with(scaleDownY_ImCoche)
+                                    .with(scaleDownX_ImColor).with(scaleDownY_ImColor)
+                                    .with(scaleDownX_TxtMatricula).with(scaleDownY_TxtMatricula)
+                                    .with(scaleDownX_TxtMarca).with(scaleDownY_TxtMarca)
+                                    .with(scaleDownX_TxtModelo).with(scaleDownY_TxtModelo)
+                                    .with(scaleDownX_LayoutSpinnerCombustible).with(scaleDownY_LayoutSpinnerCombustible)
+                                    .with(scaleDownX_SpinnerCombustible).with(scaleDownY_SpinnerCombustible)
+                                    .with(scaleDownX_BtSeleccionarColor).with(scaleDownY_BtSeleccionarColor);
+                            animatorSetEscale.setDuration(Biblioteca.tAnimacionesScaleInicial);
+                            animatorSetEscale.setInterpolator(new AccelerateDecelerateInterpolator());
+                            animatorSetEscale.start();
                             visibilidadVista(View.VISIBLE);
                         }
                     }
@@ -270,7 +344,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
             //En caso de que no responda el servidor mostramos mensaje de error:
             @Override
             public void onFailure(Call<List<Vehiculo>> call, Throwable t) {
-                Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"El servidor esta caido.", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -349,7 +423,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                     if (!response.isSuccessful()) {
-                        Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                         return;
                     }
                     //Si el cambio ha sido exitoso volvemos a la actividad anterior reiniciando la vista completa y el recyclerview:
@@ -366,7 +440,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                 //En caso de que no responda el servidor mostramos mensaje de error:
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(getContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"El servidor esta caido.", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -426,7 +500,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                                         public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
                                             //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                                             if (!response.isSuccessful()) {
-                                                Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                                                 return;
                                             }
                                             //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
@@ -439,7 +513,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                                         //En caso de que no responda el servidor mostramos mensaje de error:
                                         @Override
                                         public void onFailure(Call<Vehiculo> call, Throwable t) {
-                                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
                                         }
                                     });
                                 }
@@ -487,7 +561,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                         public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
                             //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                             if (!response.isSuccessful()) {
-                                Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                                 return;
                             }
                             //Si la respuesta es satisfactoria, actualizamos el vehiculo sesion, y volvemos a reiniciar interfaz y lista de recycler view:
@@ -500,7 +574,7 @@ public class VehiculosFragment extends Fragment implements View.OnClickListener,
                         //En caso de que no responda el servidor mostramos mensaje de error:
                         @Override
                         public void onFailure(Call<Vehiculo> call, Throwable t) {
-                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

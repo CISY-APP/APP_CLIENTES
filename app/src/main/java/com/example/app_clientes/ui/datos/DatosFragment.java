@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.app_clientes.Biblioteca;
@@ -105,6 +107,29 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
         editTextTelefono.addTextChangedListener(this);
         editTextDescripcion.addTextChangedListener(this);
         editTextFecha.addTextChangedListener(this);
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextTelefono.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextTelefono.setBackground(getActivity().getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextTelefono.setBackground(getActivity().getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });//Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextDescripcion.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextDescripcion.setBackground(getActivity().getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextDescripcion.setBackground(getActivity().getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
         //Animaciones tipo scale despues de que todoo se haya realizado:
         txtErrorDescripcion.post(new Runnable() {
             @Override
@@ -248,7 +273,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 public void onResponse(Call<Void> call, Response<Void> response) {
                     //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                     if (!response.isSuccessful()) {
-                        Toast.makeText(getActivity(),"Code: "+response.code(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(),"Codigo de error: "+response.code(), Toast.LENGTH_LONG).show();
                         return;
                     }
                     //Si la baja ha sido exitosa:
@@ -263,7 +288,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                 //En caso de que no responda el servidor mostramos mensaje de error:
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(getActivity(),t.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"El servidor esta caido.", Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -367,7 +392,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                                         public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                                             //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                                             if (!response.isSuccessful()) {
-                                                Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                                                 return;
                                             }
                                             //Si el cambio ha sido exitoso cargamos los datos:
@@ -379,7 +404,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                                         //En caso de que no responda el servidor mostramos mensaje de error:
                                         @Override
                                         public void onFailure(Call<Usuario> call, Throwable t) {
-                                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
                                         }
                                     });
                                 }
@@ -429,7 +454,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                         public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                             //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                             if (!response.isSuccessful()) {
-                                Toast.makeText(getContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                                 return;
                             }
                             //Si el cambio ha sido exitoso cargamos los datos:
@@ -441,7 +466,7 @@ public class DatosFragment extends Fragment implements View.OnClickListener, Tex
                         //En caso de que no responda el servidor mostramos mensaje de error:
                         @Override
                         public void onFailure(Call<Usuario> call, Throwable t) {
-                            Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

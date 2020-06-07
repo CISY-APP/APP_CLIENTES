@@ -1,10 +1,15 @@
 package com.example.app_clientes.adapter;
 
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.item.ItemVehiculo;
 import com.example.app_clientes.R;
 
@@ -24,6 +30,32 @@ public class MiAdapterMisVehiculos extends RecyclerView.Adapter<MiAdapterMisVehi
     private ArrayList<ItemVehiculo> misVehiculosList;//Atributo que contiene la lista de los datos a tratar (objetos de tipo ExampleItem)
     private OnItemClickListener mListener;//Atributo que nos permitira asignar un listener a cada item
 
+    //Metodo que pinta una animacion en el holder view:
+    protected void setAnimation(MiAdapterMisVehiculos.ExampleViewHolder holder) {
+        //Declaramos un animatorSet para poder luego ejecutar un conjunto de animaciones a la vez:
+        AnimatorSet animatorSetEscale = new AnimatorSet();
+        //Instanciamos el conjunto de animaciones:
+        //Animacion para el edittext Localidad Origen:
+        ObjectAnimator scaleDownX_holderViajes = ObjectAnimator.ofFloat(holder.itemView, "scaleX", 0.0f, 1.0f);
+        ObjectAnimator scaleDownY_holderViajes = ObjectAnimator.ofFloat(holder.itemView, "scaleY", 0.0f, 1.0f);
+        //Configuramos el animatorSet, como se tienen que reproducir las animaciones, el tiempo que duran, que clase de interpolador utilizan y la lanzamos:
+        animatorSetEscale.play(scaleDownX_holderViajes).with(scaleDownY_holderViajes);
+        animatorSetEscale.setDuration(Biblioteca.tAnimacionesScaleInicial);
+        animatorSetEscale.setInterpolator(new AccelerateDecelerateInterpolator());
+        animatorSetEscale.start();
+    }
+    //Metodo que cancela la animacion de ese holder si ya esta fuera de la pantalla:
+    @Override
+    public void onViewDetachedFromWindow(@NonNull MiAdapterMisVehiculos.ExampleViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
+    //Metodo que pinta la animacion de ese holder si esta ya dentro de la pantalla:
+    @Override
+    public void onViewAttachedToWindow(@NonNull MiAdapterMisVehiculos.ExampleViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        setAnimation(holder);
+    }
     //INTERFAZ dentro de la clase la cual nos obliga a implementar y sobreescribir el metodo OnItemClick
     public interface OnItemClickListener {
         void OnVehiculoClick(int position);//Metodo abstracto que recibe por parametro la posicion del item que ha sido pulsado

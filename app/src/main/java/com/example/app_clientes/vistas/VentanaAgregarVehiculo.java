@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.app_clientes.Biblioteca;
@@ -109,6 +111,39 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
         editTextMatricula.addTextChangedListener(this);
         editTextMarca.addTextChangedListener(this);
         editTextModelo.addTextChangedListener(this);
+        editTextMatricula.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextMatricula.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextMatricula.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextMarca.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextMarca.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextMarca.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        editTextModelo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextModelo.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextModelo.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
         //Instancia el objeto de tipo storageReference:
         storageReference = FirebaseStorage.getInstance().getReference();
         //Animaciones tipo scale despues de que todoo se haya realizado:
@@ -286,7 +321,11 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                                         public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
                                             //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                                             if (!response.isSuccessful()) {
-                                                Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                                if(response.code()==500){
+                                                    Toast.makeText(getApplicationContext(), "Matricula duplicada.", Toast.LENGTH_LONG).show();
+                                                }else {
+                                                    Toast.makeText(getApplicationContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
+                                                }
                                                 return;
                                             }
                                             //Si el cambio ha sido exitoso volvemos a la actividad anterior:
@@ -302,7 +341,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                                         //En caso de que no responda el servidor mostramos mensaje de error:
                                         @Override
                                         public void onFailure(Call<Vehiculo> call, Throwable t) {
-                                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                                            Toast.makeText(getApplicationContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
                                         }
                                     });
                                 }
@@ -343,7 +382,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                         public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
                             //Respuesta del servidor con un error y paramos el flujo del programa, indicando el codigo de error:
                             if (!response.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Code: " + response.code(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Codigo de error: " + response.code(), Toast.LENGTH_LONG).show();
                                 return;
                             }
                             //Si el cambio ha sido exitoso volvemos a la actividad anterior:
@@ -359,7 +398,7 @@ public class VentanaAgregarVehiculo extends AppCompatActivity implements View.On
                         //En caso de que no responda el servidor mostramos mensaje de error:
                         @Override
                         public void onFailure(Call<Vehiculo> call, Throwable t) {
-                            Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.app_clientes.Biblioteca;
 import com.example.app_clientes.R;
@@ -61,6 +64,41 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
         editTextClaveActual.addTextChangedListener(this);
         editTextClaveNueva.addTextChangedListener(this);
         editTextClaveNuevaRepetida.addTextChangedListener(this);
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextClaveActual.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextClaveActual.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextClaveActual.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });//Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextClaveNueva.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextClaveNueva.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextClaveNueva.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
+        //Establecemos distinta imagen de fondo segun el foco de los editText's:
+        editTextClaveNuevaRepetida.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    editTextClaveNuevaRepetida.setBackground(getDrawable(R.drawable.edittextseleccionadoazul));
+                } else {
+                    editTextClaveNuevaRepetida.setBackground(getDrawable(R.drawable.layout_drawable_2));
+                }
+            }
+        });
         //Animaciones tipo scale despues de que todoo se haya realizado:
         txtErrorClaveNuevaRepetida.post(new Runnable() {
             @Override
@@ -211,7 +249,7 @@ public class VentanaCambiarContrasena extends AppCompatActivity implements View.
                     //En caso de que no responda el servidor mostramos mensaje de error:
                     @Override
                     public void onFailure(Call<Usuario> call, Throwable t) {
-                        Toast.makeText(getApplication(),t.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplication(),"El servidor esta caido.", Toast.LENGTH_LONG).show();
                     }
                 });
             }

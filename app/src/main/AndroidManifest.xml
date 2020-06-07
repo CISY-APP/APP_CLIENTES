@@ -25,13 +25,16 @@
             android:name=".vistas.VentanaLogin"
             android:windowSoftInputMode="stateHidden"
             android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".vistas.VentanaPrincipal"
+        <activity
+            android:name=".vistas.VentanaPrincipal"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".vistas.VentanaRegistro"
             android:windowSoftInputMode="stateHidden"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".vistas.VentanaClaveOlvidada" />
+        <activity
+            android:name=".vistas.VentanaClaveOlvidada"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".vistas.VentanaPublicarViaje"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -50,10 +53,12 @@
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".vistas.VentanaCambiarContrasena"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".vistas.VentanaAgregarVehiculo"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name=".vistas.VentanaBuscarViaje"
             android:windowSoftInputMode="stateHidden"
