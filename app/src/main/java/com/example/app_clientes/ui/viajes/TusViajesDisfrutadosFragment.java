@@ -250,7 +250,7 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                         public void OnUsuarioLongClick(int position) {
                         }
                         @Override
-                        public void OnBorrarClick(int position) {
+                        public void OnBorrarClick(final int position) {
                             //Cancelamos el viaje siempre y cuando ya no se haya caducado:
                             //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
                             Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
@@ -276,6 +276,11 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                                     }
                                     //Si la respuesta es correcta pasamos a rellenar el modelo que utliza el recycler view:
                                     Toast.makeText(getContext(), "Reserva cancelada correctamente.", Toast.LENGTH_LONG).show();
+                                    misUsuariosList.remove(position);
+                                    misViajesList.remove(position);
+                                    if(misViajesList.size()<=0&&misUsuariosList.size()<=0){
+                                        recyclerViewTusViajes.setVisibility(View.GONE);
+                                    }
                                     //Cargamos los datos de nuevo:
                                     cargarUsuariosViajesDisfrutados();
                                 }
@@ -290,6 +295,7 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                     //Cambiamos la visibilidad
                     me_siento_vasio.setVisibility(View.GONE);
                     textViewMe_siento_vasio.setVisibility(View.GONE);
+                    recyclerViewTusViajes.setVisibility(View.VISIBLE);
                     visibilidadVista(View.GONE);
                     elige_vehiculo_wey.setVisibility(View.VISIBLE);
                     elige_vehiculo_wey.playAnimation();
@@ -297,6 +303,7 @@ public class TusViajesDisfrutadosFragment extends Fragment {
                     textViewElige_vehiculo_wey.setVisibility(View.VISIBLE);
                 }else{
                     //Cambiamos la visibilidad
+                    recyclerViewTusViajes.setVisibility(View.GONE);
                     visibilidadVista(View.GONE);
                     elige_vehiculo_wey.setVisibility(View.GONE);
                     textViewElige_vehiculo_wey.setVisibility(View.GONE);

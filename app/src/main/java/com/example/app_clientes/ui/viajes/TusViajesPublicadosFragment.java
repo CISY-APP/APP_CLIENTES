@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +38,7 @@ public class TusViajesPublicadosFragment extends Fragment {
     private LottieAnimationView me_siento_vasio ;
     private TextView textViewMe_siento_vasio;
     private LinearLayout linearLayoutAnimacion;
+    private View lineaSeparadoraViajesPublicados;
     //Atributos clase:
     private RecyclerView recyclerViewTusViajes;
     private MiAdapterTusViajesPublicados miAdapterTusViajes;
@@ -49,19 +49,20 @@ public class TusViajesPublicadosFragment extends Fragment {
         //Conectamos el xml:
         View view = inflater.inflate(R.layout.fragment_tusviajespublicados, container, false);
         //Vinculamos los atributos de la clase:
+        lineaSeparadoraViajesPublicados=view.findViewById(R.id.lineaSeparadoraViajesPublicados);
         recyclerViewTusViajes = view.findViewById(R.id.RVViajesPublicados);
         me_siento_vasio = view.findViewById(R.id.animation_vacio_ViajesPublicados);
         textViewMe_siento_vasio = view.findViewById(R.id.textViewTituloAnimacionVacioViajesPublicados);
         linearLayoutAnimacion = view.findViewById(R.id.linearLayoutPrincipalAnimacionViajesPublicados);
         //Cargamos los viajes:
-        cargarViajesViajesDisfrutados();
+        cargarViajesViajesPublicados();
         //Recibidor de broadcast para que cuando 'c' se cierre se cierra 'a' tambien, y solo quede home, tambien para cerrar sesion:
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent intent) {
                 String action = intent.getAction();
                 if (action.equals("reiniciate_fragment_viajes_publicados")) {
-                    cargarViajesViajesDisfrutados();
+                    cargarViajesViajesPublicados();
                 }
             }
         };
@@ -69,8 +70,8 @@ public class TusViajesPublicadosFragment extends Fragment {
         return view;
     }
 
-    //CARGA LOS DATOS DE LOS VIAJES QUE EL USUARIO A DISFRUTADO VIAJES
-    private  void cargarViajesViajesDisfrutados() {
+    //CARGA LOS DATOS DE LOS VIAJES QUE EL USUARIO A publicado VIAJES
+    private  void cargarViajesViajesPublicados() {
         //Creamos objeto Retrofit, para lanzar peticiones y poder recibir respuestas:
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Biblioteca.ip).addConverterFactory(GsonConverterFactory.create()).build();
         //Vinculamos el cliente con la interfaz:
@@ -87,6 +88,7 @@ public class TusViajesPublicadosFragment extends Fragment {
                     if(response.code()==404){
                         //Cambiamos la visibilidad
                         recyclerViewTusViajes.setVisibility(View.GONE);
+                        lineaSeparadoraViajesPublicados.setVisibility(View.GONE);
                         linearLayoutAnimacion.setVisibility(View.VISIBLE);
                         me_siento_vasio.playAnimation();
                         me_siento_vasio.setRepeatCount(ValueAnimator.INFINITE);
@@ -129,7 +131,7 @@ public class TusViajesPublicadosFragment extends Fragment {
                                         }
                                         //Si la respuesta es correcta pasamos a rellenar el modelo que utliza el recycler view:
                                         Toast.makeText(getContext(), "Viaje cancelado con exito.", Toast.LENGTH_LONG).show();
-                                        cargarViajesViajesDisfrutados();
+                                        cargarViajesViajesPublicados();
                                     }
                                     //En caso de que no responda el servidor mostramos mensaje de error:
                                     @Override
@@ -139,13 +141,15 @@ public class TusViajesPublicadosFragment extends Fragment {
                                 });
                             }else{
                                 Toast.makeText(getContext(), "Viaje caducado, no se pudo eliminar.", Toast.LENGTH_LONG).show();
-                                cargarViajesViajesDisfrutados();
+                                cargarViajesViajesPublicados();
                             }
                         }
                     });
+                    lineaSeparadoraViajesPublicados.setVisibility(View.VISIBLE);
                     recyclerViewTusViajes.setVisibility(View.VISIBLE);
                     linearLayoutAnimacion.setVisibility(View.GONE);
                 }else{
+                    lineaSeparadoraViajesPublicados.setVisibility(View.GONE);
                     recyclerViewTusViajes.setVisibility(View.GONE);
                     linearLayoutAnimacion.setVisibility(View.VISIBLE);
                     me_siento_vasio.playAnimation();
@@ -158,5 +162,21 @@ public class TusViajesPublicadosFragment extends Fragment {
                 Toast.makeText(getContext(), "El servidor esta caido.", Toast.LENGTH_LONG).show();
             }
         });
+
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        //Recibidor de broadcast para que cuando 'c' se cierre se cierra 'a' tambien, y solo quede home, tambien para cerrar sesion:
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context arg0, Intent intent) {
+                String action = intent.getAction();
+                if (action.equals("reiniciate_fragment_viajes_publicados")) {
+                    cargarViajesViajesPublicados();
+                }
+            }
+        };
+        requireContext().registerReceiver(broadcastReceiver, new IntentFilter("reiniciate_fragment_viajes_publicados"));
     }
 }
