@@ -22,3 +22,4 @@ también podrán darse de baja del viaje hasta la hora de comienzo del
 mismo, con esta acción el conductor recibiría una notificación avisándole
 de que un pasajero se ha dado de baja y a este último le sería devuelto el
 importe abonado.
+![alt text](https://github.com/CISY-APP/APP_CLIENTES/blob/master/WhatsApp%20Image%202021-05-03%20at%2023.32.49%20(1).jpeg)
